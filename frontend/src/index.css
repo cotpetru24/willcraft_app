@@ -23,7 +23,10 @@ a {
   align-items: center;
   height: 200px;
   background-color: #0C2A4D;
+  /* background-color: #cbc8be; */
+/* background-color: #C69C6D; */
 }
+
 
 .footer {
   display: flex;
@@ -32,6 +35,9 @@ a {
   align-items: center;
   height: 200px;
   background-color: #0C2A4D;
+  /* background-color: #cbc8be; */
+  /* background-color: #C69C6D; */
+
 }
 
 .header ul{
@@ -52,6 +58,7 @@ a {
   display: flex;
   align-items: center;
   color: #C69C6D;
+  /* color: #0f1f2c; */
 
 }
 
@@ -60,14 +67,16 @@ a {
 }
 .header img {
   max-height: 200px;
+  margin-left: 30px;
 }
 .footer img {
   max-height: 80px;
 }
 
 h1 {
-  color: #0C2A4D;
+  /* color: #0C2A4D; */
   /* color: #F5F5DC; */
+  color: #0f1f2c;
 }
 
 .login-register-toggle-container p {

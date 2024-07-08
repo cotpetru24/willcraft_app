@@ -19,7 +19,7 @@ const Header = () => {
         <header className='header'>
             <div>
                 <Link to='/'>
-                <img src='/logo.webp' alt='WillCraft Logo' />
+                <img src='/logoNewTree.png' alt='WillCraft Logo' />
                 </Link>
             </div>
             <div className='navigation-container'>
