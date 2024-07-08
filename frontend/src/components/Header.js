@@ -18,7 +18,9 @@ const Header = () => {
     return (
         <header className='header'>
             <div>
-                <Link to='/'>WillCraft</Link>
+                <Link to='/'>
+                <img src='/logo.webp' alt='WillCraft Logo' />
+                </Link>
             </div>
             <div className='navigation-container'>
                 {user ? (

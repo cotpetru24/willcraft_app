@@ -21,7 +21,7 @@ a {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  height: 100px;
+  height: 200px;
 }
 
 .header ul{
@@ -42,4 +42,7 @@ a {
 
 .header ul li a:hover {
   color: #777;
+}
+.header img {
+  max-height: 200px;
 }
