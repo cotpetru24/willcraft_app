@@ -7,7 +7,7 @@ const Header = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const {user} = useSelector(state => state.auth)
+    const { user } = useSelector(state => state.auth)
 
     const logoutfn = () => {
         dispatch(logout());
@@ -18,31 +18,40 @@ const Header = () => {
     return (
         <header className='header'>
             <div>
-                <Link to='/'>Task Creator</Link>
+                <Link to='/'>WillCraft</Link>
             </div>
-            <ul>
+            <div className='navigation-container'>
                 {user ? (
-                    <li>
-                        <button className='btn' onClick={logoutfn}>
-                        Logout
-                        </button>
-                    </li>
+                    <div>
+                        <h2>Welcome {user ? user.name : ''}</h2>
+                    </div>
+                ) : null}
+                <div>
+                    <ul>
+                        {user ? (
+                            <li>
+                                <button className='btn' onClick={logoutfn}>
+                                    Logout
+                                </button>
+                            </li>
 
-                ) : (
-                    <>
-                        <li>
-                            <Link to='/login'>
-                            Login
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to='/register'>
-                            Register
-                            </Link>
-                        </li>
-                    </>
-                )}
-            </ul >
+                        ) : (
+                            <>
+                                <li>
+                                    <Link to='/login'>
+                                        Login
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to='/register'>
+                                        Register
+                                    </Link>
+                                </li>
+                            </>
+                        )}
+                    </ul >
+                </div>
+            </div>
         </header >
     )
 }
