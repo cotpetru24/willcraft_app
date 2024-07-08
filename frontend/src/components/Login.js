@@ -17,12 +17,12 @@ const Login = () => {
     useEffect(() => {
         if (isError) toast.error(message);
         if (isSuccess || user) navigate('/');
-        dispatch(reset());
+        // dispatch(reset());
     },
         [user, isError, isSuccess, message, navigate, dispatch]
     );
 
-    const onChange = e = ()=>{
+    const onChange = e =>{
         setFormData(prevState=>({
             ...prevState,
             [e.target.name]: e.target.value
@@ -32,31 +32,31 @@ const Login = () => {
     const onSubmit = e =>{
         e.preventDefault()
         const userData = {email, password}
-        dispatch(login(userData))
+        // dispatch(login(userData))
     };
 
     return(
         isLoading ? <Spinner/> :(
             <>
-                <section classname="heading">
+                <section className="heading">
                     <h1>Login</h1>
                 </section>
-                <section classname="form">
+                <section className="form">
                     <form onSubmit={onSubmit}>
-                        <div classname="form-group">
-                            <input type = "email" classname="form-control" id = "email" name="email" value={email}
+                        <div className="form-group">
+                            <input type = "email" className="form-control" id = "email" name="email" value={email}
                             placeholder = "Please enter your email" onChange={onChange}/> 
                         </div>
-                        <div classname="forn-group">
-                            <input type = "password" classname="form-control" id = "password" name = "password" value={password}
+                        <div className="forn-group">
+                            <input type = "password" className="form-control" id = "password" name = "password" value={password}
                             placeholde="Please eneter your password" onChange={onChange}/>
                         </div>
-                        <div classname="form-group">
-                            <button type="submit" classname="btn">Login</button>
+                        <div className="form-group">
+                            <button type="submit" className="btn">Login</button>
                         </div>
-                        <div classname="form-group login-register-toggle-container">
+                        <div className="form-group login-register-toggle-container">
                             <p>Don't have an account?</p>
-                            <button type="button" classname="login-register-toggle-btn">Register</button>
+                            <button type="button" className="login-register-toggle-btn">Register</button>
                         </div>
                     </form>
                 </section>
