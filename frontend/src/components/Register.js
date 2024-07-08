@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import Spinner from "./Spinner";
@@ -29,14 +29,14 @@ const Register = () => {
         }))
     }
 
-    const onSubmit = e=>{
+    const onSubmit = e => {
         e.preventDefault();
 
-        if(password !== password2){
+        if (password !== password2) {
             toast.error('Passwords don\'t match')
         }
-        else{
-            const userData = {firstName, lastName, email, mobile, password}
+        else {
+            const userData = { firstName, lastName, email, mobile, password }
             // dispatch(register(userData));
         }
     };
@@ -53,31 +53,37 @@ const Register = () => {
                     <form onSubmit={onSubmit}>
                         <div className="form-group">
                             <input type="text" className="form-control" id="firstName" name="firstName" value={firstName}
-                            placeholder="Enter your first name" onChange={onChange}/> 
+                                placeholder="Enter your first name" onChange={onChange} />
                         </div>
                         <div className="form-group">
                             <input type="text" className="form-control" id="lastName" name="lastname" value={lastName}
-                            placeholder="Enter your last name" onChange={onChange}/>
+                                placeholder="Enter your last name" onChange={onChange} />
                         </div>
                         <div className="form-group">
                             <input type="email" className="form-control" id="email" name="email" value={email}
-                            placeholder="Enter your email" onChange={onChange}/>
+                                placeholder="Enter your email" onChange={onChange} />
                         </div>
                         <div className="form-group">
                             <input type="tel" className="form-control" id="mobile" name="mobile" value={mobile}
-                            placeholder="Enter your mobile number" on onChange={onChange}/>
+                                placeholder="Enter your mobile number" on onChange={onChange} />
                         </div>
                         <div className="forn-group">
                             <input type="password" className="form-control" id="password" name="password" value={password}
-                            placeholder="Enter the password" onChanhe={onChange}/>
+                                placeholder="Enter the password" onChanhe={onChange} />
                         </div>
                         <div className="form-group">
                             <input type="password" className="form-control" id="password2" name="password2" value={password2}
-                            placeholder="Confirm the password" onChange={onChange}/>
+                                placeholder="Confirm the password" onChange={onChange} />
                         </div>
                         <div className="form-group">
                             <button type="submit" classname="login-register-toggle-btn">Register</button>
-                        </div>                       
+                        </div>
+                        <div className="form-group login-register-toggle-container">
+                            <p>Don't have an account?</p>
+                            <Link to='/login'>
+                                Login
+                            </Link>
+                        </div>
                     </form>
                 </section>
             </>
