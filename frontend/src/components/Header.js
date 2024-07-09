@@ -41,7 +41,7 @@ const Header = () => {
                             <>
                                 <li>
                                     <Link to='/'>
-                                        My Orders
+                                        My Will
                                     </Link>
                                 </li>
                                 <li>
@@ -51,7 +51,7 @@ const Header = () => {
                                 </li>
                                 <li>
                                     <Link to='/login'>
-                                        Login/Register
+                                        Login
                                     </Link>
                                 </li>
                             </>

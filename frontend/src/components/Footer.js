@@ -23,7 +23,28 @@ const Footer = () => {
                 </Link>
             </div>
             <div className='footer-container'>
+                <p>Contact us:</p>
 
+
+                <Link to='/'>
+                    Contact Form
+                </Link>
+                <p>024 099555999</p>
+
+                <Link to='/'>
+                    demo@demo.com
+                </Link>
+
+                <Link to='/'>
+                    Terms of Service
+                </Link>
+                <Link to='/'>
+                    Privacy Policy
+                </Link>
+                <Link to='/'>
+                    Help and Support
+                </Link>
+                <p>&copy;2024 WillCraft. All rights reserved.</p>
             </div>
         </footer >
     )
