@@ -6,6 +6,17 @@
   box-sizing: border-box;
 }
 
+#root {
+  display:flex;
+  flex-direction:column;
+
+  /* fallback height */
+  min-height:100vh;
+
+  /* new small viewport height for modern browsers */
+  min-height:100svh;
+}
+
 body {
   font-family: 'Karla', sans-serif;
   height: 100vh;
@@ -24,23 +35,26 @@ a {
   height: 200px;
   background-color: #0C2A4D;
   /* background-color: #cbc8be; */
-/* background-color: #C69C6D; */
+  /* background-color: #C69C6D; */
 }
 
 
 .footer {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   height: 200px;
   background-color: #0C2A4D;
+  max-height: 200px;
+  color: #0C2A4D;
+  margin-top:auto;
   /* background-color: #cbc8be; */
   /* background-color: #C69C6D; */
 
 }
 
-.header ul{
+.header ul {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -48,16 +62,17 @@ a {
 
 }
 
-.header ul li{
+.header ul li {
   margin-left: 20px;
   list-style: none;
   /* color: #D4AF37; */
 }
 
-.header ul li a{
+.header ul li a {
   display: flex;
   align-items: center;
   color: #C69C6D;
+  font-weight: bold;
   /* color: #0f1f2c; */
 
 }
@@ -65,10 +80,12 @@ a {
 .header ul li a:hover {
   color: #777;
 }
+
 .header img {
   max-height: 200px;
   margin-left: 30px;
 }
+
 .footer img {
   max-height: 80px;
 }
@@ -80,16 +97,37 @@ h1 {
 }
 
 .login-register-toggle-container p {
-color: #F0E1C8 ;
+  color: #F0E1C8;
 }
 
-.footer {
-  max-height: 200px;
-  color: #0C2A4D;
-}
+
 .container {
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.progress-bar-container ul {
+
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-bottom: solid 2px #0C2A4D;
+  min-height: 50px;
+}
+
+.progress-bar-container li {
+  flex: 1;
+  text-align: center;
+  font-weight: bold;
+  display: flex;           /* Set flexbox on each li */
+  align-items: center; 
+  justify-content: center;
+
+}
+.full-width-progress {
+  width: 100vw;
 }
