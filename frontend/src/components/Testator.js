@@ -14,10 +14,11 @@ const Testator = () => {
                 <form action="/submit" method="post">
                     <label htmlFor="firstName">First Name:</label>
                     <input type="text" id="firstName" name="firstName" required /><br />
-
+                    <label htmlFor="middleName">Middle Name:</label>
+                    <input type="text" id="middleName" name="middleName" required /><br />
                     <label htmlFor="lastName">Last Name:</label>
                     <input type="text" id="lastName" name="lastName" required /><br />
-
+<p>adress here</p>
                     <label htmlFor="dob">Date of Birth:</label>
                     <input type="date" id="dob" name="dob" required /><br />
 
@@ -39,7 +40,7 @@ const Testator = () => {
                     <label htmlFor="male">Male</label>
                     <input type="radio" id="female" name="gender" value="female" />
                     <label htmlFor="female">Female</label><br /><br />
-                    
+
                     <label>Marital Status:</label>
                     <input type="radio" id="male" name="marital-status" value="married" />
                     <label htmlFor="married">Married</label>

@@ -24,7 +24,9 @@ const Footer = () => {
             </div>
             <div className='footer-container'>
                 <p>Contact us:</p>
-
+                <p>123 Test Street</p>
+                <p>Demo City</p>
+                <p>AB12 3CD</p>
 
                 <Link to='/'>
                     Contact Form

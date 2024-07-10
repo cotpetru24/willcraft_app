@@ -7,7 +7,7 @@ const Spouse = () => {
         <>
             <section className="heading">
                 <h1>Spouse Details</h1>
-
+<p>do you want to Add spouse / partner btn</p>
                 <form action="/submit" method="post">
                     <label htmlFor="firstName">First Name:</label>
                     <input type="text" id="firstName" name="firstName" required /><br />
