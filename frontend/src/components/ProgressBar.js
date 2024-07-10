@@ -42,7 +42,7 @@ const ProgressBar = () => {
             <Link to='/'>Complete</Link>
           </li>
         </ul>
-        <OrderProgressBar currentValue={0.5} maxValue={1} />
+        <OrderProgressBar currentValue={0.125} maxValue={1} />
       </div>
     </section>
   );
