@@ -7,14 +7,15 @@
 }
 
 #root {
-  display:flex;
-  flex-direction:column;
+  display: flex;
+  flex-direction: column;
+
 
   /* fallback height */
-  min-height:100vh;
+  min-height: 100vh;
 
   /* new small viewport height for modern browsers */
-  min-height:100svh;
+  min-height: 100svh;
 }
 
 body {
@@ -48,7 +49,9 @@ a {
   background-color: #0C2A4D;
   max-height: 300px;
   color: #C69C6D;
-  margin-top:auto;
+
+  margin-top: auto;
+
   /* background-color: #cbc8be; */
   /* background-color: #C69C6D; */
 
@@ -95,16 +98,27 @@ a {
   font-weight: bolder;
 }
 
-.footer-container{
+.footer-container {
   display: flex;
   flex-direction: column;
-align-items: center;
+  align-items: center;
 }
 
 h1 {
   /* color: #0C2A4D; */
   /* color: #F5F5DC; */
   color: #0f1f2c;
+}
+
+.section-container {
+  width: 100%;
+  padding-left: 10%;
+  padding-right: 10%;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
 }
 
 .login-register-toggle-container p {
@@ -134,15 +148,187 @@ h1 {
   flex: 1;
   text-align: center;
   font-weight: bold;
-  display: flex;           /* Set flexbox on each li */
-  align-items: center; 
+  display: flex;
+  /* Set flexbox on each li */
+  align-items: center;
   justify-content: center;
 
 }
+
 .full-width-progress {
   width: 100vw;
 }
 
-.navigation-container{
+.navigation-container {
   padding-right: 70px;
+}
+
+.form-group {
+  /* position: relative;
+  display: inline-block;
+  margin: 20px 0; */
+  /* float: left; */
+  margin-top: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bolder;
+  margin-bottom: 3px;
+}
+
+.form-group input {
+  border: solid 1px darkgray;
+  border-radius: 3px;
+  height: 30px;
+  width: 250px;
+  padding-left: 10px;
+}
+
+.form-group label {
+  /* position: absolute;
+  top: -10px;
+  left: 10px;
+  background: white;
+  padding: 0 5px;
+  font-size: 12px;
+  font-weight: bold; */
+  /* color: #F5A623; Yellow color */
+}
+
+.form-group #country {
+  border: solid 1px darkgray;
+  border-radius: 3px;
+  height: 30px;
+  width: 250px;
+  padding-left: 10px;
+}
+
+
+.form-group input {
+  /* padding: 10px;
+  padding-right: 30px; /* Make space for the icon */
+  /* border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  width: 200px; */
+}
+
+
+.address-group {
+  display: flex;
+  flex-direction: row;
+}
+
+#city {
+  width: 150px;
+}
+
+.postcode {
+  width: 100px;
+  padding-left: 5px;
+}
+
+#postcode {
+  width: 100%;
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: row;
+}
+
+.radio-group input {
+  width: 15px;
+  border: solid 1px darkgray;
+  border-radius: 3px;
+  height: 20px;
+  padding-left: 3px;
+}
+
+.radio-group label {
+  padding-left: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.tel-group {
+  display: flex;
+  flex-direction: row;
+}
+
+
+.react-tel-input{
+  width: 100px;
+  margin-right:5px ;
+  height: 30px;
+
+}
+
+.react-tel-input .form-control {
+  width: 100%; /* Set the width of the input field */
+  /* font-size: 16px; */
+  border-radius: 3px; /* Add border radius */
+  border: 1px solid darkgray; /* Set border */
+  height: 30px;
+
+}
+
+.tel-group #tel {
+  width: 145px;
+}
+
+/* styles.css */
+
+.country-select__control {
+  height: 30px;
+  min-height: 32px !important;
+  width: 250px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  border: 1px solid darkgray !important; /* Force border to apply */
+  border-radius: 3px !important; /* Force border-radius to apply */
+  box-shadow: none !important; /* Remove default box-shadow */
+  margin: 0px !important;
+  padding: 0px !important;
+}
+
+.country-select__option {
+  display: flex;
+  align-items: center;
+  height: 32px !important;
+  padding: 0 10px;
+}
+
+.country-select__single-value {
+  display: flex;
+  align-items: center;
+}
+
+.country-select__value-container {
+  display: flex;
+  align-items: center;
+  height: 32px !important;
+  /* padding: 0 8px; */
+}
+
+.country-select__indicators {
+  height: 32px;
+  display: flex;
+  align-items: center;
+}
+
+.country-select__input {
+  margin: 0;
+  padding: 0;
+  height: 32px !important;
+  display: flex;
+  align-items: center;
+}
+
+.country-select__input-container{
+  height: 30px !important;
+  padding: 0px !important;
+  margin: 0px !important;
 }
