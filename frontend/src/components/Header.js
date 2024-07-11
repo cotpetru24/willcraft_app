@@ -41,6 +41,11 @@ const Header = () => {
                             <>
                                 <li>
                                     <Link to='/'>
+                                        About us
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to='/'>
                                         My Will
                                     </Link>
                                 </li>

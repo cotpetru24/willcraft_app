@@ -20,7 +20,6 @@ const Footer = () => {
     return (
         <footer className='footer'>
 
-            <div className='footer-container'>
                 <div className='footer-sub-container footer-message-us'>
                     <form type='submit'>
                         <h3>MESSAGE US</h3>
@@ -32,12 +31,7 @@ const Footer = () => {
                 </div>
 
 
-                <div className='footer-sub-container footer-copyright'>
-                    <p>&copy;2024 WillCraft</p>
-                    <p>STU124543 Computing Project</p>
-                </div>
-            </div>
-            <div className='footer-container'>
+
                 <div className='footer-sub-container footer-contact-us'>
                     <h4>CALL US ON</h4>
                     <h2>+44 024 123 4567</h2>
@@ -59,7 +53,10 @@ const Footer = () => {
                         </a>
                     </div>
                 </div>
-
+                <div className='footer-sub-container footer-copyright'>
+                    <p>&copy;2024 WillCraft</p>
+                    <p>STU124543 Computing Project</p>
+            </div>
 
                 <div className='footer-sub-container footer-address-and-terms'>
                     <p> 123 Hight Street</p>
@@ -73,7 +70,6 @@ const Footer = () => {
                         </Link>
                     </div>
                 </div>
-            </div>
 
 
 
