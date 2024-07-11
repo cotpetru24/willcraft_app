@@ -39,16 +39,25 @@ a {
   /* background-color: #C69C6D; */
 }
 
+.heading{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 .footer {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  flex-direction: row;
+  justify-content: center;
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-top: 50px;
+  padding-bottom: 25px;
   align-items: center;
-  height: 300px;
+  height: auto;
   background-color: #0C2A4D;
-  max-height: 300px;
-  color: #C69C6D;
+  /* color: #C69C6D; */
+  color: white;
 
   margin-top: auto;
 
@@ -56,6 +65,162 @@ a {
   /* background-color: #C69C6D; */
 
 }
+
+.footer-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding-left: 75px;
+padding-right: 75px;
+width: 50%;
+}
+
+.footer-sub-container {
+  display: flex;
+  flex-direction: column;
+  /* align-items: start; */
+  
+}
+.footer-message-us{
+  display: flex;
+  align-self: start;
+}
+
+.footer-message-us form {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-message-us input {
+  margin-top: 20px;
+  width: 400px;
+  height: 40px;
+  padding-left: 10px;
+  border-radius: 3px;
+
+}
+
+.footer-message-us textarea {
+  margin-top: 20px;
+  width: 400px;
+  height: 150px;
+  padding-left: 10px;
+  border-radius: 3px;
+  font-family: inherit;
+  padding-top: 10px;
+
+}
+.footer-message-us button {
+  margin-top: 20px;
+  width: 80px;
+  height: 30px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: bolder;
+  letter-spacing: 0.7px;
+  border: solid 1px darkgray;
+  background-color: #0C2A4D;
+  color: white;
+  cursor: pointer;
+
+}
+
+.footer-message-us button:hover {
+  border: solid 1px darkgray;
+  background-color: rgb(102, 102, 102);
+  color: white;
+  cursor: pointer;
+
+}
+
+
+.footer-message-us textarea::placeholder {
+  font-family: inherit;
+  font-size: 14px;
+  color: rgb(102, 102, 102);
+}
+
+.footer-contact-us h4{
+  margin-bottom: 8px;
+}
+.footer-contact-us h2{
+  margin-bottom: 30px;
+
+}
+
+.footer-contact-us a{
+  margin-bottom: 30px;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.footer-contact-us a:hover{
+  color: rgb(102, 102, 102);
+
+}
+
+.footer-social-media a{
+  padding-right: 10px;
+  color: white;
+}
+
+
+
+.footer-copyright {
+  align-items: start;
+  width: 100%;
+  padding-top: 80px;
+  font-size: 14px;
+  color: darkgray;
+}
+
+.footer-address-and-terms{
+  align-items: end;
+  width: 100%;
+  padding-top: 20px;
+}
+
+.footer-address-and-terms p{
+font-size: 18px;
+}
+
+.footer-terms-and-policy {
+  margin-top: 40px;
+  font-size: 14px;
+  color: darkgray;
+}
+.footer-terms-and-policy a {
+  color: darkgray;
+  padding-left: 30px;
+}
+
+
+
+
+.footer img {
+  max-height: 80px;
+}
+
+
+
+.footer-container {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+}
+
+
+
+
+
+
+
+
+
+
+
 
 .header ul {
   display: flex;
@@ -74,7 +239,7 @@ a {
 .header ul li a {
   display: flex;
   align-items: center;
-  color: #C69C6D;
+  color: white;
   font-weight: bold;
   /* color: #0f1f2c; */
 
@@ -89,20 +254,7 @@ a {
   margin-left: 30px;
 }
 
-.footer img {
-  max-height: 80px;
-}
 
-.footer a {
-  color: #C69C6D;
-  font-weight: bolder;
-}
-
-.footer-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 
 h1 {
   /* color: #0C2A4D; */
@@ -258,18 +410,21 @@ h1 {
 }
 
 
-.react-tel-input{
+.react-tel-input {
   width: 100px;
-  margin-right:5px ;
+  margin-right: 5px;
   height: 30px;
 
 }
 
 .react-tel-input .form-control {
-  width: 100%; /* Set the width of the input field */
+  width: 100%;
+  /* Set the width of the input field */
   /* font-size: 16px; */
-  border-radius: 3px; /* Add border radius */
-  border: 1px solid darkgray; /* Set border */
+  border-radius: 3px;
+  /* Add border radius */
+  border: 1px solid darkgray;
+  /* Set border */
   height: 30px;
 
 }
@@ -287,9 +442,12 @@ h1 {
   font-size: 14px;
   display: flex;
   align-items: center;
-  border: 1px solid darkgray !important; /* Force border to apply */
-  border-radius: 3px !important; /* Force border-radius to apply */
-  box-shadow: none !important; /* Remove default box-shadow */
+  border: 1px solid darkgray !important;
+  /* Force border to apply */
+  border-radius: 3px !important;
+  /* Force border-radius to apply */
+  box-shadow: none !important;
+  /* Remove default box-shadow */
   margin: 0px !important;
   padding: 0px !important;
 }
@@ -327,8 +485,28 @@ h1 {
   align-items: center;
 }
 
-.country-select__input-container{
+.country-select__input-container {
   height: 30px !important;
   padding: 0px !important;
   margin: 0px !important;
+
+}
+
+#get-started-btn {
+  width: 250px;
+  height: 50px;
+  background-color: #0C2A4D;
+  color: white;
+  font-weight: bold;
+  font-size: 24px;
+  letter-spacing: 0.9px;
+  border: none;
+  border-radius: 3px;
+
+}
+#get-started-btn:hover {
+  background-color: rgb(102, 102, 102);
+  color: white;
+  cursor: pointer;
+
 }

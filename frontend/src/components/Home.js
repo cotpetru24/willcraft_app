@@ -5,16 +5,13 @@ const Home = () => {
 
     return (
         <>
-        <section className="heading">
-            <h1>Home page</h1>
-            <button>Get Started</button>
-            <h1>How it works:</h1>
-
-        </section>
-
+            <section className="heading">
+                <img src="/home_image.png" style={{ width: '100%' }} alt="Home" />
+                <button id="get-started-btn">Get Started</button>
+                <h1>How it works:</h1>
+            </section>
         </>
-
-    )
+    );
 }
 
 export default Home

@@ -21,7 +21,7 @@ function App() {
       <Router>
         <div className='container'>
           <Header />
-          <ProgressBar/>
+          {/* <ProgressBar/> */}
           <Routes>
             <Route path='/' element={<Home />} />;
             <Route path='/login' element={<Login />} />;
