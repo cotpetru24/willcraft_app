@@ -34,7 +34,7 @@ a {
   justify-content: space-between;
   align-items: center;
   height: 200px;
-  background-color: #0C2A4D;
+  /* background-color: #0C2A4D; */
   /* background-color: #cbc8be; */
   /* background-color: #C69C6D; */
 }
@@ -114,12 +114,21 @@ a {
   padding-bottom: 25px;
   align-items: center;
   height: 100%;
-  background-color: #0C2A4D;
+  /* background-color: #0C2A4D; */
   color: white;
   margin-top: auto;
   width: 100%;
 }
 
+.header, .footer {
+  /* background-color: #232f3e; */
+  background-color: #131921;
+  
+  /* background-color: #0d1117; */
+  /* background-color: #1d1c43; */
+
+
+}
 
 .footer-message-us {
   display: flex;
@@ -160,8 +169,9 @@ a {
   font-size: 12px;
   font-weight: bolder;
   letter-spacing: 0.7px;
-  border: solid 1px darkgray;
-  background-color: #0C2A4D;
+  border: solid 1px #e0218a;;
+  /* background-color: #0C2A4D; */
+  background-color: #131921;
   color: white;
   cursor: pointer;
 
@@ -169,10 +179,16 @@ a {
 
 .footer-message-us button:hover {
   border: solid 1px darkgray;
-  background-color: rgb(102, 102, 102);
-  color: white;
+  /* background-color: rgb(102, 102, 102); */
+  background-color: #e0218a;;
+  /* color: white; */
+  /* color: #131921; */
   cursor: pointer;
 
+}
+
+.navigation-container h2 {
+  color: white;
 }
 
 
@@ -288,7 +304,10 @@ a {
 }
 
 .header ul li a:hover {
-  color: #777;
+  /* color: #777; */
+  color: #e0218a;
+  /* border-bottom: 4px solid #e0218a; */
+  transition: 0.3s;
 }
 
 .header img {
@@ -369,6 +388,10 @@ h1 {
 }
 
 .navigation-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding-right: 70px;
 }
 
@@ -682,21 +705,25 @@ h1 {
 #get-started-btn {
   width: 250px;
   height: 50px;
-  background-color: #0C2A4D;
+  /* background-color: #0C2A4D; */
+  background-color: #131921;
+  border: 1px solid #e0218a;
   color: white;
   font-weight: bold;
   font-size: 24px;
   letter-spacing: 0.9px;
-  border: none;
+  /* border: none; */
   border-radius: 3px;
   margin-top: 40px;
 
 }
 
 #get-started-btn:hover {
-  background-color: rgb(102, 102, 102);
+  /* background-color: rgb(102, 102, 102); */
+  background-color: #e0218a;
   color: white;
   cursor: pointer;
+  transition: 0.3s;
 
 }
 

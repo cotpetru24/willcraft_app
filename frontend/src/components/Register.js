@@ -4,11 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import Spinner from "./Spinner";
+import {register, reset} from '../features/auth/authSlice';
 
 
 const Register = () => {
-    const [formData, setFormData] = useState({ firstName: '', lastName: '', email: '', mobile: '', password: '', password2: '' });
-    const { firstName, lastName, email, mobile, password, password2 } = formData;
+    const [formData, setFormData] = useState({ firstName: '', lastName: '', 
+        email: '', password: '', password2: '' });
+    const { firstName, lastName, email, password, password2 } = formData;
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -17,7 +19,7 @@ const Register = () => {
     useEffect(() => {
         if (isError) toast.error(message);
         if (isSuccess || user) navigate('/');
-        // dispatch(reset());
+        dispatch(reset());
     },
         [user, isSuccess, isError, message, navigate, dispatch]
     )
@@ -36,14 +38,14 @@ const Register = () => {
             toast.error('Passwords don\'t match')
         }
         else {
-            const userData = { firstName, lastName, email, mobile, password }
-            // dispatch(register(userData));
+            const userData = { firstName, lastName, email, password }
+            dispatch(register(userData));
         }
     };
 
 
     return (
-        isLoading ? Spinner : (
+        isLoading ? <Spinner/> : (
             <>
                 <section className="auth-form">
 
@@ -62,7 +64,7 @@ const Register = () => {
                             <div className="form-group">
                             <label htmlFor="lastName">Last Name</label>
 
-                                <input type="text" className="form-control" id="lastName" name="lastname" value={lastName}
+                                <input type="text" className="form-control" id="lastName" name="lastName" value={lastName}
                                     placeholder="Enter your last name" onChange={onChange} />
                             </div>
                             <div className="form-group">
@@ -75,7 +77,7 @@ const Register = () => {
                             <label htmlFor="password">Password</label>
 
                                 <input type="password" className="form-control" id="password" name="password" value={password}
-                                    placeholder="Enter the password" onChanhe={onChange} />
+                                    placeholder="Enter the password" onChange={onChange} />
                             </div>
                             <div className="form-group">
                             <label htmlFor="password2">Confirm Password</label>
@@ -84,7 +86,7 @@ const Register = () => {
                                     placeholder="Confirm the password" onChange={onChange} />
                             </div>
                             <div className="form-group">
-                                <button type="submit" classname="login-register-toggle-btn">Register</button>
+                                <button type="submit" className="login-register-toggle-btn">Register</button>
                             </div>
                             <div className="form-group login-register-toggle-container">
                                 <p>Don't have an account?</p>

@@ -1,12 +1,16 @@
 import React from "react";
 import HomeReview from "./HomeReview";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { login, reset } from '../features/auth/authSlice';
 import './FontAwesomeSetup'
 
 
 
 const Home = () => {
+
+    const { user } = useSelector(state => state.auth)
 
 
     return (
@@ -21,10 +25,20 @@ const Home = () => {
                     <p><FontAwesomeIcon icon="book" className="custom-icon" />Step by Step guide</p>
                     <p><FontAwesomeIcon icon="clock" className="custom-icon" />Ready in 10 minutes</p>
                     <p><FontAwesomeIcon icon="pound-sign" className="custom-icon" />Starting from £20</p>
-                    <Link to='/register'>
-                        <button id="get-started-btn">Get Started</button>
 
-                    </Link>
+                    {user ? (
+                        <Link to='/dashboard'>
+                            <button id="get-started-btn">Get Started</button>
+
+                        </Link>
+                    ) : (
+                        <Link to='/login'>
+                            <button id="get-started-btn">Get Started</button>
+
+                        </Link>
+                    )}
+
+
                 </div>
 
 

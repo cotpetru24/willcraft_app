@@ -10,11 +10,26 @@ const Header = () => {
     const dispatch = useDispatch();
     const { user } = useSelector(state => state.auth)
 
+    // const logoutfn = () => {
+    //     dispatch(logout());
+    //     dispatch(reset());
+    //     navigate('/');
+    // }
+
     const logoutfn = () => {
-        dispatch(logout());
-        dispatch(reset());
-        navigate('/');
-    }
+        dispatch(logout())
+            .unwrap() // Ensure the thunk result is unwrapped for proper chaining
+            .then(() => {
+                dispatch(reset());
+                console.log('Navigating to home...');
+                navigate('/');
+            })
+            .catch((error) => {
+                console.error('Logout failed:', error);
+            });
+    };
+
+
 
     return (
         <header className='header'>
@@ -26,19 +41,12 @@ const Header = () => {
             <div className='navigation-container'>
                 {user ? (
                     <div>
-                        <h2>Welcome {user ? user.name : ''}</h2>
+                        <h2>Welcome back {user ? user.firstName : ''}!</h2>
                     </div>
                 ) : null}
                 <div>
                     <ul>
                         {user ? (
-                            <li>
-                                <button className='btn' onClick={logoutfn}>
-                                    Logout
-                                </button>
-                            </li>
-
-                        ) : (
                             <>
                                 <li>
                                     <Link to='/aboutus'>
@@ -47,12 +55,26 @@ const Header = () => {
                                 </li>
                                 <li>
                                     <Link to='/dashboard'>
-                                        My Wills
+                                        My Dashboard
                                     </Link>
                                 </li>
                                 <li>
                                     <Link to='/progressBar'>
                                         My Account
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link onClick={logoutfn}>
+                                        Logout
+                                    </Link>
+                                </li>
+                            </>
+
+                        ) : (
+                            <>
+                                <li>
+                                    <Link to='/aboutus'>
+                                        About us
                                     </Link>
                                 </li>
                                 <li>

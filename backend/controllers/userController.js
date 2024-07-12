@@ -4,9 +4,9 @@ const User = require('../models/userModel');
 const asyncHandler = require('express-async-handler');
 
 const registerUser = asyncHandler(async (req, res) => {
-    const { firstName, lastName, email, mobile, password } = req.body;
+    const { firstName, lastName, email, password } = req.body;
 
-    if (!firstName || !lastName || !email || !mobile || !password) {
+    if (!firstName || !lastName || !email ||  !password) {
         res.status(400);
         throw new Error('All fields are required');
     }
@@ -20,19 +20,11 @@ const registerUser = asyncHandler(async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const user = await User.create({ firstName, lastName, email, mobile, password: hashedPassword });
+    const user = await User.create({ firstName, lastName, email, password: hashedPassword });
 
     if (user) {
-        res.status(201).json({
-            _id: user.id,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            email: user.email,
-            mobile: user.mobile,
-            status: user.status,
-            type: user.type,
-            token: generateJWTtoken(user._id)
-        });
+        res.status(201).json({ _id: user.id, name: user.name, email: user.email, token: generateJWTtoken(user._id) });
+
     }
     else {
         res.status(400);
@@ -47,16 +39,7 @@ const loginUser = asyncHandler(async (req, res) => {
     const user = await User.findOne({ email });
 
     if (user && (await bcrypt.compare(password, user.password))) {
-        res.status(201).json({
-            _id: user.id,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            email: user.email,
-            mobile: user.mobile,
-            status: user.status,
-            type: user.type,
-            token: generateJWTtoken(user._id)
-        });
+        res.json({ _id: user.id, firstName: user.firstName, email: user.email, token: generateJWTtoken(user._id) });
     }
     else {
         res.status(400);
@@ -67,16 +50,8 @@ const loginUser = asyncHandler(async (req, res) => {
 
 
 const getCurrentUser = asyncHandler(async (req, res) => {
-    const { _id, firstName, lastName, email, mobile, status, type } = await User.findById(req.user.id);
-    res.status(200).json({
-        id: _id,
-        firstName,
-        lastName,
-        email,
-        mobile,
-        status,
-        type
-    })
+    const { _id, name, email } = await User.findById(req.user.id);
+    res.status(200).json({ id: _id, name, email })
 });
 
 

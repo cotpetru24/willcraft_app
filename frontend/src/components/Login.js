@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Spinner from './Spinner';
+import { login, reset } from '../features/auth/authSlice'
 
 
 const Login = () => {
@@ -17,7 +18,7 @@ const Login = () => {
     useEffect(() => {
         if (isError) toast.error(message);
         if (isSuccess || user) navigate('/');
-        // dispatch(reset());
+        dispatch(reset());
     },
         [user, isError, isSuccess, message, navigate, dispatch]
     );
@@ -32,41 +33,41 @@ const Login = () => {
     const onSubmit = e => {
         e.preventDefault()
         const userData = { email, password }
-        // dispatch(login(userData))
+        dispatch(login(userData))
     };
 
     return (
         isLoading ? <Spinner /> : (
             <>
-            <section className="auth-form">
-                <section className="heading">
-                    <h1>Login</h1>
-                </section>
-                <section className="form">
-                    <form onSubmit={onSubmit}>
-                        <div className="form-group">
-                        <label htmlFor="email">Email</label>
+                <section className="auth-form">
+                    <section className="heading">
+                        <h1>Login</h1>
+                    </section>
+                    <section className="form">
+                        <form onSubmit={onSubmit}>
+                            <div className="form-group">
+                                <label htmlFor="email">Email</label>
 
-                            <input type="email" className="form-control" id="email" name="email" value={email}
-                                placeholder="Please enter your email" onChange={onChange} />
-                        </div>
-                        <div className="form-group">
-                        <label htmlFor="password">Password</label>
+                                <input type="email" className="form-control" id="email" name="email" value={email}
+                                    placeholder="Please enter your email" onChange={onChange} />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="password">Password</label>
 
-                            <input type="password" className="form-control" id="password" name="password" value={password}
-                                placeholder="Please eneter your password" onChange={onChange} />
-                        </div>
-                        <div className="form-group">
-                            <button type="submit" className="btn">Login</button>
-                        </div>
-                        <div className="form-group login-register-toggle-container">
-                            <p>Don't have an account?</p>
-                            <Link to='/register'>
-                                Register
-                            </Link>
-                        </div>
-                    </form>
-                </section>
+                                <input type="password" className="form-control" id="password" name="password" value={password}
+                                    placeholder="Please eneter your password" onChange={onChange} />
+                            </div>
+                            <div className="form-group">
+                                <button type="submit" className="btn">Login</button>
+                            </div>
+                            <div className="form-group login-register-toggle-container">
+                                <p>Don't have an account?</p>
+                                <Link to='/register'>
+                                    Register
+                                </Link>
+                            </div>
+                        </form>
+                    </section>
                 </section>
             </>
         )
