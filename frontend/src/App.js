@@ -14,6 +14,8 @@ import OrderReview from './components/OrderReview';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ProgressBar from './components/ProgressBar';
+import AboutUs from './components/AboutUs';
+import Dashboard from './components/Dashboard';
 
 function App() {
   return (
@@ -33,6 +35,10 @@ function App() {
             <Route path='/beneficiaries' element={<Beneficiaries />} />;
             <Route path='/assetDistribution' element={<AssetDistribution />} />;
             <Route path='/orderReview' element={<OrderReview />} />;
+            <Route path='/progressBar' element={<ProgressBar />} />;
+            <Route path='/aboutus' element={<AboutUs/>}/>;
+            <Route path='/dashboard' element={<Dashboard/>}/>;
+            
           </Routes>
           <Footer />
         </div>

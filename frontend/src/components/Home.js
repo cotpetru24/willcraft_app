@@ -21,7 +21,10 @@ const Home = () => {
                     <p><FontAwesomeIcon icon="book" className="custom-icon" />Step by Step guide</p>
                     <p><FontAwesomeIcon icon="clock" className="custom-icon" />Ready in 10 minutes</p>
                     <p><FontAwesomeIcon icon="pound-sign" className="custom-icon" />Starting from £20</p>
-                    <button id="get-started-btn">Get Started</button>
+                    <Link to='/register'>
+                        <button id="get-started-btn">Get Started</button>
+
+                    </Link>
                 </div>
 
 
@@ -29,12 +32,25 @@ const Home = () => {
 
 
             </section>
-            <h1>How it works:</h1>
-            <p>1.Enter your details</p>
-            <p>2.Print your will</p>
-            <p>3.Sign it</p>
-            <p>4.Store it</p>
+            <section className="how-it-works-section">
+                <h1 id="how-it-works-heading">How it works:</h1>
+                <div className="how-it-works-container">
+                    <div className="how-it-works-subcontainer">
+                        <img src="/type.webp" style={{ width: '150px' }} alt="type" />
+                        <p>1.Enter your details</p>
+                    </div>
+                    <div className="how-it-works-subcontainer">
+                        <img src="/print.webp" style={{ width: '150px' }} alt="type" />
+                        <p>2.Print your will</p>
+                    </div>
 
+                    <div className="how-it-works-subcontainer">
+                        <img src="/sign.webp" style={{ width: '150px' }} alt="type" />
+                        <p>3.Sign it</p>
+
+                    </div>
+                </div>
+            </section>
 
             <section className="home-reviews-section">
                 <h2><Link to="/">Customer Reviews</Link></h2>

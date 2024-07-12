@@ -21,9 +21,6 @@ const ProgressBar = () => {
             <Link to='/testator'>Testator</Link>
           </li>
           <li>
-            <Link to='/spouse'>Spouse</Link>
-          </li>
-          <li>
             <Link to='/executor'>Executor</Link>
           </li>
           <li>

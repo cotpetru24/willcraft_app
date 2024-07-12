@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout, reset } from '../features/auth/authSlice';
+import Testator from './Testator.js'
 
 
 const Header = () => {
@@ -19,7 +20,7 @@ const Header = () => {
         <header className='header'>
             <div>
                 <Link to='/'>
-                    <img src='/logoNewTree.png' alt='WillCraft Logo' />
+                    <img src='/test.png' alt='WillCraft Logo' />
                 </Link>
             </div>
             <div className='navigation-container'>
@@ -40,17 +41,17 @@ const Header = () => {
                         ) : (
                             <>
                                 <li>
-                                    <Link to='/'>
+                                    <Link to='/aboutus'>
                                         About us
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to='/'>
-                                        My Will
+                                    <Link to='/dashboard'>
+                                        My Wills
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to='/'>
+                                    <Link to='/progressBar'>
                                         My Account
                                     </Link>
                                 </li>

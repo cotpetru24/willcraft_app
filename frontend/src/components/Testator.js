@@ -3,6 +3,7 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import "flag-icon-css/css/flag-icons.min.css";
 import CountrySelect from "./CountrySelect";
+import ProgressBar from "./ProgressBar";
 
 
 
@@ -11,9 +12,10 @@ const Testator = () => {
 
     return (
         <>
+        <ProgressBar/>
             <div className="section-container">
-                <section className="heading">
-                    <h1>Testator Details</h1>
+                <section className="creating-order-heading">
+                    <h1>Personal information</h1>
                 </section>
                 <section className="form">
                     <form action="/submit" method="post">
@@ -107,6 +109,15 @@ const Testator = () => {
                             </div>
                         </div>
                     </form>
+                </section>
+
+                <section className="form spouse-form-container">
+                    <button>+ Add spouse or partner</button>
+                </section>
+
+
+                <section className="form children-form-container">
+                    <button>+ Add child</button>
                 </section>
             </div>
         </>
