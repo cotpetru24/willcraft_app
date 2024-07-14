@@ -49,6 +49,14 @@ const Testator = ({ onNext }) => {
 //     dispatch(updateTestator(updatedTestator));
 //   };
 
+
+
+const handleCountryChange = (country) => {
+    const updatedTestator = { ...testator, country };
+    setTestator(updatedTestator);
+    dispatch(updateTestator(updatedTestator));
+  };
+
   const handleNext = () => {
     onNext(testator);
   };
@@ -147,7 +155,8 @@ const Testator = ({ onNext }) => {
               <CountrySelect
                 name="country"
                 value={testator.country}
-                onChange={(country) => handleInputChange({ target: { name: 'country', value: country } })}
+                // onChange={(country) => handleInputChange({ target: { name: 'country', value: country } })}
+                onChange={handleCountryChange}
               />
             </div>
 
