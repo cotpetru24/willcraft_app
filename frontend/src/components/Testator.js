@@ -6,7 +6,7 @@ import CountrySelect from "./CountrySelect";
 import ProgressBar from "./ProgressBar";
 import { useDispatch, useSelector } from "react-redux";
 import { createOrder, updateOrder, updateTestator } from "../features/order/orderSlice";
-import OrderNavigation from "./orderNavigation";
+import OrderNavigation from "./OrderNavigation";
 
 const Testator = () => {
     const dispatch = useDispatch();
@@ -44,7 +44,6 @@ const Testator = () => {
 
     return (
         <>
-            <ProgressBar />
             <div className="section-container">
                 <section className="creating-order-heading">
                     <h1>Personal information</h1>
@@ -65,7 +64,11 @@ const Testator = () => {
 
                         <div className="form-group">
                             <label htmlFor="middleName">Middle Name</label>
-                            <input type="text" id="middleName" name="middleName" required />
+                            <input type="text" id="middleName" name="middleName"
+                                value={testator.middleName}
+                                onChange={handleInputChange}
+                                required
+                            />
                         </div>
 
                         <div className="form-group">
@@ -82,20 +85,20 @@ const Testator = () => {
 
                         <div className="form-group">
                             <label htmlFor="address1">Address</label>
-                            <input type="text" id="address1" name="address1" required />
+                            <input type="text" id="address1" name="address1" />
                         </div>
                         <div className="form-group">
                             <label htmlFor="address2">Address 2:</label>
-                            <input type="text" id="address2" name="address2" required />
+                            <input type="text" id="address2" name="address2" />
                         </div>
                         <div className="address-group">
                             <div className="form-group">
                                 <label htmlFor="city">City</label>
-                                <input type="text" id="city" name="city" required />
+                                <input type="text" id="city" name="city" />
                             </div>
                             <div className="form-group postcode">
                                 <label htmlFor="postcode">Postcode</label>
-                                <input type="text" id="postcode" name="postcode" required />
+                                <input type="text" id="postcode" name="postcode" />
                             </div>
                         </div>
                         <div className="form-group">
@@ -153,8 +156,6 @@ const Testator = () => {
                                 <label htmlFor="single">Single</label>
                             </div>
                         </div>
-                        <button type="button" onClick={handleCreateOrder}>Create Order</button>
-                        <button type="button" onClick={() => handleUpdateOrder({ status: 'creatingOrder', people: [testator], assets: [] })}>Save</button>
                     </form>
                 </section>
 
@@ -166,7 +167,6 @@ const Testator = () => {
                     <button>+ Add child</button>
                 </section>
             </div>
-            <OrderNavigation/>
         </>
     );
 }

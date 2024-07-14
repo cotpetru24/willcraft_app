@@ -5,6 +5,8 @@ import CountrySelect from "./CountrySelect";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import "flag-icon-css/css/flag-icons.min.css";
+import OrderNavigation from "./OrderNavigation";
+
 
 
 const Executor = () => {
@@ -13,7 +15,6 @@ const Executor = () => {
 
     return (
         <>
-            <ProgressBar />
             <div className="executor-section-container">
                 <section className="creating-order-heading">
                     <h1>Executor of the will</h1>
@@ -137,6 +138,7 @@ const Executor = () => {
                     </form>
                 </section>
             </div>
+
         </>
     );
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import OrderNavigation from "./OrderNavigation";
 
 export const OrderProgressBar = ({ currentValue, maxValue }) => (
     <>
@@ -13,67 +14,20 @@ const Dashboard = () => {
             <h2>Dashboar</h2>
             <div className="dashboard-will-container">
                 
-            <p>Testator name/ date/ status </p>
 
-            <button>
-                <Link to='/testator'>
-                    Continue
-                </Link>
-            </button>
-            </div>
-            <OrderProgressBar currentValue={0.08} maxValue={1} />
-
-            <div className="dashboard-will-container">
                 
             <p>Testator name/ date/ status </p>
 
             <button>
-                <Link to='/testator'>
+                <Link to='/creatingOrder'>
                     Continue
                 </Link>
             </button>
             </div>
+
             <OrderProgressBar currentValue={0.08} maxValue={1} />
-            <div className="dashboard-will-container">
+
                 
-            <p>Testator name/ date/ status </p>
-
-            <button>
-                <Link to='/testator'>
-                    Continue
-                </Link>
-            </button>
-            </div>
-            <OrderProgressBar currentValue={0.08} maxValue={1} />
-            <div className="dashboard-will-container">
-                
-            <p>Testator name/ date/ status </p>
-
-            <button>
-                <Link to='/testator'>
-                    Continue
-                </Link>
-            </button>
-            </div>
-            <OrderProgressBar currentValue={0.08} maxValue={1} />
-            <div className="dashboard-will-container">
-                
-            <p>Testator name/ date/ status </p>
-
-            <button>
-                <Link to='/testator'>
-                    Continue
-                </Link>
-            </button>
-            </div>
-            <OrderProgressBar currentValue={0.08} maxValue={1} />
-
-
-            <button>
-                <Link to='/testator'>
-                    Create a new will
-                </Link>
-            </button>
         </section>
     )
 

@@ -16,6 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import ProgressBar from './components/ProgressBar';
 import AboutUs from './components/AboutUs';
 import Dashboard from './components/Dashboard';
+import OrderNavigation from './components/OrderNavigation';
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
             <Route path='/progressBar' element={<ProgressBar />} />;
             <Route path='/aboutus' element={<AboutUs/>}/>;
             <Route path='/dashboard' element={<Dashboard/>}/>;
+            <Route path='/creatingOrder' element={<OrderNavigation/>}/>
             
           </Routes>
           <Footer />

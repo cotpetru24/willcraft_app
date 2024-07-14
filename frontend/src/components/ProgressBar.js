@@ -8,6 +8,11 @@ export const OrderProgressBar = ({ currentValue, maxValue }) => (
   </>
 );
 
+
+
+
+
+
 const ProgressBar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -18,25 +23,25 @@ const ProgressBar = () => {
       <div className='progress-bar-container'>
         <ul>
           <li>
-            <Link to='/testator'>Testator</Link>
+            <Link >Testator</Link>
           </li>
           <li>
-            <Link to='/executor'>Executor</Link>
+            <Link >Executor</Link>
           </li>
           <li>
-            <Link to='/assets'>Assets</Link>
+            <Link >Assets</Link>
           </li>
           <li>
-            <Link to='/beneficiaries'>Beneficiaries</Link>
+            <Link >Beneficiaries</Link>
           </li>
           <li>
-            <Link to='/assetDistribution'>Asset Distribution</Link>
+            <Link >Asset Distribution</Link>
           </li>
           <li>
-            <Link to='/orderReview'>Review</Link>
+            <Link >Review</Link>
           </li>
           <li>
-            <Link to='/'>Complete</Link>
+            <Link >Complete</Link>
           </li>
         </ul>
         <OrderProgressBar currentValue={0.08} maxValue={1} />

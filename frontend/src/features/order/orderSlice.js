@@ -5,15 +5,15 @@ import orderService from "./orderService";
 
 export const saveOrderProgress = createAsyncThunk('order/saveOrderProgress', async ({ step, data }, thunkApi) => {
     try {
-      // Save progress to the backend or local storage
-      // Example: const response = await orderService.saveProgress(step, data);
-      // return response;
-      return { step, data };
+        // Save progress to the backend or local storage
+        // Example: const response = await orderService.saveProgress(step, data);
+        // return response;
+        return { step, data };
     } catch (error) {
-      const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-      return thunkApi.rejectWithValue(message);
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+        return thunkApi.rejectWithValue(message);
     }
-  });
+});
 
 // Async thunks
 export const fetchOrders = createAsyncThunk('order/fetchOrders', async (_, thunkApi) => {
@@ -66,6 +66,7 @@ const initialState = {
     isSuccess: false,
     isLoading: false,
     message: '',
+    currentStep:0,
 };
 
 const orderSlice = createSlice({
@@ -77,13 +78,17 @@ const orderSlice = createSlice({
             state.isSuccess = false;
             state.isLoading = false;
             state.message = '';
+            state.currentStep = 0;
         },
         updateTestator: (state, action) => {
             state.entities.people.testator = {
                 ...state.entities.people.testator,
                 ...action.payload
             };
-        }
+        },
+        updateCurrentStep: (state, action) => {
+            state.currentStep = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -177,6 +182,6 @@ const orderSlice = createSlice({
     },
 });
 
-export const { reset, updateTestator } = orderSlice.actions;
+export const { reset, updateTestator, updateCurrentStep } = orderSlice.actions;
 
 export default orderSlice.reducer;

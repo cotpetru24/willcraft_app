@@ -120,10 +120,11 @@ a {
   width: 100%;
 }
 
-.header, .footer {
+.header,
+.footer {
   /* background-color: #232f3e; */
   background-color: #131921;
-  
+
   /* background-color: #0d1117; */
   /* background-color: #1d1c43; */
 
@@ -169,7 +170,8 @@ a {
   font-size: 12px;
   font-weight: bolder;
   letter-spacing: 0.7px;
-  border: solid 1px #e0218a;;
+  border: solid 1px #e0218a;
+  ;
   /* background-color: #0C2A4D; */
   background-color: #131921;
   color: white;
@@ -180,7 +182,8 @@ a {
 .footer-message-us button:hover {
   border: solid 1px darkgray;
   /* background-color: rgb(102, 102, 102); */
-  background-color: #e0218a;;
+  background-color: #e0218a;
+  ;
   /* color: white; */
   /* color: #131921; */
   cursor: pointer;
@@ -793,8 +796,8 @@ h4 {
 }
 
 .how-it-works-section {
-display: flex;
-flex-direction: column;
+  display: flex;
+  flex-direction: column;
   /* Adjust the gap between items */
 
   justify-content: center;
@@ -807,10 +810,11 @@ flex-direction: column;
   margin-right: auto;
 }
 
-#how-it-works-heading{
-padding-bottom: 40px;
-font-size: 28px;
+#how-it-works-heading {
+  padding-bottom: 40px;
+  font-size: 28px;
 }
+
 .how-it-works-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -826,7 +830,7 @@ font-size: 28px;
 
 }
 
-.how-it-works-subcontainer{
+.how-it-works-subcontainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -883,9 +887,42 @@ h2 {
 .about-us-container p {
   text-align: justify;
 }
+
 .dashboard-will-container {
   display: flex;
   flex-direction: row;
   margin-top: 20px;
-margin-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+
+.order-navigation-container {
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  justify-content: space-between;
+}
+
+.order-navigation-container button {
+  width: 150px;
+  height: 40px;
+  background-color: #131921;
+  border: 1px solid #e0218a;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  letter-spacing: 0.9px;
+  border-radius: 3px;
+  margin-top: 40px;
+
+}
+
+.order-navigation-container button:hover {
+  background-color: #e0218a;
+  color: white;
+  cursor: pointer;
+  transition: 0.1s;
 }
