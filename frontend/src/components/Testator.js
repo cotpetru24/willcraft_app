@@ -6,6 +6,7 @@ import CountrySelect from "./CountrySelect";
 import ProgressBar from "./ProgressBar";
 import { useDispatch, useSelector } from "react-redux";
 import { createOrder, updateOrder, updateTestator } from "../features/order/orderSlice";
+import OrderNavigation from "./orderNavigation";
 
 const Testator = () => {
     const dispatch = useDispatch();
@@ -165,6 +166,7 @@ const Testator = () => {
                     <button>+ Add child</button>
                 </section>
             </div>
+            <OrderNavigation/>
         </>
     );
 }
