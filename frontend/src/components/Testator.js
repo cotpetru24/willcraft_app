@@ -1,27 +1,65 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import "flag-icon-css/css/flag-icons.min.css";
 import CountrySelect from "./CountrySelect";
 import ProgressBar from "./ProgressBar";
-
-
+import { useDispatch, useSelector } from "react-redux";
+import { createOrder, updateOrder, updateTestator } from "../features/order/orderSlice";
 
 const Testator = () => {
+    const dispatch = useDispatch();
+    const order = useSelector(state => state.order.entities.order);
+    const user = useSelector(state => state.auth.user);
+    const people = useSelector(state => state.order.entities.people);
+
+    const [testator, setTestator] = useState({ firstName: '', lastName: '', role: 'testator' });
     const [countryPhoneCode, setPhone] = useState(""); // Initialize the phone state here
+
+    useEffect(() => {
+        if (people.testator) {
+            setTestator(people.testator);
+        }
+    }, [people]);
+
+    const handleCreateOrder = () => {
+        if (user) {
+            dispatch(createOrder({ userId: user.id, testator }));
+        }
+    };
+
+    const handleUpdateOrder = (updateData) => {
+        if (order.id) {
+            dispatch(updateOrder({ orderId: order.id, orderData: { ...updateData, testator } }));
+        }
+    };
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        const updatedTestator = { ...testator, [name]: value };
+        setTestator(updatedTestator);
+        dispatch(updateTestator(updatedTestator));
+    };
 
     return (
         <>
-        <ProgressBar/>
+            <ProgressBar />
             <div className="section-container">
                 <section className="creating-order-heading">
                     <h1>Personal information</h1>
                 </section>
                 <section className="form">
-                    <form action="/submit" method="post">
+                    <form>
                         <div className="form-group">
                             <label htmlFor="firstName">First Name</label>
-                            <input type="text" id="firstName" name="firstName" required />
+                            <input
+                                type="text"
+                                id="firstName"
+                                name="firstName"
+                                value={testator.firstName}
+                                onChange={handleInputChange}
+                                required
+                            />
                         </div>
 
                         <div className="form-group">
@@ -31,7 +69,14 @@ const Testator = () => {
 
                         <div className="form-group">
                             <label htmlFor="lastName">Last Name</label>
-                            <input type="text" id="lastName" name="lastName" required />
+                            <input
+                                type="text"
+                                id="lastName"
+                                name="lastName"
+                                value={testator.lastName}
+                                onChange={handleInputChange}
+                                required
+                            />
                         </div>
 
                         <div className="form-group">
@@ -79,7 +124,6 @@ const Testator = () => {
                                         required: true,
                                         autoFocus: false
                                     }}
-
                                 />
                                 <input type="tel" id="tel" name="tel" required /><br />
                             </div>
@@ -108,13 +152,14 @@ const Testator = () => {
                                 <label htmlFor="single">Single</label>
                             </div>
                         </div>
+                        <button type="button" onClick={handleCreateOrder}>Create Order</button>
+                        <button type="button" onClick={() => handleUpdateOrder({ status: 'creatingOrder', people: [testator], assets: [] })}>Save</button>
                     </form>
                 </section>
 
                 <section className="form spouse-form-container">
                     <button>+ Add spouse or partner</button>
                 </section>
-
 
                 <section className="form children-form-container">
                     <button>+ Add child</button>
