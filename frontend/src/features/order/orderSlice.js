@@ -38,24 +38,25 @@ export const fetchOrderById = createAsyncThunk('order/fetchOrderById', async (or
 
 export const createOrder = createAsyncThunk('order/createOrder', async (testatorData, thunkApi) => {
     try {
-        const response = await orderService.createOrder(testatorData);
-        return response;
+      const response = await orderService.createOrder(testatorData);
+      return response.data; // Ensure you return the data
     } catch (error) {
-        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-        return thunkApi.rejectWithValue(message);
+      const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+      return thunkApi.rejectWithValue(message);
     }
-});
-
-export const updateOrder = createAsyncThunk('order/updateOrder', async ({ orderId, orderData }, thunkApi) => {
-    try {
-        const response = await orderService.updateOrder(orderId, orderData);
-        return response;
-    } catch (error) {
-        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-        return thunkApi.rejectWithValue(message);
-    }
-});
-
+  });
+  
+  export const updateOrder = createAsyncThunk('order/updateOrder', async ({ orderId, orderData }, thunkApi) => {
+    reset.status(200).json({message:'update order called'})
+    
+    // try {
+    //   const response = await orderService.updateOrder(orderId, orderData);
+    //   return response.data; // Ensure you return the data
+    // } catch (error) {
+    //   const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    //   return thunkApi.rejectWithValue(message);
+    // }
+  });
 const initialState = {
     entities: {
         people: {},
