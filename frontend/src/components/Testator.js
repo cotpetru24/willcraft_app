@@ -51,6 +51,7 @@ const Testator = ({ onNext }) => {
 
 
 
+
 const handleCountryChange = (country) => {
     const updatedTestator = { ...testator, country };
     setTestator(updatedTestator);
@@ -156,7 +157,7 @@ const handleCountryChange = (country) => {
                 name="country"
                 value={testator.country}
                 // onChange={(country) => handleInputChange({ target: { name: 'country', value: country } })}
-                onChange={handleCountryChange}
+                onChange={handleCountryChange} 
               />
             </div>
 

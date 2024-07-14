@@ -3,8 +3,7 @@ import Select from 'react-select';
 import countryList from 'react-select-country-list';
 import '../index.css'; // Import the custom CSS file
 
-const CountrySelect = () => {
-  const [value, setValue] = useState(null);
+const CountrySelect = ({ value, onChange }) => {
   const options = countryList().getData();
 
   const formatOptionLabel = ({ label, value, ...rest }) => (
@@ -21,8 +20,8 @@ const CountrySelect = () => {
   return (
     <Select
       options={options}
-      value={value}
-      onChange={setValue}
+      value={options.find(option => option.value === value)}
+      onChange={(selectedOption) => onChange(selectedOption.label)}
       classNamePrefix="country-select"
       formatOptionLabel={formatOptionLabel}
     />
