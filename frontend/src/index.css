@@ -642,6 +642,10 @@ h1 {
 
 }
 
+.react-tel-input .country-list{
+  height: 200px;
+}
+
 .tel-group #tel {
   width: 295px;
 }
