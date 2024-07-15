@@ -930,3 +930,31 @@ h2 {
   cursor: pointer;
   transition: 0.1s;
 }
+
+/* 
+.input-valid input {
+  color: darkgray;
+}
+
+.input-invalid input {
+  color: #f75c7b;
+} */
+
+
+.section-container .input-valid {
+  border: 1px solid darkgray;
+}
+
+.section-container .input-invalid {
+  border: 2px solid #f75c7b;
+}
+
+
+
+.input-valid .country-select__control .country-select__value-container {
+  border: 2px solid green;
+}
+
+.input-invalid .country-select__control .country-select__value-container {
+  border: 2px solid red;
+}

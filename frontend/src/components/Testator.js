@@ -57,7 +57,7 @@ const Testator = ({ onNext }) => {
 
 
     const handleCountryPhoneCodeChange = (value) => {
-        const updatedTestator = { ...testator, countryPhoneCode: '+'+value };
+        const updatedTestator = { ...testator, countryPhoneCode: '+' + value };
         setTestator(updatedTestator);
         dispatch(updateTestator(updatedTestator));
     };
@@ -70,6 +70,7 @@ const Testator = ({ onNext }) => {
         dispatch(updateTestator(updatedTestator));
     };
 
+    const isFieldValid = (field) => field && field.trim() !== '';
 
 
     return (
@@ -89,6 +90,7 @@ const Testator = ({ onNext }) => {
                                 value={testator.firstName}
                                 onChange={handleInputChange}
                                 required
+                                className={isFieldValid(testator.firstName) ? 'input-valid' : 'input-invalid'}
                             />
                         </div>
 
@@ -114,6 +116,8 @@ const Testator = ({ onNext }) => {
                                 value={testator.lastName}
                                 onChange={handleInputChange}
                                 required
+                                className={isFieldValid(testator.lastName) ? 'input-valid' : 'input-invalid'}
+
                             />
                         </div>
 
@@ -126,6 +130,8 @@ const Testator = ({ onNext }) => {
                                 value={testator.address1}
                                 onChange={handleInputChange}
                                 required
+                                className={isFieldValid(testator.address1) ? 'input-valid' : 'input-invalid'}
+
                             />
                         </div>
                         <div className="form-group">
@@ -136,6 +142,9 @@ const Testator = ({ onNext }) => {
                                 name="address2"
                                 value={testator.address2}
                                 onChange={handleInputChange}
+                                className={isFieldValid(testator.address2) ? 'input-valid' : 'input-invalid'}
+
+
                             />
                         </div>
                         <div className="address-group">
@@ -148,6 +157,8 @@ const Testator = ({ onNext }) => {
                                     value={testator.city}
                                     onChange={handleInputChange}
                                     required
+                                    className={isFieldValid(testator.city) ? 'input-valid' : 'input-invalid'}
+
                                 />
                             </div>
                             <div className="form-group postcode">
@@ -159,6 +170,8 @@ const Testator = ({ onNext }) => {
                                     value={testator.postcode}
                                     onChange={handleInputChange}
                                     required
+                                    className={isFieldValid(testator.postcode) ? 'input-valid' : 'input-invalid'}
+
                                 />
                             </div>
                         </div>
@@ -168,6 +181,8 @@ const Testator = ({ onNext }) => {
                                 name="country"
                                 value={testator.country}
                                 onChange={handleCountryChange}
+                                className={isFieldValid(testator.country) ? 'input-valid' : 'input-invalid'}
+
                             />
                         </div>
 
@@ -180,6 +195,8 @@ const Testator = ({ onNext }) => {
                                 value={testator.dob}
                                 onChange={handleInputChange}
                                 required
+                                className={isFieldValid(testator.postcode) ? 'input-valid' : 'input-invalid'}
+
                             /><br />
                         </div>
 
@@ -192,6 +209,8 @@ const Testator = ({ onNext }) => {
                                 value={testator.email}
                                 onChange={handleInputChange}
                                 required
+                                className={isFieldValid(testator.postcode) ? 'input-valid' : 'input-invalid'}
+
                             /><br />
                         </div>
 
@@ -209,6 +228,8 @@ const Testator = ({ onNext }) => {
                                         required: true,
                                         autoFocus: false
                                     }}
+                                    className={isFieldValid(testator.countryPhoneCode) ? 'input-valid' : 'input-invalid'}
+
                                 />
                                 <input
                                     type="tel"
@@ -217,6 +238,8 @@ const Testator = ({ onNext }) => {
                                     value={testator.tel}
                                     onChange={handleInputChange}
                                     required
+                                    className={isFieldValid(testator.tel) ? 'input-valid' : 'input-invalid'}
+
                                 /><br />
                             </div>
                         </div>
@@ -231,6 +254,8 @@ const Testator = ({ onNext }) => {
                                     value="male"
                                     checked={testator.gender === 'male'}
                                     onChange={handleInputChange}
+                                    className={isFieldValid(testator.postcode) ? 'input-valid' : 'input-invalid'}
+
                                 />
                                 <label htmlFor="male">Male</label>
                             </div>
@@ -257,6 +282,7 @@ const Testator = ({ onNext }) => {
                                     value="married"
                                     checked={testator.maritalStatus === 'married'}
                                     onChange={handleInputChange}
+                                    className={isFieldValid(testator.maritalStatus) ? 'input-valid' : 'input-invalid'}
                                 />
                                 <label htmlFor="married">Married</label>
                             </div>
