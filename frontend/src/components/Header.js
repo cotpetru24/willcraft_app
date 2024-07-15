@@ -35,7 +35,7 @@ const Header = () => {
         <header className='header'>
             <div>
                 <Link to='/'>
-                    <img src='/test.png' alt='WillCraft Logo' />
+                    <img src='/dhru_logo.png' alt='WillCraft Logo' />
                 </Link>
             </div>
             <div className='navigation-container'>
@@ -50,7 +50,7 @@ const Header = () => {
                             <>
                                 <li>
                                     <Link to='/aboutus'>
-                                        About us
+                                        About
                                     </Link>
                                 </li>
                                 <li>
@@ -74,7 +74,17 @@ const Header = () => {
                             <>
                                 <li>
                                     <Link to='/aboutus'>
-                                        About us
+                                        About
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to='/aboutus'>
+                                        Contact
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to='/aboutus'>
+                                        Pricing
                                     </Link>
                                 </li>
                                 <li>

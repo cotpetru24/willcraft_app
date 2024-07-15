@@ -19,6 +19,8 @@ import AboutUs from './components/AboutUs';
 import Dashboard from './components/Dashboard';
 import OrderNavigation from './components/OrderNavigation';
 import AddressAutocomplete from './components/AddressAutocomplete';
+import CreatingOrder from './components/CreatingOrder';
+import PersonForm from './components/PersonForm';
 
 function App() {
 
@@ -35,7 +37,7 @@ function App() {
             <Route path='/register' element={<Register />} />;
             <Route path='/testator' element={<Testator />} />;
             <Route path='/spouse' element={<Spouse />} />;
-            <Route path='/executor' element={<Executor />} />;
+            <Route path='/executors' element={<Executor />} />;
             <Route path='/assets' element={<Assets />} />;
             <Route path='/beneficiaries' element={<Beneficiaries />} />;
             <Route path='/assetDistribution' element={<AssetDistribution />} />;
@@ -43,7 +45,8 @@ function App() {
             <Route path='/progressBar' element={<ProgressBar />} />;
             <Route path='/aboutus' element={<AboutUs/>}/>;
             <Route path='/dashboard' element={<Dashboard/>}/>;
-            <Route path='/creatingOrder' element={<OrderNavigation/>}/>;
+            <Route path='/creatingOrder' element={<CreatingOrder/>}/>;
+            <Route path='/aboutYou' element={<PersonForm/>}/>;
           </Routes>
           <Footer />
         </div>
