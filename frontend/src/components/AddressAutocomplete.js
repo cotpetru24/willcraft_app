@@ -7,7 +7,7 @@ const AddressAutocomplete = ({ name, value, onPlaceSelected, handleInputChange }
   const inputRef = useRef(null);
 
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: 'api key here', // Replace with your API key
+    googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY, // Replace with your API key
     libraries,
   });
 
