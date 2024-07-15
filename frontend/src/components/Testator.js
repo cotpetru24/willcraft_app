@@ -5,8 +5,21 @@ import "flag-icon-css/css/flag-icons.min.css";
 import CountrySelect from "./CountrySelect";
 import { useDispatch, useSelector } from "react-redux";
 import { updateTestator } from "../features/order/orderSlice";
+import AddressAutocomplete from "./AddressAutocomplete";
+
+
+
 
 const Testator = ({ onNext }) => {
+
+
+
+    const handlePlaceSelected = (place) => {
+        console.log('Selected place: ', place);
+    };
+
+
+
     const dispatch = useDispatch();
     const people = useSelector(state => state.order.entities.people);
 
@@ -123,69 +136,8 @@ const Testator = ({ onNext }) => {
 
                         <div className="form-group">
                             <label htmlFor="address1">Address</label>
-                            <input
-                                type="text"
-                                id="address1"
-                                name="address1"
-                                value={testator.address1}
-                                onChange={handleInputChange}
-                                required
-                                className={isFieldValid(testator.address1) ? 'input-valid' : 'input-invalid'}
-
-                            />
+                            <AddressAutocomplete onPlaceSelected={handlePlaceSelected} />
                         </div>
-                        <div className="form-group">
-                            <label htmlFor="address2">Address 2:</label>
-                            <input
-                                type="text"
-                                id="address2"
-                                name="address2"
-                                value={testator.address2}
-                                onChange={handleInputChange}
-                                className={isFieldValid(testator.address2) ? 'input-valid' : 'input-invalid'}
-
-
-                            />
-                        </div>
-                        <div className="address-group">
-                            <div className="form-group">
-                                <label htmlFor="city">City</label>
-                                <input
-                                    type="text"
-                                    id="city"
-                                    name="city"
-                                    value={testator.city}
-                                    onChange={handleInputChange}
-                                    required
-                                    className={isFieldValid(testator.city) ? 'input-valid' : 'input-invalid'}
-
-                                />
-                            </div>
-                            <div className="form-group postcode">
-                                <label htmlFor="postcode">Postcode</label>
-                                <input
-                                    type="text"
-                                    id="postcode"
-                                    name="postcode"
-                                    value={testator.postcode}
-                                    onChange={handleInputChange}
-                                    required
-                                    className={isFieldValid(testator.postcode) ? 'input-valid' : 'input-invalid'}
-
-                                />
-                            </div>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="country">Country</label>
-                            <CountrySelect
-                                name="country"
-                                value={testator.country}
-                                onChange={handleCountryChange}
-                                className={isFieldValid(testator.country) ? 'input-valid' : 'input-invalid'}
-
-                            />
-                        </div>
-
                         <div className="form-group">
                             <label htmlFor="dob">Date of Birth</label>
                             <input
@@ -206,42 +158,29 @@ const Testator = ({ onNext }) => {
                                 type="email"
                                 id="email"
                                 name="email"
+                                placeholder="Optional"
+
                                 value={testator.email}
                                 onChange={handleInputChange}
                                 required
-                                className={isFieldValid(testator.postcode) ? 'input-valid' : 'input-invalid'}
 
                             /><br />
                         </div>
 
                         <div className="form-group">
                             <label htmlFor="tel">Phone Number</label>
-                            <div className="tel-group">
-                                <PhoneInput
-                                    // country={'gb'}
-                                    placeholder=""
-                                    name='countryPhoneCode'
-                                    value={countryPhoneCode}
-                                    onChange={(value) => handleCountryPhoneCodeChange(value)}
-                                    inputProps={{
-                                        name: 'countryPhoneCode',
-                                        required: true,
-                                        autoFocus: false
-                                    }}
-                                    className={isFieldValid(testator.countryPhoneCode) ? 'input-valid' : 'input-invalid'}
 
-                                />
                                 <input
                                     type="tel"
                                     id="tel"
                                     name="tel"
+                                    placeholder="Optional"
+
                                     value={testator.tel}
                                     onChange={handleInputChange}
                                     required
-                                    className={isFieldValid(testator.tel) ? 'input-valid' : 'input-invalid'}
 
                                 /><br />
-                            </div>
                         </div>
 
                         <div className="form-group">

@@ -1,3 +1,4 @@
+import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './components/Home';
 import Login from './components/Login';
@@ -17,8 +18,11 @@ import ProgressBar from './components/ProgressBar';
 import AboutUs from './components/AboutUs';
 import Dashboard from './components/Dashboard';
 import OrderNavigation from './components/OrderNavigation';
+import AddressAutocomplete from './components/AddressAutocomplete';
 
 function App() {
+
+
   return (
     <>
       <Router>
@@ -39,8 +43,7 @@ function App() {
             <Route path='/progressBar' element={<ProgressBar />} />;
             <Route path='/aboutus' element={<AboutUs/>}/>;
             <Route path='/dashboard' element={<Dashboard/>}/>;
-            <Route path='/creatingOrder' element={<OrderNavigation/>}/>
-            
+            <Route path='/creatingOrder' element={<OrderNavigation/>}/>;
           </Routes>
           <Footer />
         </div>

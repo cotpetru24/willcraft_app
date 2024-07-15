@@ -5,7 +5,6 @@ import CountrySelect from "./CountrySelect";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import "flag-icon-css/css/flag-icons.min.css";
-import OrderNavigation from "./OrderNavigation";
 
 
 

@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import OrderNavigation from "./OrderNavigation";
 
 export const OrderProgressBar = ({ currentValue, maxValue }) => (
     <>
