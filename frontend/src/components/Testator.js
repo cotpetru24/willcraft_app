@@ -27,15 +27,10 @@ const Testator = ({ onNext }) => {
         firstName: '',
         lastName: '',
         middleName: '',
-        address1: '',
-        address2: '',
-        city: '',
-        postcode: '',
-        country: '',
+        address: '',
         dob: '',
         email: '',
         tel: '',
-        countryPhoneCode: '',
         gender: '',
         maritalStatus: '',
         role: 'testator'
@@ -137,8 +132,8 @@ const Testator = ({ onNext }) => {
                         <div className="form-group">
                             <label htmlFor="address">Address</label>
                             <AddressAutocomplete
-                                name="address1"
-                                value={testator.address1}
+                                name="address"
+                                value={testator.address}
                                 handleInputChange={handleInputChange}
                                 onPlaceSelected={handlePlaceSelected}
                             />

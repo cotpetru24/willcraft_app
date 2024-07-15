@@ -3,7 +3,7 @@ import { useLoadScript } from '@react-google-maps/api';
 
 const libraries = ['places'];
 
-const AddressAutocomplete = ({ onPlaceSelected }) => {
+const AddressAutocomplete = ({ name, value, onPlaceSelected, handleInputChange }) => {
   const inputRef = useRef(null);
 
   const { isLoaded, loadError } = useLoadScript({
@@ -21,9 +21,15 @@ const AddressAutocomplete = ({ onPlaceSelected }) => {
       autocomplete.addListener('place_changed', () => {
         const place = autocomplete.getPlace();
         onPlaceSelected(place);
+        handleInputChange({
+          target: {
+            name,
+            value: place.formatted_address,
+          },
+        });
       });
     }
-  }, [isLoaded, loadError, onPlaceSelected]);
+  }, [isLoaded, loadError, onPlaceSelected, handleInputChange, name]);
 
   if (loadError) {
     return <div>Error loading maps</div>;
@@ -33,6 +39,9 @@ const AddressAutocomplete = ({ onPlaceSelected }) => {
     <input
       type="text"
       ref={inputRef}
+      name={name}
+      value={value}
+      onChange={handleInputChange}
       placeholder="Enter a UK address"
       style={{ width: '100%', padding: '10px' }}
     />
