@@ -24,9 +24,7 @@ const Testator = ({ onNext }) => {
     const people = useSelector(state => state.order.entities.people);
 
     const [testator, setTestator] = useState({
-        firstName: '',
-        lastName: '',
-        middleName: '',
+        fullName: '',
         address: '',
         dob: '',
         email: '',
@@ -51,33 +49,6 @@ const Testator = ({ onNext }) => {
         dispatch(updateTestator(updatedTestator));
     };
 
-    //   const handlePhoneChange = (phone) => {
-    //     setPhone(phone);
-    //     const updatedTestator = { ...testator, tel: phone };
-    //     setTestator(updatedTestator);
-    //     dispatch(updateTestator(updatedTestator));
-    //   };
-    //   const handlePhoneChange = (value, countryData) => {
-    //     const updatedTestator = { ...testator, tel: value, countryPhoneCode: countryData.dialCode };
-    //     setTestator(updatedTestator);
-    //     dispatch(updateTestator(updatedTestator));
-    //   };
-
-
-    const handleCountryPhoneCodeChange = (value) => {
-        const updatedTestator = { ...testator, countryPhoneCode: '+' + value };
-        setTestator(updatedTestator);
-        dispatch(updateTestator(updatedTestator));
-    };
-
-
-
-    const handleCountryChange = (country) => {
-        const updatedTestator = { ...testator, country };
-        setTestator(updatedTestator);
-        dispatch(updateTestator(updatedTestator));
-    };
-
     const isFieldValid = (field) => field && field.trim() !== '';
 
 
@@ -90,47 +61,20 @@ const Testator = ({ onNext }) => {
                 <section className="form">
                     <form>
                         <div className="form-group">
-                            <label htmlFor="firstName">First Name</label>
+                            <label htmlFor="fullName">Full legal name</label>
                             <input
                                 type="text"
-                                id="firstName"
-                                name="firstName"
-                                value={testator.firstName}
+                                id="fullName"
+                                name="fullName"
+                                value={testator.fullName}
                                 onChange={handleInputChange}
                                 required
-                                className={isFieldValid(testator.firstName) ? 'input-valid' : 'input-invalid'}
+                                className={isFieldValid(testator.fullName) ? 'input-valid' : 'input-invalid'}
                             />
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="middleName">Middle Name</label>
-                            <input
-                                type="text"
-                                id="middleName"
-                                name="middleName"
-                                placeholder="Optional"
-                                value={testator.middleName}
-                                onChange={handleInputChange}
-                                required
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="lastName">Last Name</label>
-                            <input
-                                type="text"
-                                id="lastName"
-                                name="lastName"
-                                value={testator.lastName}
-                                onChange={handleInputChange}
-                                required
-                                className={isFieldValid(testator.lastName) ? 'input-valid' : 'input-invalid'}
-
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="address">Address</label>
+                            <label htmlFor="address">Full address</label>
                             <AddressAutocomplete
                                 name="address"
                                 value={testator.address}
@@ -153,13 +97,11 @@ const Testator = ({ onNext }) => {
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="email">Email</label>
+                            <label htmlFor="email">Email (optional)</label>
                             <input
                                 type="email"
                                 id="email"
                                 name="email"
-                                placeholder="Optional"
-
                                 value={testator.email}
                                 onChange={handleInputChange}
                                 required
@@ -168,14 +110,12 @@ const Testator = ({ onNext }) => {
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="tel">Phone Number</label>
+                            <label htmlFor="tel">Phone Number (optional)</label>
 
                             <input
                                 type="tel"
                                 id="tel"
                                 name="tel"
-                                placeholder="Optional"
-
                                 value={testator.tel}
                                 onChange={handleInputChange}
                                 required
