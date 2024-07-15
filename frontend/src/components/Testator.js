@@ -135,8 +135,13 @@ const Testator = ({ onNext }) => {
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="address1">Address</label>
-                            <AddressAutocomplete onPlaceSelected={handlePlaceSelected} />
+                            <label htmlFor="address">Address</label>
+                            <AddressAutocomplete
+                                name="address1"
+                                value={testator.address1}
+                                handleInputChange={handleInputChange}
+                                onPlaceSelected={handlePlaceSelected}
+                            />
                         </div>
                         <div className="form-group">
                             <label htmlFor="dob">Date of Birth</label>
@@ -170,17 +175,17 @@ const Testator = ({ onNext }) => {
                         <div className="form-group">
                             <label htmlFor="tel">Phone Number</label>
 
-                                <input
-                                    type="tel"
-                                    id="tel"
-                                    name="tel"
-                                    placeholder="Optional"
+                            <input
+                                type="tel"
+                                id="tel"
+                                name="tel"
+                                placeholder="Optional"
 
-                                    value={testator.tel}
-                                    onChange={handleInputChange}
-                                    required
+                                value={testator.tel}
+                                onChange={handleInputChange}
+                                required
 
-                                /><br />
+                            /><br />
                         </div>
 
                         <div className="form-group">
