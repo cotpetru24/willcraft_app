@@ -7,7 +7,7 @@ const AddressAutocomplete = ({ name, value, onPlaceSelected, handleInputChange }
   const inputRef = useRef(null);
 
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY, // Replace with your API key
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY, // Replace with your API key
     libraries,
   });
 
@@ -21,15 +21,9 @@ const AddressAutocomplete = ({ name, value, onPlaceSelected, handleInputChange }
       autocomplete.addListener('place_changed', () => {
         const place = autocomplete.getPlace();
         onPlaceSelected(place);
-        handleInputChange({
-          target: {
-            name,
-            value: place.formatted_address,
-          },
-        });
       });
     }
-  }, [isLoaded, loadError, onPlaceSelected, handleInputChange, name]);
+  }, [isLoaded, loadError, onPlaceSelected]);
 
   if (loadError) {
     return <div>Error loading maps</div>;

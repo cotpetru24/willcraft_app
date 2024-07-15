@@ -20,6 +20,7 @@
     "normalizer": "^1.2.7",
     "normalizr": "^3.6.2",
     "react": "^18.3.1",
+    "react-date-picker": "^11.0.0",
     "react-dom": "^18.3.1",
     "react-icons": "^5.2.1",
     "react-phone-input-2": "^2.15.1",

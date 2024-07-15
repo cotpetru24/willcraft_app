@@ -418,8 +418,16 @@ h1 {
   border: solid 1px darkgray;
   border-radius: 3px;
   height: 40px;
-  width: 400px;
+  width: 400px !important;
   padding-left: 10px;
+}
+
+.date-input {
+  /* border: solid 1px darkgray;
+  border-radius: 3px; */
+  height: 40px;
+  width: 400px !important;
+  /* padding-left: 10px; */
 }
 
 .form-group button {
@@ -958,3 +966,76 @@ h2 {
 .input-invalid .country-select__control .country-select__value-container {
   border: 2px solid red;
 }
+
+
+
+
+
+.date-input {
+  display: flex;
+  gap: 10px;
+}
+
+.date-input-field {
+  width: 50px;
+  padding: 5px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Remove arrows from number inputs */
+.date-input-field::-webkit-outer-spin-button,
+.date-input-field::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.date-input-field {
+  -moz-appearance: textfield; /* Firefox */
+}
+
+.date-input-field::placeholder {
+  color: #bbb;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+
+.title-and-fullName-container{
+  display: flex;
+  flex-direction: row;
+  width: 400px;
+}
+
+.date-group  #title{
+  width: 70px;
+  border: solid 1px darkgray;
+  border-radius: 3px;
+  height: 40px;
+  padding-left: 10px;
+  margin-right: 10px;
+}
+
+
+
+.date-group  #fullLegalName{
+  width: 320px;
+  border: solid 1px darkgray;
+  border-radius: 3px;
+  height: 40px;
+  padding-left: 10px;
+}
+
+
+
+.date-group label {
+  display: flex;
+  font-weight: bolder;
+  margin-bottom: 3px;
+}
+

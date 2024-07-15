@@ -6,6 +6,7 @@ import CountrySelect from "./CountrySelect";
 import { useDispatch, useSelector } from "react-redux";
 import { updateTestator } from "../features/order/orderSlice";
 import AddressAutocomplete from "./AddressAutocomplete";
+import PersonForm from "./PersonForm";
 
 
 
@@ -187,6 +188,7 @@ const Testator = ({ onNext }) => {
                 <section className="form children-form-container">
                     <button>+ Add child</button>
                 </section>
+                <PersonForm/>
             </div>
         </>
     );
