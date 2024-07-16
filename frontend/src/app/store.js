@@ -7,7 +7,7 @@ import assetsReducer from '../features/orderAssets/orderAssetsSlice'
 export const store = configureStore({
   reducer: {
     order: orderReducer,
-    // people: peopleReducer,
+    people: peopleReducer,
     // assets: assetsReducer,
     auth: authReducer,  
   }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AddressAutocomplete from "./AddressAutocomplete";
 import DateInput from "./DateInput";
+import {reset} from "../features/people/peopleSlice";
 
 const PersonForm = ({ role }) => {
     const dispatch = useDispatch();
@@ -54,7 +55,6 @@ const PersonForm = ({ role }) => {
                                 value={person.title}
                                 onChange={handleInputChange}
                                 required
-                                // className="date-input-field"
                             >
                                 {titles.map(title => (
                                     <option key={title} value={title}>
