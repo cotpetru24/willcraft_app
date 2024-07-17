@@ -21,6 +21,7 @@ import OrderNavigation from './components/OrderNavigation';
 import AddressAutocomplete from './components/AddressAutocomplete';
 import CreatingOrder from './components/CreatingOrder';
 import PersonForm from './components/PersonForm';
+import AssetForm from './components/AssetForm';
 
 function App() {
 
@@ -38,7 +39,6 @@ function App() {
             <Route path='/testator' element={<Testator />} />;
             <Route path='/spouse' element={<Spouse />} />;
             <Route path='/executors' element={<Executor />} />;
-            <Route path='/assets' element={<Assets />} />;
             <Route path='/beneficiaries' element={<Beneficiaries />} />;
             <Route path='/assetDistribution' element={<AssetDistribution />} />;
             <Route path='/orderReview' element={<OrderReview />} />;
@@ -47,6 +47,7 @@ function App() {
             <Route path='/dashboard' element={<Dashboard/>}/>;
             <Route path='/creatingOrder' element={<CreatingOrder/>}/>;
             <Route path='/aboutYou' element={<PersonForm/>}/>;
+            <Route path='/assets' element={<AssetForm/>}/>
           </Routes>
           <Footer />
         </div>

@@ -2,40 +2,40 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AddressAutocomplete from "./AddressAutocomplete";
 import DateInput from "./DateInput";
-import {reset} from "../features/people/peopleSlice";
+import { reset } from "../features/people/peopleSlice";
 
-const PersonForm = ({ role }) => {
+const AssetForm = ({ type, role }) => {
     const dispatch = useDispatch();
-    const people = useSelector(state => state.order.entities.people);
+    const orderAssets = useSelector(state => state.order.entities.asset);
 
-    const [person, setPerson] = useState({
+    const [orderAsset, setOrderAsset] = useState({
         title: '',
         fullLegalName: '',
         fullAddress: '',
         dob: '',
         email: '',
         tel: '',
-        role
+        role: ''
     });
 
-    useEffect(() => {
-        const personData = Object.values(people).find(p => p.role === role);
-        if (personData) {
-            setPerson(personData);
-        }
-    }, [people, role]);
+    // useEffect(() => {
+    //     const assetData = orderAssets.find(p => p.role === role);
+    //     if (assetData) {
+    //         setOrderAsset(assetData);
+    //     }
+    // }, [orderAssets, role]);
 
     const handlePlaceSelected = (place) => {
-        setPerson({
-            ...person,
+        setOrderAsset({
+            ...orderAsset,
             fullAddress: place.formatted_address
         });
     };
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setPerson({
-            ...person,
+        setOrderAsset({
+            ...orderAsset,
             [name]: value
         });
     };
@@ -47,12 +47,13 @@ const PersonForm = ({ role }) => {
             <section className="form person-form">
                 <form>
                     <div className="title-and-fullName-container">
+                        <p>asset type</p>
                         <div className="date-group">
                             <label htmlFor="title">Title</label>
                             <select
                                 id="title"
                                 name="title"
-                                value={person.title}
+                                value={orderAsset.title}
                                 onChange={handleInputChange}
                                 required
                             >
@@ -69,7 +70,7 @@ const PersonForm = ({ role }) => {
                                 type="text"
                                 id="fullLegalName"
                                 name="fullLegalName"
-                                value={person.fullLegalName}
+                                value={orderAsset.fullLegalName}
                                 onChange={handleInputChange}
                                 required
                             />
@@ -79,7 +80,7 @@ const PersonForm = ({ role }) => {
                         <label htmlFor="fullAddress">Full address</label>
                         <AddressAutocomplete
                             name="fullAddress"
-                            value={person.fullAddress}
+                            value={orderAsset.fullAddress}
                             onPlaceSelected={handlePlaceSelected}
                             handleInputChange={handleInputChange}
                         />
@@ -87,7 +88,8 @@ const PersonForm = ({ role }) => {
                     <div className="form-group">
                         <label htmlFor="dob">Date of Birth</label>
                         <DateInput
-                            value={person.dob}
+                            name="dob"
+                            value={orderAsset.dob}
                             onChange={handleInputChange}
                         />
                     </div>
@@ -97,9 +99,8 @@ const PersonForm = ({ role }) => {
                             type="email"
                             id="email"
                             name="email"
-                            value={person.email}
+                            value={orderAsset.email}
                             onChange={handleInputChange}
-                            required
                         />
                     </div>
                     <div className="form-group">
@@ -108,9 +109,8 @@ const PersonForm = ({ role }) => {
                             type="tel"
                             id="tel"
                             name="tel"
-                            value={person.tel}
+                            value={orderAsset.tel}
                             onChange={handleInputChange}
-                            required
                         />
                     </div>
                 </form>
@@ -119,4 +119,4 @@ const PersonForm = ({ role }) => {
     );
 }
 
-export default PersonForm;
+export default AssetForm;
