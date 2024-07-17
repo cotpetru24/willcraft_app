@@ -1,8 +1,13 @@
-const express = require('express');
-const session = require('express-session');
-const { errorHandler } = require('./middleware/errorMiddleware');
-const dotenv = require('dotenv').config();
-const connectDb = require('./connect/connect');
+import express from 'express';
+import session from 'express-session';
+import dotenv from 'dotenv';
+import { errorHandler } from './middleware/errorMiddleware.js';
+import connectDb from './connect/connect.js';
+import { peopleRoutes } from './routes/peopleRoutes.js';  // Named import
+import { userRoutes } from './routes/userRoutes.js';  // Named import
+
+dotenv.config();
+
 const port = process.env.PORT || 5000;
 
 connectDb();
@@ -14,19 +19,11 @@ app.use(express.urlencoded({ extended: false }));
 // Session Setup
 app.use(
     session({
-        // It holds the secret key for session
         secret: "hello",
-
-        // Forces the session to be saved
-        // back to the session store
         resave: true,
-
-        // Forces a session that is "uninitialized"
-        // to be saved to the store
         saveUninitialized: false,
         cookie: {
-            // Session expires after 1 min of inactivity.
-            maxAge: 60000 // Use maxAge instead of expires
+            maxAge: 60000
         }
     })
 );
@@ -42,8 +39,8 @@ app.use((req, res, next) => {
 });
 
 // Your existing routes
-app.use('/docs', require('./routes/docRoutes'));
-app.use('/users', require('./routes/userRoutes'));
+app.use('/users', userRoutes);
+app.use('/people', peopleRoutes);
 
 // Error handler middleware
 app.use(errorHandler);

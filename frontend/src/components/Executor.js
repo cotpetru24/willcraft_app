@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 import ProgressBar from "./ProgressBar";
-import CountrySelect from "./CountrySelect";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import "flag-icon-css/css/flag-icons.min.css";
@@ -78,10 +77,7 @@ const Executor = () => {
                                 <input type="text" id="postcode" name="postcode" required />
                             </div>
                         </div>
-                        <div className="form-group">
-                            <label htmlFor="country">Country</label>
-                            <CountrySelect />
-                        </div>
+
 
                         <div className="form-group">
                             <label htmlFor="dob">Date of Birth</label>

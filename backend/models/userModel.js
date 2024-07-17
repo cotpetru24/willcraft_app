@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose';
 
 const userSchema = mongoose.Schema(
     {
@@ -25,11 +25,13 @@ const userSchema = mongoose.Schema(
         },
         type: {
             type: String,
-            required: [true, ' Type is required'],
+            required: [true, 'Type is required'],
             default: 'user'
         }
     },
     { timestamps: true }
 );
 
-module.exports = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
+
+export default User;

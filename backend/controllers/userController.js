@@ -1,12 +1,12 @@
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
-const User = require('../models/userModel');
-const asyncHandler = require('express-async-handler');
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
+import User from '../models/userModel.js';
+import asyncHandler from 'express-async-handler';
 
-const registerUser = asyncHandler(async (req, res) => {
+export const registerUser = asyncHandler(async (req, res) => {
     const { firstName, lastName, email, password } = req.body;
 
-    if (!firstName || !lastName || !email ||  !password) {
+    if (!firstName || !lastName || !email || !password) {
         res.status(400);
         throw new Error('All fields are required');
     }
@@ -14,7 +14,7 @@ const registerUser = asyncHandler(async (req, res) => {
     const userExists = await User.findOne({ email });
     if (userExists) {
         res.status(400);
-        throw new Error('User Exists')
+        throw new Error('User Exists');
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -24,37 +24,28 @@ const registerUser = asyncHandler(async (req, res) => {
 
     if (user) {
         res.status(201).json({ _id: user.id, name: user.name, email: user.email, token: generateJWTtoken(user._id) });
-
-    }
-    else {
+    } else {
         res.status(400);
         throw new Error('Invalid user data');
     }
 });
 
-
-const loginUser = asyncHandler(async (req, res) => {
+export const loginUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
 
     if (user && (await bcrypt.compare(password, user.password))) {
         res.json({ _id: user.id, firstName: user.firstName, email: user.email, token: generateJWTtoken(user._id) });
-    }
-    else {
+    } else {
         res.status(400);
-        throw new Error('Invalid data')
-
+        throw new Error('Invalid data');
     }
 });
 
-
-const getCurrentUser = asyncHandler(async (req, res) => {
+export const getCurrentUser = asyncHandler(async (req, res) => {
     const { _id, name, email } = await User.findById(req.user.id);
-    res.status(200).json({ id: _id, name, email })
+    res.status(200).json({ id: _id, name, email });
 });
-
 
 const generateJWTtoken = id => jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '5d' });
-
-module.exports = { registerUser, loginUser, getCurrentUser };

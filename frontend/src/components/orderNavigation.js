@@ -3,10 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateCurrentStep, updateOrder } from '../features/order/orderSlice';
 import Testator from './Testator';
 import Executor from './Executor';
-import Assets from './Assets';
-import Beneficiaries from './Beneficiaries';
-import AssetDistribution from './AssetDistribution';
-import OrderReview from './OrderReview';
 import ProgressBar from './ProgressBar';
 
 const steps = [
@@ -46,16 +42,16 @@ const OrderNavigation = () => {
     switch (step) {
       case 0:
         return <Testator onNext={handleNext} />;
-      case 1:
-        return <Executor onNext={handleNext} />;
-      case 2:
-        return <Assets onNext={handleNext} />;
-      case 3:
-        return <Beneficiaries onNext={handleNext} />;
-      case 4:
-        return <AssetDistribution onNext={handleNext} />;
-      case 5:
-        return <OrderReview onNext={handleNext} />;
+      // case 1:
+      //   return <Executor onNext={handleNext} />;
+      // case 2:
+      //   return <Assets onNext={handleNext} />;
+      // case 3:
+      //   return <Beneficiaries onNext={handleNext} />;
+      // case 4:
+      //   return <AssetDistribution onNext={handleNext} />;
+      // case 5:
+      //   return <OrderReview onNext={handleNext} />;
       default:
         return <Testator onNext={handleNext} />;
     }

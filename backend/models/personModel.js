@@ -1,19 +1,18 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import mongoose from 'mongoose';
 
-const personSchema = mongoose.Schema(
+const personSchema = new mongoose.Schema(
     {
         title: {
             type: String,
-            required: [true, 'First name is required']
+            required: [true, 'Title is required']
         },
         fullLegalName: {
             type: String,
-            required: [true, 'Last name is required']
+            required: [true, 'Full legal name is required']
         },
         fullAddress: {
             type: String,
-            required: [true, 'Email is required']
+            required: [true, 'Full address is required']
         },
         dob: {
             type: Date,
@@ -29,4 +28,6 @@ const personSchema = mongoose.Schema(
     { timestamps: true }
 );
 
-module.exports = mongoose.model('Person', personSchema);
+const Person = mongoose.model('Person', personSchema);
+
+export default Person;

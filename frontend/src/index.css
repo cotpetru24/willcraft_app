@@ -1092,3 +1092,40 @@ flex-direction: column;
   border: 1px solid darkgray;
   margin-top: 5%;
 }
+
+
+
+.creatingOrder-section-navigation-container{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 20px;
+justify-content: space-between;
+}
+
+.creatingOrder-section-navigation-container button {
+  width: 150px;
+  background-color: #009688;
+  color: white;
+  height: 50px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+.creatingOrder-section-navigation-container button:hover {
+  background-color: #e0218a;
+  transition: 0.1s;
+  /* transform:rotateX(45deg); */
+  transform: scale(90%);
+  cursor: pointer;
+}
+
+.creatingOrder-section-heading-container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 20px;
+  padding-left: 20%;
+  border-bottom: 2px solid #594740;
+  margin-bottom: 30px;
+}

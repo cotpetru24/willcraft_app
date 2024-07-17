@@ -2,14 +2,34 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import peopleService from "./peopleService";
 
 const initialState = {
-    people: {},
+    people: [],
     isError: false,
     isSuccess: false,
     isLoading: false,
     message: ''
 };
 
-export const fetchPeople = createAsyncThunk('people/fetchPeople', async (_, thunkApi) => {
+
+
+export const createPerson = createAsyncThunk('people/create',
+    async (personData, thunkApi) => {
+        try {
+            const token = thunkApi.getState().auth.user.token;
+            return await peopleService.createPerson(personData, token);
+        }
+        catch (error) {
+            const message =
+                (error.response && error.response.data && error.response.data.message)
+                || error.message
+                || error.toString();
+            return thunkApi.rejectWithValue(message);
+        }
+    });
+
+
+
+
+export const getPerson = createAsyncThunk('people/fetchPeople', async (_, thunkApi) => {
     try {
         return await peopleService.fetchPeople();
     }
@@ -22,55 +42,26 @@ export const fetchPeople = createAsyncThunk('people/fetchPeople', async (_, thun
     }
 });
 
-export const storePerson = createAsyncThunk('people/storePerson', async (personData, thunkApi) => {
-    try {
-        return await peopleService.storePerson(personData);
-    }
-    catch (error) {
-        const message =
-            (error.response && error.response.data && error.response.data.message)
-            || error.message
-            || error.toString();
-        return thunkApi.rejectWithValue(message);
-    }
-});
+
 
 const peopleSlice = createSlice({
     name: 'people',
     initialState,
     reducers: {
-        reset: (state) => {
-            state.isLoading = false;
-            state.isSuccess = false;
-            state.isError = false;
-            state.message = '';
-        },
+        reset: state => initialState
     },
+
     extraReducers: (builder) => {
         builder
-            // .addCase(fetchPeople.pending, (state) => {
-            //     state.isLoading = true;
-            // })
-            // .addCase(fetchPeople.fulfilled, (state, action) => {
-            //     state.isLoading = false;
-            //     state.isSuccess = true;
-            //     state.people = { ...state.people, ...action.payload.entities.people };
-            // })
-            // .addCase(fetchPeople.rejected, (state, action) => {
-            //     state.isLoading = false;
-            //     state.isError = true;
-            //     state.message = action.payload;
-            // })
-            .addCase(storePerson.pending, (state) => {
+            .addCase(createPerson.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(storePerson.fulfilled, (state, action) => {
+            .addCase(createPerson.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
-                // Add the new person to the people state
-                state.people[action.payload.id] = action.payload;
+                state.people.push(action.payload)
             })
-            .addCase(storePerson.rejected, (state, action) => {
+            .addCase(createPerson.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;
