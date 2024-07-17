@@ -3,6 +3,20 @@ const Schema = mongoose.Schema;
 
 const orderSchema = new Schema(
     {
+        user: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+            required: [true, 'User ID is required']
+        },
+        status: {
+            type: String,
+            required: [true, 'Status is required'],
+            default: 'CreatingOrder'
+        },
+        payment: {
+            type: Schema.Types.ObjectId,
+            ref: 'Payment',
+        },
         peopleAndRoles: [
             {
                 personId: {
@@ -16,16 +30,28 @@ const orderSchema = new Schema(
                 }
             }
         ],
-        assets: {
-            type: Schema.Types.ObjectId,
-            ref: 'Assets',
-            required: [true, 'Asset ID is required']
-        },
-        user: {
-            type: Schema.Types.ObjectId,
-            ref: 'User',
-            required: [true, 'User ID is required']
-        }
+        assetsAndDistribution: [
+            {
+                assetId: {
+                    type: Schema.Types.ObjectId,
+                    ref: 'Asset',
+                    required: true
+                },
+                distribution: [
+                    {
+                        personid: {
+                            type: String,
+                            required: true
+                        },
+                        receivingAmount: {
+                            type: String,
+                            required: true
+                        }
+                    }
+                ]
+            }
+        ],
+
     },
     { timestamps: true }
 );
