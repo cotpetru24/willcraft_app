@@ -1,7 +1,4 @@
 import axios from "axios";
-import { normalize } from "normalizr";
-import { order } from "../../schemas/schemas";
-
 const API_URL = '/api/orders';
 
 const fetchOrders = async ()=>{
@@ -16,20 +13,45 @@ const fetchOrderById = async (orderId)=>{
     return normalizedData;
 }
 
-const createOrder = async (testatorData)=>{
-    const response = await axios.post(API_URL, {
-        ...testatorData,
-        status: 'creatingOrder'
-    })
-    const normalizedData = normalize(response.data, order);
-    return normalizedData;
-}
-
 const updateOrder = async (orderId, orderData) => {
     const response = await axios.put(`${API_URL}${orderId}`, orderData);
     const normalizedData =normalize(response.data, order);
     return normalizedData;
 }
+
+
+
+
+
+
+
+
+
+
+
+const createOrder = async (orderData, token)=>{
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.post(API_URL, orderData, config);
+    return response.data;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const orderService = {
     fetchOrders,
