@@ -13,7 +13,7 @@ const initialState = {
 
 
 
-export const createPerson = createAsyncThunk('people/create',
+export const createPerson = createAsyncThunk('api/people',
     async (personData, thunkApi) => {
     // Get the userId from the state
     const userId = thunkApi.getState().auth.user._id;
@@ -23,6 +23,13 @@ export const createPerson = createAsyncThunk('people/create',
         try {
             const token = thunkApi.getState().auth.user.token;
             return await peopleService.createPerson(updatedPersonData, token);
+
+
+            
+
+
+
+
         }
         catch (error) {
             const message =

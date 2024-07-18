@@ -231,7 +231,7 @@ import AddressAutocomplete from "./AddressAutocomplete";
 import DateInput from "./DateInput";
 
 const PersonForm = ({ role, formData, handleInputChange, handlePlaceSelected }) => {
-  const people = useSelector(state => state.order.entities.people);
+  const people = useSelector(state => state.people);
 
   useEffect(() => {
     const personData = Object.values(people).find(p => p.role === role);

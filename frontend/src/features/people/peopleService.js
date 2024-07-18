@@ -1,23 +1,15 @@
 import axios from "axios";
-const API_URL = '/people/create';
+const API_URL = '/api/people/';
 
 
 
 const createPerson = async (personData, token) => {
-
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
         }
     }
-
     const response = await axios.post(API_URL, personData, config);
-    
-    // if (response.data) {
-    //     const people = JSON.parse(localStorage.getItem('people')) || [];
-    //     people.push(response.data);
-    //     localStorage.setItem('people', JSON.stringify(people));
-    // }
     return response.data;
 }
 

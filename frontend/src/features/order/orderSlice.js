@@ -1,54 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import orderService from "./orderService";
-import { order } from "../../schemas/schemas";
+// import { Order } from "../../schemas/schemas";
 
-
-
-// export const saveOrderProgress = createAsyncThunk('order/saveOrderProgress', async ({ step, data }, thunkApi) => {
-//     try {
-//         // Save progress to the backend or local storage
-//         // Example: const response = await orderService.saveProgress(step, data);
-//         // return response;
-//         return { step, data };
-//     } catch (error) {
-//         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-//         return thunkApi.rejectWithValue(message);
-//     }
-// });
-
-// // Async thunks
-// export const fetchOrders = createAsyncThunk('order/fetchOrders', async (_, thunkApi) => {
-//     try {
-//         const response = await orderService.fetchOrders();
-//         return response;
-//     } catch (error) {
-//         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-//         return thunkApi.rejectWithValue(message);
-//     }
-// });
-
-// export const fetchOrderById = createAsyncThunk('order/fetchOrderById', async (orderId, thunkApi) => {
-//     try {
-//         const response = await orderService.fetchOrderById(orderId);
-//         return response;
-//     } catch (error) {
-//         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-//         return thunkApi.rejectWithValue(message);
-//     }
-// });
-
-
-// export const updateOrder = createAsyncThunk('order/updateOrder', async ({ orderId, orderData }, thunkApi) => {
-//     reset.status(200).json({ message: 'update order called' })
-
-//     // try {
-//     //   const response = await orderService.updateOrder(orderId, orderData);
-//     //   return response.data; // Ensure you return the data
-//     // } catch (error) {
-//     //   const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-//     //   return thunkApi.rejectWithValue(message);
-//     // }
-// });
 
 
 

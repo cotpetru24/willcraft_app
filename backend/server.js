@@ -39,8 +39,8 @@ app.use((req, res, next) => {
 });
 
 // Your existing routes
-app.use('/users', userRoutes);
-app.use('/people', peopleRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/people', peopleRoutes);
 
 // Error handler middleware
 app.use(errorHandler);
