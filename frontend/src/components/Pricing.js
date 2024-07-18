@@ -9,33 +9,33 @@ const Pricing = () => {
     <div className="pricing-component-container">
         <section className="price-container">
             <img src="./accept_terms.png"/>
-            <h4>
+            <h3 className="price-heading">
                 Wills
-            </h4>
-            <p>£20</p>
-            <p>each</p>
+            </h3>
+            <h2 className="price-price">£20</h2>
+            <h4 className="price-subheading">each</h4>
 
 
         </section>
 
         <section className="price-container">
             <img src="./printing_invoice.png"/>
-            <h4>
+            <h3 className="price-heading">
                 Printing
-            </h4>
-            <p>£5</p>
-            <p>per will</p>
+            </h3>
+            <h2 className="price-price">£5</h2>
+            <h4 className="price-subheading">per will</h4>
 
 
         </section>
 
         <section className="price-container">
             <img src="./storage.png"/>
-            <h4>
+            <h3 className="price-heading">
                 Storage
-            </h4>
-            <p>£25</p>
-            <p>per annum</p>
+            </h3>
+            <h2 className="price-price">£25</h2>
+            <h4 className="price-subheading">per annum</h4>
 
         </section>
 

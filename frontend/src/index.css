@@ -843,21 +843,6 @@ border: none;
 
 }
 
-.price-container{
-  margin-top: 30px;
-  margin-bottom: 30px;
-  width: 100%;
-  border: 4px solid #E5DFDC;
-  border-radius: 10px;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  background-color: #EFEBE9;
-  box-sizing: border-box;
-  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); */
-
-}
-
 .review-container p,
 h4 {
   margin-top: 10px;
@@ -870,6 +855,69 @@ h4 {
   -webkit-box-orient: vertical;
 
 }
+
+.pricing-component-container{
+  justify-content: center;
+  align-items: center;
+}
+
+.price-container{
+  margin-top: 30px;
+  margin-bottom: 30px;
+  width: 280px;
+  border: 4px solid #E5DFDC;
+  border-radius: 10px;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  background-color: #EFEBE9;
+  box-sizing: border-box;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); */
+  margin-left: auto;
+  margin-right: auto;
+
+  justify-content: center;
+  /* align-items: center; */
+}
+
+.price-price{
+color: #009688;
+font-size: 42px;
+font-weight: bolder;
+display: flex;
+flex-direction: column;
+width: 100%;
+text-align: center;
+padding-top: 10px;
+}
+
+.price-subheading{
+  color: #009688;
+  font-size: 20px;
+  font-weight: bolder;
+  display: flex;
+flex-direction: column;
+width: 100%;
+text-align: center;
+margin-top: 0px;
+
+  }
+
+
+  .price-heading {
+    color: #D98859;
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+flex-direction: column;
+width: 100%;
+text-align: center;
+
+
+    }
+
 
 .how-it-works-section {
   display: flex;
@@ -981,7 +1029,9 @@ h4 {
 
 
 
-.about-us-container h1, .how-it-works-section h1, .home-reviews-section h1 {
+.about-us-container h1, .how-it-works-section h1, .home-reviews-section h1,
+.pricing-section h1
+ {
   font-size: 32px;
   color: #BFA288;
   border-bottom: 5px solid #D98859;

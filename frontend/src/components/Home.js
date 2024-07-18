@@ -74,7 +74,7 @@ const Home = () => {
 <section>
     <AboutUs/>
 </section>
-<section>
+<section className="pricing-section">
 <h1><Link to="/">Pricing</Link></h1>
 
 <Pricing/>
