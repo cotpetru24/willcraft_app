@@ -75,6 +75,8 @@ const Home = () => {
     <AboutUs/>
 </section>
 <section>
+<h1><Link to="/">Pricing</Link></h1>
+
 <Pricing/>
 </section>
             <section className="home-reviews-section">
