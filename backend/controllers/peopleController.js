@@ -46,6 +46,7 @@ export const createPerson = asyncHandler(async (req, res) => {
         dob: req.body.dob,
         email: req.body.email,
         tel: req.body.tel,
+        userId:req.body.userId,
     });
 
     res.status(200).json(person);

@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 
+const {Schema} = mongoose;
+
 const personSchema = new mongoose.Schema(
     {
         title: {
@@ -23,7 +25,12 @@ const personSchema = new mongoose.Schema(
         },
         tel: {
             type: String,
-        }
+        },
+        userId: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+            required: [true, 'User ID is required']
+        },
     },
     { timestamps: true }
 );

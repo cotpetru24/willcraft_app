@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import peopleService from "./peopleService";
+import {useState} from '@reduxjs/toolkit'
+
 
 const initialState = {
     people: [],
@@ -13,9 +15,14 @@ const initialState = {
 
 export const createPerson = createAsyncThunk('people/create',
     async (personData, thunkApi) => {
+    // Get the userId from the state
+    const userId = thunkApi.getState().auth.user._id;
+
+    // Add userId to personData
+    const updatedPersonData = { ...personData, userId };
         try {
             const token = thunkApi.getState().auth.user.token;
-            return await peopleService.createPerson(personData, token);
+            return await peopleService.createPerson(updatedPersonData, token);
         }
         catch (error) {
             const message =
@@ -59,7 +66,9 @@ const peopleSlice = createSlice({
             .addCase(createPerson.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
-                state.people.push(action.payload)
+
+                const { _id, title, fullLegalName, fullAddress, dob, email, tel, userId } = action.payload;
+                state.people.push({ _id, title, fullLegalName, fullAddress, dob, email, tel, userId })
             })
             .addCase(createPerson.rejected, (state, action) => {
                 state.isLoading = false;
