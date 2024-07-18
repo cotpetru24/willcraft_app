@@ -1,10 +1,11 @@
 import express from 'express';
 // import { createPerson} from '../controllers/peopleController.js';
 import { protect } from '../middleware/authMiddleware.js';
+import { createOrder } from '../controllers/orderController.js';
 
 const router = express.Router();
 
-router.post('/create', protect, createPerson);
+router.post('/', protect, createOrder);
 // router.get('/',protect, getPerson);
 
 

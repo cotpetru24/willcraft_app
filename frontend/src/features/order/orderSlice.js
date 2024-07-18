@@ -6,22 +6,22 @@ import orderService from "./orderService";
 
 
 
-export const createOrder = createAsyncThunk('order/createOrder', 
+export const createOrder = createAsyncThunk('api/order',
     async (orderData, thunkApi) => {
-    // Get the userId from the state
-    const userId = thunkApi.getState().auth.user._id;
+        // Get the userId from the state
+        const userId = thunkApi.getState().auth.user._id;
 
-    const updatedOrderData = { ...orderData, userId };
-    try {
-        const token = thunkApi.getState().auth.user.token;
-        const response = await orderService.createOrder(orderData);
-        return await orderService.createOrder(updatedOrderData, token);
+        const updatedOrderData = { ...orderData, userId };
+        try {
+            const token = thunkApi.getState().auth.user.token;
+            // const response = await orderService.createOrder(orderData);
+            return await orderService.createOrder(updatedOrderData, token);
 
-    } catch (error) {
-        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-        return thunkApi.rejectWithValue(message);
-    }
-});
+        } catch (error) {
+            const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+            return thunkApi.rejectWithValue(message);
+        }
+    });
 
 
 
@@ -83,75 +83,6 @@ const orderSlice = createSlice({
                 state.isError = true;
                 state.message = action.payload;
             })
-        // .addCase(updateOrder.pending, (state) => {
-        //     state.isLoading = true;
-        // })
-        // .addCase(updateOrder.fulfilled, (state, action) => {
-        //     state.isLoading = false;
-        //     state.isSuccess = true;
-        //     state.entities = {
-        //         ...state.entities,
-        //         order: action.payload.result,
-        //         people: action.payload.entities.people,
-        //         assets: action.payload.entities.assets,
-        //     };
-        // })
-        // .addCase(updateOrder.rejected, (state, action) => {
-        //     state.isLoading = false;
-        //     state.isError = true;
-        //     state.message = action.payload;
-        // })
-        // .addCase(fetchOrderById.pending, (state) => {
-        //     state.isLoading = true;
-        // })
-        // .addCase(fetchOrderById.fulfilled, (state, action) => {
-        //     state.isLoading = false;
-        //     state.isSuccess = true;
-        //     state.entities = {
-        //         ...state.entities,
-        //         order: action.payload.result,
-        //         people: action.payload.entities.people,
-        //         assets: action.payload.entities.assets,
-        //     };
-        // })
-        // .addCase(fetchOrderById.rejected, (state, action) => {
-        //     state.isLoading = false;
-        //     state.isError = true;
-        //     state.message = action.payload;
-        // })
-        // .addCase(fetchOrders.pending, (state) => {
-        //     state.isLoading = true;
-        // })
-        // .addCase(fetchOrders.fulfilled, (state, action) => {
-        //     state.isLoading = false;
-        //     state.isSuccess = true;
-        //     state.entities = {
-        //         ...state.entities,
-        //         order: action.payload.result,
-        //         people: action.payload.entities.people,
-        //         assets: action.payload.entities.assets,
-        //     };
-        // })
-        // .addCase(fetchOrders.rejected, (state, action) => {
-        //     state.isLoading = false;
-        //     state.isError = true;
-        //     state.message = action.payload;
-        // })
-        // .addCase(saveOrderProgress.pending, (state) => {
-        //     state.isLoading = true;
-        // })
-        // .addCase(saveOrderProgress.fulfilled, (state, action) => {
-        //     state.isLoading = false;
-        //     state.isSuccess = true;
-        //     // Save progress to the state
-        //     state.currentStep = action.payload.step;
-        //     state.formData = action.payload.data;
-        // })
-        // .addCase(saveOrderProgress.rejected, (state, action) => {
-        //     state.isLoading = false;
-        //     state.isError = true;
-        //     state.message = action.payload;
-        // });
     },
 });
 

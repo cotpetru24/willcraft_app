@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_URL = '/api/orders';
+const API_URL = '/api/order/';
 
 // const fetchOrders = async ()=>{
 //     const response = await axios.get(API_URL);

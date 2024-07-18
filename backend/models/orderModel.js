@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
 
-const { Schema } = mongoose.Schema;
+const { Schema } = mongoose;
 
 const orderSchema = new mongoose.Schema(
     {
-        user: {
+        userId: {
             type: Schema.Types.ObjectId,
             ref: 'User',
             required: [true, 'User ID is required']
@@ -14,10 +14,6 @@ const orderSchema = new mongoose.Schema(
             required: [true, 'Status is required'],
             default: 'CreatingOrder'
         },
-        // payment: {
-        //     type: Schema.Types.ObjectId,
-        //     ref: 'Payment',
-        // },
         peopleAndRoles: [
             {
                 personId: {
@@ -26,7 +22,7 @@ const orderSchema = new mongoose.Schema(
                     required: true
                 },
                 role: {
-                    type: String,
+                    type: [String],
                     required: true
                 }
             }
@@ -36,17 +32,17 @@ const orderSchema = new mongoose.Schema(
                 assetId: {
                     type: Schema.Types.ObjectId,
                     ref: 'Asset',
-                    required: true
+                    // required: true
                 },
                 distribution: [
                     {
                         personid: {
                             type: String,
-                            required: true
+                            // required: true
                         },
                         receivingAmount: {
                             type: String,
-                            required: true
+                            // required: true
                         }
                     }
                 ]

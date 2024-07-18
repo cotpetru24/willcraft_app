@@ -5,6 +5,7 @@ import { errorHandler } from './middleware/errorMiddleware.js';
 import connectDb from './connect/connect.js';
 import { peopleRoutes } from './routes/peopleRoutes.js';  // Named import
 import { userRoutes } from './routes/userRoutes.js';  // Named import
+import { orderRoutes } from './routes/orderRoutes.js';
 
 dotenv.config();
 
@@ -41,6 +42,7 @@ app.use((req, res, next) => {
 // Your existing routes
 app.use('/api/users', userRoutes);
 app.use('/api/people', peopleRoutes);
+app.use('/api/order', orderRoutes);
 
 // Error handler middleware
 app.use(errorHandler);
