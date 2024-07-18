@@ -89,7 +89,9 @@ const Header = () => {
                                 </li>
                                 <li>
                                     <Link to='/login'>
-                                        Login
+                                        <button id='login-btn'>
+                                            Login
+                                        </button>
                                     </Link>
                                 </li>
                             </>

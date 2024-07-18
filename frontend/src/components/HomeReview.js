@@ -13,15 +13,18 @@ export function formatReviewRating(rating) {
 const HomeReview = () => {
     return (
         <section className="review-container">
-            <p dangerouslySetInnerHTML={{ __html: formatReviewRating(4) }}></p>
-            <h4>Great Service!</h4>
-            <p>
+               <p>
                 The process was seamless and easy to follow. I appreciate the detailed instructions and
                 the quick turnaround time. Will definitely use this service again.
             </p>
             <h4>
                 Jane
             </h4>
+            <p>May 1990</p>
+            <p dangerouslySetInnerHTML={{ __html: formatReviewRating(4) }}></p>
+            {/* <h4>Great Service!</h4> */}
+         
+
         </section>
     )
 
