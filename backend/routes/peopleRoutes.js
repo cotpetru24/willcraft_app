@@ -1,17 +1,15 @@
 import express from 'express';
-import { createPerson} from '../controllers/peopleController.js';
+import { createPerson, deletePerson, getPersons, updatePerson } from '../controllers/peopleController.js';
 import { protect } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
+router.get('/', protect, getPersons);
+
 router.post('/', protect, createPerson);
-// router.get('/',protect, getPerson);
 
+router.put('/:id', protect, updatePerson);
 
-
-
-// router.put('/:id', protect, updateTask);
-
-// router.delete('/:id', protect, deleteTask);
+router.delete('/:id', protect, deletePerson);
 
 export { router as peopleRoutes };
