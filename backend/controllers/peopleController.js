@@ -50,7 +50,7 @@ export const updatePerson = asyncHandler(async (req, res) => {
 });
 
 export const getPersons = asyncHandler(async (req, res) => {
-    const { personId } = req.query;
+    const { personId } = req.body;
     const userId = req.user._id;
     let persons;
     let person;

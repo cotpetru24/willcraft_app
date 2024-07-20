@@ -2,20 +2,21 @@ import asyncHandler from 'express-async-handler';
 import Asset from '../models/assetModel.js'; // Added .js extension
 import User from '../models/userModel.js';  // Added .js extension
 
-export const getAssets = asyncHandler(async (req, res) => {
-    const { assetID, orderID } = req.query;
-    let assets;
+export const getAsset = asyncHandler(async (req, res) => {
+    const { assetId } = req.body;
+    let asset;
 
-    if (assetID) {
-        assets = await Asset.find({ _id: assetID, userId: req.user.id }); // Corrected to userId
-    } else if (orderID) {
-        assets = await Asset.find({ orderID, userId: req.user.id }); // Corrected to userId
-    } else {
-        assets = await Asset.find({ userId: req.user.id }); // Corrected to userId
+    if (assetId) {
+        asset = await Asset.find({ _id: assetId, userId: req.user.id }); // Corrected to userId
     }
+    // } else if (orderID) {
+    //     assets = await Asset.find({ orderID, userId: req.user.id }); // Corrected to userId
+    // } else {
+    //     assets = await Asset.find({ userId: req.user.id }); // Corrected to userId
+    // }
 
-    if (assets.length > 0) {
-        res.status(200).json(assets);
+    if (asset.length > 0) {
+        res.status(200).json(asset);
     } else {
         res.status(404).json({ message: 'No assets found' });
     }
@@ -42,13 +43,13 @@ export const createAsset = asyncHandler(async (req, res) => {
         userId: req.user.id // Corrected to userId
     };
 
-    if (assetType === 'Bank account' && bankName) {
+    if (assetType.toLowerCase() === 'bank account' && bankName) {
         assetData.bankName = bankName;
-    } else if ((assetType === 'Life Insurance' || assetType === 'Pension') && provider) {
+    } else if ((assetType.toLowerCase() === 'life insurance' || assetType.toLowerCase() === 'pension') && provider) {
         assetData.provider = provider;
-    } else if (assetType === 'Stocks and shares' && companyName) {
+    } else if (assetType.toLowerCase() === 'stocks and shares' && companyName) {
         assetData.companyName = companyName;
-    } else if (assetType === 'Property' && propertyAddress) {
+    } else if (assetType.toLowerCase() === 'property' && propertyAddress) {
         assetData.propertyAddress = propertyAddress;
     }
 
@@ -58,27 +59,33 @@ export const createAsset = asyncHandler(async (req, res) => {
 });
 
 export const updateAsset = asyncHandler(async (req, res) => {
-    const asset = await Asset.findById(req.params.id);
-    if (!asset) {
-        res.status(400);
-        throw new Error('Asset not found.');
+    try {
+        const asset = await Asset.findById(req.params.id);
+        if (!asset) {
+            res.status(404);
+            throw new Error('Asset not found.');
+        }
+
+        const user = await User.findById(req.user.id);
+
+        if (!user) {
+            res.status(403); // Changed to 403
+            throw new Error('No such user found');
+        }
+
+        if (asset.userId.toString() !== user.id) { // Corrected to userId
+            res.status(403); // Changed to 403
+            throw new Error('User is not authorised to update');
+        }
+
+        Object.assign(asset, req.body);
+        await asset.validate(); // Ensure validation before saving
+        await asset.save();
+
+        res.status(200).json(asset);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
     }
-
-    const user = await User.findById(req.user.id);
-
-    if (!user) {
-        res.status(403); // Changed to 403
-        throw new Error('No such user found');
-    }
-
-    if (asset.userId.toString() !== user.id) { // Corrected to userId
-        res.status(403); // Changed to 403
-        throw new Error('User is not authorised to update');
-    }
-
-    const updatedAsset = await Asset.findByIdAndUpdate(
-        req.params.id, req.body, { new: true });
-    res.status(200).json(updatedAsset);
 });
 
 export const deleteAsset = asyncHandler(async (req, res) => {
