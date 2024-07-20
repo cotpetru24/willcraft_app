@@ -1,32 +1,3 @@
-// const Person = require('../models/personModel');
-// const asyncHandler = require('express-async-handler');
-
-
-// const createPerson = asyncHandler(async (req, res) => {
-//     if (!req.body.fullLegalName) { //to add here later all the fields
-//         res.status(400);
-//         throw new Error('Please enter a person');
-//     };
-
-//     const person = await Person.create({
-//         title: req.body.title,
-//         fullLegalName: req.body.fullLegalName,
-//         fullAddress: req.body.fullAddress,
-//         dob: req.body.dob,
-//         email: req.body.email,
-//         tel: req.body.tel,
-//     });
-//     res.status(200).json(person);
-
-// });
-
-
-
-
-// module.exports = { createPerson };
-
-
-
 import asyncHandler from 'express-async-handler';
 import Person from '../models/personModel.js';
 import User from '../models/userModel.js';
@@ -47,7 +18,7 @@ export const createPerson = asyncHandler(async (req, res) => {
         dob: req.body.dob,
         email: req.body.email,
         tel: req.body.tel,
-        userId: req.body.userId,
+        userId: req.user._id,
     });
 
     res.status(200).json(person);
@@ -79,25 +50,27 @@ export const updatePerson = asyncHandler(async (req, res) => {
 });
 
 export const getPersons = asyncHandler(async (req, res) => {
-    const { personId, orderId } = req.query;
+    const { personId } = req.query;
+    const userId = req.user._id;
     let persons;
+    let person;
 
     if (personId) {
-        persons = await Person.find({ _id: personId, user: req.user.id });
-    } else if (orderId) {
-        persons = await Person.find({ orderId, user: req.user.id });
+        person = await Person.findOne({ _id: personId, userId: userId });
+        if (person) {
+            res.status(200).json(person);
+        } else {
+            res.status(404).json({ message: 'Person not found'});
+        }
     } else {
-        persons = await Person.find({ user: req.user.id });
-    }
-
-    if (persons.length > 0) {
-        res.status(200).json(persons);
-    } else {
-        res.status(400);
-        throw new Error('Error getting persons');
+        persons = await Person.find({ userId: userId }).lean();
+        if (persons.length > 0) {
+            res.status(200).json(persons);
+        } else {
+            res.status(404).json({ message: 'No persons found for this user' });
+        }
     }
 });
-
 
 export const deletePerson = asyncHandler(async (req, res) => {
     const person = await Person.findById(req.params.id);
