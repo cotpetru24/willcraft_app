@@ -6,6 +6,8 @@ import connectDb from './connect/connect.js';
 import { peopleRoutes } from './routes/peopleRoutes.js';  // Named import
 import { userRoutes } from './routes/userRoutes.js';  // Named import
 import { orderRoutes } from './routes/orderRoutes.js';
+import { reviewRoutes } from './routes/reviewRoutes.js';
+import { messageRoutes } from './routes/messageRoutes.js';
 
 dotenv.config();
 
@@ -43,6 +45,10 @@ app.use((req, res, next) => {
 app.use('/api/users', userRoutes);
 app.use('/api/people', peopleRoutes);
 app.use('/api/order', orderRoutes);
+app.use('/api/review', reviewRoutes);
+app.use('/api/message', messageRoutes);
+
+
 
 // Error handler middleware
 app.use(errorHandler);

@@ -16,7 +16,7 @@ export const createMessage = asyncHandler(async (req, res) => {
     const message = await Message.create(messageData);
 
     if (message) {
-        res.status(201).json({ message: 'Message sent' });
+        res.status(201).json(message);
     } else {
         res.status(400);
         throw new Error('Invalid message data');
@@ -42,5 +42,5 @@ export const deleteMessage = asyncHandler(async (req, res) => {
         throw new Error('Message not found');
     }
 
-    res.status(200).json({ message: 'Message has been deleted' });
+    res.status(200).json(message._id);
 });
