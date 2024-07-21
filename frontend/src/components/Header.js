@@ -55,7 +55,7 @@ const Header = () => {
                                 </li>
                                 <li>
                                     <Link to='/dashboard'>
-                                        My Dashboard
+                                        My Wills
                                     </Link>
                                 </li>
                                 <li>
