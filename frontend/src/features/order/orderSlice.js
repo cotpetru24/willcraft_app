@@ -3,28 +3,6 @@ import orderService from "./orderService";
 // import { Order } from "../../schemas/schemas";
 
 
-
-
-
-export const createOrder = createAsyncThunk('api/order',
-    async (orderData, thunkApi) => {
-        // Get the userId from the state
-        const userId = thunkApi.getState().auth.user._id;
-
-        const updatedOrderData = { ...orderData, userId };
-        try {
-            const token = thunkApi.getState().auth.user.token;
-            // const response = await orderService.createOrder(orderData);
-            return await orderService.createOrder(updatedOrderData, token);
-
-        } catch (error) {
-            const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-            return thunkApi.rejectWithValue(message);
-        }
-    });
-
-
-
 const initialState = {
     orderId: '',
     userId: '',
@@ -37,6 +15,45 @@ const initialState = {
     message: '',
     currentStep: 0,
 };
+
+export const createOrder = createAsyncThunk(
+    'orders/createOrder',
+    async (orderData, thunkAPI) => {
+        // Get the userId from the state
+        const userId = thunkAPI.getState().auth.user._id;
+
+        const updatedOrderData = { ...orderData, userId };
+        try {
+            const token = thunkAPI.getState().auth.user.token;
+            // const response = await orderService.createOrder(orderData);
+            return await orderService.createOrder(updatedOrderData, token);
+
+        } catch (error) {
+            const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
+
+export const getOrder = createAsyncThunk(
+    'orders/getOrder',
+    async (id, thunkAPI) => {
+        try {
+            const token = thunkAPI.getState().auth.user.token
+            return await orderService.getOrder(id, token)
+        }
+        catch (error) {
+            const message =
+                (error.response && error.response.data && error.response.data.message)
+                || error.message
+                || error.toString()
+            return thunkAPI.rejectWithValue(message)
+        }
+    }
+)
+
+
+
 
 const orderSlice = createSlice({
     name: 'order',
@@ -79,6 +96,27 @@ const orderSlice = createSlice({
                 state.assetsAndDistribution = action.payload.assetsAndDistribution;
             })
             .addCase(createOrder.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload;
+            })
+
+
+
+
+            .addCase(getOrder.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getOrder.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.orderId = action.payload._id;
+                state.userId = action.payload.userId;
+                state.status = action.payload.status;
+                // state.peopleAndRoles = action.payload.peopleAndRoles;
+                // state.assetsAndDistribution = action.payload.assetsAndDistribution;
+            })
+            .addCase(getOrder.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;

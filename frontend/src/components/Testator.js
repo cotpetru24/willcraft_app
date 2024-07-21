@@ -62,7 +62,9 @@ const Testator = () => {
             />
           </div>
           <div className="creatingOrder-section-navigation-container">
-            <button>Back</button>
+            <button onClick={()=>{
+                            navigate('/creatingOrder')
+                          }}>Back</button>
             <button type="submit">Save and continue</button>
           </div>
         </form>
