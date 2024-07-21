@@ -7,12 +7,20 @@ import { useNavigate } from "react-router-dom";
 import OrderItem from "./OrderItem";
 
 
+
+
+
 const OrdersList = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { orders, isLoading, isError, message } = useSelector(state =>
         state.orders
     )
+
+
+    const handleCreateWill = () => {
+        navigate('/creatingOrder');
+    };
 
     useEffect(() => {
         if (isError) console.log(message)
@@ -25,7 +33,10 @@ const OrdersList = () => {
         isLoading ? <Spinner /> :
             (
                 <>
-                    <section className="content">
+        <section>
+            <button onClick={handleCreateWill}>Create a new Will</button>
+        </section>
+                    <section className="orders-list">
                         {orders.length > 0 ? (
                             <div className="orders">
                                 {orders.map(order => (
