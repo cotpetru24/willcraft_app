@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import OrdersList from "./OrdersList";
 
 export const OrderProgressBar = ({ currentValue, maxValue }) => (
     <>
@@ -9,6 +10,7 @@ export const OrderProgressBar = ({ currentValue, maxValue }) => (
 
 const Dashboard = () => {
     return (
+        <>
         <section className="about-us-container">
             <h2>Dashboar</h2>
             <div className="dashboard-will-container">
@@ -28,6 +30,11 @@ const Dashboard = () => {
 
                 
         </section>
+
+        <section>
+<OrdersList/>
+        </section>
+        </>
     )
 
 }

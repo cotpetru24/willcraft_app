@@ -85,7 +85,7 @@ export const getAllUserOrders = asyncHandler(async (req, res) => {
             }
 
             return {
-                id: order._id,
+                _id: order._id,
                 createdAt: order.createdAt,
                 updatedAt: order.updatedAt,
                 testator: testatorRole ? testatorRole.personId.fullLegalName : 'No testator found',
