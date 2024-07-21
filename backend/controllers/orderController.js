@@ -12,7 +12,8 @@ export const createOrder = asyncHandler(async (req, res) => {
     }
 
     const order = await Order.create({
-        userId: req.body.userId,
+        // userId: req.body.userId,
+        userId: req.user.id,
         peopleAndRoles: req.body.peopleAndRoles,
         assetsAndDistribution: req.body.assetsAndDistribution
     });
@@ -52,23 +53,95 @@ export const updateOrder = asyncHandler(async (req, res) => {
 });
 
 // Get orders
-export const getOrders = asyncHandler(async (req, res) => {
-    const { orderId } = req.query;
-    let orders;
+// export const getOrder = asyncHandler(async (req, res) => {
+//     // const { orderId } = req.body;
+//     const { id: orderId } = req.params;
 
-    if (orderId) {
-        orders = await Order.findOne({ _id: orderId, userId: req.user.id });
+//     // Fetch the order and populate related documents
+//     const order = await Order.findById(orderId)
+//         .populate('peopleAndRoles.personId')
+//         .populate('assetsAndDistribution.assetId')
+//         .populate('assetsAndDistribution.distribution.personId');
+
+//     if (order) {
+//         res.status(200).json(order);
+//     } else {
+//         res.status(404).json({ message: 'Order not found' });
+//     }
+// });
+// Get orders
+export const getOrder = asyncHandler(async (req, res) => {
+    const { id: orderId } = req.params;
+
+    // Fetch the order and populate related documents
+    const order = await Order.findById(orderId)
+        .populate('peopleAndRoles.personId')
+        .populate('assetsAndDistribution.assetId')
+        .populate({
+            path: 'assetsAndDistribution.distribution',
+            populate: {
+                path: 'personId',
+                model: 'Person'
+            }
+        });
+
+    if (order) {
+        res.status(200).json(order);
     } else {
-        orders = await Order.find({ userId: req.user.id });
+        res.status(404).json({ message: 'Order not found' });
     }
+});
+
+
+// export const getAllUserOrders = asyncHandler(async (req, res) => {
+
+//     const orders = await Order.find({ userId: req.user.id });
+
+//     if (orders) {
+
+//         //here need a query to get the testator name
+//         const response = orders.map(n => ({
+//             testator: n.testator,
+//             id: n._id,
+//             createdAt: n.createdAt
+//         }));
+
+
+//         res.status(200).json(orders);
+//     } else {
+//         res.status(400);
+//         throw new Error('Error getting orders');
+//     }
+// });
+
+
+
+export const getAllUserOrders = asyncHandler(async (req, res) => {
+    // Fetch orders by user ID
+    const orders = await Order.find({ userId: req.user.id }).populate('peopleAndRoles.personId');
 
     if (orders) {
-        res.status(200).json(orders);
+        // Map through orders to get the desired response structure
+        const response = orders.map(order => {
+            // Find the person with the role 'testator'
+            const testatorRole = order.peopleAndRoles.find(role => role.role.includes('testator'));
+
+            return {
+                id: order._id,
+                createdAt: order.createdAt,
+                updatedAt: order.updatedAt,
+                testator: testatorRole ? testatorRole.personId.fullLegalName : 'No testator found'
+            };
+        });
+
+        res.status(200).json(response);
     } else {
         res.status(400);
         throw new Error('Error getting orders');
     }
 });
+
+
 
 // Delete an order
 export const deleteOrder = asyncHandler(async (req, res) => {
