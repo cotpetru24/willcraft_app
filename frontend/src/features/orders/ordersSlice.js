@@ -61,7 +61,7 @@ export const ordersSlice = createSlice({
             .addCase(getOrders.fulfilled, (state, action) => {
                 state.isLoading = false
                     state.isSuccess = true
-                    state.orders.push(action.payload)
+                    state.orders=action.payload
             })
             .addCase(getOrders.rejected, (state, action) => {
                 state.isLoading = false
