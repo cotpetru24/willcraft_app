@@ -70,16 +70,7 @@ const orderSlice = createSlice({
             state.isLoading = false;
             state.message = '';
             state.currentStep = 0;
-        },
-        // updateTestator: (state, action) => {
-        //     state.entities.people.testator = {
-        //         ...state.entities.people.testator,
-        //         ...action.payload
-        //     };
-        // },
-        // updateCurrentStep: (state, action) => {
-        //     state.currentStep = action.payload;
-        // },
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -113,6 +104,8 @@ const orderSlice = createSlice({
                 state.orderId = action.payload._id;
                 state.userId = action.payload.userId;
                 state.status = action.payload.status;
+                state.peopleAndRoles= action.payload.peopleAndRoles;
+                state.assetsAndDistribution= action.payload.assetsAndDistribution;
                 // state.peopleAndRoles = action.payload.peopleAndRoles;
                 // state.assetsAndDistribution = action.payload.assetsAndDistribution;
             })
