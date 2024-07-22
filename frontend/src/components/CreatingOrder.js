@@ -30,8 +30,8 @@ const CreatingOrder = () => {
 
                     <div className="creatingOrder-tile">
                         <p>About you</p>
+                        <button onClick={() => navigate('/testator')}>Get Started</button>
                         <button onClick={() => navigate('/testator')}>Edit</button>
-                        <button>Get Started</button>
 
                     </div>
 

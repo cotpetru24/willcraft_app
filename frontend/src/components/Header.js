@@ -35,7 +35,7 @@ const Header = () => {
         <header className='header'>
             <div>
                 <Link to='/'>
-                    <img src='/dhru_logo.png' alt='WillCraft Logo' />
+                    <img src='/test.png' alt='WillCraft Logo' />
                 </Link>
             </div>
             <div className='navigation-container'>
