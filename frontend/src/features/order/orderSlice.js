@@ -139,6 +139,24 @@ const orderSlice = createSlice({
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;
+            })
+
+            .addCase(updatePerson.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(updatePerson.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                const updatedPerson = action.payload;
+                const personIndex = state.peopleAndRoles.findIndex(person => person.personId._id === updatedPerson._id);
+                if (personIndex >= 0) {
+                  state.peopleAndRoles[personIndex].personId = updatedPerson;
+                }
+              })
+            .addCase(updatePerson.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload;
             });
     },
 });
