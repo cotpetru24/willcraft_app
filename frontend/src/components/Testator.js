@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import PersonForm from "./PersonForm";
-import { createPerson } from "../features/people/peopleSlice";
+import { createPerson } from "../features/order/orderSlice";
 
 const Testator = () => {
-  const [formData, setFormData] = useState({
+  const [initialFormData, setInitialFormData] = useState({
     title: '',
     fullLegalName: '',
     fullAddress: '',
@@ -17,33 +17,26 @@ const Testator = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const order = useSelector(state => state.order);
+
+  useEffect(() => {
+    const personData = order.peopleAndRoles.find(p => p.role.includes("testator"));
+    if (personData) {
+      const { personId } = personData;
+      setInitialFormData({
+        title: personId.title || '',
+        fullLegalName: personId.fullLegalName || '',
+        fullAddress: personId.fullAddress || '',
+        dob: personId.dob || '',
+        email: personId.email || '',
+        tel: personId.tel || ''
+      });
+    }
+  }, [order]);
+
+  const onSubmit = (formData) => {
     dispatch(createPerson(formData));  // Passing formData directly
-    setFormData({
-      title: '',
-      fullLegalName: '',
-      fullAddress: '',
-      dob: '',
-      email: '',
-      tel: ''
-    });  // Reset form data
     navigate('/creatingOrder');
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-  };
-
-  const handlePlaceSelected = (place) => {
-    setFormData({
-      ...formData,
-      fullAddress: place.formatted_address
-    });
   };
 
   return (
@@ -52,22 +45,16 @@ const Testator = () => {
         <div className="creatingOrder-section-heading-container">
           <h1>Your details</h1>
         </div>
-        <form onSubmit={onSubmit}>
-          <div className="creatingOrder-section-main-content-container">
-            <PersonForm
-              role="testator"
-              formData={formData}
-              handleInputChange={handleInputChange}
-              handlePlaceSelected={handlePlaceSelected}
-            />
-          </div>
-          <div className="creatingOrder-section-navigation-container">
-            <button onClick={()=>{
-                            navigate('/creatingOrder')
-                          }}>Back</button>
-            <button type="submit">Save and continue</button>
-          </div>
-        </form>
+        <div className="creatingOrder-section-main-content-container">
+          <PersonForm
+            role="testator"
+            initialFormData={initialFormData}
+            onSubmit={onSubmit}
+          />
+        </div>
+        <div className="creatingOrder-section-navigation-container">
+          <button onClick={() => { navigate('/creatingOrder') }}>Back</button>
+        </div>
       </section>
     </>
   );

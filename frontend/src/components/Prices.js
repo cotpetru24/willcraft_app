@@ -4,7 +4,7 @@ import React from "react";
 
 
 
-const Pricing = () => {
+const Prices = () => {
     return (<>
     <div className="pricing-component-container">
         <section className="price-container">
@@ -46,4 +46,4 @@ const Pricing = () => {
 
 }
 
-export default Pricing;
+export default Prices;

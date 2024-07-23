@@ -4,7 +4,7 @@ import React from "react";
 
 // Function to set recipe rating stars
 export function formatReviewRating(rating) {
-    const yellowStar = '<img class="rating-stars" src="./icons8-star-filled-30-yellow.png" alt="Yellow Star" />';
+    const yellowStar = '<img class="rating-stars" src="./icons8-star.png" alt="Yellow Star" />';
     const grayStar = '<img class="rating-stars" src="./icons8-star-filled-30-gray.png" alt="Gray Star" />';
     return yellowStar.repeat(rating) + grayStar.repeat(5 - rating);
 }

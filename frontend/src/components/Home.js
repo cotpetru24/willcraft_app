@@ -7,7 +7,7 @@ import { faCheckSquare, faCheckCircle } from "@fortawesome/free-solid-svg-icons"
 import { login, reset } from '../features/auth/authSlice';
 import './FontAwesomeSetup';
 import AboutUs from "./AboutUs";
-import Pricing from "./Pricing";
+import Pricing from "./Prices";
 
 
 
@@ -81,14 +81,14 @@ const Home = () => {
                 </div>
             </section>
 
-<section>
+{/* <section>
     <AboutUs/>
-</section>
-<section className="pricing-section">
+</section> */}
+{/* <section className="pricing-section">
 <h1><Link to="/">Pricing</Link></h1>
 
 <Pricing/>
-</section>
+</section> */}
             <section className="home-reviews-section">
                 <h1><Link to="/">Testimonials</Link></h1>
 

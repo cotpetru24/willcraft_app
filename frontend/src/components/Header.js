@@ -55,6 +55,11 @@ const Header = () => {
                                     </Link>
                                 </li>
                                 <li>
+                                    <Link to='/prices'>
+                                        Prices
+                                    </Link>
+                                </li>
+                                <li>
                                     <Link to='/dashboard'>
                                         My Wills
                                     </Link>
@@ -84,8 +89,8 @@ const Header = () => {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to='/aboutus'>
-                                        Pricing
+                                    <Link to='/prices'>
+                                        Prices
                                     </Link>
                                 </li>
                                 <li>

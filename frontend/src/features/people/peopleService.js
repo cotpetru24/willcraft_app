@@ -16,9 +16,6 @@ const createPerson = async (personData, token) => {
 
 const getPerson = async () => {
     const response = await axios.get(API_URL);
-    // const normalizedData = normalize(response.data, [person]);
-
-    // return normalizedData;
     return response;
 }
 

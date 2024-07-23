@@ -17,6 +17,7 @@ import AddressAutocomplete from './components/AddressAutocomplete';
 import CreatingOrder from './components/CreatingOrder';
 import PersonForm from './components/PersonForm';
 import AssetForm from './components/AssetForm';
+import Prices from './components/Prices';
 
 function App() {
 
@@ -39,6 +40,7 @@ function App() {
             <Route path='/creatingOrder' element={<CreatingOrder/>}/>;
             <Route path='/aboutYou' element={<PersonForm/>}/>;
             <Route path='/assets' element={<AssetForm/>}/>
+            <Route path='/prices' element ={<Prices/>}/>;
           </Routes>
           <Footer />
         </div>
