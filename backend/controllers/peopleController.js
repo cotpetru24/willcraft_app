@@ -24,30 +24,70 @@ export const createPerson = asyncHandler(async (req, res) => {
     res.status(200).json(person);
 });
 
+// export const updatePerson = asyncHandler(async (req, res) => {
+//     const person = await Person.findById(req.params.id);
+//     if (!person) {
+//         res.status(400);
+//         throw new Error('Person not found');
+//     }
+
+//     const user = await User.findById(req.user.id);
+
+//     if (!user) {
+//         res.status(401);
+//         throw new Error('No such user found');
+//     }
+
+//     if (person.userId.toString() !== user.id) {
+//         res.status(403);
+//         throw new Error('User is not authorised to update');
+//     }
+
+//     const updatedPerson = await Person.findByIdAndUpdate(
+//         req.params.id, req.body, { new: true }
+//     );
+//     res.status(200).json(updatedPerson);
+// });
+
 export const updatePerson = asyncHandler(async (req, res) => {
     const person = await Person.findById(req.params.id);
     if (!person) {
-        res.status(400);
+        res.status(404); // Not found
         throw new Error('Person not found');
     }
 
-    const user = await User.findById(req.user.id);
+    if (!req.user) {
+        res.status(401); // Unauthorized
+        throw new Error('No user found');
+    }
 
+    const user = await User.findById(req.user.id);
     if (!user) {
-        res.status(401);
+        res.status(401); // Unauthorized
         throw new Error('No such user found');
     }
 
     if (person.userId.toString() !== user.id) {
-        res.status(403);
-        throw new Error('User is not authorised to update');
+        res.status(403); // Forbidden
+        throw new Error('User is not authorized to update');
     }
 
-    const updatedPerson = await Person.findByIdAndUpdate(
-        req.params.id, req.body, { new: true }
-    );
-    res.status(200).json(updatedPerson);
+    try {
+        const updatedPerson = await Person.findByIdAndUpdate(
+            req.params.id, req.body, { new: true }
+        );
+        if (!updatedPerson) {
+            res.status(404); // Not found
+            throw new Error('Person not found after update');
+        }
+        res.status(200).json(updatedPerson);
+    } catch (error) {
+        res.status(500); // Internal server error
+        throw new Error('Error updating person');
+    }
 });
+
+
 
 export const getPersons = asyncHandler(async (req, res) => {
     const { personId } = req.body;

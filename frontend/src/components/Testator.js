@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import PersonForm from "./PersonForm";
-import { createPerson } from "../features/order/orderSlice";
+import { createPerson, updatePerson } from "../features/order/orderSlice";
 
 const Testator = () => {
   const [initialFormData, setInitialFormData] = useState({
+    _id: '',
     title: '',
     fullLegalName: '',
     fullAddress: '',
@@ -24,6 +25,7 @@ const Testator = () => {
     if (personData) {
       const { personId } = personData;
       setInitialFormData({
+        _id: personId._id || '',
         title: personId.title || '',
         fullLegalName: personId.fullLegalName || '',
         fullAddress: personId.fullAddress || '',
@@ -35,7 +37,11 @@ const Testator = () => {
   }, [order]);
 
   const onSubmit = (formData) => {
-    dispatch(createPerson(formData));  // Passing formData directly
+    if (formData._id) {
+      dispatch(updatePerson({ id: formData._id, personData: formData }));
+    } else {
+      dispatch(createPerson(formData));
+    }
     navigate('/creatingOrder');
   };
 

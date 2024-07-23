@@ -41,16 +41,16 @@ const getPerson = async () => {
 };
 
 
-const updatedPerson = async(id, personData, token)=>{
+const updatePerson = async(id, personData, token)=>{
     const config = {
         headers: {
             Authorization:`Bearer ${token}`
         }
     }
-     const response = axios.put(API_PEOPLE_URL+id, config);
+     const response = axios.put(API_PEOPLE_URL+id, personData,config);
      return (await response).data;
 }
 
-const orderService = { createOrder, getOrder, createPerson, getPerson };
+const orderService = { createOrder, getOrder, createPerson, getPerson, updatePerson };
 
 export default orderService;

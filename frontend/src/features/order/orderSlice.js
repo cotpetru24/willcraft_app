@@ -41,12 +41,12 @@ export const createPerson = createAsyncThunk(
     }
 );
 
-export const updatedPerson = createAsyncThunk(
+export const updatePerson = createAsyncThunk(
     'orders/people/updatePerson',
-    async (id, personData, thunkAPI) => {
+    async ({id, personData}, thunkAPI) => {
         try {
             const token = thunkAPI.getState().auth.user.token;
-            return await orderService.updatedPerson(id, personData, token)
+            return await orderService.updatePerson(id, personData, token)
         } catch (error) {
             const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
             return thunkAPI.rejectWithValue(message);

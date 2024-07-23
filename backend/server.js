@@ -44,7 +44,7 @@ app.use((req, res, next) => {
 
 // Your existing routes
 app.use('/api/users', userRoutes);
-app.use('/api/people', peopleRoutes);
+app.use('/api/orders/people', peopleRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/messages', messageRoutes);

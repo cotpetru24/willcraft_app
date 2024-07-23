@@ -12,6 +12,7 @@ const PersonForm = ({ role, initialFormData, onSubmit }) => {
     if (personData) {
       const { personId } = personData;
       setFormData({
+        _id: personId._id || '',
         title: personId.title || '',
         fullLegalName: personId.fullLegalName || '',
         fullAddress: personId.fullAddress || '',
