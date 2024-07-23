@@ -44,7 +44,8 @@ const Home = () => {
 
                 </div>
 
-                <img src="/landing_page.png" style={{ width: '60%' }} alt="Home" />
+                <img src="/hero1.png" style={{ width: '60%' }} alt="Home" />
+                {/* <img src="/robot.svg" style={{ width: '35%' }} alt="Home" /> */}
 
 
 
