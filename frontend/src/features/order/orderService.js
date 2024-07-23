@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API_ORDER_URL = '/api/orders/';
-const API_PEOPLE_URL = '/api/people/';
+const API_PEOPLE_URL = '/api/orders/people/';
 
 // Order-related API calls
 const createOrder = async (orderData, token) => {
@@ -39,6 +39,17 @@ const getPerson = async () => {
   const response = await axios.get(API_PEOPLE_URL);
   return response.data;
 };
+
+
+const updatedPerson = async(id, personData, token)=>{
+    const config = {
+        headers: {
+            Authorization:`Bearer ${token}`
+        }
+    }
+     const response = axios.put(API_PEOPLE_URL+id, config);
+     return (await response).data;
+}
 
 const orderService = { createOrder, getOrder, createPerson, getPerson };
 
