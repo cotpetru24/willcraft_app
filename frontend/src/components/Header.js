@@ -35,7 +35,8 @@ const Header = () => {
         <header className='header'>
             <div>
                 <Link to='/'>
-                    <img src='/test.png' alt='WillCraft Logo' />
+                    <img src='/logo10.png' alt='WillCraft Logo' />
+                    {/* <h5>WillWizad</h5> */}
                 </Link>
             </div>
             <div className='navigation-container'>

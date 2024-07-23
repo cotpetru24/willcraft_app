@@ -3,6 +3,7 @@ import HomeReview from "./HomeReview";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheckSquare, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { login, reset } from '../features/auth/authSlice';
 import './FontAwesomeSetup';
 import AboutUs from "./AboutUs";
@@ -20,13 +21,20 @@ const Home = () => {
             <section className="home-section-heading">
 
                 <div className="hero-section-container">
-                    <h1>Will writing made simple.</h1>
-                    <p><FontAwesomeIcon icon="times-circle" className="custom-icon" />No appointments</p>
-                    <p><FontAwesomeIcon icon="times-circle" className="custom-icon" />No solicitors</p>
-                    <p><FontAwesomeIcon icon="book" className="custom-icon" />Step by Step guide</p>
-                    <p><FontAwesomeIcon icon="clock" className="custom-icon" />Ready in 10 minutes</p>
-                    <p><FontAwesomeIcon icon="pound-sign" className="custom-icon" />Starting from £20</p>
+                    <h1>Will writing made simple</h1>
+                    {/* <p><FontAwesomeIcon icon={faCheckSquare} className="custom-icon" style={{ color: 'green' }} />no appointments</p>
+                    <p><FontAwesomeIcon icon={faCheckSquare} className="custom-icon" style={{ color: 'green' }} />no solicitors</p>
+                    <p><FontAwesomeIcon icon={faCheckSquare} className="custom-icon" style={{ color: 'green' }} />step by Step guide</p>
+                    <p><FontAwesomeIcon icon={faCheckSquare} className="custom-icon" style={{ color: 'green' }} />ready in 10 minutes</p>
+                    <p><FontAwesomeIcon icon={faCheckSquare} className="custom-icon" style={{ color: 'green' }} />starting from £20</p> */}
                     
+
+                    <p><FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />no appointments</p>
+                    <p><FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />no solicitors</p>
+                    <p><FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />step by Step guide</p>
+                    <p><FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />ready in 10 minutes</p>
+                    <p><FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />starting from £20</p>
+
 
                     {user ? (
                         <Link to='/dashboard'>
@@ -36,7 +44,8 @@ const Home = () => {
                     ) : (
                         <Link to='/login'>
                             <button id="get-started-btn">Get Started  
-                            <img src="./feather.png" alt="feather icon" style={{ height: '30px' }} />                            </button>
+                            {/* <img src="./feather.png" alt="feather icon" style={{ height: '30px' }} />                   */}
+                                      </button>
 
                         </Link>
                     )}

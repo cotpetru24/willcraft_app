@@ -59,6 +59,7 @@ a {
   /* background-color: #0C2A4D; */
   /* background-color: #cbc8be; */
   /* background-color: #C69C6D; */
+  border-bottom: 1px solid #c2bfbf;
 }
 
 .home-section-heading {
@@ -159,6 +160,10 @@ a {
   color: rgba(255, 255, 255, 0.87);
   margin-top: auto;
   width: 100%;
+  background-color: #3194F0;
+  /* background-color: #40237A; */
+  /* background-color: #FFF8C0; */
+
 }
 
 .header,
@@ -169,6 +174,7 @@ a {
 
   /* background-color: #0d1117; */
   /* background-color: #1d1c43; */
+  /* background-color: #3194F0; */
 
 
 }
@@ -357,14 +363,16 @@ a {
 
 .header ul li a:hover {
   /* color: #777; */
-  color: #e0218a;
+  color: #3194F0;
   /* border-bottom: 4px solid #e0218a; */
   transition: 0.3s;
 }
 
 .header img {
-  max-height: 100px;
-  margin-left: 30px;
+  /* max-height: 100px; */
+
+  margin-left: 10px;
+  width:150px
 }
 
 
@@ -445,7 +453,7 @@ h1 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-right: 70px;
+  padding-right: 30px;
 }
 
 .form-group {
@@ -773,7 +781,7 @@ h1 {
   align-items: center;
   justify-content: center;
   width: 280px;
-  height: 70px;
+  height: 50px;
   /* background-color: #0C2A4D; */
   /* background-color: #131921; */
   /* background-color: #e0218a; */
@@ -824,7 +832,7 @@ h1 {
 #get-started-btn:hover {
   /* background-color: rgb(102, 102, 102); */
   /* background-color:rgba(255, 255, 255, 0.87); */
-  background-color: #e0218a;
+  background-color: #3194F0;
   color: rgba(255, 255, 255, 0.87);
   cursor: pointer;
   transition: 0.3s;
@@ -838,7 +846,7 @@ h1 {
   cursor: pointer;
   transition: 0.3s;
   transform: scale(90%);
-  background-color: #e0218a;
+  background-color: #3194F0;
 
 }
 
@@ -913,7 +921,7 @@ h4 {
   -webkit-line-clamp: 4;
   /* Number of lines to show */
   -webkit-box-orient: vertical;
-  color: rgba(255, 255, 255, 0.60);
+  /* color: rgba(255, 255, 255, 0.60); */
 
 
 }
@@ -1000,8 +1008,10 @@ h4 {
 }
 
 #how-it-works-heading {
-  padding-bottom: 40px;
+  padding-bottom: 30px;
   font-size: 28px;
+  border-bottom: 1px solid #c2bfbf;
+  width: 100%;
 
 }
 
@@ -1034,7 +1044,7 @@ h4 {
 .custom-icon {
   color: rgb(102, 102, 102);
   width: 25px;
-  padding-right: 30px;
+  padding-right: 13px;
 }
 
 .footer-container {
@@ -1102,8 +1112,8 @@ h4 {
 .home-reviews-section h1,
 .pricing-section h1 {
   font-size: 32px;
-  color: rgba(255, 255, 255, 0.87);
-  border-bottom: 2px solid rgba(255, 255, 255, 0.30);
+  /* color: rgba(255, 255, 255, 0.87); */
+  /* border-bottom: 2px solid black; */
 }
 
 .about-us-container p {
