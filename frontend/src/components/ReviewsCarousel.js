@@ -39,6 +39,7 @@ const ReviewsCarousel = () => {
             infiniteLoop={true}
             showStatus={false}
             interval={3000}
+            transitionTime={1000}
         >
             {slides.map((group, index) => (
                 <div key={index} className="carousel-group">
