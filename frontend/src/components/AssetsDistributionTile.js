@@ -18,7 +18,7 @@ const AssetsDistributionTile = () => {
 
     const order = useSelector(state => state.order);
 
-    const testatorData = order.peopleAndRoles.find(p => p.roles.includes("testator"));
+    const testatorData = order.peopleAndRoles.find(p => p.role.includes("testator"));
 
     useEffect(() => {
         if (testatorData) {

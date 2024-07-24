@@ -1362,7 +1362,7 @@ ol {
   padding: 20px;
   display: flex;
   flex-direction: column;
-  height: 200px;
+  height: auto;
   border: 1px solid darkgray;
   margin-top: 5%;
   margin-bottom: 5%;
@@ -1472,6 +1472,55 @@ ol {
   border-radius: 50%;
   animation: spin 1.2s linear infinite;
 }
+
+
+
+.marital-status-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+
+.marital-status-options-container{
+  display: flex;
+  flex-direction: row;
+}
+
+.marital-status-radio-container{
+display: flex;
+flex-direction: row;
+margin: 10px;
+}
+
+#marital-status-yes+ label, 
+#marital-status-no + label{
+  padding-left: 5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @keyframes spin {
   0% {

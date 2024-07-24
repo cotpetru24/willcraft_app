@@ -18,7 +18,7 @@ const ExecutorsTile = () => {
 
     const order = useSelector(state => state.order);
 
-    const testatorData = order.peopleAndRoles.find(p => p.roles.includes("testator"));
+    const testatorData = order.peopleAndRoles.find(p => p.role.includes("testator"));
 
     useEffect(() => {
         if (testatorData) {
@@ -65,7 +65,7 @@ const ExecutorsTile = () => {
                     ) : (
                         <>
                             <p>Who will carry out your wishes…</p>
-                            <button onClick={() => navigate('/testator')}>Get Started</button>
+                            <button onClick={() => navigate('/family')}>Get Started</button>
                         </>
                     )}
                 </div>

@@ -43,7 +43,7 @@ export const createPerson = createAsyncThunk(
 
 export const updatePerson = createAsyncThunk(
     'orders/people/updatePerson',
-    async ({id, personData}, thunkAPI) => {
+    async ({ id, personData }, thunkAPI) => {
         try {
             const token = thunkAPI.getState().auth.user.token;
             return await orderService.updatePerson(id, personData, token)
@@ -134,6 +134,9 @@ const orderSlice = createSlice({
                 state.isSuccess = true;
                 const { _id, title, fullLegalName, fullAddress, dob, email, tel, userId, orderId } = action.payload;
                 state.peopleAndRoles.push({ personId: { _id, title, fullLegalName, fullAddress, dob, email, tel, userId }, role: ['testator'] });
+
+                // state.peopleAndRoles.push({ personId: { _id, title, fullLegalName, fullAddress, dob, email, tel, userId, role } });
+
             })
             .addCase(createPerson.rejected, (state, action) => {
                 state.isLoading = false;
@@ -150,9 +153,9 @@ const orderSlice = createSlice({
                 const updatedPerson = action.payload;
                 const personIndex = state.peopleAndRoles.findIndex(person => person.personId._id === updatedPerson._id);
                 if (personIndex >= 0) {
-                  state.peopleAndRoles[personIndex].personId = updatedPerson;
+                    state.peopleAndRoles[personIndex].personId = updatedPerson;
                 }
-              })
+            })
             .addCase(updatePerson.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;

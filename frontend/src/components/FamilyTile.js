@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckSquare, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import Family from "./Family";
 
 
 
@@ -18,7 +19,7 @@ const FamilyTile = () => {
 
     const order = useSelector(state => state.order);
 
-    const testatorData = order.peopleAndRoles.find(p => p.roles.includes("testator"));
+    const testatorData = order.peopleAndRoles.find(p => p.role.includes("testator"));
 
     useEffect(() => {
         if (testatorData) {
