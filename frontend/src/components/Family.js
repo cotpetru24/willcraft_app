@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import PersonForm from "./PersonForm";
-import { createPerson, updateOrder, updatePerson } from "../features/order/orderSlice";
+import { createPersonThunk, updateOrderThunk, updatePersonThunk } from "../features/order/orderSlice"; // Update imports
 
 const Family = () => {
   const dispatch = useDispatch();
@@ -25,8 +25,6 @@ const Family = () => {
 
   const [maritalStatus, setMaritalStatus] = useState('')
 
-
-
   useEffect(() => {
     const spouseData = order.peopleAndRoles.find(p => p.role.includes("spouse"));
     if (spouseData) {
@@ -43,46 +41,20 @@ const Family = () => {
     }
   }, [order]);
 
-//   const onSubmit = (formData) => {
-//     if (formData._id) {
-//       await dispatch(updatePerson({ id: formData._id, personData: formData }));
-// then dispatch(updateOrder({id:formData._id, orderData:formData}))
-//     } else {
-//       dispatch(createPerson(formData));
-//       then dispatch(updateOrder({id:formData._id, orderData:formData}))
+  const onSubmit = async (formData) => {
+    if (formData._id) {
+      await dispatch(updatePersonThunk({ id: formData._id, personData: formData })); // Update thunk name
+      await dispatch(updateOrderThunk({ id: order.orderId, orderData: order })); // Update thunk name
+    } else {
+      const createdPerson = await dispatch(createPersonThunk(formData)).unwrap(); // Update thunk name
+      if (createdPerson){
+        await dispatch(updateOrderThunk({ id: order.orderId, orderData: order })); // Update thunk name
+  
+      }
+    }
 
-//     }
-//     navigate('/creatingOrder');
-//   };
-
-// const onSubmit = async (formData) => {
-//   if (formData._id) {
-//     await dispatch(updatePerson({ id: formData._id, personData: formData }));
-//     const updatedState=() =>{
-//       const updatedOrderState =  useSelector(state => state.order);
-//     }
-
-//     await dispatch(updateOrder({ id: order._id, orderData: updatedOrderState }));//useState get the order id and the entire order from state
-//   } else {
-//     const createdPerson = await dispatch(createPerson(formData)).unwrap();
-//     await dispatch(updateOrder({ id: createdPerson._id, orderData: createdPerson }));
-//   }
-//   navigate('/creatingOrder');
-// };
-
-
-const onSubmit = async (formData) => {
-  if (formData._id) {
-    await dispatch(updatePerson({ id: formData._id, personData: formData }));
-    await dispatch(updateOrder({ id: order.orderId, orderData: order }));
-  } else {
-    const createdPerson = await dispatch(createPerson(formData)).unwrap();
-    await dispatch(updateOrder({ id: order.orderId, orderData: order }));
-  }
-  navigate('/creatingOrder');
-};
-
-
+    navigate('/creatingOrder');
+  };
 
   return (
     <>
@@ -93,16 +65,16 @@ const onSubmit = async (formData) => {
 
         <div className="marital-status-container">
           <div>
-            <h4>Are you maried or live have a partner ?</h4>
+            <h4>Are you married or have a partner?</h4>
           </div>
           <div className="marital-status-options-container">
             <div className="marital-status-radio-container">
               <input type="radio" id="marital-status-yes" name="marital-status" value="yes" onChange={handleMaritalStatusChange}></input>
-              <label htmlFor="matital-status-yes">Yes</label>
+              <label htmlFor="marital-status-yes">Yes</label>
             </div>
             <div className="marital-status-radio-container">
               <input type="radio" id="marital-status-no" name="marital-status" value="no" onChange={handleMaritalStatusChange}></input>
-              <label htmlFor="matital-status-no">No</label>
+              <label htmlFor="marital-status-no">No</label>
             </div>
           </div>
         </div>

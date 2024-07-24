@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import PersonForm from "./PersonForm";
-import { createPerson, updatePerson } from "../features/order/orderSlice";
+import { createPersonThunk, updatePersonThunk } from "../features/order/orderSlice";
 
 const Testator = () => {
   const [initialFormData, setInitialFormData] = useState({
@@ -38,9 +38,9 @@ const Testator = () => {
 
   const onSubmit = (formData) => {
     if (formData._id) {
-      dispatch(updatePerson({ id: formData._id, personData: formData }));
+      dispatch(updatePersonThunk({ id: formData._id, personData: formData }));
     } else {
-      dispatch(createPerson(formData));
+      dispatch(createPersonThunk(formData));
     }
     navigate('/creatingOrder');
   };

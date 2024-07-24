@@ -1,9 +1,221 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import orderService from "./orderService";
-import {}
-// import {updaOrder} from
+// import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+// import orderService from "./orderService";
+// // import {updaOrder} from
 
-console.log(orderService); // Add this line to log the orderService object
+// console.log(orderService); // Add this line to log the orderService object
+
+// const initialState = {
+//     orderId: '',
+//     userId: '',
+//     status: '',
+//     peopleAndRoles: [],
+//     assetsAndDistribution: [],
+//     isError: false,
+//     isSuccess: false,
+//     isLoading: false,
+//     message: '',
+//     currentStep: 0,
+// };
+
+// // Thunk for creating a person and optionally creating an order
+// export const createPerson = createAsyncThunk(
+//     'orders/createPerson',
+//     async (personData, thunkAPI) => {
+//         const userId = thunkAPI.getState().auth.user._id;
+//         const updatedPersonData = { ...personData, userId };
+
+//         try {
+//             const token = thunkAPI.getState().auth.user.token;
+//             const orderId = thunkAPI.getState().order.orderId;
+
+//             const personResponse = await orderService.createPerson(updatedPersonData, token);
+
+//             if (!orderId) {
+//                 const orderData = { peopleAndRoles: [{ personId: personResponse._id, role: ['testator'] }] };
+//                 const createdOrder = await thunkAPI.dispatch(createOrder(orderData)).unwrap();
+//                 return { ...personResponse, orderId: createdOrder._id };
+//             } else {
+//                 return personResponse;
+//             }
+//         } catch (error) {
+//             const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+//             return thunkAPI.rejectWithValue(message);
+//         }
+//     }
+// );
+
+// export const updatePerson = createAsyncThunk(
+//     'orders/people/updatePerson',
+//     async ({ id, personData }, thunkAPI) => {
+//         try {
+//             const token = thunkAPI.getState().auth.user.token;
+//             return await orderService.updatePerson(id, personData, token)
+//         } catch (error) {
+//             const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+//             return thunkAPI.rejectWithValue(message);
+//         }
+//     }
+// )
+
+// export const updateOrder = createAsyncThunk(
+//     'orders/updateOrder',
+//     async ({ id, orderData }, thunkAPI) => {
+//         try {
+//             const token = thunkAPI.getState().auth.user.token;
+//             return await orderService.updateOrder(id, orderData, token)
+//         } catch (error) {
+//             const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+//             return thunkAPI.rejectWithValue(message);
+//         }
+//     }
+// )
+
+// // Thunk for creating an order
+// export const createOrder = createAsyncThunk(
+//     'orders/createOrder',
+//     async (orderData, thunkAPI) => {
+//         const userId = thunkAPI.getState().auth.user._id;
+//         const updatedOrderData = { ...orderData, userId };
+//         try {
+//             const token = thunkAPI.getState().auth.user.token;
+//             return await orderService.createOrder(updatedOrderData, token);
+//         } catch (error) {
+//             const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+//             return thunkAPI.rejectWithValue(message);
+//         }
+//     }
+// );
+
+// // Thunk for getting an order
+// export const getOrder = createAsyncThunk(
+//     'orders/getOrder',
+//     async (id, thunkAPI) => {
+//         try {
+//             const token = thunkAPI.getState().auth.user.token;
+//             return await orderService.getOrder(id, token);
+//         } catch (error) {
+//             const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+//             return thunkAPI.rejectWithValue(message);
+//         }
+//     }
+// );
+
+// const orderSlice = createSlice({
+//     name: 'order',
+//     initialState,
+//     reducers: {
+//         reset: (state) => initialState,
+//     },
+//     extraReducers: (builder) => {
+//         builder
+//             .addCase(createOrder.pending, (state) => {
+//                 state.isLoading = true;
+//             })
+//             .addCase(createOrder.fulfilled, (state, action) => {
+//                 state.isLoading = false;
+//                 state.isSuccess = true;
+//                 state.orderId = action.payload._id;
+//                 state.userId = action.payload.userId;
+//                 state.status = action.payload.status;
+//                 state.peopleAndRoles = action.payload.peopleAndRoles;
+//                 state.assetsAndDistribution = action.payload.assetsAndDistribution;
+//             })
+//             .addCase(createOrder.rejected, (state, action) => {
+//                 state.isLoading = false;
+//                 state.isError = true;
+//                 state.message = action.payload;
+//             })
+
+
+
+
+//             .addCase(updateOrder.pending, (state) => {
+//                 state.isLoading = true;
+//             })
+//             .addCase(updateOrder.fulfilled, (state, action) => {
+//                 state.isLoading = false;
+//                 state.isSuccess = true;
+//                 state.orderId = action.payload._id;
+//                 state.userId = action.payload.userId;
+//                 state.status = action.payload.status;
+//                 state.peopleAndRoles = action.payload.peopleAndRoles;
+//                 state.assetsAndDistribution = action.payload.assetsAndDistribution;
+//             })
+//             .addCase(updateOrder.rejected, (state, action) => {
+//                 state.isLoading = false;
+//                 state.isError = true;
+//                 state.message = action.payload;
+//             })
+
+
+
+
+
+//             .addCase(getOrder.pending, (state) => {
+//                 state.isLoading = true;
+//             })
+//             .addCase(getOrder.fulfilled, (state, action) => {
+//                 state.isLoading = false;
+//                 state.isSuccess = true;
+//                 state.orderId = action.payload._id;
+//                 state.userId = action.payload.userId;
+//                 state.status = action.payload.status;
+//                 state.peopleAndRoles = action.payload.peopleAndRoles;
+//                 state.assetsAndDistribution = action.payload.assetsAndDistribution;
+//             })
+//             .addCase(getOrder.rejected, (state, action) => {
+//                 state.isLoading = false;
+//                 state.isError = true;
+//                 state.message = action.payload;
+//             })
+//             .addCase(createPerson.pending, (state) => {
+//                 state.isLoading = true;
+//             })
+//             .addCase(createPerson.fulfilled, (state, action) => {
+//                 state.isLoading = false;
+//                 state.isSuccess = true;
+//                 const { _id, title, fullLegalName, fullAddress, dob, email, tel, userId, orderId } = action.payload;
+//                 state.peopleAndRoles.push({ personId: { _id, title, fullLegalName, fullAddress, dob, email, tel, userId }, role: ['testator'] });
+
+//                 // state.peopleAndRoles.push({ personId: { _id, title, fullLegalName, fullAddress, dob, email, tel, userId, role } });
+
+//             })
+//             .addCase(createPerson.rejected, (state, action) => {
+//                 state.isLoading = false;
+//                 state.isError = true;
+//                 state.message = action.payload;
+//             })
+
+//             .addCase(updatePerson.pending, (state) => {
+//                 state.isLoading = true;
+//             })
+//             .addCase(updatePerson.fulfilled, (state, action) => {
+//                 state.isLoading = false;
+//                 state.isSuccess = true;
+//                 const updatedPerson = action.payload;
+//                 const personIndex = state.peopleAndRoles.findIndex(person => person.personId._id === updatedPerson._id);
+//                 if (personIndex >= 0) {
+//                     state.peopleAndRoles[personIndex].personId = updatedPerson;
+//                 }
+//             })
+//             .addCase(updatePerson.rejected, (state, action) => {
+//                 state.isLoading = false;
+//                 state.isError = true;
+//                 state.message = action.payload;
+//             });
+//     },
+// });
+
+// export const { reset } = orderSlice.actions;
+
+// export default orderSlice.reducer;
+
+
+
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { updateOrder, createOrder, getOrder, createPerson, getPerson, updatePerson } from "./orderService"; // Import named exports
+
+console.log({ updateOrder, createOrder, getOrder, createPerson, getPerson, updatePerson }); // Add this line to debug
 
 const initialState = {
     orderId: '',
@@ -19,7 +231,7 @@ const initialState = {
 };
 
 // Thunk for creating a person and optionally creating an order
-export const createPerson = createAsyncThunk(
+export const createPersonThunk = createAsyncThunk(
     'orders/createPerson',
     async (personData, thunkAPI) => {
         const userId = thunkAPI.getState().auth.user._id;
@@ -29,11 +241,11 @@ export const createPerson = createAsyncThunk(
             const token = thunkAPI.getState().auth.user.token;
             const orderId = thunkAPI.getState().order.orderId;
 
-            const personResponse = await orderService.createPerson(updatedPersonData, token);
+            const personResponse = await createPerson(updatedPersonData, token);
 
             if (!orderId) {
                 const orderData = { peopleAndRoles: [{ personId: personResponse._id, role: ['testator'] }] };
-                const createdOrder = await thunkAPI.dispatch(createOrder(orderData)).unwrap();
+                const createdOrder = await thunkAPI.dispatch(createOrderThunk(orderData)).unwrap();
                 return { ...personResponse, orderId: createdOrder._id };
             } else {
                 return personResponse;
@@ -45,41 +257,41 @@ export const createPerson = createAsyncThunk(
     }
 );
 
-export const updatePerson = createAsyncThunk(
+export const updatePersonThunk = createAsyncThunk(
     'orders/people/updatePerson',
     async ({ id, personData }, thunkAPI) => {
         try {
             const token = thunkAPI.getState().auth.user.token;
-            return await orderService.updatePerson(id, personData, token)
+            return await updatePerson(id, personData, token);
         } catch (error) {
             const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
             return thunkAPI.rejectWithValue(message);
         }
     }
-)
+);
 
-export const updateOrder = createAsyncThunk(
+export const updateOrderThunk = createAsyncThunk(
     'orders/updateOrder',
     async ({ id, orderData }, thunkAPI) => {
         try {
             const token = thunkAPI.getState().auth.user.token;
-            return await orderService.updateOrder(id, orderData, token)
+            return await updateOrder(id, orderData, token);
         } catch (error) {
             const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
             return thunkAPI.rejectWithValue(message);
         }
     }
-)
+);
 
 // Thunk for creating an order
-export const createOrder = createAsyncThunk(
+export const createOrderThunk = createAsyncThunk(
     'orders/createOrder',
     async (orderData, thunkAPI) => {
         const userId = thunkAPI.getState().auth.user._id;
         const updatedOrderData = { ...orderData, userId };
         try {
             const token = thunkAPI.getState().auth.user.token;
-            return await orderService.createOrder(updatedOrderData, token);
+            return await createOrder(updatedOrderData, token);
         } catch (error) {
             const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
             return thunkAPI.rejectWithValue(message);
@@ -88,12 +300,12 @@ export const createOrder = createAsyncThunk(
 );
 
 // Thunk for getting an order
-export const getOrder = createAsyncThunk(
+export const getOrderThunk = createAsyncThunk(
     'orders/getOrder',
     async (id, thunkAPI) => {
         try {
             const token = thunkAPI.getState().auth.user.token;
-            return await orderService.getOrder(id, token);
+            return await getOrder(id, token);
         } catch (error) {
             const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
             return thunkAPI.rejectWithValue(message);
@@ -109,10 +321,10 @@ const orderSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(createOrder.pending, (state) => {
+            .addCase(createOrderThunk.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(createOrder.fulfilled, (state, action) => {
+            .addCase(createOrderThunk.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
                 state.orderId = action.payload._id;
@@ -121,19 +333,15 @@ const orderSlice = createSlice({
                 state.peopleAndRoles = action.payload.peopleAndRoles;
                 state.assetsAndDistribution = action.payload.assetsAndDistribution;
             })
-            .addCase(createOrder.rejected, (state, action) => {
+            .addCase(createOrderThunk.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;
             })
-
-
-
-
-            .addCase(updateOrder.pending, (state) => {
+            .addCase(updateOrderThunk.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(updateOrder.fulfilled, (state, action) => {
+            .addCase(updateOrderThunk.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
                 state.orderId = action.payload._id;
@@ -142,20 +350,15 @@ const orderSlice = createSlice({
                 state.peopleAndRoles = action.payload.peopleAndRoles;
                 state.assetsAndDistribution = action.payload.assetsAndDistribution;
             })
-            .addCase(updateOrder.rejected, (state, action) => {
+            .addCase(updateOrderThunk.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;
             })
-
-
-
-
-
-            .addCase(getOrder.pending, (state) => {
+            .addCase(getOrderThunk.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(getOrder.fulfilled, (state, action) => {
+            .addCase(getOrderThunk.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
                 state.orderId = action.payload._id;
@@ -164,33 +367,29 @@ const orderSlice = createSlice({
                 state.peopleAndRoles = action.payload.peopleAndRoles;
                 state.assetsAndDistribution = action.payload.assetsAndDistribution;
             })
-            .addCase(getOrder.rejected, (state, action) => {
+            .addCase(getOrderThunk.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;
             })
-            .addCase(createPerson.pending, (state) => {
+            .addCase(createPersonThunk.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(createPerson.fulfilled, (state, action) => {
+            .addCase(createPersonThunk.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
                 const { _id, title, fullLegalName, fullAddress, dob, email, tel, userId, orderId } = action.payload;
                 state.peopleAndRoles.push({ personId: { _id, title, fullLegalName, fullAddress, dob, email, tel, userId }, role: ['testator'] });
-
-                // state.peopleAndRoles.push({ personId: { _id, title, fullLegalName, fullAddress, dob, email, tel, userId, role } });
-
             })
-            .addCase(createPerson.rejected, (state, action) => {
+            .addCase(createPersonThunk.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;
             })
-
-            .addCase(updatePerson.pending, (state) => {
+            .addCase(updatePersonThunk.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(updatePerson.fulfilled, (state, action) => {
+            .addCase(updatePersonThunk.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
                 const updatedPerson = action.payload;
@@ -199,7 +398,7 @@ const orderSlice = createSlice({
                     state.peopleAndRoles[personIndex].personId = updatedPerson;
                 }
             })
-            .addCase(updatePerson.rejected, (state, action) => {
+            .addCase(updatePersonThunk.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;

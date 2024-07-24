@@ -35,7 +35,16 @@ export const updateOrder = asyncHandler(async (req, res) => {
         orderId,
         req.body,
         { new: true }
-    );
+    )
+    .populate('peopleAndRoles.personId')
+    .populate('assetsAndDistribution.assetId')
+    .populate({
+        path: 'assetsAndDistribution.distribution',
+        populate: {
+            path: 'personId',
+            model: 'Person'
+        }
+    });
 
     res.status(200).json(updatedOrder);
 });

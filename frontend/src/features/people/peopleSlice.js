@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import peopleService from "./peopleService";
 import { useState } from '@reduxjs/toolkit'
-import { createOrder } from "../order/orderSlice";
+import { createOrderThunk } from "../order/orderSlice";
 
 const initialState = {
     people: [],
@@ -34,7 +34,7 @@ export const createPerson = createAsyncThunk('api/people',
                     peopleAndRoles: [{ personId: testatorData._id, role: ['testator'] }],
                     // userId 
                 };
-                const createdOrder = await thunkApi.dispatch(createOrder(orderData)).unwrap();
+                const createdOrder = await thunkApi.dispatch(createOrderThunk(orderData)).unwrap();
                 console.log('Created Order:', createdOrder);
 
                 return { ...testatorData, orderId: createdOrder._id }; // Return both person and new order ID

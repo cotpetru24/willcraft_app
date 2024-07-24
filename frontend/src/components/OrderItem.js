@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { deleteOrder } from "../features/orders/ordersSlice";
-import { getOrder } from "../features/order/orderSlice";
+import { getOrderThunk } from "../features/order/orderSlice";
 import { useNavigate } from "react-router-dom";
 
 export const OrderProgressBar = ({ currentValue, maxValue }) => (
@@ -33,7 +33,7 @@ const OrderItem = ({ order }) => {
                 {order.status === "CreatingOrder" && (
                     <button
                         onClick={async () => {
-                            dispatch(getOrder(order._id));
+                            dispatch(getOrderThunk(order._id));
                             navigate('/creatingOrder');
                         }}
                         className="order-item-btns"
