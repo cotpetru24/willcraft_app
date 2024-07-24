@@ -1321,8 +1321,14 @@ ol {
   height: 200px;
   border: 1px solid darkgray;
   margin-top: 5%;
+  border-radius: 5px;
 }
 
+.creatingOrder-tile-heading {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 
 
 .creatingOrder-section-navigation-container {
@@ -1430,3 +1436,4 @@ ol {
     transform: rotate(360deg);
   }
 }
+

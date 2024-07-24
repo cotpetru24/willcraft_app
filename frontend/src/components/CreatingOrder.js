@@ -28,38 +28,6 @@ const CreatingOrder = () => {
             <div className="creatingOrder-tiles-and-instructions-container">
 
                 <div className="creatingOrder-tiles">
-
-
-                    {/*  -----Testator tile ------\*/}
-                    {/* <div className="creatingOrder-tile">
-                        <div>
-                            <h2>About you</h2>
-                        </div>
-
-                        {testatorData ? (
-                            <>
-                                <div>
-                                    <h4>Name:</h4> <p>{testaorInitialData.testatorTitle}{testaorInitialData.testatorFullLegalName}</p>
-                                </div>
-                                <div>
-                                    <h4>Date of birth:</h4> <p>{testaorInitialData.testatorDob}</p>
-                                </div>
-                                <div>
-                                    <h4>Address:</h4> <p>{testaorInitialData.testatorFullAddress}</p>
-                                </div>
-                                <div>
-                                    <button onClick={() => navigate('/testator')}>Edit</button>
-                                </div>
-                            </>
-                        ) : (
-                            <>
-                                <p>Please enter your details</p>
-                                <button onClick={() => navigate('/testator')}>Get Started</button>
-                            </>
-
-                        )}
-                    </div> */}
-
                     <TestatorTile />
 
 
