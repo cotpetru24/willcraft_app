@@ -6,7 +6,7 @@ import { faCheckSquare, faCheckCircle } from "@fortawesome/free-solid-svg-icons"
 
 
 
-const TestatorTile = () => {
+const FamilyTile = () => {
     const navigate = useNavigate();
 
     const [testatorInitialData, setTestatorInitialData] = useState({
@@ -38,7 +38,7 @@ const TestatorTile = () => {
 
                 <div className="creatingOrder-tile">
                     <div className="creatingOrder-tile-heading">
-                        <h2>About you</h2>
+                        <h2>Your Family</h2>
                         {testatorData ?(
                         <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />
                         ):(
@@ -64,7 +64,7 @@ const TestatorTile = () => {
                         </>
                     ) : (
                         <>
-                            <p>Tell us a little bit about yourself…</p>
+                            <p>Those most important to you. Your partner, children...</p>
                             <button onClick={() => navigate('/testator')}>Get Started</button>
                         </>
                     )}
@@ -75,4 +75,4 @@ const TestatorTile = () => {
     );
 }
 
-export default TestatorTile;
+export default FamilyTile;

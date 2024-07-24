@@ -422,27 +422,14 @@ h1 {
   /* background-color: #EFEBE9; */
 }
 
-.progress-bar-container ul {
 
+.progress-bar-container{
   display: flex;
-  justify-content: space-between;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  border-bottom: solid 2px #0C2A4D;
-  min-height: 50px;
+  width: 100%;
 }
 
-.progress-bar-container li {
-  flex: 1;
-  text-align: center;
-  font-weight: bold;
-  display: flex;
-  /* Set flexbox on each li */
-  align-items: center;
-  justify-content: center;
 
-}
+
 
 .full-width-progress {
   width: 100%;
@@ -494,7 +481,7 @@ h1 {
   height: 40px;
   width: 400px;
   padding-left: 10px;
-  background-color: #0C2A4D;
+  background-color: #3194F0;
   border: none;
   color: white;
   font-weight: bold;
@@ -550,7 +537,7 @@ h1 {
 }
 
 .executor-group button:hover {
-  background-color: rgb(102, 102, 102);
+  background-color: #e0218a;
   /* color:#0C2A4D; */
   cursor: pointer;
 }
@@ -598,9 +585,12 @@ h1 {
 
 .form-group button:hover {
 
-  background-color: rgb(102, 102, 102);
+  background-color: #e0218a;
+  /* background-color: #39EE86; */
   /* color:#0C2A4D; */
   cursor: pointer;
+  transition: 0.3s;
+  transform: scale(95%);
 }
 
 
@@ -1283,13 +1273,32 @@ ol {
   margin-right: auto;
 }
 
-.creatingOrder-heading {
+.creatingOrder-header {
   display: flex;
   flex-direction: row;
   width: 100%;
   justify-content: space-between;
+  padding-top: 10px;
+  height: 40px;
 }
 
+
+.creatingOrder-header-heading{
+  display: flex;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+}
+
+.creatingOrder-header-progressBar{
+  width: 50%;
+  display: block;
+  align-items: center; 
+  justify-content: center;
+  height: 100%;
+  margin-left: 5%;
+
+}
 .creatingOrder-tiles-and-instructions-container {
   display: flex;
   flex-direction: row;

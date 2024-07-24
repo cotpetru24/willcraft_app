@@ -21,29 +21,7 @@ const ProgressBar = () => {
   return (
     <section className='progress-bar'>
       <div className='progress-bar-container'>
-        <ul>
-          <li>
-            <Link >Testator</Link>
-          </li>
-          <li>
-            <Link >Executor</Link>
-          </li>
-          <li>
-            <Link >Assets</Link>
-          </li>
-          <li>
-            <Link >Beneficiaries</Link>
-          </li>
-          <li>
-            <Link >Asset Distribution</Link>
-          </li>
-          <li>
-            <Link >Review</Link>
-          </li>
-          <li>
-            <Link >Complete</Link>
-          </li>
-        </ul>
+
         <OrderProgressBar currentValue={0.08} maxValue={1} />
       </div>
     </section>
