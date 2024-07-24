@@ -40,6 +40,19 @@ const ReviewsCarousel = () => {
             showStatus={false}
             interval={3000}
             transitionTime={1000}
+
+
+            // showThumbs={false}
+            // showStatus={false}
+            // showIndicators={false}
+            // autoPlay={false} // Disable auto play to manage it manually
+            // infiniteLoop={true}
+            // interval={3000}
+            // transitionTime={1000} // Smooth transition time
+            // swipeable={false} // Disable swipe to enforce single direction
+            // emulateTouch={false} // Disable touch to enforce single direction
+
+
         >
             {slides.map((group, index) => (
                 <div key={index} className="carousel-group">
