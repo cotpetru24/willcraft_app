@@ -59,13 +59,13 @@ const FamilyTile = () => {
                                 <h4>Address:</h4> <p>{testatorInitialData.testatorFullAddress}</p>
                             </div>
                             <div>
-                                <button onClick={() => navigate('/testator')}>Edit</button>
+                                <button onClick={() => navigate('/family')}>Edit</button>
                             </div>
                         </>
                     ) : (
                         <>
                             <p>Those most important to you. Your partner, children...</p>
-                            <button onClick={() => navigate('/testator')}>Get Started</button>
+                            <button onClick={() => navigate('/family')}>Get Started</button>
                         </>
                     )}
                 </div>

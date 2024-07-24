@@ -18,6 +18,8 @@ import CreatingOrder from './components/CreatingOrder';
 import PersonForm from './components/PersonForm';
 import AssetForm from './components/AssetForm';
 import Prices from './components/Prices';
+import Family from './components/Family';
+
 
 function App() {
 
@@ -38,9 +40,10 @@ function App() {
             <Route path='/aboutus' element={<AboutUs/>}/>;
             <Route path='/dashboard' element={<Dashboard/>}/>;
             <Route path='/creatingOrder' element={<CreatingOrder/>}/>;
-            <Route path='/aboutYou' element={<PersonForm/>}/>;
+            {/* <Route path='/aboutYou' element={<PersonForm/>}/>; */}
             <Route path='/assets' element={<AssetForm/>}/>
             <Route path='/prices' element ={<Prices/>}/>;
+            <Route path='/family' element={<Family/>}/>;
           </Routes>
           <Footer />
         </div>

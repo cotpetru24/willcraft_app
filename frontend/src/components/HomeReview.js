@@ -21,7 +21,7 @@ const HomeReview = () => {
                 Jane
             </h4>
             <p>May 1990</p>
-            <p dangerouslySetInnerHTML={{ __html: formatReviewRating(4) }}></p>
+            <div className="review-starts-container" dangerouslySetInnerHTML={{ __html: formatReviewRating(4) }}></div>
             {/* <h4>Great Service!</h4> */}
          
 

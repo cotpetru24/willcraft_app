@@ -8,6 +8,7 @@ import { login, reset } from '../features/auth/authSlice';
 import './FontAwesomeSetup';
 import AboutUs from "./AboutUs";
 import Pricing from "./Prices";
+import ReviewsCarousel from "./ReviewsCarousel";
 
 
 
@@ -100,6 +101,7 @@ const Home = () => {
 
 
                 </div>
+                <ReviewsCarousel/>
                 <h4>Rating 4.8/5 based on 123 reviews. <Link to="/">View all reviews</Link></h4>
             </section>
         </>
