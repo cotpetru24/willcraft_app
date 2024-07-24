@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import PersonForm from "./PersonForm";
-import { createPerson, updatePerson } from "../features/order/orderSlice";
+import { createPerson, updateOrder, updatePerson } from "../features/order/orderSlice";
 
 const Family = () => {
   const dispatch = useDispatch();
@@ -43,14 +43,46 @@ const Family = () => {
     }
   }, [order]);
 
-  const onSubmit = (formData) => {
-    if (formData._id) {
-      dispatch(updatePerson({ id: formData._id, personData: formData }));
-    } else {
-      dispatch(createPerson(formData));
-    }
-    navigate('/creatingOrder');
-  };
+//   const onSubmit = (formData) => {
+//     if (formData._id) {
+//       await dispatch(updatePerson({ id: formData._id, personData: formData }));
+// then dispatch(updateOrder({id:formData._id, orderData:formData}))
+//     } else {
+//       dispatch(createPerson(formData));
+//       then dispatch(updateOrder({id:formData._id, orderData:formData}))
+
+//     }
+//     navigate('/creatingOrder');
+//   };
+
+// const onSubmit = async (formData) => {
+//   if (formData._id) {
+//     await dispatch(updatePerson({ id: formData._id, personData: formData }));
+//     const updatedState=() =>{
+//       const updatedOrderState =  useSelector(state => state.order);
+//     }
+
+//     await dispatch(updateOrder({ id: order._id, orderData: updatedOrderState }));//useState get the order id and the entire order from state
+//   } else {
+//     const createdPerson = await dispatch(createPerson(formData)).unwrap();
+//     await dispatch(updateOrder({ id: createdPerson._id, orderData: createdPerson }));
+//   }
+//   navigate('/creatingOrder');
+// };
+
+
+const onSubmit = async (formData) => {
+  if (formData._id) {
+    await dispatch(updatePerson({ id: formData._id, personData: formData }));
+    await dispatch(updateOrder({ id: order.orderId, orderData: order }));
+  } else {
+    const createdPerson = await dispatch(createPerson(formData)).unwrap();
+    await dispatch(updateOrder({ id: order.orderId, orderData: order }));
+  }
+  navigate('/creatingOrder');
+};
+
+
 
   return (
     <>

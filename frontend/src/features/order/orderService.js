@@ -51,6 +51,16 @@ const updatePerson = async(id, personData, token)=>{
      return (await response).data;
 }
 
-const orderService = { createOrder, getOrder, createPerson, getPerson, updatePerson };
+const updateOrder = async(id, orderData, token)=>{
+  const config ={
+    headers:{
+      Authorization:`Bearer ${token}`
+    }
+  }
+  const response = axios.put(API_ORDER_URL+id, orderData, config)
+  return (await response).data;
+}
+
+const orderService = { updateOrder, createOrder, getOrder, createPerson, getPerson, updatePerson };
 
 export default orderService;

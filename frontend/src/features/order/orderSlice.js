@@ -1,5 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import orderService from "./orderService";
+import {}
+// import {updaOrder} from
+
+console.log(orderService); // Add this line to log the orderService object
 
 const initialState = {
     orderId: '',
@@ -47,6 +51,19 @@ export const updatePerson = createAsyncThunk(
         try {
             const token = thunkAPI.getState().auth.user.token;
             return await orderService.updatePerson(id, personData, token)
+        } catch (error) {
+            const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+)
+
+export const updateOrder = createAsyncThunk(
+    'orders/updateOrder',
+    async ({ id, orderData }, thunkAPI) => {
+        try {
+            const token = thunkAPI.getState().auth.user.token;
+            return await orderService.updateOrder(id, orderData, token)
         } catch (error) {
             const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
             return thunkAPI.rejectWithValue(message);
@@ -109,6 +126,32 @@ const orderSlice = createSlice({
                 state.isError = true;
                 state.message = action.payload;
             })
+
+
+
+
+            .addCase(updateOrder.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(updateOrder.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.orderId = action.payload._id;
+                state.userId = action.payload.userId;
+                state.status = action.payload.status;
+                state.peopleAndRoles = action.payload.peopleAndRoles;
+                state.assetsAndDistribution = action.payload.assetsAndDistribution;
+            })
+            .addCase(updateOrder.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload;
+            })
+
+
+
+
+
             .addCase(getOrder.pending, (state) => {
                 state.isLoading = true;
             })
