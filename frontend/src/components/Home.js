@@ -93,14 +93,14 @@ const Home = () => {
             <section className="home-reviews-section">
                 <h1><Link to="/">Testimonials</Link></h1>
 
-                <div className="home-reviews-container">
+                {/* <div className="home-reviews-container">
                     <HomeReview />
                     <HomeReview />
                     <HomeReview />
                     <HomeReview />
 
 
-                </div>
+                </div> */}
                 <ReviewsCarousel/>
                 <h4>Rating 4.8/5 based on 123 reviews. <Link to="/">View all reviews</Link></h4>
             </section>
