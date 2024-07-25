@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import PersonForm from "./PersonForm";
-import useNavigateAndUpdateOrder from "../features/navigationHook";
+import useNavigateAndUpdateOrder from "../hooks/navigationHook";
 import { createPersonThunk, updateOrderThunk, updatePersonThunk } from "../features/order/orderSlice"; // Update imports
 
 const Family = () => {
