@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import PersonForm from "./PersonForm";
+import useNavigateAndUpdateOrder from "../features/navigationHook";
 import { createPersonThunk, updateOrderThunk, updatePersonThunk } from "../features/order/orderSlice"; // Update imports
 
 const Family = () => {
@@ -24,6 +25,7 @@ const Family = () => {
   }
 
   const [maritalStatus, setMaritalStatus] = useState('')
+  const [shouldNavigate, setShouldNavigate] = useState(false);
 
   useEffect(() => {
     const spouseData = order.peopleAndRoles.find(p => p.role.includes("spouse"));
@@ -44,17 +46,20 @@ const Family = () => {
   const onSubmit = async (formData) => {
     if (formData._id) {
       await dispatch(updatePersonThunk({ id: formData._id, personData: formData })); // Update thunk name
-      await dispatch(updateOrderThunk({ id: order.orderId, orderData: order })); // Update thunk name
+      setShouldNavigate(true);
     } else {
+      console.log('creating new person triggered');
       const createdPerson = await dispatch(createPersonThunk(formData)).unwrap(); // Update thunk name
-      if (createdPerson){
-        await dispatch(updateOrderThunk({ id: order.orderId, orderData: order })); // Update thunk name
-  
+      console.log(`the new person: ${JSON.stringify(createdPerson)}`);
+      if (createdPerson) {
+        console.log(`orderID= ${order.orderId}`);
+        console.log(`orderData= ${JSON.stringify(order)}`);
+        setShouldNavigate(true);
       }
     }
-
-    navigate('/creatingOrder');
   };
+
+  useNavigateAndUpdateOrder(shouldNavigate, order.orderId, order);
 
   return (
     <>
