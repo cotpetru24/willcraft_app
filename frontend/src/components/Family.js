@@ -102,7 +102,7 @@ const Family = () => {
           </div>
         </div>
 
-        {maritalStatus === 'spouseOrPartner' &&
+        {(maritalStatus === 'married' || maritalStatus === 'partner') &&
           (
             <div className="creatingOrder-section-main-content-container">
               <PersonForm
