@@ -80,16 +80,24 @@ const Family = () => {
 
         <div className="marital-status-container">
           <div>
-            <h4>Are you married or have a partner?</h4>
+            <h4>What is your marital status?</h4>
           </div>
           <div className="marital-status-options-container">
             <div className="marital-status-radio-container">
-              <input type="radio" id="marital-status-yes" name="marital-status" value="spouseOrPartner" onChange={handleMaritalStatusChange}></input>
-              <label htmlFor="marital-status-yes">Yes</label>
+              <input type="radio" id="marital-status-yes" name="marital-status" value="married" onChange={handleMaritalStatusChange}></input>
+              <label htmlFor="marital-status-yes">Married</label>
             </div>
             <div className="marital-status-radio-container">
-              <input type="radio" id="marital-status-no" name="marital-status" value="sigle" onChange={handleMaritalStatusChange}></input>
-              <label htmlFor="marital-status-no">No</label>
+              <input type="radio" id="marital-status-no" name="marital-status" value="partner" onChange={handleMaritalStatusChange}></input>
+              <label htmlFor="marital-status-no">Living with partner</label>
+            </div>
+            <div className="marital-status-radio-container">
+              <input type="radio" id="marital-status-no" name="marital-status" value="widowed" onChange={handleMaritalStatusChange}></input>
+              <label htmlFor="marital-status-no">Widowed</label>
+            </div>
+            <div className="marital-status-radio-container">
+              <input type="radio" id="marital-status-no" name="marital-status" value="single" onChange={handleMaritalStatusChange}></input>
+              <label htmlFor="marital-status-no">Single</label>
             </div>
           </div>
         </div>
