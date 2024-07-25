@@ -30,10 +30,12 @@ export const createPersonThunk = createAsyncThunk(
             const personResponse = await createPerson(updatedPersonData, token);
 
             if (!orderId) {
+                console.log('no order id')
                 const orderData = { peopleAndRoles: [{ personId: personResponse._id, role: ['testator'] }] };
                 const createdOrder = await thunkAPI.dispatch(createOrderThunk(orderData)).unwrap();
                 return { ...personResponse, orderId: createdOrder._id };
             } else {
+                console.log(`order id when creating oa new person ${orderId}`)
                 return personResponse;
             }
         } catch (error) {
@@ -164,8 +166,8 @@ const orderSlice = createSlice({
             .addCase(createPersonThunk.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
-                const { _id, title, fullLegalName, fullAddress, dob, email, tel, userId, orderId } = action.payload;
-                state.peopleAndRoles.push({ personId: { _id, title, fullLegalName, fullAddress, dob, email, tel, userId }, role: ['testator'] });
+                const { _id, title, fullLegalName, fullAddress, dob, email, tel, userId, orderId, role } = action.payload;
+                state.peopleAndRoles.push({ personId: { _id, title, fullLegalName, fullAddress, dob, email, tel, userId }, role: [role] });
             })
             .addCase(createPersonThunk.rejected, (state, action) => {
                 state.isLoading = false;
