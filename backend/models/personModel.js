@@ -26,6 +26,9 @@ const personSchema = new mongoose.Schema(
         tel: {
             type: String,
         },
+        maritalStatus :{
+            type:String,
+        },
         userId: {
             type: Schema.Types.ObjectId,
             ref: 'User',

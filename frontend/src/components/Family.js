@@ -28,7 +28,7 @@ const Family = () => {
   const [shouldNavigate, setShouldNavigate] = useState(false);
 
   useEffect(() => {
-    const spouseData = order.peopleAndRoles.find(p => p.role.includes("spouse"));
+    const spouseData = order.peopleAndRoles.find(p => p.role.includes("spouseOrPartner"));
     if (spouseData) {
       const { personId } = spouseData;
       setInitialSpouseFormData({
@@ -43,13 +43,13 @@ const Family = () => {
     }
   }, [order]);
 
-  const onSubmit = async (formData) => {
+  const onSubmit = async (formData, role) => {
     if (formData._id) {
       await dispatch(updatePersonThunk({ id: formData._id, personData: formData })); // Update thunk name
       setShouldNavigate(true);
     } else {
       console.log('creating new person triggered');
-      const createdPerson = await dispatch(createPersonThunk(formData)).unwrap(); // Update thunk name
+      const createdPerson = await dispatch(createPersonThunk({...formData, role})).unwrap(); // Update thunk name
       console.log(`the new person: ${JSON.stringify(createdPerson)}`);
       if (createdPerson) {
         console.log(`orderID= ${order.orderId}`);
@@ -88,7 +88,7 @@ const Family = () => {
           (
             <div className="creatingOrder-section-main-content-container">
               <PersonForm
-                role="partner"
+                role="spouseOrPartner"
                 initialFormData={initialSpouseFormData}
                 onSubmit={onSubmit}
               />

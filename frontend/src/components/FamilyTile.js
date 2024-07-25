@@ -19,7 +19,7 @@ const FamilyTile = () => {
 
     const order = useSelector(state => state.order);
 
-    const testatorData = order.peopleAndRoles.find(p => p.role.includes("spouse"));
+    const testatorData = order.peopleAndRoles.find(p => p.role.includes("spouseOrPartner"));
 
     useEffect(() => {
         if (testatorData) {
