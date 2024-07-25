@@ -21,7 +21,17 @@ const Family = () => {
   });
 
   const handleMaritalStatusChange = (e) => {
-    setMaritalStatus(e.target.value)
+    const newMaritalStatus = e.target.value;
+    setMaritalStatus(newMaritalStatus);
+
+    const testator = order.peopleAndRoles.find(p => p.role.includes("testator"));
+    if (testator) {
+      const testatorId = testator.personId._id;
+      console.log(`updating person id: ${testatorId} adding status ${newMaritalStatus}`)
+      dispatch(updatePersonThunk({ id: testatorId, personData: { maritalStatus: e.target.value } }))
+      console.log(`updating person after`)
+
+    }
   }
 
   const [maritalStatus, setMaritalStatus] = useState('')
@@ -49,7 +59,7 @@ const Family = () => {
       setShouldNavigate(true);
     } else {
       console.log('creating new person triggered');
-      const createdPerson = await dispatch(createPersonThunk({...formData, role})).unwrap(); // Update thunk name
+      const createdPerson = await dispatch(createPersonThunk({ ...formData, role })).unwrap(); // Update thunk name
       console.log(`the new person: ${JSON.stringify(createdPerson)}`);
       if (createdPerson) {
         console.log(`orderID= ${order.orderId}`);
@@ -74,17 +84,17 @@ const Family = () => {
           </div>
           <div className="marital-status-options-container">
             <div className="marital-status-radio-container">
-              <input type="radio" id="marital-status-yes" name="marital-status" value="yes" onChange={handleMaritalStatusChange}></input>
+              <input type="radio" id="marital-status-yes" name="marital-status" value="spouseOrPartner" onChange={handleMaritalStatusChange}></input>
               <label htmlFor="marital-status-yes">Yes</label>
             </div>
             <div className="marital-status-radio-container">
-              <input type="radio" id="marital-status-no" name="marital-status" value="no" onChange={handleMaritalStatusChange}></input>
+              <input type="radio" id="marital-status-no" name="marital-status" value="sigle" onChange={handleMaritalStatusChange}></input>
               <label htmlFor="marital-status-no">No</label>
             </div>
           </div>
         </div>
 
-        {maritalStatus === 'yes' &&
+        {maritalStatus === 'spouseOrPartner' &&
           (
             <div className="creatingOrder-section-main-content-container">
               <PersonForm

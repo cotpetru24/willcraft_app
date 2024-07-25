@@ -23,6 +23,8 @@ export const updatePersonThunk = createAsyncThunk(
         try {
             const token = thunkAPI.getState().auth.user.token;
             return await updatePerson(id, personData, token);
+            console.log(`update person called`)
+
         } catch (error) {
             const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
             return thunkAPI.rejectWithValue(message);
@@ -73,35 +75,6 @@ export const getOrderThunk = createAsyncThunk(
     }
 );
 
-
-// Thunk for creating a person and optionally creating an order
-// export const createPersonThunk = createAsyncThunk(
-//     'orders/createPerson',
-//     async (personData, thunkAPI) => {
-//         const userId = thunkAPI.getState().auth.user._id;
-//         const updatedPersonData = { ...personData, userId };
-
-//         try {
-//             const token = thunkAPI.getState().auth.user.token;
-//             const orderId = thunkAPI.getState().order.orderId;
-
-//             const personResponse = await createPerson(updatedPersonData, token);
-
-//             if (!orderId) {
-//                 console.log('no order id')
-//                 const orderData = { peopleAndRoles: [{ personId: personResponse._id, role: ['testator'] }] };
-//                 const createdOrder = await thunkAPI.dispatch(createOrderThunk(orderData)).unwrap();
-//                 return { ...personResponse, orderId: createdOrder._id };
-//             } else {
-//                 console.log(`order id when creating oa new person ${orderId}`)
-//                 return personResponse;
-//             }
-//         } catch (error) {
-//             const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-//             return thunkAPI.rejectWithValue(message);
-//         }
-//     }
-// );
 
 export const createPersonThunk = createAsyncThunk(
     'orders/createPerson',
@@ -207,9 +180,9 @@ const orderSlice = createSlice({
             .addCase(createPersonThunk.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
-                const { _id, title, fullLegalName, fullAddress, dob, email, tel, userId, orderId, role } = action.payload;
+                const { _id, title, fullLegalName, fullAddress, dob, email, tel, userId, orderId, role, maritalStatus } = action.payload;
                 state.peopleAndRoles.push({ 
-                  personId: { _id, title, fullLegalName, fullAddress, dob, email, tel, userId }, role: [role] // Use the role from the payload
+                  personId: { _id, title, fullLegalName, fullAddress, dob, email, tel, maritalStatus,  userId }, role: [role] // Use the role from the payload
                 });
               })
             .addCase(createPersonThunk.rejected, (state, action) => {
