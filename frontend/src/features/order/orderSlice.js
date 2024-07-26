@@ -228,11 +228,11 @@ const currentOrderSlice = createSlice({
             .addCase(updatePersonThunk.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
-                const updatedPerson = action.payload;
-                const personIndex = state.peopleAndRoles.findIndex(person => person.personId._id === updatedPerson._id);
-                if (personIndex >= 0) {
-                    state.peopleAndRoles[personIndex].personId = updatedPerson;
-                }
+                // const updatedPerson = action.payload;
+                // const personIndex = state.peopleAndRoles.findIndex(person => person.personId._id === updatedPerson._id);
+                // if (personIndex >= 0) {
+                //     state.peopleAndRoles[personIndex].personId = updatedPerson;
+                // }
             })
             .addCase(updatePersonThunk.rejected, (state, action) => {
                 state.isLoading = false;

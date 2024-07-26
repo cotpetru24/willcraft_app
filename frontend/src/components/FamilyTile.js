@@ -20,7 +20,7 @@ const FamilyTile = () => {
     const spouseOrPartnerData = useSelector(state => state.spouseOrPartner);
 
     const isSpouseDataComplete = (data) => {
-        return data.spouseOrPartnerData && data.spouseOrPartnerFullLegalName && data.spouseOrPartnerDob && data.spouseOrPartnerFullAddress;
+        return data.title && data.fullLegalName && data.dob && data.fullAddress;
     };
     const allNecessaryFieldsSpecified = isSpouseDataComplete(spouseOrPartnerData);
 

@@ -9,7 +9,10 @@ import OrderNavigation from "./OrderNavigation";
 const SpouseOrPartner = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const order = useSelector(state => state.order);
+  const currentOrder = useSelector(state => state.currentOrder);
+  const testator = useSelector(state=>state.testator)
+  const spouseOrPartnerData = useSelector(state=> state.spouseOrPartner)
+
 
   const [initialSpouseFormData, setInitialSpouseFormData] = useState({
     _id: '',
@@ -36,9 +39,8 @@ const SpouseOrPartner = () => {
     const newMaritalStatus = e.target.value;
     setMaritalStatus(newMaritalStatus);
 
-    const testator = order.peopleAndRoles.find(p => p.role.includes("testator"));
     if (testator) {
-      const testatorId = testator.personId._id;
+      const testatorId = testator._id;
       console.log(`updating person id: ${testatorId} adding status ${newMaritalStatus}`)
       dispatch(updatePersonThunk({ id: testatorId, personData: { maritalStatus: e.target.value } }))
       console.log(`updating person after`)
@@ -50,38 +52,36 @@ const SpouseOrPartner = () => {
   const [shouldNavigate, setShouldNavigate] = useState(false);
 
   useEffect(() => {
-    const spouseData = order.peopleAndRoles.find(p => p.role.includes("spouseOrPartner"));
-    if (spouseData) {
-      const { personId } = spouseData;
+    if (spouseOrPartnerData) {
       setInitialSpouseFormData({
-        _id: personId._id || '',
-        title: personId.title || '',
-        fullLegalName: personId.fullLegalName || '',
-        fullAddress: personId.fullAddress || '',
-        dob: personId.dob || '',
-        email: personId.email || '',
-        tel: personId.tel || ''
+        _id: spouseOrPartnerData._id || '',
+        title: spouseOrPartnerData.title || '',
+        fullLegalName: spouseOrPartnerData.fullLegalName || '',
+        fullAddress: spouseOrPartnerData.fullAddress || '',
+        dob: spouseOrPartnerData.dob || '',
+        email: spouseOrPartnerData.email || '',
+        tel: spouseOrPartnerData.tel || ''
       });
     }
-  }, [order]);
+  }, [spouseOrPartnerData]);
 
-  const onSubmit = async (formData, role) => {
-    if (formData._id) {
-      await dispatch(updatePersonThunk({ id: formData._id, personData: formData })); // Update thunk name
-      setShouldNavigate(true);
-    } else {
-      console.log('creating new person triggered');
-      const createdPerson = await dispatch(createPersonThunk({ ...formData, role })).unwrap(); // Update thunk name
-      console.log(`the new person: ${JSON.stringify(createdPerson)}`);
-      if (createdPerson) {
-        console.log(`orderID= ${order.orderId}`);
-        console.log(`orderData= ${JSON.stringify(order)}`);
-        setShouldNavigate(true);
-      }
-    }
-  };
+  // const onSubmit = async (formData, role) => {
+  //   if (formData._id) {
+  //     await dispatch(updatePersonThunk({ id: formData._id, personData: formData })); // Update thunk name
+  //     setShouldNavigate(true);
+  //   } else {
+  //     console.log('creating new person triggered');
+  //     const createdPerson = await dispatch(createPersonThunk({ ...formData, role })).unwrap(); // Update thunk name
+  //     console.log(`the new person: ${JSON.stringify(createdPerson)}`);
+  //     if (createdPerson) {
+  //       console.log(`orderID= ${currentOrder.orderId}`);
+  //       console.log(`orderData= ${JSON.stringify(currentOrder)}`);
+  //       setShouldNavigate(true);
+  //     }
+  //   }
+  // };
 
-  useNavigateAndUpdateOrder(shouldNavigate, order.orderId, order);
+  useNavigateAndUpdateOrder(shouldNavigate, currentOrder.orderId, currentOrder);
 
   return (
     <>
@@ -120,7 +120,7 @@ const SpouseOrPartner = () => {
               <PersonForm
                 role="spouseOrPartner"
                 initialFormData={initialSpouseFormData}
-                onSubmit={onSubmit}
+                // onSubmit={onSubmit}
               />
             </div>
           )}

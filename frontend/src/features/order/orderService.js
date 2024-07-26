@@ -126,5 +126,5 @@ export const updateOrder = async (id, orderData, token) => {
     }
   };
   const response = await axios.put(API_ORDER_URL + id, orderData, config);
-  return response.data;
+  return response.status;
 };

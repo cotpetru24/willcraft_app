@@ -21,7 +21,7 @@ const TestatorTile = () => {
     const testatorData = useSelector(state => state.testator);
 
     const isTestatorDataComplete = (data) => {
-        return data.testatorTitle && data.testatorFullLegalName && data.testatorDob && data.testatorFullAddress;
+        return data.title && data.fullLegalName && data.dob && data.fullAddress;
     };
     const allNecessaryFieldsSpecified = isTestatorDataComplete(testatorData);
 
