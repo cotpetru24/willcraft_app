@@ -6,11 +6,28 @@ import "flag-icon-css/css/flag-icons.min.css";
 import { useSelector } from "react-redux";
 import ListItem from "./ListItem";
 import PersonForm from "./PersonForm";
-
+import { useNavigate } from "react-router-dom";
+import OrderNavigation from "./OrderNavigation";
 
 
 const Family = () => {
+    const navigate = useNavigate()
 
+
+
+
+
+
+
+
+const handleBack = ()=>{
+    navigate('/spouseOrPartner')
+}
+
+const handleSaveAndContinue = ()=>{
+    console.log('saved the family sectio')
+navigate('/creatingOrder')
+}
 
     const handleCancel = () => {
         // Logic specific to Family when cancel is clicked
@@ -68,9 +85,9 @@ const Family = () => {
                                 <PersonForm
                                     role='children'
                                     initialFormData={''}
-                                    onCancel={handleCancel} 
+                                    onCancel={handleCancel}
                                     onSave={handleSave}
-                                    // onSubmit={onSubmit}
+                                // onSubmit={onSubmit}
                                 />
                             ) : (
                                 <button onClick={handleAddChildClick}>+ Add Children</button>
@@ -79,8 +96,10 @@ const Family = () => {
 
                             {/* <button onclick={handleAddChildClick}>+ Add Children</button> */}
                         </div>
-                        <button>Back</button>
-                        <button>Save and Continue</button>
+                        <OrderNavigation
+                            onBack={handleBack}
+                            onSaveAndContinue={handleSaveAndContinue}
+                        />
                     </div>
                 </section>
 

@@ -10,28 +10,33 @@ import SpouseOrPartner from "./SpouseOrPartner";
 const FamilyTile = () => {
     const navigate = useNavigate();
 
-    const [testatorInitialData, setTestatorInitialData] = useState({
-        testatorTitle: '',
-        testatorFullLegalName: '',
-        testatorDob: '',
-        testatorFullAddress: ''
+    const [spouseOrPartnerInitialData, setspouseOrPartnerInitialData] = useState({
+        spouseOrPartnerTitle: '',
+        spouseOrPartnerFullLegalName: '',
+        spouseOrPartnerDob: '',
+        spouseOrPartnerFullAddress: ''
     });
 
-    const order = useSelector(state => state.order);
+    const spouseOrPartnerData = useSelector(state => state.spouseOrPartner);
 
-    const testatorData = order.peopleAndRoles.find(p => p.role.includes("spouseOrPartner"));
+    const isSpouseDataComplete = (data) => {
+        return data.spouseOrPartnerData && data.spouseOrPartnerFullLegalName && data.spouseOrPartnerDob && data.spouseOrPartnerFullAddress;
+    };
+    const allNecessaryFieldsSpecified = isSpouseDataComplete(spouseOrPartnerData);
+
+
 
     useEffect(() => {
-        if (testatorData) {
-            const { personId } = testatorData;
-            setTestatorInitialData({
-                testatorTitle: personId.title || '',
-                testatorFullLegalName: personId.fullLegalName || '',
-                testatorDob: personId.dob || '',
-                testatorFullAddress: personId.fullAddress || '',
+        if (spouseOrPartnerData) {
+            // const { personId } = spouseOrPartnerData;
+            setspouseOrPartnerInitialData({
+                spouseOrPartnerTitle: spouseOrPartnerData.title || '',
+                spouseOrPartnerFullLegalName: spouseOrPartnerData.fullLegalName || '',
+                spouseOrPartnerDob: spouseOrPartnerData.dob || '',
+                spouseOrPartnerFullAddress: spouseOrPartnerData.fullAddress || '',
             });
         }
-    }, [order, testatorData]);
+    }, [spouseOrPartnerData]);
 
     return (
         <>
@@ -40,7 +45,7 @@ const FamilyTile = () => {
                 <div className="creatingOrder-tile">
                     <div className="creatingOrder-tile-heading">
                         <h2>Your Family</h2>
-                        {testatorData ?(
+                        {allNecessaryFieldsSpecified ?(
                         <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />
                         ):(
                             <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'grey' }} />
@@ -48,19 +53,19 @@ const FamilyTile = () => {
 
                     </div>
 
-                    {testatorData ? (
+                    {allNecessaryFieldsSpecified ? (
                         <>
                             <div>
-                                <h4>Name:</h4> <p>{testatorInitialData.testatorTitle} {testatorInitialData.testatorFullLegalName}</p>
+                                <h4>Name:</h4> <p>{spouseOrPartnerInitialData.spouseOrPartnerTitle} {spouseOrPartnerInitialData.spouseOrPartnerFullLegalName}</p>
                             </div>
                             <div>
-                                <h4>Date of birth:</h4> <p>{testatorInitialData.testatorDob}</p>
+                                <h4>Date of birth:</h4> <p>{spouseOrPartnerInitialData.spouseOrPartnerDob}</p>
                             </div>
                             <div>
-                                <h4>Address:</h4> <p>{testatorInitialData.testatorFullAddress}</p>
+                                <h4>Address:</h4> <p>{spouseOrPartnerInitialData.spouseOrPartnerFullAddress}</p>
                             </div>
                             <div>
-                                <button onClick={() => navigate('/family')}>Edit</button>
+                                <button onClick={() => navigate('/spouseOrPartner')}>Edit</button>
                             </div>
                         </>
                     ) : (

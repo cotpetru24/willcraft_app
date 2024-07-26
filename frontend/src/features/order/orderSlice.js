@@ -1,5 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { updateOrder, createOrder, getOrder, createPerson, getPerson, updatePerson } from "./orderService"; // Import named exports
+import { updateTestatorSlice } from "../people/testatorSlice";
+import { updateSpouseOrPartnerSlice } from "../people/spouseOrPartnerSlice";
+
 
 console.log({ updateOrder, createOrder, getOrder, createPerson, getPerson, updatePerson }); // Add this line to debug
 
@@ -7,13 +10,10 @@ const initialState = {
     orderId: '',
     userId: '',
     status: '',
-    peopleAndRoles: [],
-    assetsAndDistribution: [],
     isError: false,
     isSuccess: false,
     isLoading: false,
     message: '',
-    currentStep: 0,
 };
 
 
@@ -62,18 +62,52 @@ export const createOrderThunk = createAsyncThunk(
 );
 
 // Thunk for getting an order
+// export const getOrderThunk = createAsyncThunk(
+//     'orders/getOrder',
+//     async (id, thunkAPI) => {
+//         try {
+//             const token = thunkAPI.getState().auth.user.token;
+//             return await getOrder(id, token);
+//         } catch (error) {
+//             const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+//             return thunkAPI.rejectWithValue(message);
+//         }
+//     }
+// );
+
+
+
 export const getOrderThunk = createAsyncThunk(
     'orders/getOrder',
     async (id, thunkAPI) => {
         try {
             const token = thunkAPI.getState().auth.user.token;
-            return await getOrder(id, token);
+            const order = await getOrder(id, token);
+
+            // Dispatch actions to update relevant slices
+            const testatorRole = order.peopleAndRoles.find(p => p.role.includes("testator"));
+            if (testatorRole) {
+                thunkAPI.dispatch(updateTestatorSlice(testatorRole.personId));
+            }
+
+            const spouseRole = order.peopleAndRoles.find(p => p.role.includes("spouseOrPartner"));
+            if (spouseRole) {
+                thunkAPI.dispatch(updateSpouseOrPartnerSlice(spouseRole.personId));
+            }
+
+            // const familyRoles = order.peopleAndRoles.filter(p => p.role.includes("family"));
+            // familyRoles.forEach(familyRole => {
+            //     thunkAPI.dispatch(updateFamilySlice(familyRole.personId));
+            // });
+
+            return order;
         } catch (error) {
             const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
             return thunkAPI.rejectWithValue(message);
         }
     }
 );
+
 
 
 export const createPersonThunk = createAsyncThunk(
@@ -106,8 +140,8 @@ export const createPersonThunk = createAsyncThunk(
   
 
 
-const orderSlice = createSlice({
-    name: 'order',
+const currentOrderSlice = createSlice({
+    name: 'currentOrder',
     initialState,
     reducers: {
         reset: (state) => initialState,
@@ -157,8 +191,6 @@ const orderSlice = createSlice({
                 state.orderId = action.payload._id;
                 state.userId = action.payload.userId;
                 state.status = action.payload.status;
-                state.peopleAndRoles = action.payload.peopleAndRoles;
-                state.assetsAndDistribution = action.payload.assetsAndDistribution;
             })
             .addCase(getOrderThunk.rejected, (state, action) => {
                 state.isLoading = false;
@@ -210,6 +242,6 @@ const orderSlice = createSlice({
     },
 });
 
-export const { reset } = orderSlice.actions;
+export const { reset } = currentOrderSlice.actions;
 
-export default orderSlice.reducer;
+export default currentOrderSlice.reducer;

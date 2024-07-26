@@ -5,7 +5,13 @@ import { getOrders, reset } from "../features/orders/ordersSlice";
 import Spinner from "./Spinner";
 import { useNavigate } from "react-router-dom";
 import OrderItem from "./OrderItem";
-import { reset as resetOrder } from "../features/order/orderSlice";
+import { reset as resetCurrentOrder } from "../features/order/orderSlice";
+import { reset as resetTestator } from "../features/people/testatorSlice";
+import { reset as resetSpouseOrPartner } from "../features/people/spouseOrPartnerSlice";
+import { reset as resetChildren } from "../features/people/childrenSlice";
+
+
+
 
 
 
@@ -20,10 +26,14 @@ const OrdersList = () => {
     const order = useSelector(state => state.order)
 
 
-    const handleCreateWill = () => {
-        dispatch(resetOrder())
+    const handleCreateWill = async () => {
+        await dispatch(resetCurrentOrder())
+        await dispatch(resetTestator())
+        await dispatch(resetSpouseOrPartner())
+        await dispatch(resetChildren())
         navigate('/creatingOrder');
     };
+
 
     useEffect(() => {
         if (isError) console.log(message)

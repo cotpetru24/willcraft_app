@@ -55,6 +55,17 @@ const testatorSlice = createSlice({
     name: 'testator',
     initialState,
     reducers: {
+        updateTestatorSlice: (state, action) => {
+            const { _id, title, fullLegalName, fullAddress, dob, email, tel, maritalStatus } = action.payload;
+            state._id = _id;
+            state.title = title;
+            state.fullLegalName = fullLegalName;
+            state.fullAddress = fullAddress;
+            state.dob = dob;
+            state.email = email || '';
+            state.tel = tel || '';
+            state.maritalStatus = maritalStatus || '';
+        },
         reset: (state) => initialState,
     },
     extraReducers: (builder) => {
@@ -107,7 +118,7 @@ const testatorSlice = createSlice({
     },
 });
 
-export const { reset } = testatorSlice.actions;
+export const { updateTestatorSlice, reset } = testatorSlice.actions;
 
 export default testatorSlice.reducer;
 

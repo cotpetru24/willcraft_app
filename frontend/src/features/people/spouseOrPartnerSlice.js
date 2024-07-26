@@ -54,6 +54,16 @@ const spouseOrPartnerSlice = createSlice({
     name: 'spouseOrPartner',
     initialState,
     reducers: {
+        updateSpouseOrPartnerSlice: (state, action) => {
+            const { _id, title, fullLegalName, fullAddress, dob, email, tel } = action.payload;
+            state._id = _id;
+            state.title = title;
+            state.fullLegalName = fullLegalName;
+            state.fullAddress = fullAddress;
+            state.dob = dob;
+            state.email = email || '';
+            state.tel = tel || '';
+        },
         reset: (state) => initialState,
     },
     extraReducers: (builder) => {
@@ -104,7 +114,7 @@ const spouseOrPartnerSlice = createSlice({
     },
 });
 
-export const { reset } = spouseOrPartnerSlice.actions;
+export const { updateSpouseOrPartnerSlice, reset } = spouseOrPartnerSlice.actions;
 
 export default spouseOrPartnerSlice.reducer;
 

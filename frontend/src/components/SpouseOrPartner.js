@@ -21,6 +21,17 @@ const SpouseOrPartner = () => {
     tel: ''
   });
 
+
+  const handleBack = () => {
+    navigate('/creatingOrder');
+  };
+
+  const handleSaveAndContinue = () => {
+    console.log("spouse form saved");
+    navigate('/family');
+  };
+
+
   const handleMaritalStatusChange = (e) => {
     const newMaritalStatus = e.target.value;
     setMaritalStatus(newMaritalStatus);
@@ -113,12 +124,12 @@ const SpouseOrPartner = () => {
               />
             </div>
           )}
-        <div className="creatingOrder-section-navigation-container">
-          <button onClick={() => { navigate('/creatingOrder') }}>Back</button>
-        </div>
 
-        <OrderNavigation/>
 
+        <OrderNavigation
+          onBack={handleBack}
+          onSaveAndContinue={handleSaveAndContinue}
+        />
       </section>
     </>
   );

@@ -7,6 +7,8 @@ import { faCheckSquare, faCheckCircle } from "@fortawesome/free-solid-svg-icons"
 
 
 const TestatorTile = () => {
+
+
     const navigate = useNavigate();
 
     const [testatorInitialData, setTestatorInitialData] = useState({
@@ -16,21 +18,24 @@ const TestatorTile = () => {
         testatorFullAddress: ''
     });
 
-    const order = useSelector(state => state.order);
+    const testatorData = useSelector(state => state.testator);
 
-    const testatorData = order.peopleAndRoles.find(p => p.role.includes("testator"));
+    const isTestatorDataComplete = (data) => {
+        return data.testatorTitle && data.testatorFullLegalName && data.testatorDob && data.testatorFullAddress;
+    };
+    const allNecessaryFieldsSpecified = isTestatorDataComplete(testatorData);
+
 
     useEffect(() => {
         if (testatorData) {
-            const { personId } = testatorData;
             setTestatorInitialData({
-                testatorTitle: personId.title || '',
-                testatorFullLegalName: personId.fullLegalName || '',
-                testatorDob: personId.dob || '',
-                testatorFullAddress: personId.fullAddress || '',
+                testatorTitle: testatorData.title || '',
+                testatorFullLegalName: testatorData.fullLegalName || '',
+                testatorDob: testatorData.dob || '',
+                testatorFullAddress: testatorData.fullAddress || '',
             });
         }
-    }, [order, testatorData]);
+    }, [testatorData]);
 
     return (
         <>
@@ -39,7 +44,7 @@ const TestatorTile = () => {
                 <div className="creatingOrder-tile">
                     <div className="creatingOrder-tile-heading">
                         <h2>About you</h2>
-                        {testatorData ?(
+                        {allNecessaryFieldsSpecified ?(
                         <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />
                         ):(
                             <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'grey' }} />
@@ -47,7 +52,7 @@ const TestatorTile = () => {
 
                     </div>
 
-                    {testatorData ? (
+                    {allNecessaryFieldsSpecified ? (
                         <>
                             <div>
                                 <h4>Name:</h4> <p>{testatorInitialData.testatorTitle} {testatorInitialData.testatorFullLegalName}</p>

@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from '../features/auth/authSlice';
-import orderReducer from '../features/order/orderSlice';
+import currentOrderReducer from '../features/order/orderSlice';
 import ordersReducer from '../features/orders/ordersSlice';
 import testatorReducer from '../features/people/testatorSlice';
 import spouseOrPartnerReducer from '../features/people/spouseOrPartnerSlice';
@@ -14,7 +14,7 @@ export const store = configureStore({
   reducer: {
     auth: authReducer,  
     orders: ordersReducer,
-    order: orderReducer,
+    currentOrder: currentOrderReducer,
     step: stepReducer,
     testator:testatorReducer,
     spouseOrPartner: spouseOrPartnerReducer,

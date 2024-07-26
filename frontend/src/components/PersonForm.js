@@ -5,23 +5,20 @@ import DateInput from "./DateInput";
 
 const PersonForm = ({ role, initialFormData, onCancel, onSave }) => {
   const [formData, setFormData] = useState(initialFormData);
-  const order = useSelector(state => state.order);
 
   useEffect(() => {
-    const personData = order.peopleAndRoles.find(p => p.role.includes(role));
-    if (personData) {
-      const { personId } = personData;
+    if (initialFormData) {
       setFormData({
-        _id: personId._id || '',
-        title: personId.title || '',
-        fullLegalName: personId.fullLegalName || '',
-        fullAddress: personId.fullAddress || '',
-        dob: personId.dob || '',
-        email: personId.email || '',
-        tel: personId.tel || ''
+        _id: initialFormData._id || '',
+        title: initialFormData.title || '',
+        fullLegalName: initialFormData.fullLegalName || '',
+        fullAddress: initialFormData.fullAddress || '',
+        dob: initialFormData.dob || '',
+        email: initialFormData.email || '',
+        tel: initialFormData.tel || ''
       });
     }
-  }, [order, role]);
+  }, [initialFormData]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -116,8 +113,8 @@ const PersonForm = ({ role, initialFormData, onCancel, onSave }) => {
             />
           </div>
           <div className="creatingOrder-section-navigation-container">
-            <button type="button" onClick={onCancel}>Cancel</button>
-            <button type="submit" onClick={onSave}>Save and continue</button>
+            {/* <button type="button" onClick={onCancel}>Cancel</button>
+            <button type="submit" onClick={onSave}>Save and continue</button> */}
           </div>
         </section>
       </div>
