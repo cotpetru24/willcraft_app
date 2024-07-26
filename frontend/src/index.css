@@ -31,7 +31,7 @@ body {
 
   /* background: linear-gradient(to bottom, #2C2C2C 0%, #1E1E1E 200px, #1E1E1E 100%); */
 
-/* asta */
+  /* asta */
   /* background: linear-gradient(to bottom, #060008 22%, #140018 1000px, #060008 100%); */
 
   /* background: linear-gradient(to bottom, #1f1b24 0%, #332940 500px, #332940 100%); */
@@ -88,11 +88,11 @@ a {
 
 
   /* text-shadow: */
-    /* 0 0 5px rgba(255, 69, 0, 0.8), */
-    /* 0 0 10px rgba(255, 69, 0, 0.8), */
-    /* 0 0 15px rgba(255, 69, 0, 0.8), */
-    /* 0 0 20px rgba(255, 69, 0, 0.8), */
-    /* 0 0 25px rgba(255, 69, 0, 0.8); */
+  /* 0 0 5px rgba(255, 69, 0, 0.8), */
+  /* 0 0 10px rgba(255, 69, 0, 0.8), */
+  /* 0 0 15px rgba(255, 69, 0, 0.8), */
+  /* 0 0 20px rgba(255, 69, 0, 0.8), */
+  /* 0 0 25px rgba(255, 69, 0, 0.8); */
 
   /* padding-top: 40px; */
 
@@ -372,7 +372,7 @@ a {
   /* max-height: 100px; */
 
   margin-left: 10px;
-  width:150px
+  width: 150px
 }
 
 
@@ -423,7 +423,7 @@ h1 {
 }
 
 
-.progress-bar-container{
+.progress-bar-container {
   display: flex;
   width: 100%;
 }
@@ -916,16 +916,18 @@ h4 {
 
 
 }
-.review-starts-container{
+
+.review-starts-container {
   display: flex;
   flex-direction: row;
   width: 100%;
 }
+
 /* .review-starts-container img{
   width: 30px;
 } */
 
-.carousel .slide img{
+.carousel .slide img {
   width: 20px;
 }
 
@@ -938,7 +940,7 @@ h4 {
 
 .carousel-group > * {
   /* flex: 1; */
-  /* width: 250px;
+/* width: 250px;
   margin: 0 10px; */
 
 
@@ -952,6 +954,7 @@ h4 {
   width: 250px;
   margin: 0 10px;
 }
+
 .pricing-component-container {
   justify-content: center;
   align-items: center;
@@ -1318,22 +1321,23 @@ ol {
 }
 
 
-.creatingOrder-header-heading{
+.creatingOrder-header-heading {
   display: flex;
   align-items: center;
   width: 50%;
   height: 100%;
 }
 
-.creatingOrder-header-progressBar{
+.creatingOrder-header-progressBar {
   width: 50%;
   display: block;
-  align-items: center; 
+  align-items: center;
   justify-content: center;
   height: 100%;
   margin-left: 5%;
 
 }
+
 .creatingOrder-tiles-and-instructions-container {
   display: flex;
   flex-direction: row;
@@ -1482,30 +1486,46 @@ ol {
   align-items: center;
 }
 
-.marital-status-options-container{
+.marital-status-options-container {
   display: flex;
   flex-direction: row;
 }
 
-.marital-status-radio-container{
-display: flex;
-flex-direction: row;
-margin: 10px;
+.marital-status-radio-container {
+  display: flex;
+  flex-direction: row;
+  margin: 10px;
 }
 
-#marital-status-yes+ label, 
-#marital-status-no + label{
+#marital-status-yes+label,
+#marital-status-no+label {
   padding-left: 5px;
 }
 
 
 
+.list-item-container {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  /* height: 100%; */
+  min-height: 100px;
+  border: 1px solid darkgray;
+  border-radius: 10px;
+  padding: 10px
+}
 
-
-
-
-
-
+.list-item-btns-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: end;
+  /* align-items: end; */
+}
+.list-item-btns-container button{
+  width: 50px;
+margin-left: 10px;
+}
 
 
 
@@ -1531,4 +1551,3 @@ margin: 10px;
     transform: rotate(360deg);
   }
 }
-

@@ -9,7 +9,7 @@ import AssetsTile from "./AssetsTile";
 import ExecutorsTile from "./ExecutorsTile";
 import AssetsDistributionTile from "./AssetsDistributionTile";
 import ProgressBar from "./ProgressBar";
-import Family from "./Family";
+import Family from "./SpouseOrPartner";
 
 
 

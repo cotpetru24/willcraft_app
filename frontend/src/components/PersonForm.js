@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import AddressAutocomplete from "./AddressAutocomplete";
 import DateInput from "./DateInput";
 
-const PersonForm = ({ role, initialFormData, onSubmit }) => {
+const PersonForm = ({ role, initialFormData, onCancel, onSave }) => {
   const [formData, setFormData] = useState(initialFormData);
   const order = useSelector(state => state.order);
 
@@ -38,15 +38,16 @@ const PersonForm = ({ role, initialFormData, onSubmit }) => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit(formData, role);
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   onSubmit(formData, role);
+  // };
 
   const titles = ['', 'Mr', 'Mrs', 'Ms', 'Miss', 'Dr', 'Prof', 'Rev', 'Hon'];
 
   return (
-    <form onSubmit={handleSubmit}>
+    // <form onSubmit={handleSubmit}>
+    <form>
       <div className="section-container">
         <section className="form person-form">
           <div className="title-and-fullName-container">
@@ -115,7 +116,8 @@ const PersonForm = ({ role, initialFormData, onSubmit }) => {
             />
           </div>
           <div className="creatingOrder-section-navigation-container">
-            <button type="submit">Save and continue</button>
+            <button type="button" onClick={onCancel}>Cancel</button>
+            <button type="submit" onClick={onSave}>Save and continue</button>
           </div>
         </section>
       </div>

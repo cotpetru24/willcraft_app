@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckSquare, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
-import Family from "./Family";
+import SpouseOrPartner from "./SpouseOrPartner";
 
 
 
@@ -66,7 +66,9 @@ const FamilyTile = () => {
                     ) : (
                         <>
                             <p>Those most important to you. Your partner, children...</p>
+                            {/* <button onClick={() => navigate('/spouseOrPartner')}>Get Started</button> */}
                             <button onClick={() => navigate('/family')}>Get Started</button>
+
                         </>
                     )}
                 </div>

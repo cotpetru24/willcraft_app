@@ -18,6 +18,7 @@ import CreatingOrder from './components/CreatingOrder';
 import PersonForm from './components/PersonForm';
 import AssetForm from './components/AssetForm';
 import Prices from './components/Prices';
+import SpouseOrPartner from './components/SpouseOrPartner';
 import Family from './components/Family';
 
 
@@ -29,21 +30,20 @@ function App() {
       <Router>
         <div className='container'>
           <Header />
-          {/* <ProgressBar/> */}
           <Routes>
             <Route path='/' element={<Home />} />;
             <Route path='/login' element={<Login />} />;
             <Route path='/register' element={<Register />} />;
             <Route path='/testator' element={<Testator />} />;
+            <Route path='/family' element={<Family />} />;
             <Route path='/executors' element={<Executor />} />;
             <Route path='/progressBar' element={<ProgressBar />} />;
-            <Route path='/aboutus' element={<AboutUs/>}/>;
-            <Route path='/dashboard' element={<Dashboard/>}/>;
-            <Route path='/creatingOrder' element={<CreatingOrder/>}/>;
-            {/* <Route path='/aboutYou' element={<PersonForm/>}/>; */}
-            <Route path='/assets' element={<AssetForm/>}/>
-            <Route path='/prices' element ={<Prices/>}/>;
-            <Route path='/family' element={<Family/>}/>;
+            <Route path='/aboutus' element={<AboutUs />} />;
+            <Route path='/dashboard' element={<Dashboard />} />;
+            <Route path='/creatingOrder' element={<CreatingOrder />} />;
+            <Route path='/assets' element={<AssetForm />} />
+            <Route path='/prices' element={<Prices />} />;
+            <Route path='/spouseOrPartner' element={<SpouseOrPartner />} />;
           </Routes>
           <Footer />
         </div>

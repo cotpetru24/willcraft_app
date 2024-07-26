@@ -65,7 +65,7 @@ const ExecutorsTile = () => {
                     ) : (
                         <>
                             <p>Who will carry out your wishes…</p>
-                            <button onClick={() => navigate('/family')}>Get Started</button>
+                            <button onClick={() => navigate('/spouseOrPartner')}>Get Started</button>
                         </>
                     )}
                 </div>
