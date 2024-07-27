@@ -1,31 +1,46 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import AddressAutocomplete from "./AddressAutocomplete";
 import DateInput from "./DateInput";
+import { useSelector, useDispatch } from "react-redux";
+import { updateTestatorSlice } from "../features/people/testatorSlice";
 
-const PersonForm = ({ role, initialFormData, onCancel, onSave }) => {
-  const [formData, setFormData] = useState(initialFormData);
+const PersonForm = ({ role, onSave }) => {
+  const dispatch = useDispatch();
+  const formDataFromState = useSelector((state) => state[role]);
+
+  const [formData, setFormData] = useState({
+    _id: '',
+    title: '',
+    fullLegalName: '',
+    fullAddress: '',
+    dob: '',
+    email: '',
+    tel: ''
+  });
 
   useEffect(() => {
-    if (initialFormData) {
+    if (formDataFromState) {
       setFormData({
-        _id: initialFormData._id || '',
-        title: initialFormData.title || '',
-        fullLegalName: initialFormData.fullLegalName || '',
-        fullAddress: initialFormData.fullAddress || '',
-        dob: initialFormData.dob || '',
-        email: initialFormData.email || '',
-        tel: initialFormData.tel || ''
+        _id: formDataFromState._id || '',
+        title: formDataFromState.title || '',
+        fullLegalName: formDataFromState.fullLegalName || '',
+        fullAddress: formDataFromState.fullAddress || '',
+        dob: formDataFromState.dob || '',
+        email: formDataFromState.email || '',
+        tel: formDataFromState.tel || ''
       });
     }
-  }, [initialFormData]);
+  }, [formDataFromState]);
 
-  const handleInputChange = (e) => {
+  const handleOnChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value
     });
+
+    // Dispatch the change to the Redux store
+    dispatch(updateTestatorSlice({ ...formData, [name]: value }));
   };
 
   const handlePlaceSelected = (place) => {
@@ -33,18 +48,20 @@ const PersonForm = ({ role, initialFormData, onCancel, onSave }) => {
       ...formData,
       fullAddress: place.formatted_address || ''
     });
+
+    // Dispatch the change to the Redux store
+    dispatch(updateTestatorSlice({ ...formData, fullAddress: place.formatted_address || '' }));
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   onSubmit(formData, role);
-  // };
+  const handleSave = (e) => {
+    e.preventDefault();
+    onSave(formData, role);
+  };
 
   const titles = ['', 'Mr', 'Mrs', 'Ms', 'Miss', 'Dr', 'Prof', 'Rev', 'Hon'];
 
   return (
-    // <form onSubmit={handleSubmit}>
-    <form>
+    <form onSubmit={handleSave}>
       <div className="section-container">
         <section className="form person-form">
           <div className="title-and-fullName-container">
@@ -54,7 +71,7 @@ const PersonForm = ({ role, initialFormData, onCancel, onSave }) => {
                 id="title"
                 name="title"
                 value={formData.title}
-                onChange={handleInputChange}
+                onChange={handleOnChange}
                 required
               >
                 {titles.map(title => (
@@ -71,7 +88,7 @@ const PersonForm = ({ role, initialFormData, onCancel, onSave }) => {
                 id="fullLegalName"
                 name="fullLegalName"
                 value={formData.fullLegalName}
-                onChange={handleInputChange}
+                onChange={handleOnChange}
                 required
               />
             </div>
@@ -82,14 +99,16 @@ const PersonForm = ({ role, initialFormData, onCancel, onSave }) => {
               name="fullAddress"
               value={formData.fullAddress}
               onPlaceSelected={handlePlaceSelected}
-              handleInputChange={handleInputChange}
+              handleInputChange={handleOnChange}
             />
           </div>
           <div className="form-group">
             <label htmlFor="dob">Date of Birth</label>
             <DateInput
+              id="dob"
+              name="dob"
               value={formData.dob}
-              onChange={handleInputChange}
+              onChange={handleOnChange}
             />
           </div>
           <div className="form-group">
@@ -99,7 +118,7 @@ const PersonForm = ({ role, initialFormData, onCancel, onSave }) => {
               id="email"
               name="email"
               value={formData.email}
-              onChange={handleInputChange}
+              onChange={handleOnChange}
             />
           </div>
           <div className="form-group">
@@ -109,12 +128,8 @@ const PersonForm = ({ role, initialFormData, onCancel, onSave }) => {
               id="tel"
               name="tel"
               value={formData.tel}
-              onChange={handleInputChange}
+              onChange={handleOnChange}
             />
-          </div>
-          <div className="creatingOrder-section-navigation-container">
-            {/* <button type="button" onClick={onCancel}>Cancel</button>
-            <button type="submit" onClick={onSave}>Save and continue</button> */}
           </div>
         </section>
       </div>

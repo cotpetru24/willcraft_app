@@ -23,7 +23,8 @@ export const store = configureStore({
     assets: orderAssetsReducer,
     executorsSlice: executorsReducer,
 
-  }
+  },
+  devTools: process.env.NODE_ENV !== 'production',
 });
 
 

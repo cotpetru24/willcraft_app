@@ -1271,7 +1271,7 @@ ol {
   width: 400px;
 }
 
-.date-group #title {
+.name-group #title {
   width: 70px;
   border: solid 1px darkgray;
   border-radius: 3px;
@@ -1282,7 +1282,7 @@ ol {
 
 
 
-.date-group #fullLegalName {
+.name-group #fullLegalName {
   width: 320px;
   border: solid 1px darkgray;
   border-radius: 3px;
@@ -1292,7 +1292,7 @@ ol {
 
 
 
-.date-group label {
+.name-group label {
   display: flex;
   font-weight: bolder;
   margin-bottom: 3px;

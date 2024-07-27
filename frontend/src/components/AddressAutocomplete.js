@@ -1,3 +1,4 @@
+// AddressAutocomplete.js
 import React, { useEffect, useRef } from 'react';
 import { useLoadScript } from '@react-google-maps/api';
 
@@ -20,7 +21,9 @@ const AddressAutocomplete = ({ name, value, onPlaceSelected, handleInputChange }
 
       autocomplete.addListener('place_changed', () => {
         const place = autocomplete.getPlace();
-        onPlaceSelected(place);
+        if (place.formatted_address) {
+          onPlaceSelected(place.formatted_address);
+        }
       });
     }
   }, [isLoaded, loadError, onPlaceSelected]);
