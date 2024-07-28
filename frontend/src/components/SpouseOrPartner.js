@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import PersonForm from "./PersonForm";
 import useNavigateAndUpdateOrder from "../hooks/navigationHook";
-import { createPersonThunk, updateOrderThunk, updatePersonThunk } from "../features/order/orderSlice"; // Update imports
 import OrderNavigation from "./OrderNavigation";
+import { updatePersonThunk } from "../features/people/peopleThunks";
 
 const SpouseOrPartner = () => {
   const dispatch = useDispatch();

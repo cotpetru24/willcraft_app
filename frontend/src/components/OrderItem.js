@@ -33,6 +33,7 @@ const OrderItem = ({ order }) => {
                 {order.status === "CreatingOrder" && (
                     <button
                         onClick={async () => {
+                            console.log(`should have loaded order id :${order._id}`)
                             dispatch(getOrderThunk(order._id));
                             navigate('/creatingOrder');
                         }}

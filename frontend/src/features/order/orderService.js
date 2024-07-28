@@ -1,7 +1,3 @@
-// import axios from 'axios';
-
-// const API_ORDER_URL = '/api/orders/';
-// const API_PEOPLE_URL = '/api/orders/people/';
 
 // // Order-related API calls
 // const createOrder = async (orderData, token) => {
@@ -14,43 +10,9 @@
 //   return response.data;
 // };
 
-// const getOrder = async (id, token) => {
-//   const config = {
-//     headers: {
-//       Authorization: `Bearer ${token}`
-//     }
-//   };
-//   const response = await axios.get(API_ORDER_URL + id, config);
-//   return response.data;
-// };
-
-// // People-related API calls
-// const createPerson = async (personData, token) => {
-//   const config = {
-//     headers: {
-//       Authorization: `Bearer ${token}`
-//     }
-//   };
-//   const response = await axios.post(API_PEOPLE_URL, personData, config);
-//   return response.data;
-// };
-
-// const getPerson = async () => {
-//   const response = await axios.get(API_PEOPLE_URL);
-//   return response.data;
-// };
 
 
-// const updatePerson = async(id, personData, token)=>{
-//     const config = {
-//         headers: {
-//             Authorization:`Bearer ${token}`
-//         }
-//     }
-//      const response = axios.put(API_PEOPLE_URL+id, personData,config);
-//      return (await response).data;
-// }
-
+//
 // const updateOrder = async(id, orderData, token)=>{
 //   const config ={
 //     headers:{
@@ -70,7 +32,7 @@
 import axios from 'axios';
 
 const API_ORDER_URL = '/api/orders/';
-const API_PEOPLE_URL = '/api/orders/people/';
+
 
 // Order-related API calls
 export const createOrder = async (orderData, token) => {
@@ -83,41 +45,49 @@ export const createOrder = async (orderData, token) => {
   return response.data;
 };
 
+// export const getOrder = async (id, token) => {
+//   console.log(`get order called in orderservice with id ${id}`)
+//   const config = {
+//     headers: {
+//       Authorization: `Bearer ${token}`
+//     }
+//   };
+//   console.log(`get order url in orderservice: ${API_ORDER_URL + id}`)
+
+//   const response = await axios.get(API_ORDER_URL + id, config);
+//   return response.data;
+// };
+
 export const getOrder = async (id, token) => {
+  console.log(`get order called in orderservice with id ${id}`);
   const config = {
     headers: {
       Authorization: `Bearer ${token}`
     }
   };
+  console.log(`get order url in orderservice: ${API_ORDER_URL + id}`);
+
   const response = await axios.get(API_ORDER_URL + id, config);
+  console.log(`API response from getOrder:`, response.data); // Log the API response
   return response.data;
 };
 
-// People-related API calls
-export const createPerson = async (personData, token) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  };
-  const response = await axios.post(API_PEOPLE_URL, personData, config);
-  return response.data;
-};
 
-export const getPerson = async () => {
-  const response = await axios.get(API_PEOPLE_URL);
-  return response.data;
-};
 
-export const updatePerson = async (id, personData, token) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  };
-  const response = await axios.put(API_PEOPLE_URL + id, personData, config);
-  return response.data;
-};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export const updateOrder = async (id, orderData, token) => {
   const config = {
@@ -128,3 +98,6 @@ export const updateOrder = async (id, orderData, token) => {
   const response = await axios.put(API_ORDER_URL + id, orderData, config);
   return response.status;
 };
+
+
+

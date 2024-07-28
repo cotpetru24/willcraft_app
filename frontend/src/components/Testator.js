@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import OrderNavigation from "./OrderNavigation";
 import AddressAutocomplete from "./AddressAutocomplete";
@@ -6,12 +6,17 @@ import DateInput from "./DateInput";
 import constants from "../common/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { updateTestatorSlice } from "../features/people/testatorSlice";
+import { createPersonThunk, updatePersonThunk } from "../features/people/peopleThunks";
 
 const Testator = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const testator = useSelector((state) => state.testator);
+
+
+  // Use useRef to store the "saved" state
+  const savedTestatorData = useRef(null);
 
   const [testatorFormData, setTestatorFormData] = useState({
     _id: '',
@@ -34,16 +39,34 @@ const Testator = () => {
         email: testator.email || '',
         tel: testator.tel || ''
       });
+
+      // Store the initial state as "saved" state if it's not already saved
+      if (!savedTestatorData.current) {
+        savedTestatorData.current = JSON.parse(JSON.stringify(testator));
+      }
+
     }
   }, [testator]);
 
-  const handleSaveAndContinue = () => {
+
+  const handleBack = () => {
+    // Revert to the "saved" state
+    if (savedTestatorData.current) {
+      dispatch(updateTestatorSlice(savedTestatorData.current));
+    }
     navigate('/creatingOrder');
   };
 
-  const handleBack = () => {
+
+  const handleSaveAndContinue = async () => {
+    if (!testator._id) {
+     await dispatch(createPersonThunk(testator));
+    } else {
+      await dispatch(updatePersonThunk(testator));
+    }
     navigate('/creatingOrder');
   };
+  
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -56,6 +79,7 @@ const Testator = () => {
     dispatch(updateTestatorSlice({ ...testatorFormData, [name]: value }));
   };
 
+  
   const handlePlaceSelected = (address) => {
     setTestatorFormData((prevData) => ({
       ...prevData,

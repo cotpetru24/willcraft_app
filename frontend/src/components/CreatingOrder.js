@@ -37,10 +37,10 @@ const CreatingOrder = () => {
 
                 <div className="creatingOrder-tiles">
                     <TestatorTile />
-                    <FamilyTile />
+                    {/* <FamilyTile />
                     <AssetsTile />
                     <AssetsDistributionTile />
-                    <ExecutorsTile />
+                    <ExecutorsTile /> */}
                 </div>
 
 

@@ -3,7 +3,7 @@ const API_URL = '/api/people/';
 
 
 
-const createPerson = async (personData, token) => {
+export const createPerson = async (personData, token) => {
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
@@ -13,12 +13,20 @@ const createPerson = async (personData, token) => {
     return response.data;
 }
 
+export const updatePerson = async (personData, token)=>{
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.put(API_URL+personData._id, personData, config)
+    return response.data;
+}
 
-const getPerson = async () => {
+export const getPerson = async () => {
     const response = await axios.get(API_URL);
     return response;
 }
-
-const peopleService = { getPerson, createPerson };
+const peopleService = { getPerson, createPerson, updatePerson };
 
 export default peopleService;

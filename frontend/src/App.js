@@ -34,16 +34,22 @@ function App() {
             <Route path='/' element={<Home />} />;
             <Route path='/login' element={<Login />} />;
             <Route path='/register' element={<Register />} />;
-            <Route path='/testator' element={<Testator />} />;
-            <Route path='/family' element={<Family />} />;
-            <Route path='/executors' element={<Executor />} />;
-            <Route path='/progressBar' element={<ProgressBar />} />;
             <Route path='/aboutus' element={<AboutUs />} />;
+            <Route path='/prices' element={<Prices />} />;
             <Route path='/dashboard' element={<Dashboard />} />;
             <Route path='/creatingOrder' element={<CreatingOrder />} />;
+
+
+
+            <Route path='/testator' element={<Testator />} />;
+
+
+
+            {/* <Route path='/family' element={<Family />} />;
+            <Route path='/executors' element={<Executor />} />;
+            <Route path='/progressBar' element={<ProgressBar />} />;
             <Route path='/assets' element={<AssetForm />} />
-            <Route path='/prices' element={<Prices />} />;
-            <Route path='/spouseOrPartner' element={<SpouseOrPartner />} />;
+            <Route path='/spouseOrPartner' element={<SpouseOrPartner />} />; */}
           </Routes>
           <Footer />
         </div>

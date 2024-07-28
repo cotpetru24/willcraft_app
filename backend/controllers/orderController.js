@@ -13,7 +13,6 @@ export const createOrder = asyncHandler(async (req, res) => {
     }
 
     const order = await Order.create({
-        // userId: req.body.userId,
         userId: req.user.id,
         peopleAndRoles: req.body.peopleAndRoles,
         assetsAndDistribution: req.body.assetsAndDistribution
