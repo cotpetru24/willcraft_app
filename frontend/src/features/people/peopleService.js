@@ -23,10 +23,10 @@ export const updatePerson = async (personData, token)=>{
     return response.data;
 }
 
-export const getPerson = async () => {
-    const response = await axios.get(API_URL);
-    return response;
-}
-const peopleService = { getPerson, createPerson, updatePerson };
+// export const getPerson = async () => {
+//     const response = await axios.get(API_URL);
+//     return response;
+// }
+const peopleService = { createPerson, updatePerson };
 
 export default peopleService;

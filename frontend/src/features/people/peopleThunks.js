@@ -58,26 +58,6 @@ export const updatePersonThunk = createAsyncThunk(
     }
 );
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // export const getPerson = createAsyncThunk('people/fetchPeople', async (_, thunkApi) => {
 //     try {
 //         return await peopleService.fetchPeople();

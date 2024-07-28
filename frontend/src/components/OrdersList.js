@@ -29,8 +29,8 @@ const OrdersList = () => {
     const handleCreateWill = async () => {
         await dispatch(resetCurrentOrder())
         await dispatch(resetTestator())
-        await dispatch(resetSpouseOrPartner())
-        await dispatch(resetChildren())
+        // await dispatch(resetSpouseOrPartner())
+        // await dispatch(resetChildren())
         navigate('/creatingOrder');
     };
 
