@@ -14,7 +14,7 @@ const initialState = {
 };
 
 
-//-------------------this one is checked and is correct
+
 // Thunk for creating an order
 export const createOrderThunk = createAsyncThunk(
     'orders/createOrder',
@@ -54,41 +54,35 @@ export const getOrderThunk = createAsyncThunk(
     }
 );
 
-
-
-
-
-
-
-
-
-
-
 //need to test this function--------------------------
+// export const updateOrderThunk = createAsyncThunk(
+//     'orders/updateOrder',
+//     async ({ id, orderData }, thunkAPI) => {
+//         try {
+//             const token = thunkAPI.getState().auth.user.token;
+//             return await updateOrder(id, orderData, token);
+//         } catch (error) {
+//             const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+//             return thunkAPI.rejectWithValue(message);
+//         }
+//     }
+// );
+
 export const updateOrderThunk = createAsyncThunk(
     'orders/updateOrder',
-    async ({ id, orderData }, thunkAPI) => {
-        try {
-            const token = thunkAPI.getState().auth.user.token;
-            return await updateOrder(id, orderData, token);
-        } catch (error) {
-            const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-            return thunkAPI.rejectWithValue(message);
-        }
+    async ({ id, updateType, updateData }, thunkAPI) => {
+
+        console.log(`update order called in order slice`)
+      try {
+        const token = thunkAPI.getState().auth.user.token;
+        return await updateOrder(id, updateType, updateData, token);
+      } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+        return thunkAPI.rejectWithValue(message);
+      }
     }
-);
-
-
-
-
-
-
-
-
-
-
-
-
+  );
+  
 
 
 const currentOrderSlice = createSlice({
@@ -99,6 +93,8 @@ const currentOrderSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+
+
             .addCase(createOrderThunk.pending, (state) => {
                 state.isLoading = true;
             })
@@ -116,6 +112,8 @@ const currentOrderSlice = createSlice({
                 state.isError = true;
                 state.message = action.payload;
             })
+
+
             .addCase(updateOrderThunk.pending, (state) => {
                 state.isLoading = true;
             })
@@ -133,6 +131,8 @@ const currentOrderSlice = createSlice({
                 state.isError = true;
                 state.message = action.payload;
             })
+
+
             .addCase(getOrderThunk.pending, (state) => {
                 state.isLoading = true;
             })

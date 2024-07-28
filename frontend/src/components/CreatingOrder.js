@@ -4,12 +4,11 @@ import PersonForm from "./PersonForm";
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import TestatorTile from "./TestatorTile";
-import FamilyTile from "./FamilyTile";
+import SpouseOrPartnerTile from "./SpouseOrPartnerTile";
 import AssetsTile from "./AssetsTile";
 import ExecutorsTile from "./ExecutorsTile";
 import AssetsDistributionTile from "./AssetsDistributionTile";
 import ProgressBar from "./ProgressBar";
-import Family from "./SpouseOrPartner";
 
 
 
@@ -37,8 +36,8 @@ const CreatingOrder = () => {
 
                 <div className="creatingOrder-tiles">
                     <TestatorTile />
-                    {/* <FamilyTile />
-                    <AssetsTile />
+                    <SpouseOrPartnerTile />
+                   {/* <AssetsTile />
                     <AssetsDistributionTile />
                     <ExecutorsTile /> */}
                 </div>

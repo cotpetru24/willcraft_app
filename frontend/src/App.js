@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Children } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './components/Home';
 import Login from './components/Login';
@@ -19,7 +19,7 @@ import PersonForm from './components/PersonForm';
 import AssetForm from './components/AssetForm';
 import Prices from './components/Prices';
 import SpouseOrPartner from './components/SpouseOrPartner';
-import Family from './components/Family';
+import Kids from './components/Kids'
 
 
 function App() {
@@ -38,18 +38,19 @@ function App() {
             <Route path='/prices' element={<Prices />} />;
             <Route path='/dashboard' element={<Dashboard />} />;
             <Route path='/creatingOrder' element={<CreatingOrder />} />;
-
-
-
             <Route path='/testator' element={<Testator />} />;
+            <Route path='/spouseOrPartner' element={<SpouseOrPartner />} />;
+            <Route path='/kids' element={<Kids />} />;
 
 
 
-            {/* <Route path='/family' element={<Family />} />;
+            {/* 
             <Route path='/executors' element={<Executor />} />;
             <Route path='/progressBar' element={<ProgressBar />} />;
             <Route path='/assets' element={<AssetForm />} />
-            <Route path='/spouseOrPartner' element={<SpouseOrPartner />} />; */}
+               */}
+
+               
           </Routes>
           <Footer />
         </div>

@@ -21,8 +21,36 @@ export const createOrder = asyncHandler(async (req, res) => {
     res.status(200).json(order);
 });
 
+// export const updateOrder = asyncHandler(async (req, res) => {
+//     const { id: orderId } = req.params;
+
+//     const order = await Order.findById(orderId);
+//     if (!order) {
+//         res.status(404);
+//         throw new Error('Order not found');
+//     }
+
+//     const updatedOrder = await Order.findByIdAndUpdate(
+//         orderId,
+//         req.body,
+//         { new: true }
+//     )
+//     .populate('peopleAndRoles.personId')
+//     .populate('assetsAndDistribution.assetId')
+//     .populate({
+//         path: 'assetsAndDistribution.distribution',
+//         populate: {
+//             path: 'personId',
+//             model: 'Person'
+//         }
+//     });
+
+//     res.status(200).json(updatedOrder);
+// });
+
 export const updateOrder = asyncHandler(async (req, res) => {
     const { id: orderId } = req.params;
+    const { updateType, updateData } = req.body;
 
     const order = await Order.findById(orderId);
     if (!order) {
@@ -30,23 +58,50 @@ export const updateOrder = asyncHandler(async (req, res) => {
         throw new Error('Order not found');
     }
 
-    const updatedOrder = await Order.findByIdAndUpdate(
-        orderId,
-        req.body,
-        { new: true }
-    )
-    .populate('peopleAndRoles.personId')
-    .populate('assetsAndDistribution.assetId')
-    .populate({
-        path: 'assetsAndDistribution.distribution',
-        populate: {
-            path: 'personId',
-            model: 'Person'
-        }
-    });
+    // Determine the update type and perform the update
+    switch (updateType) {
+        case 'peopleAndRoles':
+            const { personId, role } = updateData;
+            const personIndex = order.peopleAndRoles.findIndex(pr => pr.personId.toString() === personId);
+            if (personIndex > -1) {
+                order.peopleAndRoles[personIndex].role = role;
+            } else {
+                res.status(404).json({ message: 'Person not found in peopleAndRoles' });
+                return;
+            }
+            break;
+        case 'assetsAndDistribution':
+            order.assetsAndDistribution.push(updateData);
+            break;
+        case 'status':
+            order.status = updateData;
+            break;
+        default:
+            res.status(400).json({ message: 'Invalid update type' });
+            return;
+    }
+
+    // Save the updated order
+    const updatedOrder = await order.save();
+
+    // Populate necessary fields
+    await updatedOrder.populate('peopleAndRoles.personId')
+        .populate('assetsAndDistribution.assetId')
+        .populate({
+            path: 'assetsAndDistribution.distribution',
+            populate: {
+                path: 'personId',
+                model: 'Person'
+            }
+        }).execPopulate();
 
     res.status(200).json(updatedOrder);
 });
+
+
+
+
+
 
 // Get orders
 export const getOrder = asyncHandler(async (req, res) => {
@@ -72,6 +127,7 @@ export const getOrder = asyncHandler(async (req, res) => {
 });
 
 export const getAllUserOrders = asyncHandler(async (req, res) => {
+    console.log(`gett all user orders calle din order controller. user id - ${req.user.id}`)
     // Fetch orders by user ID
     const orders = await Order.find({ userId: req.user.id }).populate('peopleAndRoles.personId');
 

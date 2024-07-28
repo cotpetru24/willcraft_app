@@ -17,7 +17,7 @@ export const store = configureStore({
     currentOrder: currentOrderReducer,
     step: stepReducer,
     testator:testatorReducer,
-    // spouseOrPartner: spouseOrPartnerReducer,
+    spouseOrPartner: spouseOrPartnerReducer,
     // children: childrenReducer,
     // beneficiaries: beneficiariesReducer,
     // assets: orderAssetsReducer,
