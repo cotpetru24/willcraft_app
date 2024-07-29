@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { updateOrder, createOrder, getOrder, createPerson, getPerson, updatePerson } from "./orderService"; // Import named exports
 import { updateTestatorSlice } from "../people/testatorSlice";
+import { updateSpouseOrPartnerSlice } from "../people/spouseOrPartnerSlice";
 
 
 const initialState = {
@@ -38,12 +39,15 @@ export const getOrderThunk = createAsyncThunk(
             const token = thunkAPI.getState().auth.user.token;
             const response = await getOrder(id, token);
             const testator = response.peopleAndRoles.find(p => p.role.includes("testator"));
+            const spouseOrPartner = response.peopleAndRoles.find(p => p.role.includes("spouse" || "partner"));
+
 
             // Ensure response contains the testator data
             if (!testator) {
                 throw new Error('Testator data is missing in the response');
             }
             thunkAPI.dispatch(updateTestatorSlice(testator.personId));
+            thunkAPI.dispatch(updateSpouseOrPartnerSlice(spouseOrPartner.personId))
 
             return response;
         } catch (error) {
