@@ -5,8 +5,6 @@ import currentOrderReducer from '../features/order/orderSlice';
 import ordersReducer from '../features/orders/ordersSlice';
 import testatorReducer from '../features/people/testatorSlice';
 import spouseOrPartnerReducer from '../features/people/spouseOrPartnerSlice';
-import beneficiariesReducer from '../features/people/beneficiariesSlice';
-import executorsReducer from '../features/people/executors/executorsSlice';
 import orderAssetsReducer from '../features/orderAssets/orderAssetsSlice';
 import stepReducer from '../features/orderSteps/orderStepSlice'
 
