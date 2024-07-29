@@ -16,6 +16,8 @@ const SpouseOrPartner = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const currentOrder = useSelector(state => state.currentOrder);
+  const currentOrderId = currentOrder.orderId;
+  console.log(`current orderId = ${currentOrder.orderId}`);
   const testator = useSelector(state => state.testator)
   const spouseOrPartner = useSelector(state => state.spouseOrPartner)
 
@@ -72,6 +74,7 @@ const SpouseOrPartner = () => {
   };
 
   const handleSaveAndContinue = async () => {
+    console.log(`current orderId in handlesaveandnavifgate = ${currentOrder.orderId}`)
     if (!spouseOrPartner._id) {
       const createSpouseOrPartnerResponse = await dispatch(createPersonThunk(spouseOrPartner)).unwrap();
 
@@ -82,7 +85,7 @@ const SpouseOrPartner = () => {
         console.log(`role for updating the order = ${role}.    in spouse or partner commponent`)
 
         await dispatch(updateOrderThunk({
-          id: currentOrder._id,
+          id: currentOrderId,
           updateType: 'peopleAndRoles',
           updateData: {
             personId: createSpouseOrPartnerResponse._id, // The ID of the person whose role you want to update

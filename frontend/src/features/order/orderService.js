@@ -43,6 +43,6 @@ export const updateOrder = async (id, updateType, updateData, token) => {
       // 'Content-Type': 'application/json'
     }
   };
-  const response = await axios.put(`${API_ORDER_URL}+${id}`, { updateType, updateData }, config);
+  const response = await axios.put(API_ORDER_URL+id, { updateType, updateData }, config);
   return response.data;
 };
