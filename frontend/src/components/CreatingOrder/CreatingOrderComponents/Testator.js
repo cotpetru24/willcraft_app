@@ -14,7 +14,6 @@ const Testator = () => {
 
   const testator = useSelector((state) => state.testator);
 
-
   // Use useRef to store the "saved" state
   const savedTestatorData = useRef(null);
 
@@ -25,8 +24,10 @@ const Testator = () => {
     fullAddress: '',
     dob: '',
     email: '',
-    tel: ''
+    tel: '',
+    maritalStatus: '',
   });
+
 
   useEffect(() => {
     if (testator) {
@@ -37,7 +38,8 @@ const Testator = () => {
         fullAddress: testator.fullAddress || '',
         dob: testator.dob || '',
         email: testator.email || '',
-        tel: testator.tel || ''
+        tel: testator.tel || '',
+        maritalStatus: testator.maritalStatus || '',
       });
 
       // Store the initial state as "saved" state if it's not already saved
@@ -46,7 +48,8 @@ const Testator = () => {
       }
 
     }
-  }, [testator]);
+  }, [testator]
+  );
 
 
   const handleBack = () => {
@@ -60,13 +63,13 @@ const Testator = () => {
 
   const handleSaveAndContinue = async () => {
     if (!testator._id) {
-     await dispatch(testatorThunks.createTestatorThunk(testator));
+      await dispatch(testatorThunks.createTestatorThunk(testator));
     } else {
       await dispatch(testatorThunks.updateTestatorThunk(testator));
     }
     navigate('/creatingOrder');
   };
-  
+
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -79,7 +82,7 @@ const Testator = () => {
     dispatch(updateTestatorSlice({ ...testatorFormData, [name]: value }));
   };
 
-  
+
   const handlePlaceSelected = (address) => {
     setTestatorFormData((prevData) => ({
       ...prevData,
@@ -89,6 +92,7 @@ const Testator = () => {
     // Dispatch the change to the Redux store
     dispatch(updateTestatorSlice({ ...testatorFormData, fullAddress: address }));
   };
+
 
   return (
     <>
@@ -110,8 +114,8 @@ const Testator = () => {
                       onChange={handleOnChange}
                       required
                     >
-                      {constants.titles.map(title => (
-                        <option key={title} value={title}>
+                      {Object.values(constants.title).map((title, index) => (
+                        <option key={index} value={title}>
                           {title}
                         </option>
                       ))}

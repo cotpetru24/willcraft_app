@@ -1,35 +1,35 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { createOrderThunk } from "../../order/orderSlice";
 import peopleService from "../peopleService";
+import constants from "../../../common/constants";
 
 
 export const createTestatorThunk = createAsyncThunk(
     'people/createTestator',
-    async (personData, thunkApi) => {
+    async (testatorData, thunkApi) => {
+
         // Get the userId from the state
         const userId = thunkApi.getState().auth.user._id;
-        // Add userId to personData
-        const updatedPersonData = { ...personData, userId };
 
+        // Add userId to personData
+        const updatedTestatorData = { ...testatorData, userId };
 
         try {
             const token = thunkApi.getState().auth.user.token;
-            const createPersonResponse = await peopleService.createPerson(updatedPersonData, token);
+            const createTestatorResponse = await peopleService.createPerson(updatedTestatorData, token);
 
             //create a new order if there is no orderId
             const orderId = thunkApi.getState().currentOrder.orderId;
             if (!orderId) {
                 const orderData = {
-                    peopleAndRoles: [{ personId: createPersonResponse._id, role: ['testator'] }],
+                    peopleAndRoles: [{ personId: createTestatorResponse._id, role: [constants.role.TESTATOR] }],
                 };
+                const createNewOrderResponse = await thunkApi.dispatch(createOrderThunk(orderData)).unwrap();
 
-                const newOrder = await thunkApi.dispatch(createOrderThunk(orderData)).unwrap();
-
-                return { ...createPersonResponse, orderId: newOrder._id }; // Return both person and new order ID
+                return { ...createTestatorResponse, orderId: createNewOrderResponse._id }; // Return both person and new order ID
             } else {
-                return createPersonResponse;
+                return createTestatorResponse;
             }
-
         }
         catch (error) {
             const message =
@@ -38,38 +38,26 @@ export const createTestatorThunk = createAsyncThunk(
                 || error.toString();
             return thunkApi.rejectWithValue(message);
         }
-    });
+    }
+);
+
 
 export const updateTestatorThunk = createAsyncThunk(
     'people/updateTestator',
-    async (personData, thunkAPI) => {
+    async (testatorData, thunkAPI) => {
         try {
             const token = thunkAPI.getState().auth.user.token;
+            const updateTestatorResponse = await peopleService.updatePerson(testatorData, token);
 
-
-            //add this to people service
-            return await peopleService.updatePerson( personData, token);
-
-
-        } catch (error) {
+            return updateTestatorResponse;
+        }
+        catch (error) {
             const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
             return thunkAPI.rejectWithValue(message);
         }
     }
 );
 
-// export const getPerson = createAsyncThunk('people/fetchPeople', async (_, thunkApi) => {
-//     try {
-//         return await peopleService.fetchPeople();
-//     }
-//     catch (error) {
-//         const message =
-//             (error.response && error.response.data && error.response.data.message)
-//             || error.message
-//             || error.toString();
-//         return thunkApi.rejectWithValue(message);
-//     }
-// });
 
 const testatorThunks = {
     createTestatorThunk,

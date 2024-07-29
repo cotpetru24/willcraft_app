@@ -277,10 +277,10 @@ const SpouseOrPartner = () => {
                         onChange={handleOnChange}
                         required
                       >
-                        {constants.titles.map(title => (
-                          <option key={title} value={title}>
-                            {title}
-                          </option>
+                      {Object.values(constants.title).map((title, index) => (
+                        <option key={index} value={title}>
+                          {title}
+                        </option>
                         ))}
                       </select>
                     </div>
