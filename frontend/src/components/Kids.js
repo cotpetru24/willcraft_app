@@ -3,7 +3,7 @@ import constants from "../common/constants"
 import AddressAutocomplete from "./AddressAutocomplete"
 import DateInput from "./DateInput"
 
-const handleKidsFormSave =()=>{
+const handleKidsFormSave = () => {
 
 }
 
@@ -23,27 +23,35 @@ export const Kids = () => {
                             <ul>
                                 <li>
                                     <div className="section-list-item-container">
-                                        <div className="section-list-item-gropu">
+                                        <div className="section-list-item-group">
                                             <h5>Child Name Here: Name Test</h5>
                                         </div>
-                                        <div className="section-list-item-gropu">
+                                        <div className="section-list-item-group">
                                             <h5>Child Address Here: Address Test</h5>
                                         </div>
-                                        <div className="section-list-item-gropu">
+                                        <div className="section-list-item-group">
                                             <h5>Child date of birth Here: 01/01/1900</h5>
+                                        </div>
+                                        <div className="section-list-item-btns-container">
+                                            <button className="section-list-item-btn">Edit</button>
+                                            <button className="section-list-item-btn">Remove</button>
                                         </div>
                                     </div>
                                 </li>
                                 <li>
                                     <div className="section-list-item-container">
-                                        <div className="section-list-item-gropu">
+                                        <div className="section-list-item-group">
                                             <h5>Child Name Here: Name Test</h5>
                                         </div>
-                                        <div className="section-list-item-gropu">
+                                        <div className="section-list-item-group">
                                             <h5>Child Address Here: Address Test</h5>
                                         </div>
-                                        <div className="section-list-item-gropu">
+                                        <div className="section-list-item-group">
                                             <h5>Child date of birth Here: 01/01/1900</h5>
+                                        </div>
+                                        <div className="section-list-item-btns-container">
+                                            <button className="section-list-item-btn">Edit</button>
+                                            <button className="section-list-item-btn">Remove</button>
                                         </div>
                                     </div>
                                 </li>
@@ -140,6 +148,6 @@ export const Kids = () => {
         </>
     )
 
-} 
+}
 
 export default Kids

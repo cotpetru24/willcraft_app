@@ -416,6 +416,7 @@ h1 {
 
 .container {
   min-height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -1522,9 +1523,10 @@ ol {
   justify-content: end;
   /* align-items: end; */
 }
-.list-item-btns-container button{
+
+.list-item-btns-container button {
   width: 50px;
-margin-left: 10px;
+  margin-left: 10px;
 }
 
 
@@ -1532,8 +1534,72 @@ margin-left: 10px;
 
 
 
+.section-heading-container {
+  width: 100%;
+}
+.section-content-container{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.section-form-container{
+  margin-left: 20px;
+}
+
+.form-btns-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.section-navigation-container{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
 
 
+.section-controll-container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.section-list-item-container{
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  border: 1px solid darkgray;
+  border-radius: 5px;
+  padding:10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+
+}
+
+.section-list-item-group{
+  margin-bottom: 5px;
+}
+
+.section-list-item-btns-container{
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: end;
+
+}
+
+.section-list-item-btn{
+  width: 70px;
+  margin-left: 10px;
+}
 
 
 
