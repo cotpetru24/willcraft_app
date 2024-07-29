@@ -2,6 +2,7 @@ import OrderNavigation from "../CreatigOrderNavigation"
 import constants from "../../../common/constants"
 import AddressAutocomplete from "../../Common/AddressAutocomplete"
 import DateInput from "../../Common/DateInput"
+import SectionListItem from "../../SectionListItem"
 
 const handleKidsFormSave = () => {
 
@@ -20,7 +21,7 @@ export const Kids = () => {
                 <div className="section-content-container">
                     <div className="section-controll-container">
                         <div className="section-list-container">
-                            <ul>
+                            {/* <ul>
                                 <li>
                                     <div className="section-list-item-container">
                                         <div className="section-list-item-group">
@@ -55,7 +56,9 @@ export const Kids = () => {
                                         </div>
                                     </div>
                                 </li>
-                            </ul>
+                            </ul> */}
+                            <SectionListItem/>
+                            <SectionListItem/>
                         </div>
                         <div className="sectio-add-btn-container">
                             <button className="section-add-btn"> +Add children</button>
