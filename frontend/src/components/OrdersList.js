@@ -8,7 +8,6 @@ import OrderItem from "./OrderItem";
 import { reset as resetCurrentOrder } from "../features/order/orderSlice";
 import { reset as resetTestator } from "../features/people/testatorSlice";
 import { reset as resetSpouseOrPartner } from "../features/people/spouseOrPartnerSlice";
-import { reset as resetChildren } from "../features/people/childrenSlice";
 
 
 

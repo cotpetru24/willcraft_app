@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
+import logger from 'redux-logger'
 import authReducer from '../features/auth/authSlice';
 import currentOrderReducer from '../features/order/orderSlice';
 import ordersReducer from '../features/orders/ordersSlice';
 import testatorReducer from '../features/people/testatorSlice';
 import spouseOrPartnerReducer from '../features/people/spouseOrPartnerSlice';
-import childrenReducer from '../features/people/childrenSlice';
 import beneficiariesReducer from '../features/people/beneficiariesSlice';
-import executorsReducer from '../features/people/executorsSlice';
+import executorsReducer from '../features/people/executors/executorsSlice';
 import orderAssetsReducer from '../features/orderAssets/orderAssetsSlice';
 import stepReducer from '../features/orderSteps/orderStepSlice'
 
@@ -24,6 +24,7 @@ export const store = configureStore({
     // executorsSlice: executorsReducer,
 
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
   devTools: process.env.NODE_ENV !== 'production',
 });
 
