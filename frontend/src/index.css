@@ -1266,7 +1266,7 @@ ol {
 }
 
 
-.title-and-fullName-container {
+.form-title-and-fullName-container {
   display: flex;
   flex-direction: row;
   width: 400px;
@@ -1596,9 +1596,10 @@ ol {
 
 }
 
-.section-list-item-btn{
+.section-list-item-btn, .form-btn{
   width: 70px;
-  margin-left: 10px;
+  /* margin-left: 10px; */
+  height: 30px;
 }
 
 
