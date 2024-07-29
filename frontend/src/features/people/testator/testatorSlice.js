@@ -32,7 +32,7 @@ const testatorSlice = createSlice({
             state.tel = tel || '';
             state.maritalStatus = maritalStatus || '';
         },
-        reset: (state) => initialState,
+        resetTestatorSlice: (state) => initialState,
     },
     extraReducers: (builder) => {
 
@@ -92,6 +92,6 @@ const testatorSlice = createSlice({
     },
 });
 
-export const { updateTestatorSlice, reset } = testatorSlice.actions;
+export const { updateTestatorSlice, resetTestatorSlice } = testatorSlice.actions;
 
 export default testatorSlice.reducer;

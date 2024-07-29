@@ -30,7 +30,7 @@ const spouseOrPartnerSlice = createSlice({
             state.email = email || '';
             state.tel = tel || '';
         },
-        reset: (state) => initialState,
+        resetSpouseOrPartnerSlice: (state) => initialState,
     },
     extraReducers: (builder) => {
         builder
@@ -86,7 +86,7 @@ const spouseOrPartnerSlice = createSlice({
     },
 });
 
-export const { updateSpouseOrPartnerSlice, reset } = spouseOrPartnerSlice.actions;
+export const { updateSpouseOrPartnerSlice, resetSpouseOrPartnerSlice } = spouseOrPartnerSlice.actions;
 
 export default spouseOrPartnerSlice.reducer;
 

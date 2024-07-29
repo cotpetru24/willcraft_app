@@ -19,10 +19,18 @@ const role = Object.freeze({
     EXECUTOR:'executor'
 })
 
+const maritalStatus = Object.freeze({
+    MARRIED:'married',
+    PARTNER:'partner',
+    WIDOWED:'widowed',
+    SINGLE:'single'
+})
+
 
 const constants = {
     title,
-    role
+    role,
+    maritalStatus
 }
 
 export default constants

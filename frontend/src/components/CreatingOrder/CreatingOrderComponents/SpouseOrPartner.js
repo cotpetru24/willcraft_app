@@ -1,33 +1,38 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import useNavigateAndUpdateOrder from "../../../hooks/navigationHook";
 import OrderNavigation from "../CreatigOrderNavigation";
 import constants from "../../../common/constants";
 import AddressAutocomplete from "../../Common/AddressAutocomplete";
 import DateInput from "../../Common/DateInput";
 import { updateTestatorSlice } from "../../../features/people/testator/testatorSlice";
-import { updateSpouseOrPartnerSlice } from "../../../features/people/spouseOrPartner/spouseOrPartnerSlice";
+import { updateSpouseOrPartnerSlice, resetSpouseOrPartnerSlice } from "../../../features/people/spouseOrPartner/spouseOrPartnerSlice";
 import spouseOrPartnerThunks from "../../../features/people/spouseOrPartner/spouseOrPartnerThunks";
 import { updateOrderThunk } from "../../../features/order/orderSlice";
+
 
 
 const SpouseOrPartner = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const currentOrder = useSelector(state => state.currentOrder);
   const currentOrderId = currentOrder.orderId;
+
   console.log(`current orderId = ${currentOrder.orderId}`);
+
   const testator = useSelector(state => state.testator)
   const spouseOrPartner = useSelector(state => state.spouseOrPartner)
+
+  const [currentMaritalStatus, setMaritalStatus] = useState(testator.maritalStatus)
+  console.log(`current marital status = ${currentMaritalStatus}`)
 
 
   // Use useRef to store the "saved" state
   const savedSpouseOrPartnerData = useRef(null);
   const savedTestatorData = useRef(null);
+  const initialMaritalStatus = useRef(testator.maritalStatus);
 
-
-  const [currentMaritalStatus, setMaritalStatus] = useState('')
   const [spouseOrPartnerFormData, setSpouseOrPartnerFormData] = useState({
     _id: '',
     title: '',
@@ -37,6 +42,17 @@ const SpouseOrPartner = () => {
     email: '',
     tel: ''
   });
+
+
+  const handleMaritalStatusChange = (e) => {
+    const updatedMaritalStatus = e.target.value;
+    setMaritalStatus(updatedMaritalStatus);
+
+    if (testator) {
+      dispatch(updateTestatorSlice({ ...testator, maritalStatus: updatedMaritalStatus }))
+    }
+  }
+
 
   useEffect(() => {
     if (spouseOrPartner) {
@@ -60,7 +76,23 @@ const SpouseOrPartner = () => {
       }
 
     }
-  }, [spouseOrPartner]);
+  }, [spouseOrPartner]
+  );
+
+
+  useEffect(() => {
+    // Check if the marital status has changed to 'single'
+    if ((initialMaritalStatus.current !== constants.maritalStatus.SINGLE
+      || currentMaritalStatus === constants.maritalStatus.WIDOWED)
+      && (
+        currentMaritalStatus === constants.maritalStatus.SINGLE
+        || currentMaritalStatus === constants.maritalStatus.WIDOWED)
+    ) {
+      dispatch(resetSpouseOrPartnerSlice());
+    }
+  }, [currentMaritalStatus, dispatch]
+  );
+
 
   const handleBack = () => {
     // Revert to the "saved" state
@@ -73,7 +105,9 @@ const SpouseOrPartner = () => {
     navigate('/creatingOrder');
   };
 
-  const handleSaveAndContinue = async () => {
+
+  const handleSaveAndContinue = async (e) => {
+    e.preventDefault();
     console.log(`current orderId in handlesaveandnavifgate = ${currentOrder.orderId}`)
     if (!spouseOrPartner._id) {
       const createSpouseOrPartnerResponse = await dispatch(spouseOrPartnerThunks.createSpouseOrPartnerThunk(spouseOrPartner)).unwrap();
@@ -106,67 +140,8 @@ const SpouseOrPartner = () => {
   };
 
 
-
-  //dispatch example
-  // {
-  //   "updateType": "peopleAndRoles",
-  //   "updateData": {
-  //     "personId": "60d21b4667d0d8992e610c85",
-  //     "role": ["newRole"]
-  //   }
-  // }
-
-  // peopleAndRoles: {
-  //   personId: createSpouseOrPartnerResponse._id,
-  //   role: [role]
-  // }
-
-  //or like this
-  // orderData: {
-  //   personId: createSpouseOrPartnerResponse._id,
-  //   role: [role]
-  // }
-
-
-
-
-
-  const handlePlaceSelected = (address) => {
-    setSpouseOrPartnerFormData((prevData) => ({
-      ...prevData,
-      fullAddress: address
-    }));
-
-    // Dispatch the change to the Redux store
-    dispatch(updateTestatorSlice({ ...spouseOrPartnerFormData, fullAddress: address }));
-  };
-
-
-  const handleMaritalStatusChange = (e) => {
-    const updatedMaritalStatus = e.target.value;
-    setMaritalStatus(updatedMaritalStatus);
-
-    if (testator) {
-      const testatorId = testator._id;
-      console.log(`updating testator slice, adding marital status ${currentMaritalStatus}`)
-      dispatch(updateTestatorSlice({ ...testator, maritalStatus: updatedMaritalStatus }))
-      console.log(`updating testator slice after`)
-
-    }
-  }
-
-
-
-
-
-
-
-
-
-
   const handleOnChange = (e) => {
     const { name, value } = e.target;
-    console.log(`field name = ${name}, field value = ${value}`)
     setSpouseOrPartnerFormData((prevData) => ({
       ...prevData,
       [name]: value
@@ -177,36 +152,15 @@ const SpouseOrPartner = () => {
   };
 
 
+  const handlePlaceSelected = (address) => {
+    setSpouseOrPartnerFormData((prevData) => ({
+      ...prevData,
+      fullAddress: address
+    }));
 
-
-  // dispatch(updatePersonThunk({ ...testator, maritalStatus: e.target.value }))
-
-
-
-
-
-
-
-
-
-
-
-
-  // const onSubmit = async (formData, role) => {
-  //   if (formData._id) {
-  //     await dispatch(updatePersonThunk({ id: formData._id, personData: formData })); // Update thunk name
-  //     setShouldNavigate(true);
-  //   } else {
-  //     console.log('creating new person triggered');
-  //     const createdPerson = await dispatch(createPersonThunk({ ...formData, role })).unwrap(); // Update thunk name
-  //     console.log(`the new person: ${JSON.stringify(createdPerson)}`);
-  //     if (createdPerson) {
-  //       console.log(`orderID= ${currentOrder.orderId}`);
-  //       console.log(`orderData= ${JSON.stringify(currentOrder)}`);
-  //       setShouldNavigate(true);
-  //     }
-  //   }
-  // };
+    // Dispatch the change to the Redux store
+    dispatch(updateSpouseOrPartnerSlice({ ...spouseOrPartnerFormData, fullAddress: address }));
+  };
 
 
   return (
@@ -228,7 +182,8 @@ const SpouseOrPartner = () => {
                 type="radio"
                 id="marital-status-yes"
                 name="marital-status"
-                value="married"
+                value={constants.maritalStatus.MARRIED}
+                checked={currentMaritalStatus === constants.maritalStatus.MARRIED}
                 onChange={handleMaritalStatusChange}></input>
               <label htmlFor="marital-status-yes">Married</label>
             </div>
@@ -237,7 +192,8 @@ const SpouseOrPartner = () => {
                 type="radio"
                 id="marital-status-no"
                 name="marital-status"
-                value="partner"
+                value={constants.maritalStatus.PARTNER}
+                checked={currentMaritalStatus === constants.maritalStatus.PARTNER}
                 onChange={handleMaritalStatusChange}></input>
               <label htmlFor="marital-status-no">Living with partner</label>
             </div>
@@ -246,7 +202,8 @@ const SpouseOrPartner = () => {
                 type="radio"
                 id="marital-status-no"
                 name="marital-status"
-                value="widowed"
+                value={constants.maritalStatus.WIDOWED}
+                checked={currentMaritalStatus === constants.maritalStatus.WIDOWED}
                 onChange={handleMaritalStatusChange}></input>
               <label htmlFor="marital-status-no">Widowed</label>
             </div>
@@ -255,7 +212,8 @@ const SpouseOrPartner = () => {
                 type="radio"
                 id="marital-status-no"
                 name="marital-status"
-                value="single"
+                value={constants.maritalStatus.SINGLE}
+                checked={currentMaritalStatus === constants.maritalStatus.SINGLE}
                 onChange={handleMaritalStatusChange}></input>
               <label htmlFor="marital-status-no">Single</label>
             </div>
@@ -277,10 +235,10 @@ const SpouseOrPartner = () => {
                         onChange={handleOnChange}
                         required
                       >
-                      {Object.values(constants.title).map((title, index) => (
-                        <option key={index} value={title}>
-                          {title}
-                        </option>
+                        {Object.values(constants.title).map((title, index) => (
+                          <option key={index} value={title}>
+                            {title}
+                          </option>
                         ))}
                       </select>
                     </div>
@@ -352,3 +310,87 @@ const SpouseOrPartner = () => {
 }
 
 export default SpouseOrPartner;
+
+
+
+
+
+
+
+
+
+
+
+  //dispatch example
+  // {
+  //   "updateType": "peopleAndRoles",
+  //   "updateData": {
+  //     "personId": "60d21b4667d0d8992e610c85",
+  //     "role": ["newRole"]
+  //   }
+  // }
+
+  // peopleAndRoles: {
+  //   personId: createSpouseOrPartnerResponse._id,
+  //   role: [role]
+  // }
+
+  //or like this
+  // orderData: {
+  //   personId: createSpouseOrPartnerResponse._id,
+  //   role: [role]
+  // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // dispatch(updatePersonThunk({ ...testator, maritalStatus: e.target.value }))
+
+
+
+
+
+
+
+
+
+
+
+
+  // const onSubmit = async (formData, role) => {
+  //   if (formData._id) {
+  //     await dispatch(updatePersonThunk({ id: formData._id, personData: formData })); // Update thunk name
+  //     setShouldNavigate(true);
+  //   } else {
+  //     console.log('creating new person triggered');
+  //     const createdPerson = await dispatch(createPersonThunk({ ...formData, role })).unwrap(); // Update thunk name
+  //     console.log(`the new person: ${JSON.stringify(createdPerson)}`);
+  //     if (createdPerson) {
+  //       console.log(`orderID= ${currentOrder.orderId}`);
+  //       console.log(`orderData= ${JSON.stringify(currentOrder)}`);
+  //       setShouldNavigate(true);
+  //     }
+  //   }
+  // };
+
+

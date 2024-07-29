@@ -75,8 +75,8 @@ export const Kids = () => {
                                             // onChange={handleOnChange}
                                             required
                                         >
-                                            {constants.titles.map(title => (
-                                                <option key={title} value={title}>
+                                            {Object.values(constants.title).map((title, index) => (
+                                                <option key={index} value={title}>
                                                     {title}
                                                 </option>
                                             ))}
