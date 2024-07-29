@@ -3,9 +3,8 @@ import logger from 'redux-logger'
 import authReducer from '../features/auth/authSlice';
 import currentOrderReducer from '../features/order/orderSlice';
 import ordersReducer from '../features/orders/ordersSlice';
-import testatorReducer from '../features/people/testatorSlice';
-import spouseOrPartnerReducer from '../features/people/spouseOrPartnerSlice';
-import orderAssetsReducer from '../features/orderAssets/orderAssetsSlice';
+import testatorReducer from '../features/people/testator/testatorSlice';
+import spouseOrPartnerReducer from '../features/people/spouseOrPartner/spouseOrPartnerSlice';
 import stepReducer from '../features/orderSteps/orderStepSlice'
 
 export const store = configureStore({
@@ -13,14 +12,12 @@ export const store = configureStore({
     auth: authReducer,  
     orders: ordersReducer,
     currentOrder: currentOrderReducer,
+
+    //not sure if this is needed. if not => delete
     step: stepReducer,
+
     testator:testatorReducer,
     spouseOrPartner: spouseOrPartnerReducer,
-    // children: childrenReducer,
-    // beneficiaries: beneficiariesReducer,
-    // assets: orderAssetsReducer,
-    // executorsSlice: executorsReducer,
-
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
   devTools: process.env.NODE_ENV !== 'production',

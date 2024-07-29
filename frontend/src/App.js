@@ -1,25 +1,19 @@
 import React, { Children } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './components/Home';
-import Login from './components/Login';
-import Register from './components/Register';
+import Login from './components/Authentication/Login';
+import Register from './components/Authentication/Register';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Testator from './components/Testator';
-import Executor from './components/Executor';
+import Testator from './components/CreatingOrder/CreatingOrderComponents/Testator';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import ProgressBar from './components/ProgressBar';
 import AboutUs from './components/AboutUs';
 import Dashboard from './components/Dashboard';
-import OrderNavigation from './components/OrderNavigation';
-import AddressAutocomplete from './components/AddressAutocomplete';
-import CreatingOrder from './components/CreatingOrder';
-import PersonForm from './components/PersonForm';
-import AssetForm from './components/AssetForm';
+import CreatingOrder from './components/CreatingOrder/CreatingOrder';
 import Prices from './components/Prices';
-import SpouseOrPartner from './components/SpouseOrPartner';
-import Kids from './components/Kids'
+import SpouseOrPartner from './components/CreatingOrder/CreatingOrderComponents/SpouseOrPartner';
+import Kids from './components/CreatingOrder/CreatingOrderComponents/Kids'
 
 
 function App() {

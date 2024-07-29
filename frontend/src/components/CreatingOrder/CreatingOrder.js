@@ -1,14 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import PersonForm from "./PersonForm";
+import React from "react";
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
-import TestatorTile from "./TestatorTile";
-import SpouseOrPartnerTile from "./SpouseOrPartnerTile";
-import AssetsTile from "./AssetsTile";
-import ExecutorsTile from "./ExecutorsTile";
-import AssetsDistributionTile from "./AssetsDistributionTile";
-import ProgressBar from "./ProgressBar";
+import TestatorTile from "./CreatingOrderTiles/TestatorTile";
+import SpouseOrPartnerTile from "./CreatingOrderTiles/SpouseOrPartnerTile";
+import ProgressBar from "../ProgressBar";
 
 
 
@@ -31,20 +26,12 @@ const CreatingOrder = () => {
                 </div>
             </div>
 
-
             <div className="creatingOrder-tiles-and-instructions-container">
 
                 <div className="creatingOrder-tiles">
                     <TestatorTile />
                     <SpouseOrPartnerTile />
-                   {/* <AssetsTile />
-                    <AssetsDistributionTile />
-                    <ExecutorsTile /> */}
                 </div>
-
-
-
-
                 <div className=" creatingOrder-instructions">
                     <div className="creatingOrder-tile">
                         <p>Order progress</p>
@@ -55,6 +42,7 @@ const CreatingOrder = () => {
                 </div>
 
             </div>
+            
         </section>
     )
 

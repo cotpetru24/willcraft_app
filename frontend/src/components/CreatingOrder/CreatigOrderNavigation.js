@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-const OrderNavigation = ({onBack, onSaveAndContinue}) => {
+const CreatingOrderNavigation = ({onBack, onSaveAndContinue}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -14,4 +14,4 @@ const OrderNavigation = ({onBack, onSaveAndContinue}) => {
   );
 };
 
-export default OrderNavigation;
+export default CreatingOrderNavigation;

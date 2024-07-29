@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckSquare, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { login, reset } from '../features/auth/authSlice';
-import './FontAwesomeSetup';
+import './Common/FontAwesomeSetup';
 import AboutUs from "./AboutUs";
 import Pricing from "./Prices";
 import ReviewsCarousel from "./ReviewsCarousel";

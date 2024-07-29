@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import useNavigateAndUpdateOrder from "../hooks/navigationHook";
-import OrderNavigation from "./OrderNavigation";
-import constants from "../common/constants";
-import AddressAutocomplete from "./AddressAutocomplete";
-import DateInput from "./DateInput";
-import { updateTestatorSlice } from "../features/people/testatorSlice";
-import { updateSpouseOrPartnerSlice } from "../features/people/spouseOrPartnerSlice";
-import { createPersonThunk, updatePersonThunk } from "../features/people/peopleThunks";
-import { updateOrderThunk } from "../features/order/orderSlice";
+import useNavigateAndUpdateOrder from "../../../hooks/navigationHook";
+import OrderNavigation from "../CreatigOrderNavigation";
+import constants from "../../../common/constants";
+import AddressAutocomplete from "../../Common/AddressAutocomplete";
+import DateInput from "../../Common/DateInput";
+import { updateTestatorSlice } from "../../../features/people/testator/testatorSlice";
+import { updateSpouseOrPartnerSlice } from "../../../features/people/spouseOrPartner/spouseOrPartnerSlice";
+import spouseOrPartnerThunks from "../../../features/people/spouseOrPartner/spouseOrPartnerThunks";
+import { updateOrderThunk } from "../../../features/order/orderSlice";
 
 
 const SpouseOrPartner = () => {
@@ -76,7 +76,7 @@ const SpouseOrPartner = () => {
   const handleSaveAndContinue = async () => {
     console.log(`current orderId in handlesaveandnavifgate = ${currentOrder.orderId}`)
     if (!spouseOrPartner._id) {
-      const createSpouseOrPartnerResponse = await dispatch(createPersonThunk(spouseOrPartner)).unwrap();
+      const createSpouseOrPartnerResponse = await dispatch(spouseOrPartnerThunks.createSpouseOrPartnerThunk(spouseOrPartner)).unwrap();
 
       if (createSpouseOrPartnerResponse) {
         let role;
@@ -96,11 +96,11 @@ const SpouseOrPartner = () => {
       }
     }
     else {
-      await dispatch(updatePersonThunk(spouseOrPartner));
+      await dispatch(spouseOrPartnerThunks.updateSpouseOrPartnerThunk(spouseOrPartner));
     }
 
     if (savedTestatorData.maritalStatus !== currentMaritalStatus) {
-      dispatch(updatePersonThunk({ ...testator, maritalStatus: currentMaritalStatus }))
+      dispatch(updateTestatorSlice({ ...testator, maritalStatus: currentMaritalStatus }))
     }
     navigate('/creatingOrder');
   };

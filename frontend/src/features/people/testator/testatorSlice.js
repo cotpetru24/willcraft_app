@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import peopleThunks from "./peopleThunks";
-
+import testatorThunks from "./testatorThunks";
 const initialState = {
     _id:'',
     title: '',
@@ -40,10 +39,10 @@ const testatorSlice = createSlice({
 
 
             //create Testator cases 
-            .addCase(peopleThunks.createPersonThunk.pending, (state) => {
+            .addCase(testatorThunks.createTestatorThunk.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(peopleThunks.createPersonThunk.fulfilled, (state, action) => {
+            .addCase(testatorThunks.createTestatorThunk.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
                 const { _id, title, fullLegalName, fullAddress, dob, email, tel, maritalStatus } = action.payload;
@@ -56,7 +55,7 @@ const testatorSlice = createSlice({
                 state.tel=tel ||'';
                 state.maritalStatus=maritalStatus ||'';
               })
-            .addCase(peopleThunks.createPersonThunk.rejected, (state, action) => {
+            .addCase(testatorThunks.createTestatorThunk.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;
@@ -66,10 +65,10 @@ const testatorSlice = createSlice({
 
 
             //Update testator cases
-            .addCase(peopleThunks.updatePersonThunk.pending, (state) => {
+            .addCase(testatorThunks.updateTestatorThunk.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(peopleThunks.updatePersonThunk.fulfilled, (state, action) => {
+            .addCase(testatorThunks.updateTestatorThunk.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
                 const { _id, title, fullLegalName, fullAddress, dob, email, tel, maritalStatus } = action.payload;
@@ -82,7 +81,7 @@ const testatorSlice = createSlice({
                 state.tel=tel ||'';
                 state.maritalStatus=maritalStatus ||'';
             })
-            .addCase(peopleThunks.updatePersonThunk.rejected, (state, action) => {
+            .addCase(testatorThunks.updateTestatorThunk.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;

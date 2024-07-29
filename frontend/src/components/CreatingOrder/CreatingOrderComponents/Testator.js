@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import OrderNavigation from "./OrderNavigation";
-import AddressAutocomplete from "./AddressAutocomplete";
-import DateInput from "./DateInput";
-import constants from "../common/constants";
+import CreatingOrderNavigation from "../CreatigOrderNavigation";
+import AddressAutocomplete from "../../Common/AddressAutocomplete";
+import DateInput from "../../Common/DateInput";
+import constants from "../../../common/constants";
 import { useDispatch, useSelector } from "react-redux";
-import { updateTestatorSlice } from "../features/people/testatorSlice";
-import { createPersonThunk, updatePersonThunk } from "../features/people/peopleThunks";
+import { updateTestatorSlice } from "../../../features/people/testator/testatorSlice";
+import testatorThunks from "../../../features/people/testator/testatorThunks";
 
 const Testator = () => {
   const dispatch = useDispatch();
@@ -60,9 +60,9 @@ const Testator = () => {
 
   const handleSaveAndContinue = async () => {
     if (!testator._id) {
-     await dispatch(createPersonThunk(testator));
+     await dispatch(testatorThunks.createTestatorThunk(testator));
     } else {
-      await dispatch(updatePersonThunk(testator));
+      await dispatch(testatorThunks.updateTestatorThunk(testator));
     }
     navigate('/creatingOrder');
   };
@@ -171,7 +171,7 @@ const Testator = () => {
             </div>
           </form>
         </div>
-        <OrderNavigation
+        <CreatingOrderNavigation
           onBack={handleBack}
           onSaveAndContinue={handleSaveAndContinue}
         />

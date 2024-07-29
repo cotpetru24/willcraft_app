@@ -1,13 +1,13 @@
 import React from "react";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getOrders, reset } from "../features/orders/ordersSlice";
-import Spinner from "./Spinner";
+import { getOrders, reset } from "../../features/orders/ordersSlice";
+import Spinner from "../Spinner";
 import { useNavigate } from "react-router-dom";
 import OrderItem from "./OrderItem";
-import { reset as resetCurrentOrder } from "../features/order/orderSlice";
-import { reset as resetTestator } from "../features/people/testatorSlice";
-import { reset as resetSpouseOrPartner } from "../features/people/spouseOrPartnerSlice";
+import { reset as resetCurrentOrder } from "../../features/order/orderSlice";
+import { reset as resetTestator } from "../../features/people/testator/testatorSlice";
+import { reset as resetSpouseOrPartner } from "../../features/people/spouseOrPartner/spouseOrPartnerSlice";
 
 
 

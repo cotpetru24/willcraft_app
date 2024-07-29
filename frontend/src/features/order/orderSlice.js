@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { updateOrder, createOrder, getOrder, createPerson, getPerson, updatePerson } from "./orderService"; // Import named exports
-import { updateTestatorSlice } from "../people/testatorSlice";
-import { updateSpouseOrPartnerSlice } from "../people/spouseOrPartnerSlice";
+import { updateTestatorSlice } from "../people/testator/testatorSlice";
+import { updateSpouseOrPartnerSlice } from "../people/spouseOrPartner/spouseOrPartnerSlice";
 
 
 const initialState = {

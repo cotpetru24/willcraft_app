@@ -1,7 +1,7 @@
-import OrderNavigation from "./OrderNavigation"
-import constants from "../common/constants"
-import AddressAutocomplete from "./AddressAutocomplete"
-import DateInput from "./DateInput"
+import OrderNavigation from "../CreatigOrderNavigation"
+import constants from "../../../common/constants"
+import AddressAutocomplete from "../../Common/AddressAutocomplete"
+import DateInput from "../../Common/DateInput"
 
 const handleKidsFormSave = () => {
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import OrdersList from "./OrdersList";
+import OrdersList from "./OrdersList/OrdersList";
 
 export const OrderProgressBar = ({ currentValue, maxValue }) => (
     <>

@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
-import { deleteOrder } from "../features/orders/ordersSlice";
-import { getOrderThunk } from "../features/order/orderSlice";
+import { deleteOrder } from "../../features/orders/ordersSlice";
+import { getOrderThunk } from "../../features/order/orderSlice";
 import { useNavigate } from "react-router-dom";
 
 export const OrderProgressBar = ({ currentValue, maxValue }) => (
