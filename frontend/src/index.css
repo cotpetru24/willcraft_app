@@ -1609,7 +1609,7 @@ ol {
   margin-top: 10px;
   display: flex;
   flex-direction: row;
-  width: 150px;
+  width: 170px;
   margin-left: auto;
   justify-content: space-between;
 
@@ -1618,7 +1618,7 @@ ol {
 
 .section-list-item-btn, .form-btn, .creatingOrder-tile-btn{
   color: white;
-  width: 70px;
+  width: 80px;
   /* margin-left: 10px; */
   height: 30px;
   border: 1px solid #3194F0;
