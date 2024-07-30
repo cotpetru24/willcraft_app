@@ -226,7 +226,7 @@ const SpouseOrPartner = () => {
               <form onSubmit={handleSaveAndContinue}>
                 <div className="form-main-container">
                   <div className="form-title-and-fullName-container">
-                    <div className="form-group">
+                    <div className="name-group">
                       <label htmlFor="title">Title</label>
                       <select
                         id="title"
@@ -242,7 +242,7 @@ const SpouseOrPartner = () => {
                         ))}
                       </select>
                     </div>
-                    <div className="form-group">
+                    <div className="name-group">
                       <label htmlFor="fullLegalName">Full legal name</label>
                       <input
                         type="text"

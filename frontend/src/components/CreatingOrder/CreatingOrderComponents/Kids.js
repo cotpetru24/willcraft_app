@@ -69,7 +69,7 @@ export const Kids = () => {
                         <form onSubmit={handleKidsFormSave}>
                             <div className="form-main-container">
                                 <div className="form-title-and-fullName-container">
-                                    <div className="form-group name-group">
+                                    <div className="name-group">
                                         <label htmlFor="title">Title</label>
                                         <select
                                             id="title"
@@ -85,10 +85,11 @@ export const Kids = () => {
                                             ))}
                                         </select>
                                     </div>
-                                    <div className="form-group name-group">
+                                    <div className="name-group">
                                         <label htmlFor="fullLegalName">Full legal name</label>
                                         <input
                                             type="text"
+                                            className="fullLegalName"
                                             id="fullLegalName"
                                             name="fullLegalName"
                                             // value={formData.fullLegalName}

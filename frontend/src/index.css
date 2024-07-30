@@ -1283,7 +1283,7 @@ ol {
 
 
 
-.name-group #fullLegalName {
+.name-group #fullLegalName, .fullLegalName {
   width: 320px;
   border: solid 1px darkgray;
   border-radius: 3px;
@@ -1599,11 +1599,32 @@ ol {
 }
 
 .section-list-item-btn, .form-btn{
+  color: white;
   width: 70px;
   /* margin-left: 10px; */
   height: 30px;
+  border: 1px solid #3194F0;
+  border-radius: 5px;
+  background-color: #3194F0;
+}
+.section-add-btn{
+  color:white;
+  height: 30px;
+  width:120px;
+  border: 1px solid #3194F0;
+  border-radius: 5px;
+  background-color: #3194F0;
 }
 
+.section-list-item-btn:hover, 
+.form-btn:hover,
+.section-add-btn:hover {
+cursor: pointer;
+color: #131921;
+background-color: white;
+transform: scale(110%);
+transition: 0.3s;
+}
 
 
 
