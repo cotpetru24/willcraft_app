@@ -42,6 +42,7 @@ body {
 
 
   /* color: #181818; */
+  background-color: #ffffff;
 
 }
 
@@ -1621,7 +1622,8 @@ ol {
   width: 80px;
   /* margin-left: 10px; */
   height: 30px;
-  border: 1px solid #3194F0;
+  /* border: 1px solid #3194F0; */
+  border: none;
   border-radius: 5px;
   background-color: #3194F0;
 }
@@ -1629,7 +1631,8 @@ ol {
   color:white;
   height: 30px;
   width:120px;
-  border: 1px solid #3194F0;
+  /* border: 1px solid #3194F0; */
+  border: none;
   border-radius: 5px;
   background-color: #3194F0;
 }
@@ -1639,9 +1642,9 @@ ol {
 .section-add-btn:hover,
 .creatingOrder-tile-btn:hover {
 cursor: pointer;
-color: #131921;
-background-color: white;
-/* transform: scale(110%); */
+/* color: #131921; */
+background-color: #e0218a;
+/* transform: scale(90%); */
 transition: 0.2s;
 }
 

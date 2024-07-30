@@ -2,6 +2,8 @@ import { useDispatch } from "react-redux";
 import { deleteOrder } from "../../features/orders/ordersSlice";
 import { getOrderThunk } from "../../features/order/orderSlice";
 import { useNavigate } from "react-router-dom";
+import { resetTestatorSlice } from "../../features/people/testator/testatorSlice";
+import { resetSpouseOrPartnerSlice } from "../../features/people/spouseOrPartner/spouseOrPartnerSlice";
 
 export const OrderProgressBar = ({ currentValue, maxValue }) => (
     <>
@@ -33,8 +35,10 @@ const OrderItem = ({ order }) => {
                 {order.status === "CreatingOrder" && (
                     <button
                         onClick={async () => {
-                            console.log(`should have loaded order id :${order._id}`)
-                            dispatch(getOrderThunk(order._id));
+                            await dispatch(resetTestatorSlice());
+                            await dispatch(resetSpouseOrPartnerSlice());
+                            console.log(`should have loaded order id :${order._id}`);
+                            await dispatch(getOrderThunk(order._id));
                             navigate('/creatingOrder');
                         }}
                         className="order-item-btns"

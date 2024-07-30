@@ -9,6 +9,7 @@ import { updateTestatorSlice } from "../../../features/people/testator/testatorS
 import { updateSpouseOrPartnerSlice, resetSpouseOrPartnerSlice } from "../../../features/people/spouseOrPartner/spouseOrPartnerSlice";
 import spouseOrPartnerThunks from "../../../features/people/spouseOrPartner/spouseOrPartnerThunks";
 import { updateOrderThunk } from "../../../features/order/orderSlice";
+import testatorThunks from "../../../features/people/testator/testatorThunks";
 
 
 
@@ -114,8 +115,8 @@ const SpouseOrPartner = () => {
 
       if (createSpouseOrPartnerResponse) {
         let role;
-        if (currentMaritalStatus === "married") role = 'spouse';
-        if (currentMaritalStatus === "partner") role = 'partner';
+        if (currentMaritalStatus === constants.role.SPOUSE) role = constants.role.SPOUSE;
+        if (currentMaritalStatus === constants.role.PARTNER) role = constants.role.PARTNER;
         console.log(`role for updating the order = ${role}.    in spouse or partner commponent`)
 
         await dispatch(updateOrderThunk({
@@ -133,8 +134,15 @@ const SpouseOrPartner = () => {
       await dispatch(spouseOrPartnerThunks.updateSpouseOrPartnerThunk(spouseOrPartner));
     }
 
-    if (savedTestatorData.maritalStatus !== currentMaritalStatus) {
-      dispatch(updateTestatorSlice({ ...testator, maritalStatus: currentMaritalStatus }))
+
+
+    // updateTestatorThunk({maritalStatus: currentMaritalStatus})
+
+    if (initialMaritalStatus.current !== currentMaritalStatus) {
+      // dispatch(updateTestatorSlice({ ...testator, maritalStatus: currentMaritalStatus }))
+      console.log(`update testator thunk called in spouse or partner slide on save. 
+        Saved marital status= ${initialMaritalStatus.current}, current marital status = ${currentMaritalStatus}`)
+      await dispatch(testatorThunks.updateTestatorThunk({...testator,maritalStatus: currentMaritalStatus}))
     }
     navigate('/creatingOrder');
   };

@@ -45,6 +45,7 @@ export const createTestatorThunk = createAsyncThunk(
 export const updateTestatorThunk = createAsyncThunk(
     'people/updateTestator',
     async (testatorData, thunkAPI) => {
+        console.log(`update testator thunk called with testator = ${JSON.stringify(testatorData)}`)
         try {
             const token = thunkAPI.getState().auth.user.token;
             const updateTestatorResponse = await peopleService.updatePerson(testatorData, token);
