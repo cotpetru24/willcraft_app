@@ -102,7 +102,7 @@ const Testator = () => {
         </div>
         <div className="creatingOrder-section-main-content-container">
           <form>
-            <div className="section-container">
+            <div className="section-form-container">
               <section className="form person-form">
                 <div className="form-title-and-fullName-container">
                   <div className="name-group">

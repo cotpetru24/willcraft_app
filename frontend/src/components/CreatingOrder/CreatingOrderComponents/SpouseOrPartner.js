@@ -220,10 +220,15 @@ const SpouseOrPartner = () => {
           </div>
         </div>
 
+
         {(currentMaritalStatus === 'married' || currentMaritalStatus === 'partner') &&
           (
             <div className="section-form-container">
+
               <form onSubmit={handleSaveAndContinue}>
+                <div className="form-heading">             
+                   <h3>Please enter your {currentMaritalStatus === 'married' ? "spouse" : currentMaritalStatus === 'partner' ? "partner" : ""} details.</h3>
+                </div>
                 <div className="form-main-container">
                   <div className="form-title-and-fullName-container">
                     <div className="name-group">
@@ -321,27 +326,25 @@ export default SpouseOrPartner;
 
 
 
-  //dispatch example
-  // {
-  //   "updateType": "peopleAndRoles",
-  //   "updateData": {
-  //     "personId": "60d21b4667d0d8992e610c85",
-  //     "role": ["newRole"]
-  //   }
-  // }
+//dispatch example
+// {
+//   "updateType": "peopleAndRoles",
+//   "updateData": {
+//     "personId": "60d21b4667d0d8992e610c85",
+//     "role": ["newRole"]
+//   }
+// }
 
-  // peopleAndRoles: {
-  //   personId: createSpouseOrPartnerResponse._id,
-  //   role: [role]
-  // }
+// peopleAndRoles: {
+//   personId: createSpouseOrPartnerResponse._id,
+//   role: [role]
+// }
 
-  //or like this
-  // orderData: {
-  //   personId: createSpouseOrPartnerResponse._id,
-  //   role: [role]
-  // }
-
-
+//or like this
+// orderData: {
+//   personId: createSpouseOrPartnerResponse._id,
+//   role: [role]
+// }
 
 
 
@@ -364,7 +367,9 @@ export default SpouseOrPartner;
 
 
 
-  // dispatch(updatePersonThunk({ ...testator, maritalStatus: e.target.value }))
+
+
+// dispatch(updatePersonThunk({ ...testator, maritalStatus: e.target.value }))
 
 
 
@@ -377,20 +382,20 @@ export default SpouseOrPartner;
 
 
 
-  // const onSubmit = async (formData, role) => {
-  //   if (formData._id) {
-  //     await dispatch(updatePersonThunk({ id: formData._id, personData: formData })); // Update thunk name
-  //     setShouldNavigate(true);
-  //   } else {
-  //     console.log('creating new person triggered');
-  //     const createdPerson = await dispatch(createPersonThunk({ ...formData, role })).unwrap(); // Update thunk name
-  //     console.log(`the new person: ${JSON.stringify(createdPerson)}`);
-  //     if (createdPerson) {
-  //       console.log(`orderID= ${currentOrder.orderId}`);
-  //       console.log(`orderData= ${JSON.stringify(currentOrder)}`);
-  //       setShouldNavigate(true);
-  //     }
-  //   }
-  // };
+// const onSubmit = async (formData, role) => {
+//   if (formData._id) {
+//     await dispatch(updatePersonThunk({ id: formData._id, personData: formData })); // Update thunk name
+//     setShouldNavigate(true);
+//   } else {
+//     console.log('creating new person triggered');
+//     const createdPerson = await dispatch(createPersonThunk({ ...formData, role })).unwrap(); // Update thunk name
+//     console.log(`the new person: ${JSON.stringify(createdPerson)}`);
+//     if (createdPerson) {
+//       console.log(`orderID= ${currentOrder.orderId}`);
+//       console.log(`orderData= ${JSON.stringify(currentOrder)}`);
+//       setShouldNavigate(true);
+//     }
+//   }
+// };
 
 

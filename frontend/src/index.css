@@ -383,7 +383,7 @@ h1 {
   /* color: #0f1f2c; */
 }
 
-.section-container {
+.section-form-container {
   width: 100%;
   padding-left: 10%;
   padding-right: 10%;
@@ -1386,7 +1386,11 @@ ol {
   display: flex;
   flex-direction: row;
   width: 100%;
-  padding: 20px;
+  /* padding: 20px;
+   */
+   padding-left: 50px;
+   padding-right: 50px;
+   padding-bottom: 30px;
   justify-content: space-between;
 }
 
@@ -1485,6 +1489,7 @@ ol {
   flex-direction: column;
   width: 100%;
   align-items: center;
+  margin-bottom: 50px;
 }
 
 .marital-status-options-container {
@@ -1569,6 +1574,7 @@ ol {
   display: flex;
   flex-direction: column;
   width: 100%;
+  margin-left: 50px;
 }
 
 .section-list-item-container{
@@ -1581,6 +1587,10 @@ ol {
   margin-top: 20px;
   margin-bottom: 20px;
 
+}
+
+.form-heading {
+  margin-bottom: 40px;
 }
 
 .section-list-item-group{
