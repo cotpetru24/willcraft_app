@@ -44,9 +44,9 @@ const TestatorTile = () => {
                 <div className="creatingOrder-tile">
                     <div className="creatingOrder-tile-heading">
                         <h2>About you</h2>
-                        {allNecessaryFieldsSpecified ?(
-                        <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />
-                        ):(
+                        {allNecessaryFieldsSpecified ? (
+                            <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />
+                        ) : (
                             <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'grey' }} />
                         )}
 
@@ -54,23 +54,34 @@ const TestatorTile = () => {
 
                     {allNecessaryFieldsSpecified ? (
                         <>
-                            <div>
-                                <h4>Name:</h4> <p>{testatorInitialData.testatorTitle} {testatorInitialData.testatorFullLegalName}</p>
+                            <div className="creatingOrder-tile-group">
+                                <div className="creatingOrder-tile-line-heading">
+                                    <h4 >Name:</h4>
+                                </div>
+                                <p>{testatorInitialData.testatorTitle} {testatorInitialData.testatorFullLegalName}</p>
                             </div>
-                            <div>
-                                <h4>Date of birth:</h4> <p>{testatorInitialData.testatorDob}</p>
+                            <div className="creatingOrder-tile-group">
+                                <div className="creatingOrder-tile-line-heading">
+                                    <h4>Date of birth:</h4>
+                                </div>
+                                <p>{testatorInitialData.testatorDob}</p>
                             </div>
-                            <div>
-                                <h4>Address:</h4> <p>{testatorInitialData.testatorFullAddress}</p>
+                            <div className="creatingOrder-tile-group">
+                                <div className="creatingOrder-tile-line-heading">
+                                    <h4>Address:</h4>
+                                </div>
+                                <p>{testatorInitialData.testatorFullAddress}</p>
                             </div>
-                            <div>
-                                <button onClick={() => navigate('/testator')}>Edit</button>
+                            <div className="creatingOrder-tile-btn-container">
+                                <button className="creatingOrder-tile-btn" onClick={() => navigate('/testator')}>Edit</button>
                             </div>
                         </>
                     ) : (
                         <>
                             <p>Tell us a little bit about yourself…</p>
-                            <button onClick={() => navigate('/testator')}>Get Started</button>
+                            <div className="creatingOrder-tile-btn-container">
+                                <button className="creatingOrder-tile-btn" onClick={() => navigate('/testator')}>Get Started</button>
+                            </div>
                         </>
                     )}
                 </div>

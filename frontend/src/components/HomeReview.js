@@ -17,10 +17,10 @@ const HomeReview = () => {
                 The process was seamless and easy to follow. I appreciate the detailed instructions and
                 the quick turnaround time. Will definitely use this service again.
             </p>
-            <h4>
+            <h4 className="review-container-text">
                 Jane
-            </h4>
-            <p>May 1990</p>
+            </h4 >
+            <p className="review-container-text">May 1990</p>
             <div className="review-starts-container" dangerouslySetInnerHTML={{ __html: formatReviewRating(4) }}></div>
             {/* <h4>Great Service!</h4> */}
          

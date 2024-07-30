@@ -6,7 +6,7 @@ import { faCheckSquare, faCheckCircle } from "@fortawesome/free-solid-svg-icons"
 
 
 
-const SpouseOrPartnerTile = () => {
+const KidsTile = () => {
 
 
     const navigate = useNavigate();
@@ -45,7 +45,7 @@ const SpouseOrPartnerTile = () => {
 
                 <div className="creatingOrder-tile">
                     <div className="creatingOrder-tile-heading">
-                        <h2>Your spouse or partner</h2>
+                        <h2>Your children</h2>
                         {allNecessaryFieldsSpecified ? (
                             <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />
                         ) : (
@@ -75,14 +75,14 @@ const SpouseOrPartnerTile = () => {
                                 <p>{spouseOrPartnerInitialData.spouseOrPartnerFullAddress}</p>
                             </div>
                             <div className="creatingOrder-tile-btn-container">
-                                <button className="creatingOrder-tile-btn" onClick={() => navigate('/spouseOrPartner')}>Edit</button>
+                                <button className="creatingOrder-tile-btn" onClick={() => navigate('/kids')}>Edit</button>
                             </div>
                         </>
                     ) : (
                         <>
                             <p>Tell us about your spouse or partner…</p>
                             <div className="creatingOrder-tile-btn-container">
-                                <button className="creatingOrder-tile-btn" onClick={() => navigate('/spouseOrPartner')}>Get Started</button>
+                                <button className="creatingOrder-tile-btn" onClick={() => navigate('/kids')}>Get Started</button>
                             </div>
                         </>
                     )}
@@ -93,4 +93,4 @@ const SpouseOrPartnerTile = () => {
     );
 }
 
-export default SpouseOrPartnerTile;
+export default KidsTile;

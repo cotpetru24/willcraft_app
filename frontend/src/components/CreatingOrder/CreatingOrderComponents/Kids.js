@@ -3,6 +3,7 @@ import constants from "../../../common/constants"
 import AddressAutocomplete from "../../Common/AddressAutocomplete"
 import DateInput from "../../Common/DateInput"
 import SectionListItem from "../../SectionListItem"
+import { useNavigate } from "react-router-dom"
 
 const handleKidsFormSave = () => {
 
@@ -10,6 +11,18 @@ const handleKidsFormSave = () => {
 
 
 export const Kids = () => {
+    const navigate = useNavigate()
+
+    const handleBack = () => {
+        // Revert to the "saved" state
+        // if (savedTestatorData.current) {
+        //   dispatch(updateTestatorSlice(savedTestatorData.current));
+        // }
+        // if (savedSpouseOrPartnerData.current) {
+        //   dispatch(updateSpouseOrPartnerSlice(savedSpouseOrPartnerData.current));
+        // }
+        navigate('/creatingOrder');
+    };
 
     return (
         <>
@@ -57,8 +70,8 @@ export const Kids = () => {
                                     </div>
                                 </li>
                             </ul> */}
-                            <SectionListItem/>
-                            <SectionListItem/>
+                            <SectionListItem />
+                            <SectionListItem />
                         </div>
                         <div className="sectio-add-btn-container">
                             <button className="section-add-btn"> +Add children</button>
@@ -145,7 +158,10 @@ export const Kids = () => {
                     </div>
                 </div>
                 <div className="section-navigation-container">
-                    <OrderNavigation />
+                    <OrderNavigation
+                        onBack={handleBack}
+                        onSaveAndContinue={handleBack}
+                    />
                 </div>
 
             </section>

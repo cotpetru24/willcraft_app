@@ -12,6 +12,7 @@ export const ListItem = ({ name, dob, address }) => {
 
                 <div className="list-item-group">
                     <h5>Date of birth:{dob}</h5>
+                    <p>{dob}</p>
                 </div>
 
                 <div className="list-item-group">

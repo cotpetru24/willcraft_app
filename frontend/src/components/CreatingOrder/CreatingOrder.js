@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import TestatorTile from "./CreatingOrderTiles/TestatorTile";
 import SpouseOrPartnerTile from "./CreatingOrderTiles/SpouseOrPartnerTile";
 import ProgressBar from "../ProgressBar";
+import KidsTile from "./CreatingOrderTiles/KidsTile";
 
 
 
@@ -31,6 +32,7 @@ const CreatingOrder = () => {
                 <div className="creatingOrder-tiles">
                     <TestatorTile />
                     <SpouseOrPartnerTile />
+                    <KidsTile/>
                 </div>
                 <div className=" creatingOrder-instructions">
                     <div className="creatingOrder-tile">
