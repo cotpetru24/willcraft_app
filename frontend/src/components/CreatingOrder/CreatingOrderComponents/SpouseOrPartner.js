@@ -115,8 +115,10 @@ const SpouseOrPartner = () => {
 
       if (createSpouseOrPartnerResponse) {
         let role;
-        if (currentMaritalStatus === constants.role.SPOUSE) role = constants.role.SPOUSE;
-        if (currentMaritalStatus === constants.role.PARTNER) role = constants.role.PARTNER;
+        // if (currentMaritalStatus === constants.role.MARRIED) role = constants.role.MARRIED;
+        // if (currentMaritalStatus === constants.role.PARTNER) role = constants.role.PARTNER;
+        if (currentMaritalStatus === "married") role = "spouse";
+        if (currentMaritalStatus === "partner") role = "partner";
         console.log(`role for updating the order = ${role}.    in spouse or partner commponent`)
 
         await dispatch(updateOrderThunk({
@@ -142,10 +144,58 @@ const SpouseOrPartner = () => {
       // dispatch(updateTestatorSlice({ ...testator, maritalStatus: currentMaritalStatus }))
       console.log(`update testator thunk called in spouse or partner slide on save. 
         Saved marital status= ${initialMaritalStatus.current}, current marital status = ${currentMaritalStatus}`)
-      await dispatch(testatorThunks.updateTestatorThunk({...testator,maritalStatus: currentMaritalStatus}))
+      await dispatch(testatorThunks.updateTestatorThunk({ ...testator, maritalStatus: currentMaritalStatus }))
     }
     navigate('/creatingOrder');
   };
+
+
+  // const handleSaveAndContinue = async (e) => {
+  //   e.preventDefault();
+  //   console.log(`current orderId in handleSaveAndContinue = ${currentOrder.orderId}`);
+
+  //   // Check if the marital status has changed to single or widowed and remove spouse/partner if necessary
+  //   if ((initialMaritalStatus.current === constants.role.SPOUSE || initialMaritalStatus.current === constants.role.PARTNER) &&
+  //       (currentMaritalStatus !== constants.role.SPOUSE && currentMaritalStatus !== constants.role.PARTNER)) {
+  //     // await dispatch(removeSpouseOrPartner(spouseOrPartner._id));
+  //   } else {
+  //     if (!spouseOrPartner._id) {
+  //       const createSpouseOrPartnerResponse = await dispatch(spouseOrPartnerThunks.createSpouseOrPartnerThunk(spouseOrPartner)).unwrap();
+
+  //       if (createSpouseOrPartnerResponse) {
+  //         let role;
+  //         // if (currentMaritalStatus === constants.role.SPOUSE) role = constants.role.SPOUSE;
+  //         // if (currentMaritalStatus === constants.role.PARTNER) role = constants.role.PARTNER;
+  //         if (currentMaritalStatus === 'spouse') role = 'spouse';
+  //         if (currentMaritalStatus === 'partner') role = 'partner';
+
+  //         console.log(`role for updating the order = ${role}.    in spouse or partner component`);
+
+  //         await dispatch(updateOrderThunk({
+  //           id: currentOrderId,
+  //           updateType: 'peopleAndRoles',
+  //           updateData: {
+  //             personId: createSpouseOrPartnerResponse._id, // The ID of the person whose role you want to update
+  //             role: [role] // The new role for this person
+  //           }
+  //         }));
+  //       }
+  //     } else {
+  //       await dispatch(spouseOrPartnerThunks.updateSpouseOrPartnerThunk(spouseOrPartner));
+  //     }
+  //   }
+
+  //   // Update testator's marital status if it has changed
+  //   if (initialMaritalStatus.current !== currentMaritalStatus) {
+  //     console.log(`update testator thunk called in spouse or partner slide on save. 
+  //       Saved marital status= ${initialMaritalStatus.current}, current marital status = ${currentMaritalStatus}`);
+
+
+  //     await dispatch(testatorThunks.updateTestatorThunk({...testator, maritalStatus: currentMaritalStatus}));
+  //   }
+
+  //   navigate('/creatingOrder');
+  // };
 
 
   const handleOnChange = (e) => {
@@ -234,8 +284,8 @@ const SpouseOrPartner = () => {
             <div className="section-form-container">
 
               <form onSubmit={handleSaveAndContinue}>
-                <div className="form-heading">             
-                   <h3>Please enter your {currentMaritalStatus === 'married' ? "spouse" : currentMaritalStatus === 'partner' ? "partner" : ""} details.</h3>
+                <div className="form-heading">
+                  <h3>Please enter your {currentMaritalStatus === 'married' ? "spouse" : currentMaritalStatus === 'partner' ? "partner" : ""} details.</h3>
                 </div>
                 <div className="form-main-container">
                   <div className="form-title-and-fullName-container">
