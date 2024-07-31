@@ -67,7 +67,10 @@ const SpouseOrPartnerTile = () => {
                                 <p>{spouseOrPartnerInitialData.spouseOrPartnerFullAddress}</p>
                             </div>
                             <div className="creatingOrder-tile-btn-container">
-                                <button className="creatingOrder-tile-btn" onClick={() => navigate('/spouseOrPartner')}>Edit</button>
+                                <button className="creatingOrder-tile-btn" 
+                                onClick={() => navigate('/spouseOrPartner')}
+                                
+                                >Edit</button>
                             </div>
                         </>
                     ) : (
@@ -80,7 +83,10 @@ const SpouseOrPartnerTile = () => {
                                 <>
                                     <p>Tell us about your spouse or partner…</p>
                                     <div className="creatingOrder-tile-btn-container">
-                                        <button className="creatingOrder-tile-btn" onClick={() => navigate('/spouseOrPartner')}>Get Started</button>
+                                        <button className="creatingOrder-tile-btn" 
+                                        onClick={() => navigate('/spouseOrPartner')}
+                                        disabled={!allNecessaryFieldsSpecified && !isTestatorSingleOrWidowed}
+                                        >Get Started</button>
                                     </div>
                                 </>
                             )}
