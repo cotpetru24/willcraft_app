@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { updateOrder, createOrder, getOrder, createPerson, getPerson, updatePerson } from "./orderService"; // Import named exports
+import { updateOrder, createOrder, getOrder } from "./currentOrderService"; // Import named exports
 import { updateTestatorSlice } from "../people/testator/testatorSlice";
 import { updateSpouseOrPartnerSlice } from "../people/spouseOrPartner/spouseOrPartnerSlice";
 import constants from "../../common/constants";
@@ -50,7 +50,7 @@ export const getOrderThunk = createAsyncThunk(
                 throw new Error('Testator data is missing in the response');
             }
             thunkAPI.dispatch(updateTestatorSlice(testator.personId));
-            if (spouseOrPartner){
+            if (spouseOrPartner) {
                 thunkAPI.dispatch(updateSpouseOrPartnerSlice(spouseOrPartner.personId))
             }
             // thunkAPI.dispatch(updateSpouseOrPartnerSlice(spouseOrPartner.personId))
@@ -83,16 +83,16 @@ export const updateOrderThunk = createAsyncThunk(
     async ({ id, updateType, updateData }, thunkAPI) => {
 
         console.log(`update order called in order slice`)
-      try {
-        const token = thunkAPI.getState().auth.user.token;
-        return await updateOrder(id, updateType, updateData, token);
-      } catch (error) {
-        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-        return thunkAPI.rejectWithValue(message);
-      }
+        try {
+            const token = thunkAPI.getState().auth.user.token;
+            return await updateOrder(id, updateType, updateData, token);
+        } catch (error) {
+            const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+            return thunkAPI.rejectWithValue(message);
+        }
     }
-  );
-  
+);
+
 
 
 const currentOrderSlice = createSlice({
@@ -127,15 +127,34 @@ const currentOrderSlice = createSlice({
             .addCase(updateOrderThunk.pending, (state) => {
                 state.isLoading = true;
             })
+            // .addCase(updateOrderThunk.fulfilled, (state, action) => {
+            //     state.isLoading = false;
+            //     state.isSuccess = true;
+            //     state.orderId = action.payload._id;
+            //     state.userId = action.payload.userId;
+            //     state.status = action.payload.status;
+            //     // state.peopleAndRoles = action.payload.peopleAndRoles;
+            //     // state.assetsAndDistribution = action.payload.assetsAndDistribution;
+            // })
             .addCase(updateOrderThunk.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
                 state.orderId = action.payload._id;
                 state.userId = action.payload.userId;
                 state.status = action.payload.status;
-                state.peopleAndRoles = action.payload.peopleAndRoles;
-                state.assetsAndDistribution = action.payload.assetsAndDistribution;
+                state.peopleAndRoles = action.payload.peopleAndRoles.map(pr => ({
+                    personId: pr.personId._id || pr.personId, // In case personId is populated, take only the _id
+                    role: pr.role
+                }));
+                state.assetsAndDistribution = action.payload.assetsAndDistribution.map(ad => ({
+                    assetId: ad.assetId._id || ad.assetId, // In case assetId is populated, take only the _id
+                    distribution: ad.distribution.map(dist => ({
+                        personId: dist.personId._id || dist.personId, // In case personId is populated, take only the _id
+                        receivingAmount: dist.receivingAmount
+                    }))
+                }));
             })
+
             .addCase(updateOrderThunk.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
@@ -146,13 +165,33 @@ const currentOrderSlice = createSlice({
             .addCase(getOrderThunk.pending, (state) => {
                 state.isLoading = true;
             })
+            // .addCase(getOrderThunk.fulfilled, (state, action) => {
+            //     state.isLoading = false;
+            //     state.isSuccess = true;
+            //     state.orderId = action.payload._id;
+            //     state.userId = action.payload.userId;
+            //     state.status = action.payload.status;
+                
+            // })
             .addCase(getOrderThunk.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
                 state.orderId = action.payload._id;
                 state.userId = action.payload.userId;
                 state.status = action.payload.status;
+                state.peopleAndRoles = action.payload.peopleAndRoles.map(pr => ({
+                    personId: pr.personId._id || pr.personId, // In case personId is populated, take only the _id
+                    role: pr.role
+                }));
+                state.assetsAndDistribution = action.payload.assetsAndDistribution.map(ad => ({
+                    assetId: ad.assetId._id || ad.assetId, // In case assetId is populated, take only the _id
+                    distribution: ad.distribution.map(dist => ({
+                        personId: dist.personId._id || dist.personId, // In case personId is populated, take only the _id
+                        receivingAmount: dist.receivingAmount
+                    }))
+                }));
             })
+            
             .addCase(getOrderThunk.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
