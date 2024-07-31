@@ -8,7 +8,7 @@ import DateInput from "../../Common/DateInput";
 import { updateTestatorSlice } from "../../../features/people/testator/testatorSlice";
 import { updateSpouseOrPartnerSlice, resetSpouseOrPartnerSlice } from "../../../features/people/spouseOrPartner/spouseOrPartnerSlice";
 import spouseOrPartnerThunks from "../../../features/people/spouseOrPartner/spouseOrPartnerThunks";
-import { updateOrderThunk } from "../../../features/order/orderSlice";
+import { updateOrderThunk } from "../../../features/order/currentOrderSlice";
 import testatorThunks from "../../../features/people/testator/testatorThunks";
 
 

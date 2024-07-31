@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { updateOrderThunk } from '../features/order/orderSlice';
+import { updateOrderThunk } from '../features/order/currentOrderSlice';
 
 const useNavigateAndUpdateOrder = (shouldNavigate, orderId, orderData) => {
   const navigate = useNavigate();
