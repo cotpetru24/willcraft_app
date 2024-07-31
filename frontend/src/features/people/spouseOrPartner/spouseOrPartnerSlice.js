@@ -1,14 +1,14 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
- import spouseOrPartnerThunks from "../spouseOrPartner/spouseOrPartnerThunks"
+import { createSlice } from "@reduxjs/toolkit";
+import spouseOrPartnerThunks from "../spouseOrPartner/spouseOrPartnerThunks"
 
 const initialState = {
-    _id:'',
+    _id: '',
     title: '',
     fullLegalName: '',
     fullAddress: '',
     dob: '',
     email: '',
-    tel:'',
+    tel: '',
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -33,8 +33,8 @@ const spouseOrPartnerSlice = createSlice({
         resetSpouseOrPartnerSlice: (state) => initialState,
     },
     extraReducers: (builder) => {
-        builder
 
+        builder
 
 
             //create SpouseOrPartner cases 
@@ -44,22 +44,22 @@ const spouseOrPartnerSlice = createSlice({
             .addCase(spouseOrPartnerThunks.createSpouseOrPartnerThunk.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
+
                 const { _id, title, fullLegalName, fullAddress, dob, email, tel } = action.payload;
+
                 state._id = _id;
-                state.title=title;
-                state.fullLegalName=fullLegalName;
-                state.fullAddress=fullAddress;
-                state.dob=dob;
-                state.email=email||'';
-                state.tel=tel ||'';
-              })
+                state.title = title;
+                state.fullLegalName = fullLegalName;
+                state.fullAddress = fullAddress;
+                state.dob = dob;
+                state.email = email || '';
+                state.tel = tel || '';
+            })
             .addCase(spouseOrPartnerThunks.createSpouseOrPartnerThunk.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;
             })
-
-
 
 
             //Update SpouseOrPartner cases
@@ -69,14 +69,16 @@ const spouseOrPartnerSlice = createSlice({
             .addCase(spouseOrPartnerThunks.updateSpouseOrPartnerThunk.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
+
                 const { _id, title, fullLegalName, fullAddress, dob, email, tel } = action.payload;
+
                 state._id = _id;
-                state.title=title;
-                state.fullLegalName=fullLegalName;
-                state.fullAddress=fullAddress;
-                state.dob=dob;
-                state.email=email||'';
-                state.tel=tel ||'';
+                state.title = title;
+                state.fullLegalName = fullLegalName;
+                state.fullAddress = fullAddress;
+                state.dob = dob;
+                state.email = email || '';
+                state.tel = tel || '';
             })
             .addCase(spouseOrPartnerThunks.updateSpouseOrPartnerThunk.rejected, (state, action) => {
                 state.isLoading = false;

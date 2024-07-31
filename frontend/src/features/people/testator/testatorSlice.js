@@ -47,7 +47,7 @@ const testatorSlice = createSlice({
                 state.isLoading = false;
                 state.isSuccess = true;
 
-                const { _id, title, fullLegalName, fullAddress, dob, email, tel, maritalStatus } = action.payload;
+                const { _id, title, fullLegalName, fullAddress, email, dob, tel, maritalStatus } = action.payload;
 
                 state._id = _id;
                 state.title = title;
