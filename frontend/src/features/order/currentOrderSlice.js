@@ -42,9 +42,12 @@ export const getOrderThunk = createAsyncThunk(
             const token = thunkAPI.getState().auth.user.token;
             const response = await getOrder(id, token);
             const testator = response.peopleAndRoles.find(p => p.role.includes(constants.role.TESTATOR));
-            const spouseOrPartner = response.peopleAndRoles.find(p => p.role.includes(constants.role.SPOUSE || constants.role.PARTNER));
+            // const spouseOrPartner = response.peopleAndRoles.find(p => p.role.includes(constants.role.SPOUSE || constants.role.PARTNER));
+            const spouseOrPartner = response.peopleAndRoles.find(p => p.role.includes(constants.role.SPOUSE) || p.role.includes(constants.role.PARTNER));
+
 
             // const spouseOrPartner = response.peopleAndRoles.find(p => p.role.includes("spouse" || "partner"));
+            console.log(`spouseorpartner payload = ${JSON.stringify(spouseOrPartner)}`)
 
 
             // Ensure response contains the testator data
