@@ -36,13 +36,13 @@ export const getOrder = async (id, token) => {
 
 
 
-export const updateOrder = async (id, updateType, updateData, token) => {
+export const updateOrder = async (orderData, token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`
       // 'Content-Type': 'application/json'
     }
   };
-  const response = await axios.put(API_ORDER_URL+id, { updateType, updateData }, config);
+  const response = await axios.put(API_ORDER_URL + orderData.orderId, orderData, config);
   return response.data;
 };

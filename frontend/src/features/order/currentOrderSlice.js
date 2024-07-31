@@ -21,7 +21,7 @@ const initialState = {
 
 // Thunk for creating an order
 export const createOrderThunk = createAsyncThunk(
-    'orders/createOrder',
+    'currentOrder/createOrderThunk',
     async (orderData, thunkAPI) => {
         const userId = thunkAPI.getState().auth.user._id;
         const updatedOrderData = { ...orderData, userId };
@@ -36,7 +36,7 @@ export const createOrderThunk = createAsyncThunk(
 );
 
 export const getOrderThunk = createAsyncThunk(
-    'orders/getOrder',
+    'currentOrder/getOrderThunk',
     async (id, thunkAPI) => {
         try {
             const token = thunkAPI.getState().auth.user.token;
@@ -81,13 +81,13 @@ export const getOrderThunk = createAsyncThunk(
 // );
 
 export const updateOrderThunk = createAsyncThunk(
-    'orders/updateOrder',
-    async ({ id, updateType, updateData }, thunkAPI) => {
+    'currentOrder/updateOrderThunk',
+    async (orderData, thunkAPI) => {
 
         console.log(`update order called in order slice`)
         try {
             const token = thunkAPI.getState().auth.user.token;
-            return await updateOrder(id, updateType, updateData, token);
+            return await updateOrder(orderData, token);
         } catch (error) {
             const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
             return thunkAPI.rejectWithValue(message);
@@ -148,19 +148,10 @@ const currentOrderSlice = createSlice({
             .addCase(updateOrderThunk.pending, (state) => {
                 state.isLoading = true;
             })
-            // .addCase(updateOrderThunk.fulfilled, (state, action) => {
-            //     state.isLoading = false;
-            //     state.isSuccess = true;
-            //     state.orderId = action.payload._id;
-            //     state.userId = action.payload.userId;
-            //     state.status = action.payload.status;
-            //     // state.peopleAndRoles = action.payload.peopleAndRoles;
-            //     // state.assetsAndDistribution = action.payload.assetsAndDistribution;
-            // })
             .addCase(updateOrderThunk.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
-                state.orderId = action.payload.orderId;
+                state.orderId = action.payload._id;
                 state.userId = action.payload.userId;
                 state.status = action.payload.status;
                 state.peopleAndRoles = action.payload.peopleAndRoles.map(pr => ({
