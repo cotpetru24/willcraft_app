@@ -2,13 +2,9 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckSquare, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
-
-
+import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 
 const SpouseOrPartnerTile = () => {
-
-
     const navigate = useNavigate();
 
     const [spouseOrPartnerInitialData, setSpouseOrPartnerInitialData] = useState({
@@ -19,14 +15,13 @@ const SpouseOrPartnerTile = () => {
     });
 
     const spouseOrPartnerData = useSelector(state => state.spouseOrPartner);
+    const testatorData = useSelector(state => state.testator);
 
     const isSpouseOrPartnerComplete = (data) => {
         return data.title && data.fullLegalName && data.dob && data.fullAddress;
-
-        //-------------to add here check if testtator is single => !maried || !partner
     };
-    const allNecessaryFieldsSpecified = isSpouseOrPartnerComplete(spouseOrPartnerData);
 
+    const allNecessaryFieldsSpecified = isSpouseOrPartnerComplete(spouseOrPartnerData);
 
     useEffect(() => {
         if (spouseOrPartnerData) {
@@ -41,24 +36,21 @@ const SpouseOrPartnerTile = () => {
 
     return (
         <>
-            <section >
-
+            <section>
                 <div className="creatingOrder-tile">
                     <div className="creatingOrder-tile-heading">
                         <h2>Your spouse or partner</h2>
-                        {allNecessaryFieldsSpecified ? (
-                            <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />
+                        {allNecessaryFieldsSpecified || testatorData.maritalStatus === 'single' || testatorData.maritalStatus === 'widowed' ? (                            <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />
                         ) : (
                             <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'grey' }} />
                         )}
-
                     </div>
 
                     {allNecessaryFieldsSpecified ? (
                         <>
                             <div className="creatingOrder-tile-group">
                                 <div className="creatingOrder-tile-line-heading">
-                                    <h4 >Name:</h4>
+                                    <h4>Name:</h4>
                                 </div>
                                 <p>{spouseOrPartnerInitialData.spouseOrPartnerTitle} {spouseOrPartnerInitialData.spouseOrPartnerLegalName}</p>
                             </div>
@@ -80,14 +72,21 @@ const SpouseOrPartnerTile = () => {
                         </>
                     ) : (
                         <>
-                            <p>Tell us about your spouse or partner…</p>
-                            <div className="creatingOrder-tile-btn-container">
-                                <button className="creatingOrder-tile-btn" onClick={() => navigate('/spouseOrPartner')}>Get Started</button>
-                            </div>
+                            {testatorData.maritalStatus === 'single' ? (
+                                <p>Your marital status is single.</p>
+                            ) : testatorData.maritalStatus === 'widowed' ? (
+                                <p>Your marital status is widowed.</p>
+                            ) : (
+                                <>
+                                    <p>Tell us about your spouse or partner…</p>
+                                    <div className="creatingOrder-tile-btn-container">
+                                        <button className="creatingOrder-tile-btn" onClick={() => navigate('/spouseOrPartner')}>Get Started</button>
+                                    </div>
+                                </>
+                            )}
                         </>
                     )}
                 </div>
-
             </section>
         </>
     );
