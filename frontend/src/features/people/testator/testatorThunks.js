@@ -45,7 +45,6 @@ export const createTestatorThunk = createAsyncThunk(
 export const updateTestatorThunk = createAsyncThunk(
     'people/updateTestator',
     async (testatorData, thunkAPI) => {
-        console.log(`update testator thunk called with testator = ${JSON.stringify(testatorData)}`)
         try {
             const token = thunkAPI.getState().auth.user.token;
             const updateTestatorResponse = await peopleService.updatePerson(testatorData, token);
@@ -53,7 +52,9 @@ export const updateTestatorThunk = createAsyncThunk(
             return updateTestatorResponse;
         }
         catch (error) {
-            const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+            const message = (error.response && error.response.data && error.response.data.message)
+                || error.message
+                || error.toString();
             return thunkAPI.rejectWithValue(message);
         }
     }

@@ -2,3 +2,4 @@ Testator.js => All Checked
 testatorThunks.js => All Checked
 testatorSlice.js => All Checked
 spouseOrPartnerSlice.js => All Checked
+spouseOrPartnerThunks.js => All Checked

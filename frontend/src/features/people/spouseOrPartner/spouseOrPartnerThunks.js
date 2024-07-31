@@ -4,15 +4,17 @@ import peopleService from "../peopleService";
 
 export const createSpouseOrPartnerThunk = createAsyncThunk(
     'people/createSpouseOrPartner',
-    async (personData, thunkApi) => {
+    async (spouseOrPartnerData, thunkApi) => {
+
         // Get the userId from the state
         const userId = thunkApi.getState().auth.user._id;
+
         // Add userId to personData
-        const updatedPersonData = { ...personData, userId };
+        const updatedSpouseOrPartnerData = { ...spouseOrPartnerData, userId };
 
         try {
             const token = thunkApi.getState().auth.user.token;
-            const createSpouseOrPartnerResponse = await peopleService.createPerson(updatedPersonData, token);
+            const createSpouseOrPartnerResponse = await peopleService.createPerson(updatedSpouseOrPartnerData, token);
 
             return createSpouseOrPartnerResponse
         }
@@ -23,36 +25,28 @@ export const createSpouseOrPartnerThunk = createAsyncThunk(
                 || error.toString();
             return thunkApi.rejectWithValue(message);
         }
-    });
+    }
+);
+
 
 export const updateSpouseOrPartnerThunk = createAsyncThunk(
     'people/updateSpouseOrPartner',
-    async (personData, thunkAPI) => {
+    async (spouseOrPartnerData, thunkAPI) => {
         try {
             const token = thunkAPI.getState().auth.user.token;
+            const updateSpouseOrPartner = await peopleService.updatePerson(spouseOrPartnerData, token);
 
-            //add this to people service
-            return await peopleService.updatePerson(personData, token);
+            return updateSpouseOrPartner;
         }
         catch (error) {
-            const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+            const message = (error.response && error.response.data && error.response.data.message)
+                || error.message
+                || error.toString();
             return thunkAPI.rejectWithValue(message);
         }
     }
 );
 
-// export const getPerson = createAsyncThunk('people/fetchPeople', async (_, thunkApi) => {
-//     try {
-//         return await peopleService.fetchPeople();
-//     }
-//     catch (error) {
-//         const message =
-//             (error.response && error.response.data && error.response.data.message)
-//             || error.message
-//             || error.toString();
-//         return thunkApi.rejectWithValue(message);
-//     }
-// });
 
 const spouseOrPartnerThunks = {
     createSpouseOrPartnerThunk,
