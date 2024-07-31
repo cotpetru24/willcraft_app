@@ -1493,7 +1493,8 @@ ol {
 
 
 
-.marital-status-container {
+.marital-status-container,
+.has-children-container {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -1501,12 +1502,14 @@ ol {
   margin-bottom: 50px;
 }
 
-.marital-status-options-container {
+.marital-status-options-container,
+.has-children-options-container {
   display: flex;
   flex-direction: row;
 }
 
-.marital-status-radio-container {
+.marital-status-radio-container,
+.has-children-radio-container {
   display: flex;
   flex-direction: row;
   margin: 10px;

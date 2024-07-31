@@ -27,10 +27,44 @@ export const Kids = () => {
     return (
         <>
             <section className="section-container">
-
-                <div className="section-heading-container">
-                    <h1>Your Children</h1>
+                <div>
+                    <div className="creatingOrder-section-heading-container">
+                        <h1>Your Children</h1>
+                    </div>
+                    <div className="has-children-container">
+                        <div>
+                            <h4>Do you have children ?</h4>
+                        </div>
+                        <div className="has-children-options-container">
+                            <div className="has-children-radio-container">
+                                <input
+                                    type="radio"
+                                    id="has-children-yes"
+                                    name="has-children"
+                                    value="yes"
+                                // checked={}
+                                // onChange={}
+                                >
+                                </input>
+                                <label htmlFor="has-children-yes">Yes</label>
+                            </div>
+                            <div className="has-children-radio-container">
+                                <input
+                                    type="radio"
+                                    id="has-children-no"
+                                    name="has-children"
+                                    value="no"
+                                // checked={currentMaritalStatus === constants.maritalStatus.PARTNER}
+                                // onChange={handleMaritalStatusChange}
+                                >
+                                </input>
+                                <label htmlFor="has-children-no">No</label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+
                 <div className="section-content-container">
                     <div className="section-controll-container">
                         <div className="section-list-container">

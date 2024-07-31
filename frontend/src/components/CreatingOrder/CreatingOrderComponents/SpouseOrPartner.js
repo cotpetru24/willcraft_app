@@ -225,7 +225,7 @@ const SpouseOrPartner = () => {
                 value={constants.maritalStatus.MARRIED}
                 checked={currentMaritalStatus === constants.maritalStatus.MARRIED}
                 onChange={handleMaritalStatusChange}></input>
-              <label htmlFor="marital-status-yes">Married</label>
+              <label htmlFor="marital-status-married">Married</label>
             </div>
             <div className="marital-status-radio-container">
               <input
@@ -235,7 +235,7 @@ const SpouseOrPartner = () => {
                 value={constants.maritalStatus.PARTNER}
                 checked={currentMaritalStatus === constants.maritalStatus.PARTNER}
                 onChange={handleMaritalStatusChange}></input>
-              <label htmlFor="marital-status-no">Living with partner</label>
+              <label htmlFor="marital-status-partner">Living with partner</label>
             </div>
             <div className="marital-status-radio-container">
               <input
@@ -245,7 +245,7 @@ const SpouseOrPartner = () => {
                 value={constants.maritalStatus.WIDOWED}
                 checked={currentMaritalStatus === constants.maritalStatus.WIDOWED}
                 onChange={handleMaritalStatusChange}></input>
-              <label htmlFor="marital-status-no">Widowed</label>
+              <label htmlFor="marital-status-widowed">Widowed</label>
             </div>
             <div className="marital-status-radio-container">
               <input
@@ -255,7 +255,7 @@ const SpouseOrPartner = () => {
                 value={constants.maritalStatus.SINGLE}
                 checked={currentMaritalStatus === constants.maritalStatus.SINGLE}
                 onChange={handleMaritalStatusChange}></input>
-              <label htmlFor="marital-status-no">Single</label>
+              <label htmlFor="marital-status-single">Single</label>
             </div>
           </div>
         </div>
