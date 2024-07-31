@@ -34,13 +34,15 @@ const SpouseOrPartnerTile = () => {
         }
     }, [spouseOrPartnerData]);
 
+
     return (
         <>
             <section>
                 <div className="creatingOrder-tile">
                     <div className="creatingOrder-tile-heading">
                         <h2>Your spouse or partner</h2>
-                        {allNecessaryFieldsSpecified || testatorData.maritalStatus === 'single' || testatorData.maritalStatus === 'widowed' ? (                            <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />
+                        {allNecessaryFieldsSpecified || testatorData.maritalStatus === 'single' || testatorData.maritalStatus === 'widowed' ? (                            
+                            <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />
                         ) : (
                             <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'grey' }} />
                         )}
@@ -76,16 +78,31 @@ const SpouseOrPartnerTile = () => {
                     ) : (
                         <>
                             {testatorData.maritalStatus === 'single' ? (
+                                <>
                                 <p>Your marital status is single.</p>
+                                <div className="creatingOrder-tile-btn-container">
+                                <button className="creatingOrder-tile-btn" 
+                                onClick={() => navigate('/spouseOrPartner')}
+                                
+                                >Edit</button>
+                            </div>
+                            </>
                             ) : testatorData.maritalStatus === 'widowed' ? (
+                                <>
                                 <p>Your marital status is widowed.</p>
+                                <div className="creatingOrder-tile-btn-container">
+                                <button className="creatingOrder-tile-btn" 
+                                onClick={() => navigate('/spouseOrPartner')}
+                                
+                                >Edit</button>
+                            </div>
+                            </>
                             ) : (
                                 <>
                                     <p>Tell us about your spouse or partner…</p>
                                     <div className="creatingOrder-tile-btn-container">
                                         <button className="creatingOrder-tile-btn" 
                                         onClick={() => navigate('/spouseOrPartner')}
-                                        disabled={!allNecessaryFieldsSpecified && !isTestatorSingleOrWidowed}
                                         >Get Started</button>
                                     </div>
                                 </>
