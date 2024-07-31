@@ -5,7 +5,7 @@ import { getOrders, reset } from "../../features/orders/ordersSlice";
 import Spinner from "../Spinner";
 import { useNavigate } from "react-router-dom";
 import OrderItem from "./OrderItem";
-import { reset as resetCurrentOrder } from "../../features/order/currentOrderSlice";
+import { resetCurrentOrderSlice } from "../../features/order/currentOrderSlice";
 import { resetTestatorSlice } from "../../features/people/testator/testatorSlice";
 import { resetSpouseOrPartnerSlice } from "../../features/people/spouseOrPartner/spouseOrPartnerSlice";
 
@@ -26,7 +26,7 @@ const OrdersList = () => {
 
 
     const handleCreateWill = async () => {
-        await dispatch(resetCurrentOrder())
+        await dispatch(resetCurrentOrderSlice())
         await dispatch(resetTestatorSlice())
         await dispatch(resetSpouseOrPartnerSlice())
         // await dispatch(resetChildren())

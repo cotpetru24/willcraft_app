@@ -9,6 +9,8 @@ const initialState = {
     orderId: '',
     userId: '',
     status: '',
+    peopleAndRoles: [],
+    assetsAndDistribution:[],
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -99,7 +101,26 @@ const currentOrderSlice = createSlice({
     name: 'currentOrder',
     initialState,
     reducers: {
-        reset: (state) => initialState,
+        updateCurrentOrderSlice: (state, action) => {
+            const { orderId, userId, status, peopleAndRoles, assetsAndDistribution, } = action.payload;
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.orderId = action.payload.orderId;
+            state.userId = action.payload.userId;
+            state.status = action.payload.status;
+            state.peopleAndRoles = action.payload.peopleAndRoles.map(pr => ({
+                personId: pr.personId._id || pr.personId, // In case personId is populated, take only the _id
+                role: pr.role
+            }));
+            state.assetsAndDistribution = action.payload.assetsAndDistribution.map(ad => ({
+                assetId: ad.assetId._id || ad.assetId, // In case assetId is populated, take only the _id
+                distribution: ad.distribution.map(dist => ({
+                    personId: dist.personId._id || dist.personId, // In case personId is populated, take only the _id
+                    receivingAmount: dist.receivingAmount
+                }))
+            }));
+        },
+        resetCurrentOrderSlice: (state) => initialState,
     },
     extraReducers: (builder) => {
         builder
@@ -139,7 +160,7 @@ const currentOrderSlice = createSlice({
             .addCase(updateOrderThunk.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
-                state.orderId = action.payload._id;
+                state.orderId = action.payload.orderId;
                 state.userId = action.payload.userId;
                 state.status = action.payload.status;
                 state.peopleAndRoles = action.payload.peopleAndRoles.map(pr => ({
@@ -200,6 +221,6 @@ const currentOrderSlice = createSlice({
     },
 });
 
-export const { reset } = currentOrderSlice.actions;
+export const { resetCurrentOrderSlice, updateCurrentOrderSlice } = currentOrderSlice.actions;
 
 export default currentOrderSlice.reducer;
