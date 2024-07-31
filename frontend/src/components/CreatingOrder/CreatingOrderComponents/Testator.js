@@ -8,7 +8,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateTestatorSlice } from "../../../features/people/testator/testatorSlice";
 import testatorThunks from "../../../features/people/testator/testatorThunks";
 
+
+
 const Testator = () => {
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

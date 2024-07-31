@@ -14,20 +14,15 @@ import testatorThunks from "../../../features/people/testator/testatorThunks";
 
 
 const SpouseOrPartner = () => {
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const currentOrder = useSelector(state => state.currentOrder);
-  const currentOrderId = currentOrder.orderId;
-
-  console.log(`current orderId = ${currentOrder.orderId}`);
-
   const testator = useSelector(state => state.testator)
   const spouseOrPartner = useSelector(state => state.spouseOrPartner)
 
   const [currentMaritalStatus, setMaritalStatus] = useState(testator.maritalStatus)
-  console.log(`current marital status = ${currentMaritalStatus}`)
-
 
   // Use useRef to store the "saved" state
   const savedSpouseOrPartnerData = useRef(null);
@@ -43,16 +38,6 @@ const SpouseOrPartner = () => {
     email: '',
     tel: ''
   });
-
-
-  const handleMaritalStatusChange = (e) => {
-    const updatedMaritalStatus = e.target.value;
-    setMaritalStatus(updatedMaritalStatus);
-
-    if (testator) {
-      dispatch(updateTestatorSlice({ ...testator, maritalStatus: updatedMaritalStatus }))
-    }
-  }
 
 
   useEffect(() => {
@@ -109,190 +94,85 @@ const SpouseOrPartner = () => {
 
   const handleSaveAndContinue = async (e) => {
     e.preventDefault();
-    console.log(`current orderId in handleSaveAndContinue = ${currentOrder.orderId}`);
 
     let updatedPeopleAndRoles = currentOrder.peopleAndRoles;
 
     // Check if marital status changed from spouse/partner to single or widowed
-    if ((initialMaritalStatus.current === "married" || initialMaritalStatus.current === "partner") &&
-        (currentMaritalStatus !== "married" && currentMaritalStatus !== "partner")) {
+    if ((initialMaritalStatus.current === constants.maritalStatus.MARRIED
+      || initialMaritalStatus.current === constants.maritalStatus.PARTNER)
+      && (currentMaritalStatus !== constants.maritalStatus.MARRIED
+        && currentMaritalStatus !== constants.maritalStatus.PARTNER)) {
 
-        // Filter out the spouse or partner from peopleAndRoles
-        updatedPeopleAndRoles = currentOrder.peopleAndRoles.filter(pr => pr.role[0] !== "spouse" && pr.role[0] !== "partner");
+      updatedPeopleAndRoles = currentOrder.peopleAndRoles.filter(pr => 
+        !pr.role.includes(constants.role.SPOUSE) && !pr.role.includes(constants.role.PARTNER)
+      );
+      
+      // Update the current order slice
+      const updatedOrder = {
+        ...currentOrder,
+        peopleAndRoles: updatedPeopleAndRoles
+      };
 
-        // Update the current order slice
-        const updatedOrder = {
+      await dispatch(updateCurrentOrderSlice(updatedOrder));
+
+      await dispatch(updateOrderThunk(updatedOrder));
+    }
+    else {
+      if (!spouseOrPartner._id
+        && (currentMaritalStatus === constants.maritalStatus.MARRIED
+          || currentMaritalStatus === constants.maritalStatus.PARTNER)
+      ) {
+        const createSpouseOrPartnerResponse = await dispatch(
+          spouseOrPartnerThunks.createSpouseOrPartnerThunk(spouseOrPartner)).unwrap();
+
+        if (createSpouseOrPartnerResponse) {
+          let role;
+          if (currentMaritalStatus === constants.maritalStatus.MARRIED) role = constants.role.SPOUSE;
+          if (currentMaritalStatus === constants.maritalStatus.PARTNER) role = constants.role.PARTNER;
+
+          // Update the peopleAndRoles with the new spouse/partner
+          updatedPeopleAndRoles = [
+            ...currentOrder.peopleAndRoles,
+            {
+              personId: createSpouseOrPartnerResponse._id,
+              role: [role]
+            }
+          ];
+
+          // Update the current order slice
+          const updatedOrder = {
             ...currentOrder,
             peopleAndRoles: updatedPeopleAndRoles
-        };
-        await dispatch(updateCurrentOrderSlice(updatedOrder));
-        console.log(`dispatching update order thunk order data = ${JSON.stringify(updatedOrder)}`)
-        await dispatch(updateOrderThunk(updatedOrder));
-    } else {
-        if (!spouseOrPartner._id && (currentMaritalStatus === "married" || currentMaritalStatus === "partner")) {
-            const createSpouseOrPartnerResponse = await dispatch(spouseOrPartnerThunks.createSpouseOrPartnerThunk(spouseOrPartner)).unwrap();
+          };
 
-            if (createSpouseOrPartnerResponse) {
-                let role;
-                if (currentMaritalStatus === "married") role = "spouse";
-                if (currentMaritalStatus === "partner") role = "partner";
-                console.log(`role for updating the order = ${role}.    in spouse or partner component`);
+          await dispatch(updateCurrentOrderSlice(updatedOrder));
 
-                // Update the peopleAndRoles with the new spouse/partner
-                updatedPeopleAndRoles = [
-                    ...currentOrder.peopleAndRoles,
-                    {
-                        personId: createSpouseOrPartnerResponse._id,
-                        role: [role]
-                    }
-                ];
-
-                // Update the current order slice
-                const updatedOrder = {
-                    ...currentOrder,
-                    peopleAndRoles: updatedPeopleAndRoles
-                };
-                await dispatch(updateCurrentOrderSlice(updatedOrder));
-                console.log(`dispatching update order thunk order data = ${JSON.stringify(updatedOrder)}`)
-                await dispatch(updateOrderThunk(updatedOrder));
-            }
-        } else {
-            await dispatch(spouseOrPartnerThunks.updateSpouseOrPartnerThunk(spouseOrPartner));
+          await dispatch(updateOrderThunk(updatedOrder));
         }
+      } else {
+
+        await dispatch(spouseOrPartnerThunks.updateSpouseOrPartnerThunk(spouseOrPartner));
+      }
     }
 
     // Update testator's marital status if it has changed
     if (initialMaritalStatus.current !== currentMaritalStatus) {
-        console.log(`update testator thunk called in spouse or partner slide on save. 
-          Saved marital status= ${initialMaritalStatus.current}, current marital status = ${currentMaritalStatus}`);
-        await dispatch(testatorThunks.updateTestatorThunk({ ...testator, maritalStatus: currentMaritalStatus }));
+
+      await dispatch(testatorThunks.updateTestatorThunk({ ...testator, maritalStatus: currentMaritalStatus }));
     }
 
     navigate('/creatingOrder');
-};
+  };
 
 
+  const handleMaritalStatusChange = (e) => {
+    const updatedMaritalStatus = e.target.value;
+    setMaritalStatus(updatedMaritalStatus);
 
-  //--------------------------------------------------------------
-  //--------------this one workd do not delete--------------------
-  //--------------------------------------------------------------
-  // const handleSaveAndContinue = async (e) => {
-  //   e.preventDefault();
-
-  //   let updatedPeopleAndRoles = currentOrder.peopleAndRoles;
-
-  //   console.log(`current orderId in handlesaveandnavifgate = ${currentOrder.orderId}`)
-
-
-  // //   // Check if the marital status has changed to single or widowed and remove spouse/partner if necessary
-  // //   if ((initialMaritalStatus.current === constants.role.SPOUSE || initialMaritalStatus.current === constants.role.PARTNER) &&
-  // //       (currentMaritalStatus !== constants.role.SPOUSE && currentMaritalStatus !== constants.role.PARTNER)) {
-  // //     // await dispatch(removeSpouseOrPartner(spouseOrPartner._id));
-  // //   } else {
-
-
-
-
-  //   if (!spouseOrPartner._id) {
-  //     const createSpouseOrPartnerResponse = await dispatch(spouseOrPartnerThunks.createSpouseOrPartnerThunk(spouseOrPartner)).unwrap();
-
-  //     if (createSpouseOrPartnerResponse) {
-  //       let role;
-  //       // if (currentMaritalStatus === constants.role.MARRIED) role = constants.role.MARRIED;
-  //       // if (currentMaritalStatus === constants.role.PARTNER) role = constants.role.PARTNER;
-  //       if (currentMaritalStatus === "married") role = "spouse";
-  //       if (currentMaritalStatus === "partner") role = "partner";
-  //       console.log(`role for updating the order = ${role}.    in spouse or partner commponent`)
-
-  //       // Update the peopleAndRoles with the new spouse/partner
-  //       updatedPeopleAndRoles = [
-  //         ...currentOrder.peopleAndRoles,
-  //         {
-  //           personId: createSpouseOrPartnerResponse._id,
-  //           role: [role]
-  //         }
-  //       ];
-
-
-  //       // Update the current order slice
-  //       const updatedCurrentOrder = {
-  //         ...currentOrder,
-  //         peopleAndRoles: updatedPeopleAndRoles
-  //       };
-
-  //       // Update the current order slice
-  //       await dispatch(updateCurrentOrderSlice(updatedCurrentOrder));
-
-  //       // const updatedCurrentOrder = useSelector(state => state.currentOrder);
-  //       console.log(`dispatching update order thunk order data = ${JSON.stringify(currentOrder)}`)
-  //       await dispatch(updateOrderThunk(updatedCurrentOrder))
-  //     }
-  //     else {
-  //       await dispatch(spouseOrPartnerThunks.updateSpouseOrPartnerThunk(spouseOrPartner));
-  //     }
-
-
-
-
-      
-  //   };
-  //         // updateTestatorThunk({maritalStatus: currentMaritalStatus})
-
-  //         if (initialMaritalStatus.current !== currentMaritalStatus) {
-  //           // dispatch(updateTestatorSlice({ ...testator, maritalStatus: currentMaritalStatus }))
-  //           console.log(`update testator thunk called in spouse or partner slide on save. 
-  //           Saved marital status= ${initialMaritalStatus.current}, current marital status = ${currentMaritalStatus}`)
-  //           await dispatch(testatorThunks.updateTestatorThunk({ ...testator, maritalStatus: currentMaritalStatus }))
-  //         }
-  //   navigate('/creatingOrder');
-  // }
-
-  // const handleSaveAndContinue = async (e) => {
-  //   e.preventDefault();
-  //   console.log(`current orderId in handleSaveAndContinue = ${currentOrder.orderId}`);
-
-  //   // Check if the marital status has changed to single or widowed and remove spouse/partner if necessary
-  //   if ((initialMaritalStatus.current === constants.role.SPOUSE || initialMaritalStatus.current === constants.role.PARTNER) &&
-  //       (currentMaritalStatus !== constants.role.SPOUSE && currentMaritalStatus !== constants.role.PARTNER)) {
-  //     // await dispatch(removeSpouseOrPartner(spouseOrPartner._id));
-  //   } else {
-  //     if (!spouseOrPartner._id) {
-  //       const createSpouseOrPartnerResponse = await dispatch(spouseOrPartnerThunks.createSpouseOrPartnerThunk(spouseOrPartner)).unwrap();
-
-  //       if (createSpouseOrPartnerResponse) {
-  //         let role;
-  //         // if (currentMaritalStatus === constants.role.SPOUSE) role = constants.role.SPOUSE;
-  //         // if (currentMaritalStatus === constants.role.PARTNER) role = constants.role.PARTNER;
-  //         if (currentMaritalStatus === 'spouse') role = 'spouse';
-  //         if (currentMaritalStatus === 'partner') role = 'partner';
-
-  //         console.log(`role for updating the order = ${role}.    in spouse or partner component`);
-
-  //         await dispatch(updateOrderThunk({
-  //           id: currentOrderId,
-  //           updateType: 'peopleAndRoles',
-  //           updateData: {
-  //             personId: createSpouseOrPartnerResponse._id, // The ID of the person whose role you want to update
-  //             role: [role] // The new role for this person
-  //           }
-  //         }));
-  //       }
-  //     } else {
-  //       await dispatch(spouseOrPartnerThunks.updateSpouseOrPartnerThunk(spouseOrPartner));
-  //     }
-  //   }
-
-  //   // Update testator's marital status if it has changed
-  //   if (initialMaritalStatus.current !== currentMaritalStatus) {
-  //     console.log(`update testator thunk called in spouse or partner slide on save. 
-  //       Saved marital status= ${initialMaritalStatus.current}, current marital status = ${currentMaritalStatus}`);
-
-
-  //     await dispatch(testatorThunks.updateTestatorThunk({...testator, maritalStatus: currentMaritalStatus}));
-  //   }
-
-  //   navigate('/creatingOrder');
-  // };
+    if (testator) {
+      dispatch(updateTestatorSlice({ ...testator, maritalStatus: updatedMaritalStatus }))
+    }
+  }
 
 
   const handleOnChange = (e) => {
@@ -301,6 +181,12 @@ const SpouseOrPartner = () => {
       ...prevData,
       [name]: value
     }));
+
+
+
+
+
+
 
     // Dispatch the change to the Redux store
     dispatch(updateSpouseOrPartnerSlice({ ...spouseOrPartnerFormData, [name]: value }));
@@ -321,6 +207,7 @@ const SpouseOrPartner = () => {
   return (
     <>
       <section>
+
         <div className="creatingOrder-section-heading-container">
           <h1>Your details</h1>
         </div>
@@ -329,13 +216,11 @@ const SpouseOrPartner = () => {
           <div>
             <h4>What is your marital status?</h4>
           </div>
-
-
           <div className="marital-status-options-container">
             <div className="marital-status-radio-container">
               <input
                 type="radio"
-                id="marital-status-yes"
+                id="marital-status-married"
                 name="marital-status"
                 value={constants.maritalStatus.MARRIED}
                 checked={currentMaritalStatus === constants.maritalStatus.MARRIED}
@@ -345,7 +230,7 @@ const SpouseOrPartner = () => {
             <div className="marital-status-radio-container">
               <input
                 type="radio"
-                id="marital-status-no"
+                id="marital-status-partner"
                 name="marital-status"
                 value={constants.maritalStatus.PARTNER}
                 checked={currentMaritalStatus === constants.maritalStatus.PARTNER}
@@ -355,7 +240,7 @@ const SpouseOrPartner = () => {
             <div className="marital-status-radio-container">
               <input
                 type="radio"
-                id="marital-status-no"
+                id="marital-status-widowed"
                 name="marital-status"
                 value={constants.maritalStatus.WIDOWED}
                 checked={currentMaritalStatus === constants.maritalStatus.WIDOWED}
@@ -365,7 +250,7 @@ const SpouseOrPartner = () => {
             <div className="marital-status-radio-container">
               <input
                 type="radio"
-                id="marital-status-no"
+                id="marital-status-single"
                 name="marital-status"
                 value={constants.maritalStatus.SINGLE}
                 checked={currentMaritalStatus === constants.maritalStatus.SINGLE}
@@ -376,13 +261,18 @@ const SpouseOrPartner = () => {
         </div>
 
 
-        {(currentMaritalStatus === 'married' || currentMaritalStatus === 'partner') &&
+        {(currentMaritalStatus === constants.maritalStatus.MARRIED
+          || currentMaritalStatus === constants.maritalStatus.PARTNER)
+          &&
           (
             <div className="section-form-container">
 
               <form onSubmit={handleSaveAndContinue}>
                 <div className="form-heading">
-                  <h3>Please enter your {currentMaritalStatus === 'married' ? "spouse" : currentMaritalStatus === 'partner' ? "partner" : ""} details.</h3>
+                  <h3>Please enter your {currentMaritalStatus === constants.maritalStatus.MARRIED
+                    ? constants.role.SPOUSE
+                    : currentMaritalStatus === constants.maritalStatus.PARTNER
+                      ? constants.role.PARTNER : ""} details.</h3>
                 </div>
                 <div className="form-main-container">
                   <div className="form-title-and-fullName-container">
