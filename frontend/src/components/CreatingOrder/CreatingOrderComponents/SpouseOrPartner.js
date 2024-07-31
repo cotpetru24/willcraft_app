@@ -129,7 +129,7 @@ const SpouseOrPartner = () => {
         console.log(`dispatching update order thunk order data = ${JSON.stringify(updatedOrder)}`)
         await dispatch(updateOrderThunk(updatedOrder));
     } else {
-        if (!spouseOrPartner._id) {
+        if (!spouseOrPartner._id && (currentMaritalStatus === "married" || currentMaritalStatus === "partner")) {
             const createSpouseOrPartnerResponse = await dispatch(spouseOrPartnerThunks.createSpouseOrPartnerThunk(spouseOrPartner)).unwrap();
 
             if (createSpouseOrPartnerResponse) {
