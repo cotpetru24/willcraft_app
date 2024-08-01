@@ -2,19 +2,19 @@ import { createSlice } from "@reduxjs/toolkit";
 import spouseOrPartnerThunks from "../spouseOrPartner/spouseOrPartnerThunks"
 
 const initialState = [
-    {
-    _id: '',
-    title: '',
-    fullLegalName: '',
-    fullAddress: '',
-    dob: '',
-    email: '',
-    tel: '',
-    isError: false,
-    isSuccess: false,
-    isLoading: false,
-    message: '',
-}
+    // {
+    //     _id: '',
+    //     title: '',
+    //     fullLegalName: '',
+    //     fullAddress: '',
+    //     dob: '',
+    //     email: '',
+    //     tel: '',
+    //     isError: false,
+    //     isSuccess: false,
+    //     isLoading: false,
+    //     message: '',
+    // }
 ];
 
 
@@ -23,14 +23,20 @@ const kidsSlice = createSlice({
     initialState,
     reducers: {
         updateKidsSlice: (state, action) => {
-            const { _id, title, fullLegalName, fullAddress, dob, email, tel } = action.payload;
-            state._id = _id;
-            state.title = title;
-            state.fullLegalName = fullLegalName;
-            state.fullAddress = fullAddress;
-            state.dob = dob;
-            state.email = email || '';
-            state.tel = tel || '';
+            //     const { _id, title, fullLegalName, fullAddress, dob, email, tel } = action.payload;
+            //     state._id = _id;
+            //     state.title = title;
+            //     state.fullLegalName = fullLegalName;
+            //     state.fullAddress = fullAddress;
+            //     state.dob = dob;
+            //     state.email = email || '';
+            //     state.tel = tel || '';
+            // },
+            if (Array.isArray(action.payload)) {
+                return action.payload;
+            } else {
+                state.push(action.payload);
+            }
         },
         resetKidsSlice: (state) => initialState,
     },

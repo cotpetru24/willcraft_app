@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateTestatorSlice } from "../../../features/people/testator/testatorSlice";
 import { useState, useRef, useEffect } from "react";
 import testatorThunks from "../../../features/people/testator/testatorThunks";
-import { updateKidsSlice } from "../../../features/people/kids/kidsSlice";
+import { resetKidsSlice, updateKidsSlice } from "../../../features/people/kids/kidsSlice";
 import styles from "../../../common/styles";
 
 const Kids = () => {
@@ -27,14 +27,39 @@ const Kids = () => {
     const savedTestatorData = useRef(null);
     const initialHasChildrenStatus = useRef(testator.hasChildrenStatus);
 
+    let kid;
+
+    const [kidFormData, setKidFormData] = useState({
+        _id: '',
+        title: '',
+        fullLegalName: '',
+        fullAddress: '',
+        dob: '',
+        email: '',
+        tel: ''
+    });
+
+
+
     useEffect(() => {
+        if (kid) {
+            setKidFormData({
+                _id: kidFormData._id || '',
+                title: kidFormData.title || '',
+                fullLegalName: kidFormData.fullLegalName || '',
+                fullAddress: kidFormData.fullAddress || '',
+                dob: kidFormData.dob || '',
+                email: kidFormData.email || '',
+                tel: kidFormData.tel || ''
+            })
+        }
         // Store the initial state as "saved" state if it's not already saved
         if (!savedTestatorData.current) {
             savedTestatorData.current = JSON.parse(JSON.stringify(testator));
         }
-        // if (!savedKidsData.current) {
-        //     savedKidsData.current = JSON.parse(JSON.stringify(kids));
-        // }
+        if (!savedKidsData.current) {
+            savedKidsData.current = JSON.parse(JSON.stringify(kids));
+        }
     }, [kids]);
 
     const handleHasChildrenStatusChange = (e) => {
@@ -48,15 +73,51 @@ const Kids = () => {
         if (testator) {
             dispatch(updateTestatorSlice({ ...testator, hasChildrenStatus: updatedHasChildrenStatus }));
         }
+        if (kids) {
+            dispatch(resetKidsSlice())
+        }
     };
+
 
     const handleShowKidsForm = () => {
         setShowKidsForm(prevState => !prevState);
     };
 
-    const handleKidsFormAdd = () => {
-        // Your implementation for adding kids
+
+    const handleOnChange = (e) => {
+        const { name, value } = e.target;
+        setKidFormData((prevData) => ({
+            ...prevData,
+            [name]: value
+        }));
     };
+
+
+    const handleKidFormAdd = (e) => {
+        e.preventDefault();
+
+        dispatch(updateKidsSlice([...kids, kidFormData]));
+    };
+
+
+
+    const resetKidForm = () => {
+        setKidFormData({
+            title: '',
+            fullLegalName: '',
+            fullAddress: '',
+            dob: '',
+            email: '',
+            tel: ''
+        });
+    };
+
+    const handleRemoveKid = (index) => {
+        const updatedKids = kids.filter((_, i) => i !== index);
+        dispatch(updateKidsSlice(updatedKids));
+    };
+
+
 
     const handleSaveAndContinue = async (e) => {
         e.preventDefault();
@@ -66,6 +127,7 @@ const Kids = () => {
         }
         navigate('/creatingOrder');
     };
+
 
     const handleBack = () => {
         console.log(`handle back called`);
@@ -79,6 +141,14 @@ const Kids = () => {
             console.log(`dispatched update kids slice`);
         }
         navigate('/creatingOrder');
+    };
+
+
+    const handlePlaceSelected = (address) => {
+        setKidFormData((prevData) => ({
+            ...prevData,
+            fullAddress: address
+        }));
     };
 
     return (
@@ -127,12 +197,20 @@ const Kids = () => {
                             <div className="section-content-container">
                                 <div className="section-controll-container">
                                     <div className="section-list-container">
-                                        <SectionListItem
+                                        {/* <SectionListItem
                                             buttonsDisabled={showKidsForm}
                                         />
                                         <SectionListItem
                                             buttonsDisabled={showKidsForm}
-                                        />
+                                        /> */}
+                                        {kids.map((kid, index) => (
+                                            <SectionListItem
+                                                key={index}
+                                                buttonsDisabled={showKidsForm}
+                                                data={kid}
+                                                onRemove={()=>handleRemoveKid(index)}
+                                            />
+                                        ))}
                                     </div>
                                     <div className="sectio-add-btn-container">
                                         <button
@@ -149,7 +227,7 @@ const Kids = () => {
                                 {(showKidsForm) &&
                                     (
                                         <div className="section-form-container">
-                                            <form onSubmit={handleKidsFormAdd}>
+                                            <form onSubmit={handleKidFormAdd}>
                                                 <div className="form-main-container">
                                                     <div className="form-title-and-fullName-container">
                                                         <div className="name-group">
@@ -157,8 +235,8 @@ const Kids = () => {
                                                             <select
                                                                 id="title"
                                                                 name="title"
-                                                                // value={formData.title}
-                                                                // onChange={handleOnChange}
+                                                                value={kidFormData.title}
+                                                                onChange={handleOnChange}
                                                                 required
                                                             >
                                                                 {Object.values(constants.title).map((title, index) => (
@@ -175,8 +253,8 @@ const Kids = () => {
                                                                 className="fullLegalName"
                                                                 id="fullLegalName"
                                                                 name="fullLegalName"
-                                                                // value={formData.fullLegalName}
-                                                                // onChange={handleOnChange}
+                                                                value={kidFormData.fullLegalName}
+                                                                onChange={handleOnChange}
                                                                 required
                                                             />
                                                         </div>
@@ -185,9 +263,9 @@ const Kids = () => {
                                                         <label htmlFor="fullAddress">Full address</label>
                                                         <AddressAutocomplete
                                                             name="fullAddress"
-                                                        // value={formData.fullAddress}
-                                                        // onPlaceSelected={handlePlaceSelected}
-                                                        // handleInputChange={handleOnChange}
+                                                            value={kidFormData.fullAddress}
+                                                            onPlaceSelected={handlePlaceSelected}
+                                                            handleInputChange={handleOnChange}
                                                         />
                                                     </div>
                                                     <div className="form-group">
@@ -195,8 +273,8 @@ const Kids = () => {
                                                         <DateInput
                                                             id="dob"
                                                             name="dob"
-                                                        // value={formData.dob}
-                                                        // onChange={handleOnChange}
+                                                            value={kidFormData.dob}
+                                                            onChange={handleOnChange}
                                                         />
                                                     </div>
                                                     <div className="form-group">
@@ -205,8 +283,8 @@ const Kids = () => {
                                                             type="email"
                                                             id="email"
                                                             name="email"
-                                                        // value={formData.email}
-                                                        // onChange={handleOnChange}
+                                                            value={kidFormData.email}
+                                                            onChange={handleOnChange}
                                                         />
                                                     </div>
                                                     <div className="form-group">
@@ -215,16 +293,26 @@ const Kids = () => {
                                                             type="tel"
                                                             id="tel"
                                                             name="tel"
-                                                        // value={formData.tel}
-                                                        // onChange={handleOnChange}
+                                                            value={kidFormData.tel}
+                                                            onChange={handleOnChange}
                                                         />
                                                     </div>
                                                 </div>
                                                 <div className="form-btns-container">
                                                     <button className="form-btn"
-                                                        onClick={handleShowKidsForm}
+                                                        onClick={() => {
+                                                            handleShowKidsForm();
+                                                            resetKidForm();
+                                                        }}
                                                     >Cancel</button>
-                                                    <button className="form-btn">Add</button>
+                                                    <button
+                                                        className="form-btn"
+                                                        onClick={(e) => {
+                                                            handleKidFormAdd(e);
+                                                            handleShowKidsForm();
+                                                            resetKidForm();
+                                                        }}
+                                                    >Add</button>
                                                 </div>
                                             </form>
                                         </div>

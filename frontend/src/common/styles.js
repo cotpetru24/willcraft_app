@@ -17,6 +17,7 @@ const styles = {
         backgroundColor: 'gray',
         color: 'white',
         cursor: 'not-allowed',
+        trasform:"scale(100%)"
     },
     enabledButton: {
         backgroundColor: 'red',

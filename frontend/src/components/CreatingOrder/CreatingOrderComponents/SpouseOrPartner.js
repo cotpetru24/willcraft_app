@@ -183,11 +183,6 @@ const SpouseOrPartner = () => {
     }));
 
 
-
-
-
-
-
     // Dispatch the change to the Redux store
     dispatch(updateSpouseOrPartnerSlice({ ...spouseOrPartnerFormData, [name]: value }));
   };
