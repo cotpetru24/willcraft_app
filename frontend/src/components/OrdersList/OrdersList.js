@@ -8,6 +8,7 @@ import OrderItem from "./OrderItem";
 import { resetCurrentOrderSlice } from "../../features/order/currentOrderSlice";
 import { resetTestatorSlice } from "../../features/people/testator/testatorSlice";
 import { resetSpouseOrPartnerSlice } from "../../features/people/spouseOrPartner/spouseOrPartnerSlice";
+import { resetKidsSlice } from "../../features/people/kids/kidsSlice";
 
 
 
@@ -29,6 +30,7 @@ const OrdersList = () => {
         await dispatch(resetCurrentOrderSlice())
         await dispatch(resetTestatorSlice())
         await dispatch(resetSpouseOrPartnerSlice())
+        await dispatch(resetKidsSlice())
         // await dispatch(resetChildren())
         navigate('/creatingOrder');
     };
