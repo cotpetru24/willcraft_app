@@ -4,14 +4,54 @@ import AddressAutocomplete from "../../Common/AddressAutocomplete"
 import DateInput from "../../Common/DateInput"
 import SectionListItem from "../../SectionListItem"
 import { useNavigate } from "react-router-dom"
+import { useSelector, useDispatch } from "react-redux"
+import { updateTestatorSlice } from "../../../features/people/testator/testatorSlice"
+import { useState, useRef } from "react"
+import testatorThunks from "../../../features/people/testator/testatorThunks"
 
-const handleKidsFormSave = () => {
 
-}
 
 
 export const Kids = () => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+
+    const testator = useSelector(state => state.testator);
+    const currentOrder = useSelector(state => state.currentOrder);
+
+
+    const [currentHasChildrenStatus, setHasChildrenStatus] = useState(testator.hasChildrenStatus)
+
+    const savedTestatorData = useRef(null);
+    const initialHasChildrenStatus = useRef(testator.hasChildrenStatus);
+
+
+    const handleHasChildrenStatusChange = (e) => {
+        const updatedHasChildrenStatus = e.target.value;
+        setHasChildrenStatus(updatedHasChildrenStatus);
+
+        if (testator) {
+            dispatch(updateTestatorSlice({ ...testator, hasChildrenStatus: updatedHasChildrenStatus }))
+        }
+    }
+
+
+
+    const handleKidsFormSave = () => {
+
+    }
+
+    const handleSaveAndContinue = async (e) => {
+        e.preventDefault();
+        // Update testator's hasChildrenStatus if it has changed
+        if (initialHasChildrenStatus.current !== currentHasChildrenStatus) {
+
+            await dispatch(testatorThunks.updateTestatorThunk({ ...testator, hasChildrenStatus: currentHasChildrenStatus }));
+        }
+        navigate('/creatingOrder');
+    }
+
 
     const handleBack = () => {
         // Revert to the "saved" state
@@ -42,8 +82,8 @@ export const Kids = () => {
                                     id="has-children-yes"
                                     name="has-children"
                                     value="yes"
-                                // checked={}
-                                // onChange={}
+                                    checked={currentHasChildrenStatus === "yes"}
+                                    onChange={handleHasChildrenStatusChange}
                                 >
                                 </input>
                                 <label htmlFor="has-children-yes">Yes</label>
@@ -54,8 +94,8 @@ export const Kids = () => {
                                     id="has-children-no"
                                     name="has-children"
                                     value="no"
-                                // checked={currentMaritalStatus === constants.maritalStatus.PARTNER}
-                                // onChange={handleMaritalStatusChange}
+                                    checked={currentHasChildrenStatus === "no"}
+                                    onChange={handleHasChildrenStatusChange}
                                 >
                                 </input>
                                 <label htmlFor="has-children-no">No</label>
@@ -65,10 +105,13 @@ export const Kids = () => {
                 </div>
 
 
-                <div className="section-content-container">
-                    <div className="section-controll-container">
-                        <div className="section-list-container">
-                            {/* <ul>
+                {(currentHasChildrenStatus === "yes") &&
+                    (
+                        <>
+                            <div className="section-content-container">
+                                <div className="section-controll-container">
+                                    <div className="section-list-container">
+                                        {/* <ul>
                                 <li>
                                     <div className="section-list-item-container">
                                         <div className="section-list-item-group">
@@ -104,100 +147,105 @@ export const Kids = () => {
                                     </div>
                                 </li>
                             </ul> */}
-                            <SectionListItem />
-                            <SectionListItem />
-                        </div>
-                        <div className="sectio-add-btn-container">
-                            <button className="section-add-btn"> +Add children</button>
-                        </div>
-                    </div>
-
-                    <div className="section-form-container">
-                        <form onSubmit={handleKidsFormSave}>
-                            <div className="form-main-container">
-                                <div className="form-title-and-fullName-container">
-                                    <div className="name-group">
-                                        <label htmlFor="title">Title</label>
-                                        <select
-                                            id="title"
-                                            name="title"
-                                            // value={formData.title}
-                                            // onChange={handleOnChange}
-                                            required
-                                        >
-                                            {Object.values(constants.title).map((title, index) => (
-                                                <option key={index} value={title}>
-                                                    {title}
-                                                </option>
-                                            ))}
-                                        </select>
+                                        <SectionListItem />
+                                        <SectionListItem />
                                     </div>
-                                    <div className="name-group">
-                                        <label htmlFor="fullLegalName">Full legal name</label>
-                                        <input
-                                            type="text"
-                                            className="fullLegalName"
-                                            id="fullLegalName"
-                                            name="fullLegalName"
-                                            // value={formData.fullLegalName}
-                                            // onChange={handleOnChange}
-                                            required
-                                        />
+                                    <div className="sectio-add-btn-container">
+                                        <button className="section-add-btn"> +Add children</button>
                                     </div>
                                 </div>
-                                <div className="form-group">
-                                    <label htmlFor="fullAddress">Full address</label>
-                                    <AddressAutocomplete
-                                        name="fullAddress"
-                                    // value={formData.fullAddress}
-                                    // onPlaceSelected={handlePlaceSelected}
-                                    // handleInputChange={handleOnChange}
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="dob">Date of Birth</label>
-                                    <DateInput
-                                        id="dob"
-                                        name="dob"
-                                    // value={formData.dob}
-                                    // onChange={handleOnChange}
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="email">Email (optional)</label>
-                                    <input
-                                        type="email"
-                                        id="email"
-                                        name="email"
-                                    // value={formData.email}
-                                    // onChange={handleOnChange}
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="tel">Phone Number (optional)</label>
-                                    <input
-                                        type="tel"
-                                        id="tel"
-                                        name="tel"
-                                    // value={formData.tel}
-                                    // onChange={handleOnChange}
-                                    />
-                                </div>
-                            </div>
-                            <div className="form-btns-container">
-                                <button className="form-btn">Cancel</button>
-                                <button className="form-btn">Add</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div className="section-navigation-container">
-                    <OrderNavigation
-                        onBack={handleBack}
-                        onSaveAndContinue={handleBack}
-                    />
-                </div>
 
+                                <div className="section-form-container">
+                                    <form onSubmit={handleKidsFormSave}>
+                                        <div className="form-main-container">
+                                            <div className="form-title-and-fullName-container">
+                                                <div className="name-group">
+                                                    <label htmlFor="title">Title</label>
+                                                    <select
+                                                        id="title"
+                                                        name="title"
+                                                        // value={formData.title}
+                                                        // onChange={handleOnChange}
+                                                        required
+                                                    >
+                                                        {Object.values(constants.title).map((title, index) => (
+                                                            <option key={index} value={title}>
+                                                                {title}
+                                                            </option>
+                                                        ))}
+                                                    </select>
+                                                </div>
+                                                <div className="name-group">
+                                                    <label htmlFor="fullLegalName">Full legal name</label>
+                                                    <input
+                                                        type="text"
+                                                        className="fullLegalName"
+                                                        id="fullLegalName"
+                                                        name="fullLegalName"
+                                                        // value={formData.fullLegalName}
+                                                        // onChange={handleOnChange}
+                                                        required
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="fullAddress">Full address</label>
+                                                <AddressAutocomplete
+                                                    name="fullAddress"
+                                                // value={formData.fullAddress}
+                                                // onPlaceSelected={handlePlaceSelected}
+                                                // handleInputChange={handleOnChange}
+                                                />
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="dob">Date of Birth</label>
+                                                <DateInput
+                                                    id="dob"
+                                                    name="dob"
+                                                // value={formData.dob}
+                                                // onChange={handleOnChange}
+                                                />
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="email">Email (optional)</label>
+                                                <input
+                                                    type="email"
+                                                    id="email"
+                                                    name="email"
+                                                // value={formData.email}
+                                                // onChange={handleOnChange}
+                                                />
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="tel">Phone Number (optional)</label>
+                                                <input
+                                                    type="tel"
+                                                    id="tel"
+                                                    name="tel"
+                                                // value={formData.tel}
+                                                // onChange={handleOnChange}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="form-btns-container">
+                                            <button className="form-btn">Cancel</button>
+                                            <button className="form-btn">Add</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </>
+                    )
+                }
+                <>
+                    <div className="section-navigation-container">
+                        <OrderNavigation
+                            onBack={handleBack}
+                            onSaveAndContinue={handleSaveAndContinue}
+                        />
+                    </div>
+                </>
             </section>
         </>
     )

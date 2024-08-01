@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const {Schema} = mongoose;
+const { Schema } = mongoose;
 
 const personSchema = new mongoose.Schema(
     {
@@ -26,8 +26,11 @@ const personSchema = new mongoose.Schema(
         tel: {
             type: String,
         },
-        maritalStatus :{
-            type:String,
+        maritalStatus: {
+            type: String,
+        },
+        hasChildrenStatus: {
+            type: String,
         },
         userId: {
             type: Schema.Types.ObjectId,

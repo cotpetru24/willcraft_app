@@ -10,6 +10,7 @@ const initialState = {
     email: '',
     tel: '',
     maritalStatus: '',
+    hasChildrenStatus: '',
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -22,7 +23,7 @@ const testatorSlice = createSlice({
     initialState,
     reducers: {
         updateTestatorSlice: (state, action) => {
-            const { _id, title, fullLegalName, fullAddress, dob, email, tel, maritalStatus } = action.payload;
+            const { _id, title, fullLegalName, fullAddress, dob, email, tel, maritalStatus, hasChildrenStatus } = action.payload;
             state._id = _id;
             state.title = title;
             state.fullLegalName = fullLegalName;
@@ -31,6 +32,9 @@ const testatorSlice = createSlice({
             state.email = email || '';
             state.tel = tel || '';
             state.maritalStatus = maritalStatus || '';
+            state.hasChildrenStatus = hasChildrenStatus || '';
+
+
         },
         resetTestatorSlice: (state) => initialState,
     },
@@ -47,7 +51,7 @@ const testatorSlice = createSlice({
                 state.isLoading = false;
                 state.isSuccess = true;
 
-                const { _id, title, fullLegalName, fullAddress, email, dob, tel, maritalStatus } = action.payload;
+                const { _id, title, fullLegalName, fullAddress, email, dob, tel, maritalStatus, hasChildrenStatus } = action.payload;
 
                 state._id = _id;
                 state.title = title;
@@ -57,6 +61,7 @@ const testatorSlice = createSlice({
                 state.email = email || '';
                 state.tel = tel || '';
                 state.maritalStatus = maritalStatus || '';
+                state.hasChildrenStatus = hasChildrenStatus || '';
             })
             .addCase(testatorThunks.createTestatorThunk.rejected, (state, action) => {
                 state.isLoading = false;
@@ -73,7 +78,7 @@ const testatorSlice = createSlice({
                 state.isLoading = false;
                 state.isSuccess = true;
 
-                const { _id, title, fullLegalName, fullAddress, dob, email, tel, maritalStatus } = action.payload;
+                const { _id, title, fullLegalName, fullAddress, dob, email, tel, maritalStatus, hasChildrenStatus } = action.payload;
 
                 state._id = _id;
                 state.title = title;
@@ -83,6 +88,7 @@ const testatorSlice = createSlice({
                 state.email = email || '';
                 state.tel = tel || '';
                 state.maritalStatus = maritalStatus || '';
+                state.hasChildrenStatus = hasChildrenStatus || '';
             })
             .addCase(testatorThunks.updateTestatorThunk.rejected, (state, action) => {
                 state.isLoading = false;
