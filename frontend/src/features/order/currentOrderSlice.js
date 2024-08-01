@@ -3,6 +3,7 @@ import { updateOrder, createOrder, getOrder } from "./currentOrderService"; // I
 import { updateTestatorSlice } from "../people/testator/testatorSlice";
 import { updateSpouseOrPartnerSlice } from "../people/spouseOrPartner/spouseOrPartnerSlice";
 import constants from "../../common/constants";
+import { updateKidsSlice } from "../people/kids/kidsSlice";
 
 
 const initialState = {
@@ -10,7 +11,7 @@ const initialState = {
     userId: '',
     status: '',
     peopleAndRoles: [],
-    assetsAndDistribution:[],
+    assetsAndDistribution: [],
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -44,7 +45,15 @@ export const getOrderThunk = createAsyncThunk(
             const testator = response.peopleAndRoles.find(p => p.role.includes(constants.role.TESTATOR));
             // const spouseOrPartner = response.peopleAndRoles.find(p => p.role.includes(constants.role.SPOUSE || constants.role.PARTNER));
             const spouseOrPartner = response.peopleAndRoles.find(p => p.role.includes(constants.role.SPOUSE) || p.role.includes(constants.role.PARTNER));
+            // const kids = response.peopleAndRoles.find(p=>p.role.includes(constants.role.KID))
+            // const kids = response.peopleAndRoles.filter(p => p.role.includes(constants.role.KID));
 
+            // Filter all entries with the role 'KID'
+            const kids = response.peopleAndRoles.filter(p => p.role.includes(constants.role.KID)).map(p => ({
+                ...p.personId,
+                role: p.role,
+                _id: p._id
+            }));
 
             // const spouseOrPartner = response.peopleAndRoles.find(p => p.role.includes("spouse" || "partner"));
             console.log(`spouseorpartner payload = ${JSON.stringify(spouseOrPartner)}`)
@@ -58,7 +67,24 @@ export const getOrderThunk = createAsyncThunk(
             if (spouseOrPartner) {
                 thunkAPI.dispatch(updateSpouseOrPartnerSlice(spouseOrPartner.personId))
             }
+            // if (kids) {
+            //     thunkAPI.dispatch(updateKidsSlice(kids))
+            // }
             // thunkAPI.dispatch(updateSpouseOrPartnerSlice(spouseOrPartner.personId))
+            console.log(`kids length = ${kids.length}`)
+            // if (kids) {
+            //     thunkAPI.dispatch(updateKidsSlice(kids.map(kid => kid.personId)));
+            // }
+            // if (Array.isArray(kids) && kids.length > 0) {
+            //     console.log(`kids length = ${kids.length}`)
+            //     thunkAPI.dispatch(updateKidsSlice(kids.map(kid => kid.personId)));
+            // }
+            if (Array.isArray(kids) && kids.length > 0) {
+                console.log(`kids length = ${kids.length}`)
+
+                thunkAPI.dispatch(updateKidsSlice(kids));
+            }
+
 
             return response;
         } catch (error) {
@@ -186,7 +212,7 @@ const currentOrderSlice = createSlice({
             //     state.orderId = action.payload._id;
             //     state.userId = action.payload.userId;
             //     state.status = action.payload.status;
-                
+
             // })
             .addCase(getOrderThunk.fulfilled, (state, action) => {
                 state.isLoading = false;
@@ -206,7 +232,7 @@ const currentOrderSlice = createSlice({
                     }))
                 }));
             })
-            
+
             .addCase(getOrderThunk.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;

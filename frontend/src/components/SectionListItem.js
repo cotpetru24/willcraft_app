@@ -120,7 +120,7 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit }) => {
     return (
         <div className="section-list-item-container">
             <div className="section-list-item-group">
-                <h5>Name: {data.fullLegalName}</h5>
+                <h5>Name: {data.title} {data.fullLegalName}</h5>
             </div>
             <div className="section-list-item-group">
                 <h5>Address: {data.fullAddress}</h5>
