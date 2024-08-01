@@ -1587,6 +1587,7 @@ ol {
   flex-direction: column;
   width: 100%;
   margin-left: 50px;
+  margin-bottom: 50px;
 }
 
 .section-list-item-container{
@@ -1668,6 +1669,12 @@ transition: 0.2s;
   flex-direction: row;
   justify-content: end;
   width: 100%;
+}
+.disabledButton {
+  background-Color: 'gray';
+  color: 'white';
+  cursor: 'not-allowed';
+  box-Shadow: "0px 0px 10px 0px grey";
 }
 
 

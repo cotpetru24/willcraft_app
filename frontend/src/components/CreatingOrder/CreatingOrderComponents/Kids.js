@@ -1,66 +1,83 @@
-import OrderNavigation from "../CreatigOrderNavigation"
-import constants from "../../../common/constants"
-import AddressAutocomplete from "../../Common/AddressAutocomplete"
-import DateInput from "../../Common/DateInput"
-import SectionListItem from "../../SectionListItem"
-import { useNavigate } from "react-router-dom"
-import { useSelector, useDispatch } from "react-redux"
-import { updateTestatorSlice } from "../../../features/people/testator/testatorSlice"
-import { useState, useRef } from "react"
-import testatorThunks from "../../../features/people/testator/testatorThunks"
+import OrderNavigation from "../CreatigOrderNavigation";
+import constants from "../../../common/constants";
+import AddressAutocomplete from "../../Common/AddressAutocomplete";
+import DateInput from "../../Common/DateInput";
+import SectionListItem from "../../SectionListItem";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { updateTestatorSlice } from "../../../features/people/testator/testatorSlice";
+import { useState, useRef, useEffect } from "react";
+import testatorThunks from "../../../features/people/testator/testatorThunks";
+import { updateKidsSlice } from "../../../features/people/kids/kidsSlice";
+import styles from "../../../common/styles";
 
-
-
-
-export const Kids = () => {
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
-
+const Kids = () => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const testator = useSelector(state => state.testator);
     const currentOrder = useSelector(state => state.currentOrder);
+    const kids = useSelector(state => state.kids);
 
+    const [showKidsForm, setShowKidsForm] = useState(false);
+    const [currentHasChildrenStatus, setHasChildrenStatus] = useState(testator.hasChildrenStatus);
 
-    const [currentHasChildrenStatus, setHasChildrenStatus] = useState(testator.hasChildrenStatus)
-
+    // Use useRef to store the "saved" state
+    const savedKidsData = useRef(null);
     const savedTestatorData = useRef(null);
     const initialHasChildrenStatus = useRef(testator.hasChildrenStatus);
 
+    useEffect(() => {
+        // Store the initial state as "saved" state if it's not already saved
+        if (!savedTestatorData.current) {
+            savedTestatorData.current = JSON.parse(JSON.stringify(testator));
+        }
+        // if (!savedKidsData.current) {
+        //     savedKidsData.current = JSON.parse(JSON.stringify(kids));
+        // }
+    }, [kids]);
 
     const handleHasChildrenStatusChange = (e) => {
+        setShowKidsForm(prevState => false);
+
+
+
         const updatedHasChildrenStatus = e.target.value;
         setHasChildrenStatus(updatedHasChildrenStatus);
 
         if (testator) {
-            dispatch(updateTestatorSlice({ ...testator, hasChildrenStatus: updatedHasChildrenStatus }))
+            dispatch(updateTestatorSlice({ ...testator, hasChildrenStatus: updatedHasChildrenStatus }));
         }
-    }
+    };
 
+    const handleShowKidsForm = () => {
+        setShowKidsForm(prevState => !prevState);
+    };
 
-
-    const handleKidsFormSave = () => {
-
-    }
+    const handleKidsFormAdd = () => {
+        // Your implementation for adding kids
+    };
 
     const handleSaveAndContinue = async (e) => {
         e.preventDefault();
         // Update testator's hasChildrenStatus if it has changed
         if (initialHasChildrenStatus.current !== currentHasChildrenStatus) {
-
             await dispatch(testatorThunks.updateTestatorThunk({ ...testator, hasChildrenStatus: currentHasChildrenStatus }));
         }
         navigate('/creatingOrder');
-    }
-
+    };
 
     const handleBack = () => {
+        console.log(`handle back called`);
         // Revert to the "saved" state
-        // if (savedTestatorData.current) {
-        //   dispatch(updateTestatorSlice(savedTestatorData.current));
-        // }
-        // if (savedSpouseOrPartnerData.current) {
-        //   dispatch(updateSpouseOrPartnerSlice(savedSpouseOrPartnerData.current));
-        // }
+        if (savedTestatorData.current) {
+            dispatch(updateTestatorSlice(savedTestatorData.current));
+            console.log(`dispatched update testator slice`);
+        }
+        if (savedKidsData.current) {
+            dispatch(updateKidsSlice(savedKidsData.current));
+            console.log(`dispatched update kids slice`);
+        }
         navigate('/creatingOrder');
     };
 
@@ -104,137 +121,116 @@ export const Kids = () => {
                     </div>
                 </div>
 
-
                 {(currentHasChildrenStatus === "yes") &&
                     (
                         <>
                             <div className="section-content-container">
                                 <div className="section-controll-container">
                                     <div className="section-list-container">
-                                        {/* <ul>
-                                <li>
-                                    <div className="section-list-item-container">
-                                        <div className="section-list-item-group">
-                                            <h5>Child Name Here: Name Test</h5>
-                                        </div>
-                                        <div className="section-list-item-group">
-                                            <h5>Child Address Here: Address Test</h5>
-                                        </div>
-                                        <div className="section-list-item-group">
-                                            <h5>Child date of birth Here: 01/01/1900</h5>
-                                        </div>
-                                        <div className="section-list-item-btns-container">
-                                            <button className="section-list-item-btn">Edit</button>
-                                            <button className="section-list-item-btn">Remove</button>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div className="section-list-item-container">
-                                        <div className="section-list-item-group">
-                                            <h5>Child Name Here: Name Test</h5>
-                                        </div>
-                                        <div className="section-list-item-group">
-                                            <h5>Child Address Here: Address Test</h5>
-                                        </div>
-                                        <div className="section-list-item-group">
-                                            <h5>Child date of birth Here: 01/01/1900</h5>
-                                        </div>
-                                        <div className="section-list-item-btns-container">
-                                            <button className="section-list-item-btn">Edit</button>
-                                            <button className="section-list-item-btn">Remove</button>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul> */}
-                                        <SectionListItem />
-                                        <SectionListItem />
+                                        <SectionListItem
+                                            buttonsDisabled={showKidsForm}
+                                        />
+                                        <SectionListItem
+                                            buttonsDisabled={showKidsForm}
+                                        />
                                     </div>
                                     <div className="sectio-add-btn-container">
-                                        <button className="section-add-btn"> +Add children</button>
+                                        <button
+                                            className="section-add-btn"
+                                            onClick={handleShowKidsForm}
+                                            style={showKidsForm ?
+                                                styles.disabledButton : {}}
+                                            disabled={showKidsForm}
+                                        >
+                                            +Add children</button>
                                     </div>
                                 </div>
 
-                                <div className="section-form-container">
-                                    <form onSubmit={handleKidsFormSave}>
-                                        <div className="form-main-container">
-                                            <div className="form-title-and-fullName-container">
-                                                <div className="name-group">
-                                                    <label htmlFor="title">Title</label>
-                                                    <select
-                                                        id="title"
-                                                        name="title"
-                                                        // value={formData.title}
+                                {(showKidsForm) &&
+                                    (
+                                        <div className="section-form-container">
+                                            <form onSubmit={handleKidsFormAdd}>
+                                                <div className="form-main-container">
+                                                    <div className="form-title-and-fullName-container">
+                                                        <div className="name-group">
+                                                            <label htmlFor="title">Title</label>
+                                                            <select
+                                                                id="title"
+                                                                name="title"
+                                                                // value={formData.title}
+                                                                // onChange={handleOnChange}
+                                                                required
+                                                            >
+                                                                {Object.values(constants.title).map((title, index) => (
+                                                                    <option key={index} value={title}>
+                                                                        {title}
+                                                                    </option>
+                                                                ))}
+                                                            </select>
+                                                        </div>
+                                                        <div className="name-group">
+                                                            <label htmlFor="fullLegalName">Full legal name</label>
+                                                            <input
+                                                                type="text"
+                                                                className="fullLegalName"
+                                                                id="fullLegalName"
+                                                                name="fullLegalName"
+                                                                // value={formData.fullLegalName}
+                                                                // onChange={handleOnChange}
+                                                                required
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label htmlFor="fullAddress">Full address</label>
+                                                        <AddressAutocomplete
+                                                            name="fullAddress"
+                                                        // value={formData.fullAddress}
+                                                        // onPlaceSelected={handlePlaceSelected}
+                                                        // handleInputChange={handleOnChange}
+                                                        />
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label htmlFor="dob">Date of Birth</label>
+                                                        <DateInput
+                                                            id="dob"
+                                                            name="dob"
+                                                        // value={formData.dob}
                                                         // onChange={handleOnChange}
-                                                        required
-                                                    >
-                                                        {Object.values(constants.title).map((title, index) => (
-                                                            <option key={index} value={title}>
-                                                                {title}
-                                                            </option>
-                                                        ))}
-                                                    </select>
-                                                </div>
-                                                <div className="name-group">
-                                                    <label htmlFor="fullLegalName">Full legal name</label>
-                                                    <input
-                                                        type="text"
-                                                        className="fullLegalName"
-                                                        id="fullLegalName"
-                                                        name="fullLegalName"
-                                                        // value={formData.fullLegalName}
+                                                        />
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label htmlFor="email">Email (optional)</label>
+                                                        <input
+                                                            type="email"
+                                                            id="email"
+                                                            name="email"
+                                                        // value={formData.email}
                                                         // onChange={handleOnChange}
-                                                        required
-                                                    />
+                                                        />
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label htmlFor="tel">Phone Number (optional)</label>
+                                                        <input
+                                                            type="tel"
+                                                            id="tel"
+                                                            name="tel"
+                                                        // value={formData.tel}
+                                                        // onChange={handleOnChange}
+                                                        />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div className="form-group">
-                                                <label htmlFor="fullAddress">Full address</label>
-                                                <AddressAutocomplete
-                                                    name="fullAddress"
-                                                // value={formData.fullAddress}
-                                                // onPlaceSelected={handlePlaceSelected}
-                                                // handleInputChange={handleOnChange}
-                                                />
-                                            </div>
-                                            <div className="form-group">
-                                                <label htmlFor="dob">Date of Birth</label>
-                                                <DateInput
-                                                    id="dob"
-                                                    name="dob"
-                                                // value={formData.dob}
-                                                // onChange={handleOnChange}
-                                                />
-                                            </div>
-                                            <div className="form-group">
-                                                <label htmlFor="email">Email (optional)</label>
-                                                <input
-                                                    type="email"
-                                                    id="email"
-                                                    name="email"
-                                                // value={formData.email}
-                                                // onChange={handleOnChange}
-                                                />
-                                            </div>
-                                            <div className="form-group">
-                                                <label htmlFor="tel">Phone Number (optional)</label>
-                                                <input
-                                                    type="tel"
-                                                    id="tel"
-                                                    name="tel"
-                                                // value={formData.tel}
-                                                // onChange={handleOnChange}
-                                                />
-                                            </div>
+                                                <div className="form-btns-container">
+                                                    <button className="form-btn"
+                                                        onClick={handleShowKidsForm}
+                                                    >Cancel</button>
+                                                    <button className="form-btn">Add</button>
+                                                </div>
+                                            </form>
                                         </div>
-                                        <div className="form-btns-container">
-                                            <button className="form-btn">Cancel</button>
-                                            <button className="form-btn">Add</button>
-                                        </div>
-                                    </form>
-                                </div>
+                                    )
+                                }
                             </div>
-
                         </>
                     )
                 }
@@ -243,13 +239,13 @@ export const Kids = () => {
                         <OrderNavigation
                             onBack={handleBack}
                             onSaveAndContinue={handleSaveAndContinue}
+                            buttonsDisabled={showKidsForm}
                         />
                     </div>
                 </>
             </section>
         </>
     )
-
 }
 
-export default Kids
+export default Kids;

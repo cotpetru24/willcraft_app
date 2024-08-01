@@ -6,6 +6,7 @@ import ordersReducer from '../features/orders/ordersSlice';
 import testatorReducer from '../features/people/testator/testatorSlice';
 import spouseOrPartnerReducer from '../features/people/spouseOrPartner/spouseOrPartnerSlice';
 import stepReducer from '../features/orderSteps/orderStepSlice'
+import kidsReducer from '../features/people/kids/kidsSlice'
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
 
     testator:testatorReducer,
     spouseOrPartner: spouseOrPartnerReducer,
+    kids: kidsReducer
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
   devTools: process.env.NODE_ENV !== 'production',
