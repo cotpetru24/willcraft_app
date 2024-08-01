@@ -151,7 +151,7 @@
 //         });
 //         setShowKidsForm(true);
 //     };
-    
+
 
 
 
@@ -393,6 +393,7 @@ import { resetKidsSlice, updateKidsSlice } from "../../../features/people/kids/k
 import styles from "../../../common/styles";
 import { updateCurrentOrderSlice, updateOrderThunk } from "../../../features/order/currentOrderSlice";
 import { createPerson } from "../../../features/people/peopleService";
+import { createKidThunk } from "../../../features/people/kids/kidsThunks";
 
 const Kids = () => {
     const navigate = useNavigate();
@@ -520,34 +521,100 @@ const Kids = () => {
         setShowKidsForm(true);
     };
 
-    const updatedOrder = {
-        ...currentOrder,
-        peopleAndRoles: [
-            ...currentOrder.peopleAndRoles.filter(pr => pr.role !== constants.role.KID), // Remove existing kids to avoid duplicates
-            ...kids.map(kid => ({
-                personId: kid._id,
-                role: [constants.role.KID]
-            }))
-        ]
-    };
-    
+
+
+
+
+    // const handleSaveAndContinue = async (e) => {
+    //     e.preventDefault();
+    //     // Update testator's hasChildrenStatus if it has changed
+    //     if (initialHasChildrenStatus.current !== currentHasChildrenStatus) {
+    //         await dispatch(testatorThunks.updateTestatorThunk({ ...testator, hasChildrenStatus: currentHasChildrenStatus }));
+    //     }
+
+
+    //     const updatedKids = [];
+
+    //     // Create each kid and update kids slice with returned IDs
+    //     for (const kid of kids) {
+    //         const response = await dispatch(createKidThunk(kid)).unwrap();
+    //         updatedKids.push({
+    //             ...kid,
+    //             _id: response._id
+    //         });
+    //     }
+
+
+    //     // // Create each kid
+    //     // for (const kid of kids) {
+    //     //     await dispatch(createKidThunk(kid));
+    //     // }
+
+    //     const updatedOrder = {
+    //         ...currentOrder,
+    //         peopleAndRoles: [
+    //             ...currentOrder.peopleAndRoles.filter(pr => pr.role !== constants.role.KID), // Remove existing kids to avoid duplicates
+    //             ...kids.map(kid => ({
+    //                 personId: kid._id,
+    //                 role: [constants.role.KID]
+    //             }))
+    //         ]
+    //     };
+
+
+    //     await dispatch(updateCurrentOrderSlice(updatedOrder));
+    //     await dispatch(updateOrderThunk(updatedOrder));
+
+    //     navigate('/creatingOrder');
+    // };
 
 
     const handleSaveAndContinue = async (e) => {
         e.preventDefault();
+    
         // Update testator's hasChildrenStatus if it has changed
         if (initialHasChildrenStatus.current !== currentHasChildrenStatus) {
             await dispatch(testatorThunks.updateTestatorThunk({ ...testator, hasChildrenStatus: currentHasChildrenStatus }));
         }
-
-
-await dispatch(createPerson)
-
+    
+        const updatedKids = [];
+    
+        // Create each kid and update kids slice with returned IDs
+        for (const kid of kids) {
+            const response = await dispatch(createKidThunk(kid)).unwrap();
+            updatedKids.push({
+                ...kid,
+                _id: response._id
+            });
+        }
+    
+        // Update kids slice with new kids including their IDs
+        await dispatch(updateKidsSlice(updatedKids));
+    
+        // Prepare updated order with the new kids IDs
+        const updatedOrder = {
+            ...currentOrder,
+            peopleAndRoles: [
+                ...currentOrder.peopleAndRoles.filter(pr => !pr.role.includes(constants.role.KID)), // Remove existing kids to avoid duplicates
+                ...updatedKids.map(kid => ({
+                    personId: kid._id,
+                    role: [constants.role.KID]
+                }))
+            ]
+        };
+    
+        // Update the currentOrder slice
         await dispatch(updateCurrentOrderSlice(updatedOrder));
+        // Update the order in the backend
         await dispatch(updateOrderThunk(updatedOrder));
-
+    
         navigate('/creatingOrder');
     };
+    
+
+
+
+
 
     const handleBack = () => {
         console.log(`handle back called`);
