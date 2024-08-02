@@ -141,53 +141,6 @@ const Kids = () => {
     };
 
 
-
-
-
-    // const handleSaveAndContinue = async (e) => {
-    //     e.preventDefault();
-    //     // Update testator's hasChildrenStatus if it has changed
-    //     if (initialHasChildrenStatus.current !== currentHasChildrenStatus) {
-    //         await dispatch(testatorThunks.updateTestatorThunk({ ...testator, hasChildrenStatus: currentHasChildrenStatus }));
-    //     }
-
-
-    //     const updatedKids = [];
-
-    //     // Create each kid and update kids slice with returned IDs
-    //     for (const kid of kids) {
-    //         const response = await dispatch(createKidThunk(kid)).unwrap();
-    //         updatedKids.push({
-    //             ...kid,
-    //             _id: response._id
-    //         });
-    //     }
-
-
-    //     // // Create each kid
-    //     // for (const kid of kids) {
-    //     //     await dispatch(createKidThunk(kid));
-    //     // }
-
-    //     const updatedOrder = {
-    //         ...currentOrder,
-    //         peopleAndRoles: [
-    //             ...currentOrder.peopleAndRoles.filter(pr => pr.role !== constants.role.KID), // Remove existing kids to avoid duplicates
-    //             ...kids.map(kid => ({
-    //                 personId: kid._id,
-    //                 role: [constants.role.KID]
-    //             }))
-    //         ]
-    //     };
-
-
-    //     await dispatch(updateCurrentOrderSlice(updatedOrder));
-    //     await dispatch(updateOrderThunk(updatedOrder));
-
-    //     navigate('/creatingOrder');
-    // };
-
-
     const handleSaveAndContinue = async (e) => {
         e.preventDefault();
     
@@ -198,14 +151,6 @@ const Kids = () => {
     
         const updatedKids = [];
     
-        // Create each kid and update kids slice with returned IDs
-        // for (const kid of kids) {
-        //     const response = await dispatch(createKidThunk(kid)).unwrap();
-        //     updatedKids.push({
-        //         ...kid,
-        //         _id: response._id
-        //     });
-        // }
 
 
         for (const kid of kids) {

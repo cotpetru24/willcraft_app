@@ -1,23 +1,17 @@
-import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckSquare, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 
 
-
 const KidsTile = () => {
-
-
     const navigate = useNavigate();
-
 
     const testator = useSelector(state => state.testator)
     const kidsData = useSelector(state => state.kids);
 
     const isKidsComplete = (data) => {
         return testator.hasChildrenStatus === 'no' || (Array.isArray(data) && (data.length > 0))
-
     };
 
     const allNecessaryFieldsSpecified = isKidsComplete(kidsData);
@@ -26,7 +20,6 @@ const KidsTile = () => {
     return (
         <>
             <section >
-
                 <div className="creatingOrder-tile">
                     <div className="creatingOrder-tile-heading">
                         <h2>Your children</h2>
@@ -35,7 +28,6 @@ const KidsTile = () => {
                         ) : (
                             <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'grey' }} />
                         )}
-
                     </div>
 
                     {allNecessaryFieldsSpecified ? (
@@ -65,23 +57,21 @@ const KidsTile = () => {
 
                             {testator.hasChildrenStatus === "no" && (
                                 <p>You said you don't have children</p>
-                            )
-                            }
+                            )}
+
                             <div className="creatingOrder-tile-btn-container">
                                 <button className="creatingOrder-tile-btn" onClick={() => navigate('/kids')}>Edit</button>
                             </div>
-                        </>) : (
+                        </>
+                    ) : (
                         <>
-
                             <p>Tell us about your children…</p>
                             <div className="creatingOrder-tile-btn-container">
                                 <button className="creatingOrder-tile-btn" onClick={() => navigate('/kids')}>Get Started</button>
                             </div>
                         </>
                     )}
-
                 </div>
-
             </section >
         </>
     );
