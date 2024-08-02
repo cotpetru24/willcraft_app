@@ -11,10 +11,12 @@ import testatorThunks from "../../../features/people/testator/testatorThunks";
 import { resetKidsSlice, updateKidsSlice } from "../../../features/people/kids/kidsSlice";
 import styles from "../../../common/styles";
 import { updateCurrentOrderSlice, updateOrderThunk } from "../../../features/order/currentOrderSlice";
-import { createPerson } from "../../../features/people/peopleService";
 import { createKidThunk, updateKidThunk } from "../../../features/people/kids/kidsThunks";
 
+
+
 const Kids = () => {
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -43,6 +45,7 @@ const Kids = () => {
         tel: ''
     });
 
+
     useEffect(() => {
         if (kid) {
             setKidFormData({
@@ -55,14 +58,83 @@ const Kids = () => {
                 tel: kidFormData.tel || ''
             })
         }
+
         // Store the initial state as "saved" state if it's not already saved
         if (!savedTestatorData.current) {
             savedTestatorData.current = JSON.parse(JSON.stringify(testator));
         }
+
         if (!savedKidsData.current) {
             savedKidsData.current = JSON.parse(JSON.stringify(kids));
         }
-    }, [kids]);
+    }, [kids]
+    );
+
+
+    const handleBack = () => {
+        // Revert to the "saved" state
+        if (savedTestatorData.current) {
+            dispatch(updateTestatorSlice(savedTestatorData.current));
+        }
+        if (savedKidsData.current) {
+            dispatch(updateKidsSlice(savedKidsData.current));
+        }
+        navigate('/creatingOrder');
+    };
+
+
+    const handleSaveAndContinue = async (e) => {
+        e.preventDefault();
+
+        // Update testator's hasChildrenStatus if it has changed
+        if (initialHasChildrenStatus.current !== currentHasChildrenStatus) {
+            await dispatch(testatorThunks.updateTestatorThunk({ ...testator, hasChildrenStatus: currentHasChildrenStatus }));
+        }
+
+        const updatedKids = [];
+
+
+        for (const kid of kids) {
+            let response;
+            if (kid._id) {
+                response = await dispatch(updateKidThunk(kid)).unwrap();
+            } else {
+                response = await dispatch(createKidThunk(kid)).unwrap();
+            }
+            updatedKids.push({
+                ...kid,
+                _id: response._id
+            });
+        }
+
+        // Update kids slice with new kids including their IDs
+        await dispatch(updateKidsSlice(updatedKids));
+
+        // Prepare updated order with the new kids IDs
+        const updatedOrder = {
+            ...currentOrder,
+            peopleAndRoles: [
+                ...currentOrder.peopleAndRoles.filter(pr => !pr.role.includes(constants.role.KID)), // Remove existing kids to avoid duplicates
+                ...updatedKids.map(kid => ({
+                    personId: kid._id,
+                    role: [constants.role.KID]
+                }))
+            ]
+        };
+
+        // Update the currentOrder slice
+        await dispatch(updateCurrentOrderSlice(updatedOrder));
+        // Update the order in the backend
+        await dispatch(updateOrderThunk(updatedOrder));
+
+        navigate('/creatingOrder');
+    };
+
+
+    const handleShowKidsForm = () => {
+        setShowKidsForm(prevState => !prevState);
+    };
+
 
     const handleHasChildrenStatusChange = (e) => {
         setShowKidsForm(false);
@@ -78,9 +150,6 @@ const Kids = () => {
         }
     };
 
-    const handleShowKidsForm = () => {
-        setShowKidsForm(prevState => !prevState);
-    };
 
     const handleOnChange = (e) => {
         const { name, value } = e.target;
@@ -90,6 +159,7 @@ const Kids = () => {
         }));
     };
 
+    
     const handleKidFormAdd = (e) => {
         e.preventDefault();
 
@@ -107,6 +177,7 @@ const Kids = () => {
         setShowKidsForm(false);
     };
 
+
     const resetKidForm = () => {
         setKidFormData({
             _id: '',
@@ -120,10 +191,12 @@ const Kids = () => {
         setEditKidIndex(null); // Reset the edit index
     };
 
+
     const handleRemoveKid = (index) => {
         const updatedKids = kids.filter((_, i) => i !== index);
         dispatch(updateKidsSlice(updatedKids));
     };
+
 
     const handleEditKid = (index) => {
         const kidToEdit = kids[index];
@@ -141,76 +214,6 @@ const Kids = () => {
     };
 
 
-    const handleSaveAndContinue = async (e) => {
-        e.preventDefault();
-    
-        // Update testator's hasChildrenStatus if it has changed
-        if (initialHasChildrenStatus.current !== currentHasChildrenStatus) {
-            await dispatch(testatorThunks.updateTestatorThunk({ ...testator, hasChildrenStatus: currentHasChildrenStatus }));
-        }
-    
-        const updatedKids = [];
-    
-
-
-        for (const kid of kids) {
-            let response;
-            if (kid._id) {
-                response = await dispatch(updateKidThunk(kid)).unwrap();
-            } else {
-                response = await dispatch(createKidThunk(kid)).unwrap();
-            }
-            updatedKids.push({
-                ...kid,
-                _id: response._id
-            });
-        }
-
-
-
-    
-        // Update kids slice with new kids including their IDs
-        await dispatch(updateKidsSlice(updatedKids));
-    
-        // Prepare updated order with the new kids IDs
-        const updatedOrder = {
-            ...currentOrder,
-            peopleAndRoles: [
-                ...currentOrder.peopleAndRoles.filter(pr => !pr.role.includes(constants.role.KID)), // Remove existing kids to avoid duplicates
-                ...updatedKids.map(kid => ({
-                    personId: kid._id,
-                    role: [constants.role.KID]
-                }))
-            ]
-        };
-    
-        // Update the currentOrder slice
-        await dispatch(updateCurrentOrderSlice(updatedOrder));
-        // Update the order in the backend
-        await dispatch(updateOrderThunk(updatedOrder));
-    
-        navigate('/creatingOrder');
-    };
-    
-
-
-
-
-
-    const handleBack = () => {
-        console.log(`handle back called`);
-        // Revert to the "saved" state
-        if (savedTestatorData.current) {
-            dispatch(updateTestatorSlice(savedTestatorData.current));
-            console.log(`dispatched update testator slice`);
-        }
-        if (savedKidsData.current) {
-            dispatch(updateKidsSlice(savedKidsData.current));
-            console.log(`dispatched update kids slice`);
-        }
-        navigate('/creatingOrder');
-    };
-
     const handlePlaceSelected = (address) => {
         setKidFormData((prevData) => ({
             ...prevData,
@@ -218,6 +221,44 @@ const Kids = () => {
         }));
     };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
     return (
         <>
             <section className="section-container">
