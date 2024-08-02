@@ -48,9 +48,9 @@ export const updateKidThunk = createAsyncThunk(
 );
 
 
-const kidThunks = {
+const kidsThunks = {
     createKidThunk,
     updateKidThunk
 }
 
-export default kidThunks;
+export default kidsThunks;
