@@ -52,7 +52,8 @@ export const getOrderThunk = createAsyncThunk(
             const kids = response.peopleAndRoles.filter(p => p.role.includes(constants.role.KID)).map(p => ({
                 ...p.personId,
                 role: p.role,
-                _id: p._id
+                // _id: p._id
+                _id:p.personId._id
             }));
 
             // const spouseOrPartner = response.peopleAndRoles.find(p => p.role.includes("spouse" || "partner"));

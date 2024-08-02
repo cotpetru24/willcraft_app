@@ -1678,6 +1678,11 @@ transition: 0.2s;
 }
 
 
+
+.creatingOrder-tile-list-container{
+  margin-bottom: 15px;
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);
