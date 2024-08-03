@@ -14,6 +14,7 @@ import CreatingOrder from './components/CreatingOrder/CreatingOrder';
 import Prices from './components/Prices';
 import SpouseOrPartner from './components/CreatingOrder/CreatingOrderComponents/SpouseOrPartner';
 import Kids from './components/CreatingOrder/CreatingOrderComponents/Kids'
+import Assets from './components/CreatingOrder/CreatingOrderComponents/Assets';
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
             <Route path='/testator' element={<Testator />} />;
             <Route path='/spouseOrPartner' element={<SpouseOrPartner />} />;
             <Route path='/kids' element={<Kids />} />;
+            <Route path='/assets' element={<Assets/>}/>;
 
 
 
