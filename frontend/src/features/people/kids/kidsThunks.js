@@ -3,7 +3,7 @@ import peopleService from "../peopleService";
 
 
 export const createKidThunk = createAsyncThunk(
-    'people/createKid',
+    'people/createKidThunk',
     async (kidData, thunkApi) => {
 
         // Get the userId from the state
@@ -30,7 +30,7 @@ export const createKidThunk = createAsyncThunk(
 
 
 export const updateKidThunk = createAsyncThunk(
-    'people/updateKid',
+    'people/updateKidThunk',
     async (kidData, thunkAPI) => {
         try {
             const token = thunkAPI.getState().auth.user.token;

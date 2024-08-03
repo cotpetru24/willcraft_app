@@ -108,6 +108,26 @@ export const createAssetThunk = createAsyncThunk(
   }
 );
 
+export const updateAssetThunk = createAsyncThunk(
+  'assets/updateAssetThunk',
+  async (assetData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      const updatedAssetData = await orderAssetsService.updateAsset(assetData, token);
+
+      return updatedAssetData;
+    }
+    catch (error) {
+      const message = (error.response && error.response.data && error.response.data.message)
+        || error.message
+        || error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+)
+
+
+
 const assetsSlice = createSlice({
   name: 'assets',
   initialState,

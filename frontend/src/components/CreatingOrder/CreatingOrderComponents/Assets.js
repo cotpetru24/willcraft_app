@@ -16,7 +16,7 @@ import styles from "../../../common/styles";
 import { updateCurrentOrderSlice, updateOrderThunk } from "../../../features/order/currentOrderSlice";
 import { createPerson } from "../../../features/people/peopleService";
 import { createKidThunk } from "../../../features/people/kids/kidsThunks";
-import { updateAssetsSlice, createAssetThunk } from "../../../features/orderAssets/orderAssetsSlice"
+import { updateAssetsSlice, createAssetThunk, updateAssetThunk } from "../../../features/orderAssets/orderAssetsSlice"
 
 
 
@@ -129,13 +129,13 @@ const Assets = () => {
     const handleEditAsset = (index) => {
         const assetToEdit = assets[index];
         setAssetFormData({
-            _id: assetFormData._id || '',
-            assetType: assetFormData.assetType || '',
-            bankName: assetFormData.bankName || '',
-            provider: assetFormData.provider || '',
-            companyName: assetFormData.companyName || '',
-            propertyAddress: assetFormData.propertyAddress || '',
-            otherAssetDetails: assetFormData.otherAssetDetails || '',
+            _id: assetToEdit._id || '',
+            assetType: assetToEdit.assetType || '',
+            bankName: assetToEdit.bankName || '',
+            provider: assetToEdit.provider || '',
+            companyName: assetToEdit.companyName || '',
+            propertyAddress: assetToEdit.propertyAddress || '',
+            otherAssetDetails: assetToEdit.otherAssetDetails || '',
         });
         setEditAssetIndex(index); // Set the edit index
         setshowAssetForm(true);
@@ -151,8 +151,15 @@ const Assets = () => {
 
         // Create each kid and update kids slice with returned IDs
         for (const asset of assets) {
-            console.log(`asset data sent to create asset thunk = ${JSON.stringify(asset)}`)
-            const response = await dispatch(createAssetThunk(asset)).unwrap();
+            let response;
+            if (asset._id) {
+                console.log(`asset data sent to create asset thunk = ${JSON.stringify(asset)}`)
+                response = await dispatch(updateAssetThunk(asset)).unwrap();
+            }
+            else {
+                console.log(`asset data sent to update asset thunk = ${JSON.stringify(asset)}`)
+                response = await dispatch(createAssetThunk(asset)).unwrap();
+            }
             updatedAssets.push({
                 ...asset,
                 _id: response._id
@@ -160,31 +167,30 @@ const Assets = () => {
 
         }
 
+        console.log(`updated assets = ${JSON.stringify(updatedAssets)}`)
+
+
         // Update kids slice with new kids including their IDs
         await dispatch(updateAssetsSlice(updatedAssets));
-
-
-
-
-
-
 
         // Prepare updated order with the new kids IDs
         const updatedOrder = {
             ...currentOrder,
             assetsAndDistribution: [
-                ...currentOrder.assetsAndDistribution, // Remove existing kids to avoid duplicates
+                // ...currentOrder.assetsAndDistribution, // Remove existing kids to avoid duplicates
                 ...updatedAssets.map(asset => ({
                     assetId: asset._id,
                     assetDistribution: []
                 }))
             ]
         };
+        console.log(`updated order = ${JSON.stringify(updatedOrder)}`)
+
 
         // Update the currentOrder slice
-        // await dispatch(updateCurrentOrderSlice(updatedOrder));
+        await dispatch(updateCurrentOrderSlice(updatedOrder));
         // Update the order in the backend
-        // await dispatch(updateOrderThunk(updatedOrder));
+        await dispatch(updateOrderThunk(updatedOrder));
 
         navigate('/creatingOrder');
     };
@@ -306,7 +312,7 @@ const Assets = () => {
                                             {assetFormData.assetType === constants.assetType.PROPERTY && (
                                                 <div className="form-group">
                                                     <label htmlFor="propertyAddress">Property address</label>
-                                                     <AddressAutocomplete
+                                                    <AddressAutocomplete
                                                         id="propertyAddress"
                                                         name="propertyAddress"
                                                         value={assetFormData.propertyAddress}

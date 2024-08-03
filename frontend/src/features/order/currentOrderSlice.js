@@ -4,6 +4,7 @@ import { updateTestatorSlice } from "../people/testator/testatorSlice";
 import { updateSpouseOrPartnerSlice } from "../people/spouseOrPartner/spouseOrPartnerSlice";
 import constants from "../../common/constants";
 import { updateKidsSlice } from "../people/kids/kidsSlice";
+import { updateAssetsSlice } from "../orderAssets/orderAssetsSlice";
 
 
 const initialState = {
@@ -53,8 +54,15 @@ export const getOrderThunk = createAsyncThunk(
                 ...p.personId,
                 role: p.role,
                 // _id: p._id
-                _id:p.personId._id
+                _id: p.personId._id
             }));
+
+            // const assets = response.assetsAndDistribution
+
+            const assets = response.assetsAndDistribution.map(a=>({
+                ...a.assetId,
+                distribution:a.distribution
+            }))
 
             // const spouseOrPartner = response.peopleAndRoles.find(p => p.role.includes("spouse" || "partner"));
             console.log(`spouseorpartner payload = ${JSON.stringify(spouseOrPartner)}`)
@@ -86,6 +94,10 @@ export const getOrderThunk = createAsyncThunk(
                 thunkAPI.dispatch(updateKidsSlice(kids));
             }
 
+            if (assets) {
+                thunkAPI.dispatch(updateAssetsSlice(assets))
+
+            }
 
             return response;
         } catch (error) {
@@ -142,9 +154,9 @@ const currentOrderSlice = createSlice({
                 personId: pr.personId._id || pr.personId, // In case personId is populated, take only the _id
                 role: pr.role
             }));
-            state.assetsAndDistribution = action.payload.assetsAndDistribution.map(ad => ({
+            state.assetsAndDistribution = assetsAndDistribution.map(ad => ({
                 assetId: ad.assetId._id || ad.assetId, // In case assetId is populated, take only the _id
-                distribution: ad.distribution.map(dist => ({
+                distribution: (ad.distribution || []).map(dist => ({
                     personId: dist.personId._id || dist.personId, // In case personId is populated, take only the _id
                     receivingAmount: dist.receivingAmount
                 }))

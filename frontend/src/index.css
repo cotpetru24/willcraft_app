@@ -453,6 +453,7 @@ h1 {
   margin-top: 15px;
   /* width: 500px; */
   height: 100%;
+  min-width: 400px;
 }
 
 .form-group label {
@@ -461,7 +462,8 @@ h1 {
   margin-bottom: 3px;
 }
 
-.form-group input {
+.form-group input,
+#assetType {
   border: solid 1px darkgray;
   border-radius: 3px;
   height: 40px;
@@ -919,7 +921,7 @@ h4 {
 
 }
 
-.review-container-text{
+.review-container-text {
   margin-top: 10px;
 
 }
@@ -1289,7 +1291,8 @@ ol {
 
 
 
-.name-group #fullLegalName, .fullLegalName {
+.name-group #fullLegalName,
+.fullLegalName {
   width: 320px;
   border: solid 1px darkgray;
   border-radius: 3px;
@@ -1379,7 +1382,8 @@ ol {
   margin-bottom: 5%;
 
   border-radius: 5px;
-  box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.3); /* Add this line for gray shadow */
+  box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.3);
+  /* Add this line for gray shadow */
 }
 
 .creatingOrder-tile-heading {
@@ -1397,9 +1401,9 @@ ol {
   width: 100%;
   /* padding: 20px;
    */
-   padding-left: 50px;
-   padding-right: 50px;
-   padding-bottom: 30px;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 30px;
   justify-content: space-between;
 }
 
@@ -1417,7 +1421,7 @@ ol {
   background-color: #e0218a;
   transition: 0.1s;
   /* transform:rotateX(45deg); */
-  transform: scale(90%);
+  /* transform: scale(90%); */
   cursor: pointer;
 }
 
@@ -1554,14 +1558,15 @@ ol {
 .section-heading-container {
   width: 100%;
 }
-.section-content-container{
+
+.section-content-container {
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.section-form-container{
+.section-form-container {
   margin-left: 20px;
 }
 
@@ -1574,7 +1579,7 @@ ol {
   margin-bottom: 20px;
 }
 
-.section-navigation-container{
+.section-navigation-container {
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -1582,7 +1587,7 @@ ol {
 }
 
 
-.section-controll-container{
+.section-controll-container {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -1590,13 +1595,13 @@ ol {
   margin-bottom: 50px;
 }
 
-.section-list-item-container{
+.section-list-item-container {
   display: flex;
   flex-direction: column;
   width: 400px;
   border: 1px solid darkgray;
   border-radius: 5px;
-  padding:10px;
+  padding: 10px;
   margin-top: 20px;
   margin-bottom: 20px;
 
@@ -1606,11 +1611,11 @@ ol {
   margin-bottom: 40px;
 }
 
-.section-list-item-group{
+.section-list-item-group {
   margin-bottom: 5px;
 }
 
-.section-list-item-btns-container{
+.section-list-item-btns-container {
   margin-top: 10px;
   display: flex;
   flex-direction: row;
@@ -1621,7 +1626,9 @@ ol {
 
 }
 
-.section-list-item-btn, .form-btn, .creatingOrder-tile-btn{
+.section-list-item-btn,
+.form-btn,
+.creatingOrder-tile-btn {
   color: white;
   width: 80px;
   /* margin-left: 10px; */
@@ -1631,45 +1638,47 @@ ol {
   border-radius: 5px;
   background-color: #3194F0;
 }
-.section-add-btn{
-  color:white;
+
+.section-add-btn {
+  color: white;
   height: 30px;
-  width:120px;
+  width: 120px;
   /* border: 1px solid #3194F0; */
   border: none;
   border-radius: 5px;
   background-color: #3194F0;
 }
 
-.section-list-item-btn:hover, 
+.section-list-item-btn:hover,
 .form-btn:hover,
 .section-add-btn:hover,
 .creatingOrder-tile-btn:hover {
-cursor: pointer;
-/* color: #131921; */
-background-color: #e0218a;
-/* transform: scale(90%); */
-transition: 0.2s;
+  cursor: pointer;
+  /* color: #131921; */
+  background-color: #e0218a;
+  /* transform: scale(90%); */
+  transition: 0.2s;
 }
 
 
-.creatingOrder-tile-group{
+.creatingOrder-tile-group {
   display: flex;
   flex-direction: row;
 }
 
 
-.creatingOrder-tile-line-heading{
+.creatingOrder-tile-line-heading {
   display: flex;
   width: 110px;
 }
 
-.creatingOrder-tile-btn-container{
+.creatingOrder-tile-btn-container {
   display: flex;
   flex-direction: row;
   justify-content: end;
   width: 100%;
 }
+
 .disabledButton {
   background-Color: 'gray';
   color: 'white';
@@ -1679,7 +1688,7 @@ transition: 0.2s;
 
 
 
-.creatingOrder-tile-list-container{
+.creatingOrder-tile-list-container {
   margin-bottom: 15px;
 }
 
