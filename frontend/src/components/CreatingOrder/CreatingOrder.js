@@ -5,6 +5,7 @@ import TestatorTile from "./CreatingOrderTiles/TestatorTile";
 import SpouseOrPartnerTile from "./CreatingOrderTiles/SpouseOrPartnerTile";
 import ProgressBar from "../ProgressBar";
 import KidsTile from "./CreatingOrderTiles/KidsTile";
+import AssetsTile from "./CreatingOrderTiles/AssetsTile";
 
 
 
@@ -33,6 +34,7 @@ const CreatingOrder = () => {
                     <TestatorTile />
                     <SpouseOrPartnerTile />
                     <KidsTile/>
+                    <AssetsTile/>
                 </div>
                 <div className=" creatingOrder-instructions">
                     <div className="creatingOrder-tile">

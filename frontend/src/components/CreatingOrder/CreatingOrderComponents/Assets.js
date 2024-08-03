@@ -16,253 +16,216 @@ import styles from "../../../common/styles";
 import { updateCurrentOrderSlice, updateOrderThunk } from "../../../features/order/currentOrderSlice";
 import { createPerson } from "../../../features/people/peopleService";
 import { createKidThunk } from "../../../features/people/kids/kidsThunks";
+import { updateAssetsSlice } from "../../../features/orderAssets/orderAssetsSlice"
 
 const Assets = () => {
-    // const navigate = useNavigate();
-    // const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    // // const testator = useSelector(state => state.testator);
-    // const currentOrder = useSelector(state => state.currentOrder);
+    const currentOrder = useSelector(state => state.currentOrder);
+    const assets = useSelector(state => state.assets)
 
-    // const [showAssetsForm, setShowAssetsForm] = useState(false);
-    // const [editAssetsIndex, setEditAssetsIndex] = useState(null); // New state to track the index of the kid being edited
+    const [showAssetsForm, setShowAssetsForm] = useState(false);
+    const [editAssetIndex, setEditAssetIndex] = useState(null); // New state to track the index of the kid being edited
 
-    // // Use useRef to store the "saved" state
-    // const savedAssetsData = useRef(null);
-    // // const savedTestatorData = useRef(null);
-    // const initialHasChildrenStatus = useRef(testator.hasChildrenStatus);
+    // Use useRef to store the "saved" state
+    const savedAssetsData = useRef(null);
+    // const savedTestatorData = useRef(null);
 
-    // let asset;
+    let asset;
 
-    // const [assetFormData, setAssetFormData] = useState({
-    //     _id: '',
-    //     title: '',
-    //     fullLegalName: '',
-    //     fullAddress: '',
-    //     dob: '',
-    //     email: '',
-    //     tel: ''
-    // });
+    const [assetFormData, setAssetFormData] = useState({
+        _id: '',
+        assetType: '',
+        bankName: '',
+        provider: '',
+        companyName: '',
+        propertyAddress: '',
+        otherAssetDetails: ''
 
-    // useEffect(() => {
-    //     if (asset) {
-    //         setKidFormData({
-    //             _id: kidFormData._id || '',
-    //             title: kidFormData.title || '',
-    //             fullLegalName: kidFormData.fullLegalName || '',
-    //             fullAddress: kidFormData.fullAddress || '',
-    //             dob: kidFormData.dob || '',
-    //             email: kidFormData.email || '',
-    //             tel: kidFormData.tel || ''
-    //         })
-    //     }
-    //     // Store the initial state as "saved" state if it's not already saved
-    //     if (!savedTestatorData.current) {
-    //         savedTestatorData.current = JSON.parse(JSON.stringify(testator));
-    //     }
-    //     if (!savedKidsData.current) {
-    //         savedKidsData.current = JSON.parse(JSON.stringify(kids));
-    //     }
-    // }, [kids]);
+    });
 
-    // const handleHasChildrenStatusChange = (e) => {
-    //     setShowKidsForm(false);
+    useEffect(() => {
+        if (asset) {
+            setAssetFormData({
+                // _id: assetFormData._id || '',
+                // assetType: assetFormData.assetType || '',
+                // bankName: assetFormData.bankName || '',
+                // provider: assetFormData.provider || '',
+                // companyName: assetFormData.companyName || '',
+                // propertyAddress: assetFormData.propertyAddress || '',
+                // otherAssetDetails: assetFormData.otherAssetDetails || '',
 
-    //     const updatedHasChildrenStatus = e.target.value;
-    //     setHasChildrenStatus(updatedHasChildrenStatus);
+            })
+        }
+        // Store the initial state as "saved" state if it's not already saved
+        if (!savedAssetsData.current) {
+            savedAssetsData.current = JSON.parse(JSON.stringify(assets));
+        }
+    }, [assets]);
 
-    //     if (testator) {
-    //         dispatch(updateTestatorSlice({ ...testator, hasChildrenStatus: updatedHasChildrenStatus }));
-    //     }
-    //     if (kids) {
-    //         dispatch(resetKidsSlice());
-    //     }
+
+    const handleShowAssetsForm = () => {
+        setShowAssetsForm(prevState => !prevState);
+    };
+
+    const handleOnChange = (e) => {
+        const { name, value } = e.target;
+        setAssetFormData((prevData) => ({
+            ...prevData,
+            [name]: value
+        }));
+    };
+
+    const handleAssetFormAdd = (e) => {
+        console.log(`asset form add called `)
+        e.preventDefault();
+
+        if (editAssetIndex !== null) {
+            const updatedAssets = assets.map((asset, index) =>
+                index === editAssetIndex ? assetFormData : asset
+            );
+            console.log(`asset form add meets the if condition `)
+
+            dispatch(updateAssetsSlice(updatedAssets));
+            setEditAssetIndex(null); // Reset the edit index
+        } else {
+            console.log(`asset form add else statement `)
+
+            dispatch(updateAssetsSlice([...assets, assetFormData]));
+        }
+
+        resetAssetForm();
+        setShowAssetsForm(false);
+    };
+
+    const resetAssetForm = () => {
+        setAssetFormData({
+            _id: '',
+            assetType: '',
+            bankName: '',
+            provider: '',
+            companyName: '',
+            propertyAddress: '',
+            otherAssetDetails: '',
+
+        });
+        setEditAssetIndex(null); // Reset the edit index
+    };
+
+    const handleRemoveAsset = (index) => {
+        const updatedAssets = assets.filter((_, i) => i !== index);
+        dispatch(updateAssetsSlice(updatedAssets));
+    };
+
+    const handleEditAsset = (index) => {
+        const assetToEdit = assets[index];
+        setAssetFormData({
+            _id: assetFormData._id || '',
+            assetType: assetFormData.assetType || '',
+            bankName: assetFormData.bankName || '',
+            provider: assetFormData.provider || '',
+            companyName: assetFormData.companyName || '',
+            propertyAddress: assetFormData.propertyAddress || '',
+            otherAssetDetails: assetFormData.otherAssetDetails || '',
+        });
+        setEditAssetIndex(index); // Set the edit index
+        setShowAssetsForm(true);
+    };
+
+
+
+
+    const handleSaveAndContinue = async (e) => {
+        e.preventDefault();
+
+        const updatedAssets = [];
+
+        // Create each kid and update kids slice with returned IDs
+        // for (const asset of assets) {
+        //     const response = await dispatch(createAssetThunk(asset)).unwrap();
+        //     updatedAssets.push({
+        //         ...asset,
+        //         _id: response._id
+        //     });
+        // }
+
+        // Update kids slice with new kids including their IDs
+        await dispatch(updateAssetsSlice(updatedAssets));
+
+
+
+
+
+
+
+        // Prepare updated order with the new kids IDs
+        const updatedOrder = {
+            ...currentOrder,
+            assetsAndDistribution: [
+                ...currentOrder.assetsAndDistribution, // Remove existing kids to avoid duplicates
+                ...updatedAssets.map(asset => ({
+                    assetId: asset._id,
+                    assetDistribution: []
+                }))
+            ]
+        };
+
+        // Update the currentOrder slice
+        await dispatch(updateCurrentOrderSlice(updatedOrder));
+        // Update the order in the backend
+        await dispatch(updateOrderThunk(updatedOrder));
+
+        navigate('/creatingOrder');
+    };
+
+
+
+
+
+
+    const handleBack = () => {
+        console.log(`handle back called`);
+        // Revert to the "saved" state
+
+        if (savedAssetsData.current) {
+            dispatch(updateAssetsSlice(savedAssetsData.current));
+            console.log(`dispatched update kids slice`);
+        }
+        navigate('/creatingOrder');
+    };
+
+    const handlePlaceSelected = (address) => {
+        setAssetFormData((prevData) => ({
+            ...prevData,
+            fullAddress: address
+        }));
+    };
+
+
+
+    const [assetType, setAssetType] = useState('');
+    // const handleAssetTypeChange = (e) => {
+    //     const selectedType = e.target.value;
+    //     setAssetType(selectedType);
     // };
 
-    // const handleShowKidsForm = () => {
-    //     setShowKidsForm(prevState => !prevState);
-    // };
-
-    // const handleOnChange = (e) => {
-    //     const { name, value } = e.target;
-    //     setKidFormData((prevData) => ({
-    //         ...prevData,
-    //         [name]: value
-    //     }));
-    // };
-
-    // const handleKidFormAdd = (e) => {
-    //     e.preventDefault();
-
-    //     if (editKidIndex !== null) {
-    //         const updatedKids = kids.map((kid, index) =>
-    //             index === editKidIndex ? kidFormData : kid
-    //         );
-    //         dispatch(updateKidsSlice(updatedKids));
-    //         setEditKidIndex(null); // Reset the edit index
-    //     } else {
-    //         dispatch(updateKidsSlice([...kids, kidFormData]));
-    //     }
-
-    //     resetKidForm();
-    //     setShowKidsForm(false);
-    // };
-
-    // const resetKidForm = () => {
-    //     setKidFormData({
-    //         _id: '',
-    //         title: '',
-    //         fullLegalName: '',
-    //         fullAddress: '',
-    //         dob: '',
-    //         email: '',
-    //         tel: ''
-    //     });
-    //     setEditKidIndex(null); // Reset the edit index
-    // };
-
-    // const handleRemoveKid = (index) => {
-    //     const updatedKids = kids.filter((_, i) => i !== index);
-    //     dispatch(updateKidsSlice(updatedKids));
-    // };
-
-    // const handleEditKid = (index) => {
-    //     const kidToEdit = kids[index];
-    //     setKidFormData({
-    //         _id: kidToEdit._id || '',
-    //         title: kidToEdit.title || '',
-    //         fullLegalName: kidToEdit.fullLegalName || '',
-    //         fullAddress: kidToEdit.fullAddress || '',
-    //         dob: kidToEdit.dob || '',
-    //         email: kidToEdit.email || '',
-    //         tel: kidToEdit.tel || ''
-    //     });
-    //     setEditKidIndex(index); // Set the edit index
-    //     setShowKidsForm(true);
-    // };
-
-
-
-
-
-    // // const handleSaveAndContinue = async (e) => {
-    // //     e.preventDefault();
-    // //     // Update testator's hasChildrenStatus if it has changed
-    // //     if (initialHasChildrenStatus.current !== currentHasChildrenStatus) {
-    // //         await dispatch(testatorThunks.updateTestatorThunk({ ...testator, hasChildrenStatus: currentHasChildrenStatus }));
-    // //     }
-
-
-    // //     const updatedKids = [];
-
-    // //     // Create each kid and update kids slice with returned IDs
-    // //     for (const kid of kids) {
-    // //         const response = await dispatch(createKidThunk(kid)).unwrap();
-    // //         updatedKids.push({
-    // //             ...kid,
-    // //             _id: response._id
-    // //         });
-    // //     }
-
-
-    // //     // // Create each kid
-    // //     // for (const kid of kids) {
-    // //     //     await dispatch(createKidThunk(kid));
-    // //     // }
-
-    // //     const updatedOrder = {
-    // //         ...currentOrder,
-    // //         peopleAndRoles: [
-    // //             ...currentOrder.peopleAndRoles.filter(pr => pr.role !== constants.role.KID), // Remove existing kids to avoid duplicates
-    // //             ...kids.map(kid => ({
-    // //                 personId: kid._id,
-    // //                 role: [constants.role.KID]
-    // //             }))
-    // //         ]
-    // //     };
-
-
-    // //     await dispatch(updateCurrentOrderSlice(updatedOrder));
-    // //     await dispatch(updateOrderThunk(updatedOrder));
-
-    // //     navigate('/creatingOrder');
-    // // };
-
-
-    // const handleSaveAndContinue = async (e) => {
-    //     e.preventDefault();
-
-    //     // Update testator's hasChildrenStatus if it has changed
-    //     if (initialHasChildrenStatus.current !== currentHasChildrenStatus) {
-    //         await dispatch(testatorThunks.updateTestatorThunk({ ...testator, hasChildrenStatus: currentHasChildrenStatus }));
-    //     }
-
-    //     const updatedKids = [];
-
-    //     // Create each kid and update kids slice with returned IDs
-    //     for (const kid of kids) {
-    //         const response = await dispatch(createKidThunk(kid)).unwrap();
-    //         updatedKids.push({
-    //             ...kid,
-    //             _id: response._id
-    //         });
-    //     }
-
-    //     // Update kids slice with new kids including their IDs
-    //     await dispatch(updateKidsSlice(updatedKids));
-
-    //     // Prepare updated order with the new kids IDs
-    //     const updatedOrder = {
-    //         ...currentOrder,
-    //         peopleAndRoles: [
-    //             ...currentOrder.peopleAndRoles.filter(pr => !pr.role.includes(constants.role.KID)), // Remove existing kids to avoid duplicates
-    //             ...updatedKids.map(kid => ({
-    //                 personId: kid._id,
-    //                 role: [constants.role.KID]
-    //             }))
-    //         ]
-    //     };
-
-    //     // Update the currentOrder slice
-    //     await dispatch(updateCurrentOrderSlice(updatedOrder));
-    //     // Update the order in the backend
-    //     await dispatch(updateOrderThunk(updatedOrder));
-
-    //     navigate('/creatingOrder');
-    // };
-
-
-
-
-
-
-    // const handleBack = () => {
-    //     console.log(`handle back called`);
-    //     // Revert to the "saved" state
-    //     if (savedTestatorData.current) {
-    //         dispatch(updateTestatorSlice(savedTestatorData.current));
-    //         console.log(`dispatched update testator slice`);
-    //     }
-    //     if (savedKidsData.current) {
-    //         dispatch(updateKidsSlice(savedKidsData.current));
-    //         console.log(`dispatched update kids slice`);
-    //     }
-    //     navigate('/creatingOrder');
-    // };
-
-    // const handlePlaceSelected = (address) => {
-    //     setKidFormData((prevData) => ({
-    //         ...prevData,
-    //         fullAddress: address
+    // const handleAssetTypeChange = (e) => {
+    //     const selectedType = e.target.value;
+    //     setAssetFormData(prevState => ({
+    //         ...prevState,
+    //         assetType: selectedType
     //     }));
     // };
 
 
-
-    const [assetType, setAssetType] = useState(Object.values(constants.assetType)[0]);
     const handleAssetTypeChange = (e) => {
         const selectedType = e.target.value;
-        setAssetType(selectedType);
+        setAssetType(selectedType);  // Update the assetType state
+        setAssetFormData(prevState => ({
+            ...prevState,
+            assetType: selectedType
+        }));
     };
 
 
@@ -276,39 +239,11 @@ const Assets = () => {
                     </div>
                     <div className="has-children-container">
                         <div>
-                            <h4>Do you have children ?</h4>
-                        </div>
-                        <div className="has-children-options-container">
-                            <div className="has-children-radio-container">
-                                <input
-                                    type="radio"
-                                    id="has-children-yes"
-                                    name="has-children"
-                                    value="yes"
-                                // checked={currentHasChildrenStatus === "yes"}
-                                // onChange={handleHasChildrenStatusChange}
-                                >
-                                </input>
-                                <label htmlFor="has-children-yes">Yes</label>
-                            </div>
-                            <div className="has-children-radio-container">
-                                <input
-                                    type="radio"
-                                    id="has-children-no"
-                                    name="has-children"
-                                    value="no"
-                                // checked={currentHasChildrenStatus === "no"}
-                                // onChange={handleHasChildrenStatusChange}
-                                >
-                                </input>
-                                <label htmlFor="has-children-no">No</label>
-                            </div>
+                            <h4>PLease add all the assets that you want to include in the will.</h4>
                         </div>
                     </div>
                 </div>
 
-                {/* {(currentHasChildrenStatus === "yes") &&
-                    ( */}
                 <>
                     <div className="section-content-container">
                         <div className="section-controll-container">
@@ -319,114 +254,132 @@ const Assets = () => {
                                                 // key={index}
                                                 // buttonsDisabled={showKidsForm}
                                                 // data={kid}
-                                                // onRemove={() => handleRemoveKid(index)}
-                                                // onEdit={() => handleEditKid(index)}
+                                                // onRemove={() => handleRemoveAsset(index)}
+                                                // onEdit={() => handleEditAsset(index)}
                                             />
                                         ))} */}
                             </div>
                             <div className="sectio-add-btn-container">
                                 <button
                                     className="section-add-btn"
-                                // onClick={handleShowKidsForm}
-                                // style={showKidsForm ? styles.disabledButton : {}}
-                                // disabled={showKidsForm}
+                                    onClick={handleShowAssetsForm}
+                                    style={showAssetsForm ? styles.disabledButton : {}}
+                                    disabled={showAssetsForm}
                                 >
                                     +Add Asset
                                 </button>
                             </div>
                         </div>
 
-                        {/* {showKidsForm &&
-                                    ( */}
-                        <div className="section-form-container">
-                        <form>
-            <div className="form-main-container">
-                <div className="form-group">
-                    <label htmlFor="assetType">Asset type</label>
-                    <select
-                        id="assetType"
-                        name="assetType"
-                        onChange={handleAssetTypeChange}
-                        value={assetType}
-                        required
-                    >
-                        <option value="" disabled>Select asset type</option>
-                        {Object.values(constants.assetType).map((title, index) => (
-                            <option key={index} value={title}>
-                                {title}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                {assetType === constants.assetType.PROPERTY && (
-                    <div className="form-group">
-                        <label htmlFor="propertyAddress">Address</label>
-                        <input
-                            type="text"
-                            id="propertyAddress"
-                            name="propertyAddress"
-                        />
-                    </div>
-                )}
-                {assetType === constants.assetType.BANK_ACCOUNT && (
-                    <div className="form-group">
-                        <label htmlFor="bankName">Bank name</label>
-                        <input
-                            type="text"
-                            id="bankName"
-                            name="bankName"
-                        />
-                    </div>
-                )}
-                {assetType === constants.assetType.STOCKS_AND_SHARES && (
-                    <div className="form-group">
-                        <label htmlFor="companyName">Company name</label>
-                        <input
-                            type="text"
-                            id="companyName"
-                            name="companyName"
-                        />
-                    </div>
-                )}
-                {(assetType === constants.assetType.PENSION || assetType === constants.assetType.LIFE_INSURANCE) && (
-                    <div className="form-group">
-                        <label htmlFor="provider">Provider</label>
-                        <input
-                            type="text"
-                            id="provider"
-                            name="provider"
-                        />
-                    </div>
-                )}
-                { assetType === constants.assetType.OTHER && (
-                    <div className="form-group">
-                        <label htmlFor="assetDetails">Details</label>
-                        <input
-                            type="text"
-                            id="assetDetails"
-                            name="assetDetails"
-                        />
-                    </div>
-                )}
-            </div>
-            <div className="form-btns-container">
-                <button
-                    className="form-btn"
-                    type="button"
-                >
-                    Cancel
-                </button>
-                <button
-                    className="form-btn"
-                    type="submit"
-                >
-                    Add
-                </button>
-            </div>
-        </form>
-                        </div>
-                        {/* ) */}
-                        {/* } */}
+                        {showAssetsForm &&
+                            (
+                                <div className="section-form-container">
+                                    <form onSubmit={handleAssetFormAdd}>
+                                        <div className="form-main-container">
+                                            <div className="form-group">
+                                                <label htmlFor="assetType">Asset type</label>
+                                                <select
+                                                    id="assetType"
+                                                    name="assetType"
+                                                    value={assetFormData.assetType}
+                                                    onChange={handleAssetTypeChange}
+                                                    required
+                                                >
+                                                    <option value="" disabled>Select asset type</option>
+                                                    {Object.values(constants.assetType).map((assetType, index) => (
+                                                        <option key={index} value={assetType}>
+                                                            {assetType}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                            </div>
+                                            {assetFormData.assetType === constants.assetType.PROPERTY && (
+                                                <div className="form-group">
+                                                    <label htmlFor="propertyAddress">Address</label>
+                                                    <input
+                                                        type="text"
+                                                        id="propertyAddress"
+                                                        name="propertyAddress"
+                                                        value={assetFormData.propertyAddress}
+                                                        onChange={handleOnChange}
+
+                                                    />
+                                                </div>
+                                            )}
+                                            {assetFormData.assetType === constants.assetType.BANK_ACCOUNT && (
+                                                <div className="form-group">
+                                                    <label htmlFor="bankName">Bank name</label>
+                                                    <input
+                                                        type="text"
+                                                        id="bankName"
+                                                        name="bankName"
+                                                        value={assetFormData.bankName}
+
+                                                        onChange={handleOnChange}
+
+                                                    />
+                                                </div>
+                                            )}
+                                            {assetFormData.assetType === constants.assetType.STOCKS_AND_SHARES && (
+                                                <div className="form-group">
+                                                    <label htmlFor="companyName">Company name</label>
+                                                    <input
+                                                        type="text"
+                                                        id="companyName"
+                                                        name="companyName"
+                                                        value={assetFormData.companyName}
+
+                                                        onChange={handleOnChange}
+
+                                                    />
+                                                </div>
+                                            )}
+                                            {(assetFormData.assetType === constants.assetType.PENSION || assetType === constants.assetType.LIFE_INSURANCE) && (
+                                                <div className="form-group">
+                                                    <label htmlFor="provider">Provider</label>
+                                                    <input
+                                                        type="text"
+                                                        id="provider"
+                                                        name="provider"
+                                                        value={assetFormData.provider}
+
+                                                        onChange={handleOnChange}
+
+                                                    />
+                                                </div>
+                                            )}
+                                            {assetFormData.assetType === constants.assetType.OTHER && (
+                                                <div className="form-group">
+                                                    <label htmlFor="otherAssetDetails">Details</label>
+                                                    <input
+                                                        type="text"
+                                                        id="otherAssetDetails"
+                                                        name="otherAssetDetails"
+                                                        value={assetFormData.otherAssetDetails}
+                                                        onChange={handleOnChange}
+
+                                                    />
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div className="form-btns-container">
+                                            <button
+                                                className="form-btn"
+                                                type="button"
+                                                onClick={() => {
+                                                    handleShowAssetsForm();
+                                                    resetAssetForm();
+                                                }}
+                                            >Cancel</button>
+                                            <button
+                                                className="form-btn"
+                                                type="submit"
+                                            >{editAssetIndex !== null ? "Update" : "Add"}</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            )
+                        }
                     </div>
                 </>
                 {/* )
@@ -434,9 +387,9 @@ const Assets = () => {
                 <>
                     <div className="section-navigation-container">
                         <OrderNavigation
-                        // onBack={handleBack}
-                        // onSaveAndContinue={handleSaveAndContinue}
-                        // buttonsDisabled={showKidsForm}
+                            onBack={handleBack}
+                            // onSaveAndContinue={handleSaveAndContinue}
+                            buttonsDisabled={showAssetsForm}
                         />
                     </div>
                 </>
