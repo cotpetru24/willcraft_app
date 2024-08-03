@@ -313,6 +313,7 @@ const Kids = () => {
                                                 data={kid}
                                                 onRemove={() => handleRemoveKid(index)}
                                                 onEdit={() => handleEditKid(index)}
+                                                section="kids"
                                             />
                                         ))}
                                     </div>

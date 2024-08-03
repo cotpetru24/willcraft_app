@@ -25,7 +25,7 @@ const Assets = () => {
     const currentOrder = useSelector(state => state.currentOrder);
     const assets = useSelector(state => state.assets)
 
-    const [showAssetsForm, setShowAssetsForm] = useState(false);
+    const [showAssetForm, setshowAssetForm] = useState(false);
     const [editAssetIndex, setEditAssetIndex] = useState(null); // New state to track the index of the kid being edited
 
     // Use useRef to store the "saved" state
@@ -65,8 +65,8 @@ const Assets = () => {
     }, [assets]);
 
 
-    const handleShowAssetsForm = () => {
-        setShowAssetsForm(prevState => !prevState);
+    const handleshowAssetForm = () => {
+        setshowAssetForm(prevState => !prevState);
     };
 
     const handleOnChange = (e) => {
@@ -96,7 +96,7 @@ const Assets = () => {
         }
 
         resetAssetForm();
-        setShowAssetsForm(false);
+        setshowAssetForm(false);
     };
 
     const resetAssetForm = () => {
@@ -130,7 +130,7 @@ const Assets = () => {
             otherAssetDetails: assetFormData.otherAssetDetails || '',
         });
         setEditAssetIndex(index); // Set the edit index
-        setShowAssetsForm(true);
+        setshowAssetForm(true);
     };
 
 
@@ -198,7 +198,7 @@ const Assets = () => {
     const handlePlaceSelected = (address) => {
         setAssetFormData((prevData) => ({
             ...prevData,
-            fullAddress: address
+            propertyAddress: address
         }));
     };
 
@@ -239,7 +239,7 @@ const Assets = () => {
                     </div>
                     <div className="has-children-container">
                         <div>
-                            <h4>PLease add all the assets that you want to include in the will.</h4>
+                            <h4>Please add all the assets that you want to include in the will.</h4>
                         </div>
                     </div>
                 </div>
@@ -248,30 +248,30 @@ const Assets = () => {
                     <div className="section-content-container">
                         <div className="section-controll-container">
                             <div className="section-list-container">
-                                <p>List item here</p>
-                                {/* {kids.map((kid, index) => (
-                                            <SectionListItem
-                                                // key={index}
-                                                // buttonsDisabled={showKidsForm}
-                                                // data={kid}
-                                                // onRemove={() => handleRemoveAsset(index)}
-                                                // onEdit={() => handleEditAsset(index)}
-                                            />
-                                        ))} */}
+                                {assets.map((asset, index) => (
+                                    <SectionListItem
+                                        key={index}
+                                        buttonsDisabled={showAssetForm}
+                                        data={asset}
+                                        onRemove={() => handleRemoveAsset(index)}
+                                        onEdit={() => handleEditAsset(index)}
+                                        section="assets"
+                                    />
+                                ))}
                             </div>
                             <div className="sectio-add-btn-container">
                                 <button
                                     className="section-add-btn"
-                                    onClick={handleShowAssetsForm}
-                                    style={showAssetsForm ? styles.disabledButton : {}}
-                                    disabled={showAssetsForm}
+                                    onClick={handleshowAssetForm}
+                                    style={showAssetForm ? styles.disabledButton : {}}
+                                    disabled={showAssetForm}
                                 >
                                     +Add Asset
                                 </button>
                             </div>
                         </div>
 
-                        {showAssetsForm &&
+                        {showAssetForm &&
                             (
                                 <div className="section-form-container">
                                     <form onSubmit={handleAssetFormAdd}>
@@ -296,13 +296,20 @@ const Assets = () => {
                                             {assetFormData.assetType === constants.assetType.PROPERTY && (
                                                 <div className="form-group">
                                                     <label htmlFor="propertyAddress">Address</label>
-                                                    <input
+                                                    {/* <input
                                                         type="text"
                                                         id="propertyAddress"
                                                         name="propertyAddress"
                                                         value={assetFormData.propertyAddress}
                                                         onChange={handleOnChange}
 
+                                                    /> */}
+                                                    <AddressAutocomplete
+                                                        id="propertyAddress"
+                                                        name="propertyAddress"
+                                                        value={assetFormData.propertyAddress}
+                                                        onPlaceSelected={handlePlaceSelected}
+                                                        handleInputChange={handleOnChange}
                                                     />
                                                 </div>
                                             )}
@@ -367,7 +374,7 @@ const Assets = () => {
                                                 className="form-btn"
                                                 type="button"
                                                 onClick={() => {
-                                                    handleShowAssetsForm();
+                                                    handleshowAssetForm();
                                                     resetAssetForm();
                                                 }}
                                             >Cancel</button>
@@ -389,7 +396,7 @@ const Assets = () => {
                         <OrderNavigation
                             onBack={handleBack}
                             // onSaveAndContinue={handleSaveAndContinue}
-                            buttonsDisabled={showAssetsForm}
+                            buttonsDisabled={showAssetForm}
                         />
                     </div>
                 </>
