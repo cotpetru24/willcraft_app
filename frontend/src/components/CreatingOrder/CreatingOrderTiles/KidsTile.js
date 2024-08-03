@@ -1,48 +1,25 @@
-import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckSquare, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 
 
-
 const KidsTile = () => {
-
-
     const navigate = useNavigate();
 
-    const [spouseOrPartnerInitialData, setSpouseOrPartnerInitialData] = useState({
-        spouseOrPartnerTitle: '',
-        spouseOrPartnerLegalName: '',
-        spouseOrPartnerDob: '',
-        spouseOrPartnerFullAddress: ''
-    });
+    const testator = useSelector(state => state.testator)
+    const kidsData = useSelector(state => state.kids);
 
-    const spouseOrPartnerData = useSelector(state => state.spouseOrPartner);
-
-    const isSpouseOrPartnerComplete = (data) => {
-        return data.title && data.fullLegalName && data.dob && data.fullAddress;
-
-        //-------------to add here check if testtator is single => !maried || !partner
+    const isKidsComplete = (data) => {
+        return testator.hasChildrenStatus === 'no' || (Array.isArray(data) && (data.length > 0))
     };
-    const allNecessaryFieldsSpecified = isSpouseOrPartnerComplete(spouseOrPartnerData);
 
+    const allNecessaryFieldsSpecified = isKidsComplete(kidsData);
 
-    useEffect(() => {
-        if (spouseOrPartnerData) {
-            setSpouseOrPartnerInitialData({
-                spouseOrPartnerTitle: spouseOrPartnerData.title || '',
-                spouseOrPartnerLegalName: spouseOrPartnerData.fullLegalName || '',
-                spouseOrPartnerDob: spouseOrPartnerData.dob || '',
-                spouseOrPartnerFullAddress: spouseOrPartnerData.fullAddress || '',
-            });
-        }
-    }, [spouseOrPartnerData]);
 
     return (
         <>
             <section >
-
                 <div className="creatingOrder-tile">
                     <div className="creatingOrder-tile-heading">
                         <h2>Your children</h2>
@@ -51,44 +28,51 @@ const KidsTile = () => {
                         ) : (
                             <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'grey' }} />
                         )}
-
                     </div>
 
                     {allNecessaryFieldsSpecified ? (
                         <>
-                            <div className="creatingOrder-tile-group">
-                                <div className="creatingOrder-tile-line-heading">
-                                    <h4 >Name:</h4>
+                            {kidsData.map((kid, index) => (
+                                <div className="creatingOrder-tile-list-container" key={index}>
+                                    <div className="creatingOrder-tile-group">
+                                        <div className="creatingOrder-tile-line-heading">
+                                            <h4>Name:</h4>
+                                        </div>
+                                        <p>{kid.title} {kid.fullLegalName}</p>
+                                    </div>
+                                    <div className="creatingOrder-tile-group">
+                                        <div className="creatingOrder-tile-line-heading">
+                                            <h4>Date of birth:</h4>
+                                        </div>
+                                        <p>{kid.dob}</p>
+                                    </div>
+                                    <div className="creatingOrder-tile-group">
+                                        <div className="creatingOrder-tile-line-heading">
+                                            <h4>Address:</h4>
+                                        </div>
+                                        <p>{kid.fullAddress}</p>
+                                    </div>
                                 </div>
-                                <p>{spouseOrPartnerInitialData.spouseOrPartnerTitle} {spouseOrPartnerInitialData.spouseOrPartnerLegalName}</p>
-                            </div>
-                            <div className="creatingOrder-tile-group">
-                                <div className="creatingOrder-tile-line-heading">
-                                    <h4>Date of birth:</h4>
-                                </div>
-                                <p>{spouseOrPartnerInitialData.spouseOrPartnerDob}</p>
-                            </div>
-                            <div className="creatingOrder-tile-group">
-                                <div className="creatingOrder-tile-line-heading">
-                                    <h4>Address:</h4>
-                                </div>
-                                <p>{spouseOrPartnerInitialData.spouseOrPartnerFullAddress}</p>
-                            </div>
+                            ))}
+
+                            {testator.hasChildrenStatus === "no" && (
+                                <p>You said you don't have children</p>
+                            )}
+
                             <div className="creatingOrder-tile-btn-container">
                                 <button className="creatingOrder-tile-btn" onClick={() => navigate('/kids')}>Edit</button>
                             </div>
                         </>
                     ) : (
                         <>
-                            <p>Tell us about your spouse or partner…</p>
+                            <p>Tell us about your children…</p>
                             <div className="creatingOrder-tile-btn-container">
                                 <button className="creatingOrder-tile-btn" onClick={() => navigate('/kids')}>Get Started</button>
                             </div>
                         </>
                     )}
                 </div>
-
-            </section>
+            </section >
         </>
     );
 }

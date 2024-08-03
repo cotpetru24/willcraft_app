@@ -29,12 +29,12 @@ export const createKidThunk = createAsyncThunk(
 );
 
 
-export const updateSpouseOrPartnerThunk = createAsyncThunk(
-    'people/updateSpouseOrPartner',
-    async (spouseOrPartnerData, thunkAPI) => {
+export const updateKidThunk = createAsyncThunk(
+    'people/updateKid',
+    async (kidData, thunkAPI) => {
         try {
             const token = thunkAPI.getState().auth.user.token;
-            const updateSpouseOrPartner = await peopleService.updatePerson(spouseOrPartnerData, token);
+            const updateSpouseOrPartner = await peopleService.updatePerson(kidData, token);
 
             return updateSpouseOrPartner;
         }
@@ -50,7 +50,7 @@ export const updateSpouseOrPartnerThunk = createAsyncThunk(
 
 const kidsThunks = {
     createKidThunk,
-    // updateSpouseOrPartnerThunk
+    updateKidThunk
 }
 
 export default kidsThunks;

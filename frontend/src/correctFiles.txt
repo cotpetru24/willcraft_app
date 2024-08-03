@@ -4,3 +4,9 @@ testatorSlice.js => All Checked
 spouseOrPartnerSlice.js => All Checked
 spouseOrPartnerThunks.js => All Checked
 SpouseOrPartner.js => All Checked
+KidsTile.js =>All Checked
+SpouseOrPartnerTile.js => All Checked
+TestatorTile.js => All Checked
+kidsThunks.js => All Checked
+kidsSlice.js => All Checked -------=> May need to add extraReducers similar to spouseOrPartnerSlice or testatorSlice
+SectionListItem.js => All Checked
