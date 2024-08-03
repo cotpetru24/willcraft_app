@@ -45,6 +45,7 @@ const OrderItem = ({ order }) => {
                             navigate('/creatingOrder');
                         }}
                         className="order-item-btns"
+                        id="continue-order-btn"
                     >
                         Continue
                     </button>
@@ -54,7 +55,10 @@ const OrderItem = ({ order }) => {
                 {order.status === "Completed" && (
                     <button className="order-item-btns">Edit</button>
                 )}
-                <button onClick={() => dispatch(deleteOrder(order._id))} className="order-item-btns">Delete</button>
+                <button onClick={() => dispatch(deleteOrder(order._id))} 
+                className="order-item-btns"
+                id="delete-order-btn"
+                >Delete</button>
             </div>
         </div>
     )

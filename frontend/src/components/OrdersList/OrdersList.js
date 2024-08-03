@@ -48,7 +48,11 @@ const OrdersList = () => {
             (
                 <>
                     <section>
-                        <button onClick={handleCreateWill}>Create a new Will</button>
+                        <button 
+                        id="create-my-will-btn"
+                        onClick={handleCreateWill}
+                        >Create a new Will
+                        </button>
                     </section>
                     <section className="orders-list">
                         {orders.length > 0 ? (

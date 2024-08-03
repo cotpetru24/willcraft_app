@@ -1468,9 +1468,64 @@ ol {
 }
 
 .order-item-btns {
-  width: 80px;
-  height: 30px;
+  /* background-color: #3194F0; */
+  height: 40px;
+  width: 120px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  color: rgba(255, 255, 255, 0.87);
+
+
+
+
+  /* width: 80px;
+  height: 30px; */
   margin: 5px
+}
+
+
+#delete-order-btn {
+  background-color: #e0218a;
+}
+
+#continue-order-btn {
+  background-color: #009688;
+
+}
+#delete-order-btn:hover,
+#continue-order-btn:hover{
+  cursor: pointer;
+  background-color: #3194F0;
+}
+
+
+#create-my-will-btn {
+  background-color: #3194F0;
+  height: 40px;
+  width: 200px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  color: white;
+  font-weight: bolder;
+
+
+
+
+  /* width: 80px;
+  height: 30px; */
+  margin: 5px
+}
+
+
+#create-my-will-btn:hover {
+  cursor: pointer;
+  transition: 0.2s;
+  /* transform: scale(110%); */
+  background-color: #e0218a;
 }
 
 .loadingSpinnerContainer {
