@@ -10,6 +10,20 @@ const fetchOrderAssets = async () => {
     return normalizedData;
 } 
 
-const orderAssetsService = {fetchOrderAssets};
+
+export const createAsset = async (assetData, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.post(API_URL, assetData, config);
+    return response.data;
+}
+
+
+
+
+const orderAssetsService = {fetchOrderAssets, createAsset};
 
 export default orderAssetsService;

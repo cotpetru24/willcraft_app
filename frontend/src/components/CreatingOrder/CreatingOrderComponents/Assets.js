@@ -16,7 +16,15 @@ import styles from "../../../common/styles";
 import { updateCurrentOrderSlice, updateOrderThunk } from "../../../features/order/currentOrderSlice";
 import { createPerson } from "../../../features/people/peopleService";
 import { createKidThunk } from "../../../features/people/kids/kidsThunks";
-import { updateAssetsSlice } from "../../../features/orderAssets/orderAssetsSlice"
+import { updateAssetsSlice, createAssetThunk } from "../../../features/orderAssets/orderAssetsSlice"
+
+
+
+
+
+
+
+
 
 const Assets = () => {
     const navigate = useNavigate();
@@ -142,13 +150,15 @@ const Assets = () => {
         const updatedAssets = [];
 
         // Create each kid and update kids slice with returned IDs
-        // for (const asset of assets) {
-        //     const response = await dispatch(createAssetThunk(asset)).unwrap();
-        //     updatedAssets.push({
-        //         ...asset,
-        //         _id: response._id
-        //     });
-        // }
+        for (const asset of assets) {
+            console.log(`asset data sent to create asset thunk = ${JSON.stringify(asset)}`)
+            const response = await dispatch(createAssetThunk(asset)).unwrap();
+            updatedAssets.push({
+                ...asset,
+                _id: response._id
+            });
+
+        }
 
         // Update kids slice with new kids including their IDs
         await dispatch(updateAssetsSlice(updatedAssets));
@@ -172,9 +182,9 @@ const Assets = () => {
         };
 
         // Update the currentOrder slice
-        await dispatch(updateCurrentOrderSlice(updatedOrder));
+        // await dispatch(updateCurrentOrderSlice(updatedOrder));
         // Update the order in the backend
-        await dispatch(updateOrderThunk(updatedOrder));
+        // await dispatch(updateOrderThunk(updatedOrder));
 
         navigate('/creatingOrder');
     };
@@ -295,16 +305,8 @@ const Assets = () => {
                                             </div>
                                             {assetFormData.assetType === constants.assetType.PROPERTY && (
                                                 <div className="form-group">
-                                                    <label htmlFor="propertyAddress">Address</label>
-                                                    {/* <input
-                                                        type="text"
-                                                        id="propertyAddress"
-                                                        name="propertyAddress"
-                                                        value={assetFormData.propertyAddress}
-                                                        onChange={handleOnChange}
-
-                                                    /> */}
-                                                    <AddressAutocomplete
+                                                    <label htmlFor="propertyAddress">Property address</label>
+                                                     <AddressAutocomplete
                                                         id="propertyAddress"
                                                         name="propertyAddress"
                                                         value={assetFormData.propertyAddress}
@@ -321,9 +323,7 @@ const Assets = () => {
                                                         id="bankName"
                                                         name="bankName"
                                                         value={assetFormData.bankName}
-
                                                         onChange={handleOnChange}
-
                                                     />
                                                 </div>
                                             )}
@@ -335,9 +335,7 @@ const Assets = () => {
                                                         id="companyName"
                                                         name="companyName"
                                                         value={assetFormData.companyName}
-
                                                         onChange={handleOnChange}
-
                                                     />
                                                 </div>
                                             )}
@@ -349,9 +347,7 @@ const Assets = () => {
                                                         id="provider"
                                                         name="provider"
                                                         value={assetFormData.provider}
-
                                                         onChange={handleOnChange}
-
                                                     />
                                                 </div>
                                             )}
@@ -364,7 +360,6 @@ const Assets = () => {
                                                         name="otherAssetDetails"
                                                         value={assetFormData.otherAssetDetails}
                                                         onChange={handleOnChange}
-
                                                     />
                                                 </div>
                                             )}
@@ -395,7 +390,7 @@ const Assets = () => {
                     <div className="section-navigation-container">
                         <OrderNavigation
                             onBack={handleBack}
-                            // onSaveAndContinue={handleSaveAndContinue}
+                            onSaveAndContinue={handleSaveAndContinue}
                             buttonsDisabled={showAssetForm}
                         />
                     </div>

@@ -44,6 +44,15 @@ const assetSchema = new mongoose.Schema(
                 message: 'Property address is required for property assets'
             }
         },
+        otherAssetDetails: {
+            type: String,
+            validate: {
+                validator: function (v) {
+                    return this.assetType !== 'other' || !!v;
+                },
+                message: 'Details are required for other assets'
+            }
+        },
         userId: {
             type: Schema.Types.ObjectId,
             ref: 'User',
@@ -54,49 +63,63 @@ const assetSchema = new mongoose.Schema(
 );
 
 assetSchema.pre('validate', function (next) {
-    if (this.assetType === 'bank account' && !this.bankName) {
+    if (this.assetType.toLowerCase() === 'bank account' && !this.bankName) {
         this.invalidate('bankName', 'Bank name is required for bank assets');
     }
-    if ((this.assetType === 'life insurance' || this.assetType === 'pension') && !this.provider) {
+    if ((this.assetType.toLowerCase() === 'life insurance' || this.assetType.toLowerCase() === 'pension') && !this.provider) {
         this.invalidate('provider', 'Provider is required for life insurance and pension assets');
     }
-    if (this.assetType === 'stocks and shares' && !this.companyName) {
+    if (this.assetType.toLowerCase() === 'stocks and shares' && !this.companyName) {
         this.invalidate('companyName', 'Company name is required for stocks and shares assets');
     }
-    if (this.assetType === 'property' && !this.propertyAddress) {
+    if (this.assetType.toLowerCase() === 'property' && !this.propertyAddress) {
         this.invalidate('propertyAddress', 'Property address is required for property assets');
+    }
+    if (this.assetType.toLowerCase() === 'other' && !this.otherAssetDetails) {
+        this.invalidate('otherAssetDetails', 'Details are required for other assets');
     }
     next();
 });
 
 assetSchema.pre('save', function (next) {
-    switch (this.assetType) {
+    switch (this.assetType.toLowerCase()) {
         case 'bank account':
             this.provider = undefined;
             this.companyName = undefined;
             this.propertyAddress = undefined;
+            this.otherAssetDetails = undefined;
             break;
         case 'life insurance':
         case 'pension':
             this.bankName = undefined;
             this.companyName = undefined;
             this.propertyAddress = undefined;
+            this.otherAssetDetails = undefined;
             break;
         case 'stocks and shares':
             this.bankName = undefined;
             this.provider = undefined;
             this.propertyAddress = undefined;
+            this.otherAssetDetails = undefined;
             break;
         case 'property':
             this.bankName = undefined;
             this.provider = undefined;
             this.companyName = undefined;
+            this.otherAssetDetails = undefined;
+            break;
+        case 'other':
+            this.bankName = undefined;
+            this.provider = undefined;
+            this.companyName = undefined;
+            this.propertyAddress = undefined;
             break;
         default:
             this.bankName = undefined;
             this.provider = undefined;
             this.companyName = undefined;
             this.propertyAddress = undefined;
+            this.otherAssetDetails = undefined;
             break;
     }
     next();

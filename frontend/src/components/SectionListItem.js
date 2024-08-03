@@ -59,8 +59,8 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section }) =
                     <div className="section-list-item-group">
                         {data.assetType === 'Property' && <h5>Address: {data.propertyAddress}</h5>}
                         {data.assetType === 'Bank Account' && <h5>Bank Name: {data.bankName}</h5>}
-                        {data.assetType === 'Stocks and Shares' && <h5>Company Name: {data.companyName}</h5>}
-                        {(data.assetType === 'Pension' || data.assetType === 'Life Insurance') && <h5>Provider: {data.provider}</h5>}
+                        {data.assetType === 'Stocks and shares' && <h5>Company Name: {data.companyName}</h5>}
+                        {(data.assetType === 'Pension' || data.assetType === 'Life insurance') && <h5>Provider: {data.provider}</h5>}
                         {data.assetType === 'Other' && <h5>Details: {data.otherAssetDetails}</h5>}
                     </div>
                 </>

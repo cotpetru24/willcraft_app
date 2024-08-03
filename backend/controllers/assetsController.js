@@ -28,7 +28,8 @@ export const createAsset = asyncHandler(async (req, res) => {
         bankName,
         provider,
         companyName,
-        propertyAddress
+        propertyAddress,
+        otherAssetDetails
     } = req.body;
 
     // Check for required fields
@@ -51,7 +52,10 @@ export const createAsset = asyncHandler(async (req, res) => {
         assetData.companyName = companyName;
     } else if (assetType.toLowerCase() === 'property' && propertyAddress) {
         assetData.propertyAddress = propertyAddress;
+    } else if (assetType.toLowerCase() === 'other' && otherAssetDetails) {
+        assetData.otherAssetDetails = otherAssetDetails;
     }
+    
 
     const asset = await Asset.create(assetData);
 
