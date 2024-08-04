@@ -8,16 +8,12 @@ import DateInput from "../../Common/DateInput";
 import SectionListItem from "../../SectionListItem";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { updateTestatorSlice } from "../../../features/people/testator/testatorSlice";
 import { useState, useRef, useEffect } from "react";
-import testatorThunks from "../../../features/people/testator/testatorThunks";
-import { resetKidsSlice, updateKidsSlice } from "../../../features/people/kids/kidsSlice";
 import styles from "../../../common/styles";
 import { updateCurrentOrderSlice, updateOrderThunk } from "../../../features/order/currentOrderSlice";
 import { createPerson } from "../../../features/people/peopleService";
-import { createKidThunk } from "../../../features/people/kids/kidsThunks";
 import { updateAssetsSlice, createAssetThunk, updateAssetThunk } from "../../../features/orderAssets/orderAssetsSlice"
-import { Button } from 'react-bootstrap'
+import { updateAdditionalBeneficiariesSlice } from "../../../features/people/additionalBeneficiaries/additionalBeneficiariesSlice";
 
 
 
@@ -34,114 +30,124 @@ const AssetsDistribution = () => {
     const currentOrder = useSelector(state => state.currentOrder);
     const assets = useSelector(state => state.assets)
 
-    const allPeople = useSelector(state => state.allPeople)
+    const additionalBeneficiaries = useSelector(state => state.additionalBeneficiaries)
 
-    const [showAssetForm, setshowAssetForm] = useState(false);
-    const [editAssetIndex, setEditAssetIndex] = useState(null); // New state to track the index of the kid being edited
+
+    const spouseOrPartner = useSelector(state => state.spouseOrPartner);
+    const kids = useSelector(state => state.kids);
+
+    const family = [].concat(spouseOrPartner, kids);
+
+    // console.log(`family = ${JSON.stringify(family)}`);
+
+    const [showAdditionalBeneficiaryForm, setShowAdditionalBeneficiaryForm] = useState(false);
+    const [editAdditionalBeneficiaryIndex, setEditAdditionalBeneficiaryIndex] = useState(null); // New state to track the index of the kid being edited
 
     // Use useRef to store the "saved" state
-    const savedAssetsData = useRef(null);
-    // const savedTestatorData = useRef(null);
+    const savedAdditionalBeneficiariesData = useRef(null);
+    const savedCurentOrderData = useRef(null);
 
-    let asset;
+    let beneficiary;
 
-    const [assetFormData, setAssetFormData] = useState({
+    const [additionalBeneficiaryFormData, setAdditionalBeneficiaryFormData] = useState({
         _id: '',
-        assetType: '',
-        bankName: '',
-        provider: '',
-        companyName: '',
-        propertyAddress: '',
-        otherAssetDetails: ''
+        title: '',
+        fullLegalName: '',
+        fullAddress: '',
+        dob: '',
+        email: '',
+        tel: ''
 
     });
 
+    console.log(`showAdditionalBeneficiaryForm = ${showAdditionalBeneficiaryForm}`)
+
     useEffect(() => {
-        if (asset) {
-            setAssetFormData({
-                // _id: assetFormData._id || '',
-                // assetType: assetFormData.assetType || '',
-                // bankName: assetFormData.bankName || '',
-                // provider: assetFormData.provider || '',
-                // companyName: assetFormData.companyName || '',
-                // propertyAddress: assetFormData.propertyAddress || '',
-                // otherAssetDetails: assetFormData.otherAssetDetails || '',
+        if (beneficiary) {
+            setAdditionalBeneficiaryFormData({
+                // _id: additionalBeneficiaryFormData._id || '',
+                // assetType: additionalBeneficiaryFormData.assetType || '',
+                // bankName: additionalBeneficiaryFormData.bankName || '',
+                // provider: additionalBeneficiaryFormData.provider || '',
+                // companyName: additionalBeneficiaryFormData.companyName || '',
+                // propertyAddress: additionalBeneficiaryFormData.propertyAddress || '',
+                // otherAssetDetails: additionalBeneficiaryFormData.otherAssetDetails || '',
 
             })
         }
         // Store the initial state as "saved" state if it's not already saved
-        if (!savedAssetsData.current) {
-            savedAssetsData.current = JSON.parse(JSON.stringify(assets));
+        if (!savedAdditionalBeneficiariesData.current) {
+            savedAdditionalBeneficiariesData.current = JSON.parse(JSON.stringify(assets));
         }
-    }, [assets]);
+    }, [additionalBeneficiaries]);
 
 
-    const handleshowAssetForm = () => {
-        setshowAssetForm(prevState => !prevState);
+    const handleShowAdditionalBeneficiaryForm = () => {
+        setShowAdditionalBeneficiaryForm(prevState => !prevState);
     };
 
     const handleOnChange = (e) => {
         const { name, value } = e.target;
-        setAssetFormData((prevData) => ({
+        setAdditionalBeneficiaryFormData((prevData) => ({
             ...prevData,
             [name]: value
         }));
     };
 
-    const handleAssetFormAdd = (e) => {
+    const handleAdditionalBeneficiaryFormAdd = (e) => {
         console.log(`asset form add called `)
         e.preventDefault();
 
-        if (editAssetIndex !== null) {
-            const updatedAssets = assets.map((asset, index) =>
-                index === editAssetIndex ? assetFormData : asset
+        if (editAdditionalBeneficiaryIndex !== null) {
+            const updatedAdditionalBeneficiaries = additionalBeneficiaries.map((beneficiary, index) =>
+                index === editAdditionalBeneficiaryIndex ? additionalBeneficiaryFormData : beneficiary
             );
             console.log(`asset form add meets the if condition `)
 
-            dispatch(updateAssetsSlice(updatedAssets));
-            setEditAssetIndex(null); // Reset the edit index
+            dispatch(updateAdditionalBeneficiariesSlice(updatedAdditionalBeneficiaries));
+            setEditAdditionalBeneficiaryIndex(null); // Reset the edit index
         } else {
             console.log(`asset form add else statement `)
 
-            dispatch(updateAssetsSlice([...assets, assetFormData]));
+            dispatch(updateAdditionalBeneficiariesSlice([...additionalBeneficiaries, additionalBeneficiaryFormData]));
         }
 
-        resetAssetForm();
-        setshowAssetForm(false);
+        resetAdditionalBeneficiaryForm();
+        setShowAdditionalBeneficiaryForm(false);
     };
 
-    const resetAssetForm = () => {
-        setAssetFormData({
+    const resetAdditionalBeneficiaryForm = () => {
+        setAdditionalBeneficiaryFormData({
             _id: '',
-            assetType: '',
-            bankName: '',
-            provider: '',
-            companyName: '',
-            propertyAddress: '',
-            otherAssetDetails: '',
+            title: '',
+            fullLegalName: '',
+            fullAddress: '',
+            dob: '',
+            email: '',
+            tel: ''
 
         });
-        setEditAssetIndex(null); // Reset the edit index
+        setEditAdditionalBeneficiaryIndex(null); // Reset the edit index
     };
 
-    const handleRemoveAsset = (index) => {
-        const updatedAssets = assets.filter((_, i) => i !== index);
-        dispatch(updateAssetsSlice(updatedAssets));
+    const handleRemoveAdditionalBeneficiary = (index) => {
+        const updatedAdditionalBeneficiaries = additionalBeneficiaries.filter((_, i) => i !== index);
+        dispatch(updateAdditionalBeneficiariesSlice(updatedAdditionalBeneficiaries));
     };
 
-    const handleEditAsset = (index) => {
-        const assetToEdit = assets[index];
-        setAssetFormData({
-            _id: assetToEdit._id || '',
-            assetType: assetToEdit.assetType || '',
-            bankName: assetToEdit.bankName || '',
-            provider: assetToEdit.provider || '',
-            companyName: assetToEdit.companyName || '',
-            propertyAddress: assetToEdit.propertyAddress || '',
-            otherAssetDetails: assetToEdit.otherAssetDetails || '',
+    const handleEditAdditionalBeneficiary = (index) => {
+        const beneficiaryToEdit = additionalBeneficiaries[index];
+        setAdditionalBeneficiaryFormData({
+            _id: beneficiaryToEdit._id || '',
+            title: beneficiaryToEdit.title || '',
+            fullLegalName: beneficiaryToEdit.fullLegalName || '',
+            fullAddress: beneficiaryToEdit.fullAddress || '',
+            dob: beneficiaryToEdit.dob || '',
+            email: beneficiaryToEdit.email || '',
+            tel: beneficiaryToEdit.tel || ''
         });
-        setEditAssetIndex(index); // Set the edit index
-        setshowAssetForm(true);
+        setEditAdditionalBeneficiaryIndex(index); // Set the edit index
+        setShowAdditionalBeneficiaryForm(true);
     };
 
 
@@ -207,15 +213,15 @@ const AssetsDistribution = () => {
         console.log(`handle back called`);
         // Revert to the "saved" state
 
-        if (savedAssetsData.current) {
-            dispatch(updateAssetsSlice(savedAssetsData.current));
+        if (savedAdditionalBeneficiariesData.current) {
+            dispatch(updateAdditionalBeneficiariesSlice(savedAdditionalBeneficiariesData.current));
             console.log(`dispatched update kids slice`);
         }
         navigate('/creatingOrder');
     };
 
     const handlePlaceSelected = (address) => {
-        setAssetFormData((prevData) => ({
+        setAdditionalBeneficiaryFormData((prevData) => ({
             ...prevData,
             propertyAddress: address
         }));
@@ -223,29 +229,13 @@ const AssetsDistribution = () => {
 
 
 
-    const [assetType, setAssetType] = useState('');
+    // const [assetType, setAssetType] = useState('');
     // const handleAssetTypeChange = (e) => {
     //     const selectedType = e.target.value;
     //     setAssetType(selectedType);
     // };
 
-    // const handleAssetTypeChange = (e) => {
-    //     const selectedType = e.target.value;
-    //     setAssetFormData(prevState => ({
-    //         ...prevState,
-    //         assetType: selectedType
-    //     }));
-    // };
 
-
-    const handleAssetTypeChange = (e) => {
-        const selectedType = e.target.value;
-        setAssetType(selectedType);  // Update the assetType state
-        setAssetFormData(prevState => ({
-            ...prevState,
-            assetType: selectedType
-        }));
-    };
 
 
 
@@ -262,58 +252,34 @@ const AssetsDistribution = () => {
                         </div>
                     </div>
                 </div>
-
                 <>
                     <div className="section-content-container">
                         <div className="section-controll-container">
                             <div className="section-list-container">
-                                {/* {assets.map((asset, assetIndex) => (
-                                    <div key={`asset-${assetIndex}`}>
-                                        <SectionListItem
-                                            buttonsDisabled={showAssetForm}
-                                            data={asset}
-                                            onRemove={() => handleRemoveAsset(assetIndex)}
-                                            onEdit={() => handleEditAsset(assetIndex)}
-                                            section="assetsDistribution-asset"
-                                        />
-                                        {allPeople.filter(p => !p.role.includes(constants.role.TESTATOR)).map((person, personIndex) => (
-                                            <SectionListItem
-                                                key={`asset-${assetIndex}-person-${personIndex}`}
-                                                buttonsDisabled={showAssetForm}
-                                                data={person}
-                                                onRemove={() => handleRemoveAsset(personIndex)}
-                                                onEdit={() => handleEditAsset(personIndex)}
-                                                section="assetDistribution-people"
-                                            />
-                                        ))}
-                                    </div>
-                                ))} */}
-
-
                                 {assets.map((asset, assetIndex) => (
                                     <div className="asset-distribution-container" key={`asset-${assetIndex}`}>
                                         <SectionListItem
-                                            buttonsDisabled={showAssetForm}
+                                            buttonsDisabled={showAdditionalBeneficiaryForm}
                                             data={asset}
-                                            onRemove={() => handleRemoveAsset(assetIndex)}
-                                            onEdit={() => handleEditAsset(assetIndex)}
+                                            onRemove={() => handleRemoveAdditionalBeneficiary(assetIndex)}
+                                            onEdit={() => handleEditAdditionalBeneficiary(assetIndex)}
                                             section="assetsDistribution-asset"
                                         />
-                                        {allPeople.filter(p => !p.role.includes(constants.role.TESTATOR)).map((person, personIndex) => (
+                                        {family.map((person, personIndex) => (
                                             <SectionListItem
                                                 key={`asset-${assetIndex}-person-${personIndex}`}
-                                                buttonsDisabled={showAssetForm}
+                                                buttonsDisabled={showAdditionalBeneficiaryForm}
                                                 data={person}
-                                                onRemove={() => handleRemoveAsset(personIndex)}
-                                                onEdit={() => handleEditAsset(personIndex)}
+                                                onRemove={() => handleRemoveAdditionalBeneficiary(personIndex)}
+                                                onEdit={() => handleEditAdditionalBeneficiary(personIndex)}
                                                 section="assetDistribution-people"
                                             />
                                         ))}
                                         <button
                                             className="section-add-btn"
-                                            onClick={handleshowAssetForm}
-                                            style={showAssetForm ? styles.disabledButton : {}}
-                                            disabled={showAssetForm}
+                                            onClick={handleShowAdditionalBeneficiaryForm}
+                                            style={showAdditionalBeneficiaryForm ? styles.disabledButton : {}}
+                                            disabled={showAdditionalBeneficiaryForm}
                                         >
                                             +Add Beneficiary
                                         </button>
@@ -325,122 +291,125 @@ const AssetsDistribution = () => {
 
                             </div>
                         </div>
-
-                        {showAssetForm &&
+                        {showAdditionalBeneficiaryForm &&
                             (
                                 <div className="section-form-container">
-                                    <form onSubmit={handleAssetFormAdd}>
+                                    <form onSubmit={handleAdditionalBeneficiaryFormAdd}>
                                         <div className="form-main-container">
-                                            <div className="form-group">
-                                                <label htmlFor="assetType">Asset type</label>
-                                                <select
-                                                    id="assetType"
-                                                    name="assetType"
-                                                    value={assetFormData.assetType}
-                                                    onChange={handleAssetTypeChange}
-                                                    required
-                                                >
-                                                    <option value="" disabled>Select asset type</option>
-                                                    {Object.values(constants.assetType).map((assetType, index) => (
-                                                        <option key={index} value={assetType}>
-                                                            {assetType}
-                                                        </option>
-                                                    ))}
-                                                </select>
+                                            <div className="form-title-and-fullName-container">
+                                                <div className="name-group">
+                                                    <label htmlFor="title">Title</label>
+                                                    <select
+                                                        id="title"
+                                                        name="title"
+                                                        value={additionalBeneficiaryFormData.title}
+                                                        onChange={handleOnChange}
+                                                        required
+                                                    >
+                                                        {Object.values(constants.title).map((title, index) => (
+                                                            <option key={index} value={title}>
+                                                                {title}
+                                                            </option>
+                                                        ))}
+                                                    </select>
+                                                </div>
+                                                <div className="name-group">
+                                                    <label htmlFor="fullLegalName">Full legal name</label>
+                                                    <input
+                                                        type="text"
+                                                        className="fullLegalName"
+                                                        id="fullLegalName"
+                                                        name="fullLegalName"
+                                                        value={additionalBeneficiaryFormData.fullLegalName}
+                                                        onChange={handleOnChange}
+                                                        required
+                                                    />
+                                                </div>
                                             </div>
-                                            {assetFormData.assetType === constants.assetType.PROPERTY && (
-                                                <div className="form-group">
-                                                    <label htmlFor="propertyAddress">Property address</label>
-                                                    <AddressAutocomplete
-                                                        id="propertyAddress"
-                                                        name="propertyAddress"
-                                                        value={assetFormData.propertyAddress}
-                                                        onPlaceSelected={handlePlaceSelected}
-                                                        handleInputChange={handleOnChange}
-                                                    />
-                                                </div>
-                                            )}
-                                            {assetFormData.assetType === constants.assetType.BANK_ACCOUNT && (
-                                                <div className="form-group">
-                                                    <label htmlFor="bankName">Bank name</label>
-                                                    <input
-                                                        type="text"
-                                                        id="bankName"
-                                                        name="bankName"
-                                                        value={assetFormData.bankName}
-                                                        onChange={handleOnChange}
-                                                    />
-                                                </div>
-                                            )}
-                                            {assetFormData.assetType === constants.assetType.STOCKS_AND_SHARES && (
-                                                <div className="form-group">
-                                                    <label htmlFor="companyName">Company name</label>
-                                                    <input
-                                                        type="text"
-                                                        id="companyName"
-                                                        name="companyName"
-                                                        value={assetFormData.companyName}
-                                                        onChange={handleOnChange}
-                                                    />
-                                                </div>
-                                            )}
-                                            {(assetFormData.assetType === constants.assetType.PENSION || assetType === constants.assetType.LIFE_INSURANCE) && (
-                                                <div className="form-group">
-                                                    <label htmlFor="provider">Provider</label>
-                                                    <input
-                                                        type="text"
-                                                        id="provider"
-                                                        name="provider"
-                                                        value={assetFormData.provider}
-                                                        onChange={handleOnChange}
-                                                    />
-                                                </div>
-                                            )}
-                                            {assetFormData.assetType === constants.assetType.OTHER && (
-                                                <div className="form-group">
-                                                    <label htmlFor="otherAssetDetails">Details</label>
-                                                    <input
-                                                        type="text"
-                                                        id="otherAssetDetails"
-                                                        name="otherAssetDetails"
-                                                        value={assetFormData.otherAssetDetails}
-                                                        onChange={handleOnChange}
-                                                    />
-                                                </div>
-                                            )}
+                                            <div className="form-group">
+                                                <label htmlFor="fullAddress">Full address</label>
+                                                <AddressAutocomplete
+                                                    name="fullAddress"
+                                                    value={additionalBeneficiaryFormData.fullAddress}
+                                                    onPlaceSelected={handlePlaceSelected}
+                                                    handleInputChange={handleOnChange}
+                                                />
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="dob">Date of Birth</label>
+                                                <DateInput
+                                                    id="dob"
+                                                    name="dob"
+                                                    value={additionalBeneficiaryFormData.dob}
+                                                    onChange={handleOnChange}
+                                                />
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="email">Email (optional)</label>
+                                                <input
+                                                    type="email"
+                                                    id="email"
+                                                    name="email"
+                                                    value={additionalBeneficiaryFormData.email}
+                                                    onChange={handleOnChange}
+                                                />
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="tel">Phone Number (optional)</label>
+                                                <input
+                                                    type="tel"
+                                                    id="tel"
+                                                    name="tel"
+                                                    value={additionalBeneficiaryFormData.tel}
+                                                    onChange={handleOnChange}
+                                                />
+                                            </div>
                                         </div>
                                         <div className="form-btns-container">
                                             <button
                                                 className="form-btn"
                                                 type="button"
                                                 onClick={() => {
-                                                    handleshowAssetForm();
-                                                    resetAssetForm();
+                                                    handleShowAdditionalBeneficiaryForm();
+                                                    resetAdditionalBeneficiaryForm();
                                                 }}
                                             >Cancel</button>
                                             <button
                                                 className="form-btn"
                                                 type="submit"
-                                            >{editAssetIndex !== null ? "Update" : "Add"}</button>
+                                            >{editAdditionalBeneficiaryIndex !== null ? "Update" : "Add"}</button>
                                         </div>
                                     </form>
                                 </div>
                             )
                         }
                     </div>
+                    {/* <div className="form-btns-container">
+                        <button
+                            className="form-btn"
+                            type="button"
+                            onClick={() => {
+                                handleShowAdditionalBeneficiaryForm();
+                                resetAdditionalBeneficiaryForm();
+                            }}
+                        >Cancel</button>
+                        <button
+                            className="form-btn"
+                            type="submit"
+                        >{editAdditionalBeneficiaryIndex !== null ? "Update" : "Add"}</button>
+                    </div> */}
                 </>
-                {/* )
-                } */}
+
                 <>
                     <div className="section-navigation-container">
                         <OrderNavigation
                             onBack={handleBack}
                             onSaveAndContinue={handleSaveAndContinue}
-                            buttonsDisabled={showAssetForm}
+                            buttonsDisabled={showAdditionalBeneficiaryForm}
                         />
                     </div>
                 </>
-            </section>
+            </section >
         </>
     )
 }

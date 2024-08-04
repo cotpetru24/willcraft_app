@@ -46,12 +46,12 @@ export const getOrderThunk = createAsyncThunk(
             const response = await getOrder(id, token);
 
 
-            const allPeople = response.peopleAndRoles.map(p => ({
-                ...p.personId,
-                role: p.role,
-                // _id: p._id
-                _id: p.personId._id
-            }));
+            // const allPeople = response.peopleAndRoles.map(p => ({
+            //     ...p.personId,
+            //     role: p.role,
+            //     // _id: p._id
+            //     _id: p.personId._id
+            // }));
 
             const testator = response.peopleAndRoles.find(p => p.role.includes(constants.role.TESTATOR));
             // const spouseOrPartner = response.peopleAndRoles.find(p => p.role.includes(constants.role.SPOUSE || constants.role.PARTNER));
@@ -110,9 +110,9 @@ export const getOrderThunk = createAsyncThunk(
             }
 
 
-            if (allPeople) {
-                thunkAPI.dispatch(updateAllPeopleSlice(allPeople))
-            }
+            // if (allPeople) {
+            //     thunkAPI.dispatch(updateAllPeopleSlice(allPeople))
+            // }
 
             return response;
         } catch (error) {
