@@ -34,7 +34,13 @@ const Executors = () => {
     const currentOrder = useSelector(state => state.currentOrder);
     const assets = useSelector(state => state.assets)
 
-    const allPeople = useSelector(state => state.allPeople)
+    // const allPeople = useSelector(state => state.allPeople)
+
+    const spouseOrPartner = useSelector(state => state.spouseOrPartner);
+    const kids = useSelector(state => state.kids);
+    const additionalBeneficiaries = useSelector(state=>state.additionalBeneficiaries)
+
+    const family = [].concat(spouseOrPartner, kids,additionalBeneficiaries);
 
     const [showAssetForm, setshowAssetForm] = useState(false);
     const [editAssetIndex, setEditAssetIndex] = useState(null); // New state to track the index of the kid being edited
@@ -268,7 +274,7 @@ const Executors = () => {
                         <div className="section-content-container">
                             <div className="section-controll-container">
                                 <div className="section-list-container">
-                                    {allPeople.filter(p => !p.role.includes(constants.role.TESTATOR)).map((person, personIndex) => (
+                                    {family.map((person, personIndex) => (
                                         <SectionListItem
                                             key={`person-${personIndex}`}
                                             buttonsDisabled={showAssetForm}
