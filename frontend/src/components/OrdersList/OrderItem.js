@@ -33,6 +33,17 @@ const OrderItem = ({ order }) => {
                 )} */}
 
 
+
+
+
+                {order.status === "Completed" && (
+                    <button className="order-item-btns">Edit</button>
+                )}
+                <button onClick={() => dispatch(deleteOrder(order._id))}
+                    className="order-item-btns"
+                    id="delete-order-btn"
+                >Delete</button>
+
                 {order.status === "CreatingOrder" && (
                     <button
                         onClick={async () => {
@@ -50,15 +61,6 @@ const OrderItem = ({ order }) => {
                         Continue
                     </button>
                 )}
-
-
-                {order.status === "Completed" && (
-                    <button className="order-item-btns">Edit</button>
-                )}
-                <button onClick={() => dispatch(deleteOrder(order._id))} 
-                className="order-item-btns"
-                id="delete-order-btn"
-                >Delete</button>
             </div>
         </div>
     )

@@ -1,4 +1,5 @@
 import React, { Children } from 'react';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './components/Home';
 import Login from './components/Authentication/Login';
@@ -15,6 +16,8 @@ import Prices from './components/Prices';
 import SpouseOrPartner from './components/CreatingOrder/CreatingOrderComponents/SpouseOrPartner';
 import Kids from './components/CreatingOrder/CreatingOrderComponents/Kids'
 import Assets from './components/CreatingOrder/CreatingOrderComponents/Assets';
+import AssetsDistribution from './components/CreatingOrder/CreatingOrderComponents/AssetsDistribution';
+import Executors from './components/CreatingOrder/CreatingOrderComponents/Executors'
 
 
 function App() {
@@ -37,6 +40,8 @@ function App() {
             <Route path='/spouseOrPartner' element={<SpouseOrPartner />} />;
             <Route path='/kids' element={<Kids />} />;
             <Route path='/assets' element={<Assets/>}/>;
+            <Route path='/assetsDistribution' element={<AssetsDistribution/>}/>;
+            <Route path='/executors' element={<Executors/>}/>;
 
 
 

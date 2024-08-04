@@ -17,7 +17,7 @@ import { updateCurrentOrderSlice, updateOrderThunk } from "../../../features/ord
 import { createPerson } from "../../../features/people/peopleService";
 import { createKidThunk } from "../../../features/people/kids/kidsThunks";
 import { updateAssetsSlice, createAssetThunk, updateAssetThunk } from "../../../features/orderAssets/orderAssetsSlice"
-import {Button} from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 
 
 
@@ -27,12 +27,14 @@ import {Button} from 'react-bootstrap'
 
 
 
-const Assets = () => {
+const AssetsDistribution = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const currentOrder = useSelector(state => state.currentOrder);
     const assets = useSelector(state => state.assets)
+
+    const allPeople = useSelector(state => state.allPeople)
 
     const [showAssetForm, setshowAssetForm] = useState(false);
     const [editAssetIndex, setEditAssetIndex] = useState(null); // New state to track the index of the kid being edited
@@ -252,11 +254,11 @@ const Assets = () => {
             <section className="section-container">
                 <div>
                     <div className="creatingOrder-section-heading-container">
-                        <h1>Your Assets</h1>
+                        <h1>Assets distribution</h1>
                     </div>
                     <div className="has-children-container">
                         <div>
-                            <h4>Please add all the assets that you want to include in the will.</h4>
+                            <h4>Please select or/and add the people to receive the assets and their share.</h4>
                         </div>
                     </div>
                 </div>
@@ -265,26 +267,62 @@ const Assets = () => {
                     <div className="section-content-container">
                         <div className="section-controll-container">
                             <div className="section-list-container">
-                                {assets.map((asset, index) => (
-                                    <SectionListItem
-                                        key={index}
-                                        buttonsDisabled={showAssetForm}
-                                        data={asset}
-                                        onRemove={() => handleRemoveAsset(index)}
-                                        onEdit={() => handleEditAsset(index)}
-                                        section="assets"
-                                    />
+                                {/* {assets.map((asset, assetIndex) => (
+                                    <div key={`asset-${assetIndex}`}>
+                                        <SectionListItem
+                                            buttonsDisabled={showAssetForm}
+                                            data={asset}
+                                            onRemove={() => handleRemoveAsset(assetIndex)}
+                                            onEdit={() => handleEditAsset(assetIndex)}
+                                            section="assetsDistribution-asset"
+                                        />
+                                        {allPeople.filter(p => !p.role.includes(constants.role.TESTATOR)).map((person, personIndex) => (
+                                            <SectionListItem
+                                                key={`asset-${assetIndex}-person-${personIndex}`}
+                                                buttonsDisabled={showAssetForm}
+                                                data={person}
+                                                onRemove={() => handleRemoveAsset(personIndex)}
+                                                onEdit={() => handleEditAsset(personIndex)}
+                                                section="assetDistribution-people"
+                                            />
+                                        ))}
+                                    </div>
+                                ))} */}
+
+
+                                {assets.map((asset, assetIndex) => (
+                                    <div className="asset-distribution-container" key={`asset-${assetIndex}`}>
+                                        <SectionListItem
+                                            buttonsDisabled={showAssetForm}
+                                            data={asset}
+                                            onRemove={() => handleRemoveAsset(assetIndex)}
+                                            onEdit={() => handleEditAsset(assetIndex)}
+                                            section="assetsDistribution-asset"
+                                        />
+                                        {allPeople.filter(p => !p.role.includes(constants.role.TESTATOR)).map((person, personIndex) => (
+                                            <SectionListItem
+                                                key={`asset-${assetIndex}-person-${personIndex}`}
+                                                buttonsDisabled={showAssetForm}
+                                                data={person}
+                                                onRemove={() => handleRemoveAsset(personIndex)}
+                                                onEdit={() => handleEditAsset(personIndex)}
+                                                section="assetDistribution-people"
+                                            />
+                                        ))}
+                                        <button
+                                            className="section-add-btn"
+                                            onClick={handleshowAssetForm}
+                                            style={showAssetForm ? styles.disabledButton : {}}
+                                            disabled={showAssetForm}
+                                        >
+                                            +Add Beneficiary
+                                        </button>
+                                    </div>
                                 ))}
+
                             </div>
                             <div className="sectio-add-btn-container">
-                                <button
-                                    className="section-add-btn"
-                                    onClick={handleshowAssetForm}
-                                    style={showAssetForm ? styles.disabledButton : {}}
-                                    disabled={showAssetForm}
-                                >
-                                    +Add Asset
-                                </button>
+
                             </div>
                         </div>
 
@@ -407,5 +445,5 @@ const Assets = () => {
     )
 }
 
-export default Assets;
+export default AssetsDistribution;
 

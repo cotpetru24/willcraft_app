@@ -8,6 +8,7 @@ import spouseOrPartnerReducer from '../features/people/spouseOrPartner/spouseOrP
 import stepReducer from '../features/orderSteps/orderStepSlice'
 import kidsReducer from '../features/people/kids/kidsSlice'
 import assetsReducer from '../features/orderAssets/orderAssetsSlice'
+import peopleReducer from '../features/people/peopleSlice'
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
 
     //not sure if this is needed. if not => delete
     step: stepReducer,
+    allPeople: peopleReducer,
 
     testator:testatorReducer,
     spouseOrPartner: spouseOrPartnerReducer,

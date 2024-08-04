@@ -5,6 +5,7 @@ import { updateSpouseOrPartnerSlice } from "../people/spouseOrPartner/spouseOrPa
 import constants from "../../common/constants";
 import { updateKidsSlice } from "../people/kids/kidsSlice";
 import { updateAssetsSlice } from "../orderAssets/orderAssetsSlice";
+import { updateAllPeopleSlice } from "../people/peopleSlice";
 
 
 const initialState = {
@@ -43,6 +44,15 @@ export const getOrderThunk = createAsyncThunk(
         try {
             const token = thunkAPI.getState().auth.user.token;
             const response = await getOrder(id, token);
+
+
+            const allPeople = response.peopleAndRoles.map(p => ({
+                ...p.personId,
+                role: p.role,
+                // _id: p._id
+                _id: p.personId._id
+            }));
+
             const testator = response.peopleAndRoles.find(p => p.role.includes(constants.role.TESTATOR));
             // const spouseOrPartner = response.peopleAndRoles.find(p => p.role.includes(constants.role.SPOUSE || constants.role.PARTNER));
             const spouseOrPartner = response.peopleAndRoles.find(p => p.role.includes(constants.role.SPOUSE) || p.role.includes(constants.role.PARTNER));
@@ -59,9 +69,9 @@ export const getOrderThunk = createAsyncThunk(
 
             // const assets = response.assetsAndDistribution
 
-            const assets = response.assetsAndDistribution.map(a=>({
+            const assets = response.assetsAndDistribution.map(a => ({
                 ...a.assetId,
-                distribution:a.distribution
+                distribution: a.distribution
             }))
 
             // const spouseOrPartner = response.peopleAndRoles.find(p => p.role.includes("spouse" || "partner"));
@@ -97,6 +107,11 @@ export const getOrderThunk = createAsyncThunk(
             if (assets) {
                 thunkAPI.dispatch(updateAssetsSlice(assets))
 
+            }
+
+
+            if (allPeople) {
+                thunkAPI.dispatch(updateAllPeopleSlice(allPeople))
             }
 
             return response;
