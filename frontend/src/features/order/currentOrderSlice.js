@@ -67,6 +67,12 @@ export const getOrderThunk = createAsyncThunk(
                 // _id: p._id
                 _id: p.personId._id
             }));
+            const executors = response.peopleAndRoles.filter(p => p.role.includes(constants.role.ADDITIONAL_EXECUTOR)).map(p => ({
+                ...p.personId,
+                role: p.role,
+                // _id: p._id
+                _id: p.personId._id
+            }));
 
             // const executors = response.peopleAndRoles
             //     .filter(p => !p.role.includes(constants.role.TESTATOR))
@@ -129,6 +135,7 @@ export const getOrderThunk = createAsyncThunk(
                 thunkAPI.dispatch(updateAssetsSlice(assets))
 
             }
+            if (executors) thunkAPI.dispatch(updateExecutorsSlice(executors))
 
             // if (executors) {
             //     console.log(`update executors slice called, executors: ${executors}`)

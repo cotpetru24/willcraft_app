@@ -43,9 +43,29 @@ const Executors = () => {
 
     // const family = [].concat(spouseOrPartner, kids, additionalBeneficiaries);
 
-    const family = currentOrder.peopleAndRoles
-        .filter(p => p.role.includes('partner') || p.role.includes('kid') || p.role.includes('spouse'))
-    // .map(p => p.personId);
+    // const family = currentOrder.peopleAndRoles
+    //     .filter(p => p.role.includes('partner') || p.role.includes('kid') || p.role.includes('spouse'))
+    // // .map(p => p.personId);
+
+
+    const [family, setFamily] = useState([]);
+
+    useEffect(() => {
+        const updatedFamily = currentOrder.peopleAndRoles
+            .filter(p => p.role.includes('partner') || p.role.includes('kid') || p.role.includes('spouse'));
+        setFamily(updatedFamily);
+    }, [currentOrder.peopleAndRoles, currentOrder]);
+    
+
+
+
+
+
+
+
+
+
+
 
 
 
