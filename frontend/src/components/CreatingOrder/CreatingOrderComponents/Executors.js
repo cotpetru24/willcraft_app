@@ -41,7 +41,13 @@ const Executors = () => {
     const executors = useSelector(state => state.executors)
 
 
-    const family = [].concat(spouseOrPartner, kids, additionalBeneficiaries);
+    // const family = [].concat(spouseOrPartner, kids, additionalBeneficiaries);
+
+    const family = currentOrder.peopleAndRoles
+    .filter(p => p.role.includes('partner') || p.role.includes('kid')|| p.role.includes('spouse'))
+    // .map(p => p.personId);
+
+
 
     const [showExecutorForm, setShowExecutorForm] = useState(false);
     const [editExecutorIndex, setEditExecutorIndex] = useState(null); // New state to track the index of the kid being edited
@@ -310,7 +316,7 @@ const Executors = () => {
         const familyExecutor = family[index];
     
         const updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(personRole => {
-            if (personRole.personId._id === familyExecutor._id) {
+            if (personRole.personId._id === familyExecutor.personId._id) {
                 if (isChecked) {
                     // Add the executor role if it doesn't already exist
                     return {
