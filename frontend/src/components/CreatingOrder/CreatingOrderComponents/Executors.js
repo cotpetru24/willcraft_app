@@ -19,7 +19,7 @@ import { createKidThunk } from "../../../features/people/kids/kidsThunks";
 import { updateAssetsSlice, createAssetThunk, updateAssetThunk } from "../../../features/orderAssets/orderAssetsSlice"
 import { Button } from 'react-bootstrap'
 import { removeExecutorSlice, updateExecutorsSlice } from "../../../features/executors/executorsSlice";
-
+import { createExecutorThunk, updateExecutorThunk } from "../../../features/executors/executorsThunks";
 
 
 
@@ -44,7 +44,7 @@ const Executors = () => {
     // const family = [].concat(spouseOrPartner, kids, additionalBeneficiaries);
 
     const family = currentOrder.peopleAndRoles
-    .filter(p => p.role.includes('partner') || p.role.includes('kid')|| p.role.includes('spouse'))
+        .filter(p => p.role.includes('partner') || p.role.includes('kid') || p.role.includes('spouse'))
     // .map(p => p.personId);
 
 
@@ -166,53 +166,46 @@ const Executors = () => {
 
     const handleSaveAndContinue = async (e) => {
         e.preventDefault();
-        const updatedOrder={...currentOrder}
+        const updatedOrder = { ...currentOrder }
         await dispatch(updateOrderThunk(updatedOrder));
 
-        // const updatedAssets = [];
-
-        // // Create each kid and update kids slice with returned IDs
-        // for (const asset of assets) {
-        //     let response;
-        //     if (asset._id) {
-        //         console.log(`asset data sent to create asset thunk = ${JSON.stringify(asset)}`)
-        //         response = await dispatch(updateAssetThunk(asset)).unwrap();
-        //     }
-        //     else {
-        //         console.log(`asset data sent to update asset thunk = ${JSON.stringify(asset)}`)
-        //         response = await dispatch(createAssetThunk(asset)).unwrap();
-        //     }
-        //     updatedAssets.push({
-        //         ...asset,
-        //         _id: response._id
-        //     });
-
-        // }
-
-        // console.log(`updated assets = ${JSON.stringify(updatedAssets)}`)
+        const updatedExecutors = [];
+        for (const executor of executors) {
+            let response;
+            if (executor._id) {
+                response = await dispatch(updateExecutorThunk(executor)).unwrap();
+            } else {
+                response = await dispatch(createExecutorThunk(executor)).unwrap();
+            }
+            updatedExecutors.push({
+                ...executor,
+                _id: response._id
+            });
+        }
 
 
-        // // Update kids slice with new kids including their IDs
-        // await dispatch(updateAssetsSlice(updatedAssets));
+        // Update kids slice with new kids including their IDs
+        await dispatch(updateExecutorsSlice(updatedExecutors));
 
-        // // Prepare updated order with the new kids IDs
-        // const updatedOrder = {
-        //     ...currentOrder,
-        //     assetsAndDistribution: [
-        //         // ...currentOrder.assetsAndDistribution, // Remove existing kids to avoid duplicates
-        //         ...updatedAssets.map(asset => ({
-        //             assetId: asset._id,
-        //             assetDistribution: []
-        //         }))
-        //     ]
-        // };
-        // console.log(`updated order = ${JSON.stringify(updatedOrder)}`)
+        // Prepare updated order with the new kids IDs
+        const updatedOrderWithIds = {
+            ...currentOrder,
+            peopleAndRoles: [
+                ...currentOrder.peopleAndRoles.filter(pr => !pr.role.includes(constants.role.ADDITIONAL_EXECUTOR)), // Remove existing kids to avoid duplicates
+                ...updatedExecutors.map(executor => ({
+                    personId: executor._id,
+                    role: [constants.role.ADDITIONAL_EXECUTOR]
+                }))
+            ]
+        };
 
 
-        // // Update the currentOrder slice
-        // await dispatch(updateCurrentOrderSlice(updatedOrder));
-        // // Update the order in the backend
-        // await dispatch(updateOrderThunk(updatedOrder));
+        
+
+        // Update the currentOrder slice
+        await dispatch(updateCurrentOrderSlice(updatedOrderWithIds));
+        // Update the order in the backend
+        await dispatch(updateOrderThunk(updatedOrderWithIds));
 
         navigate('/creatingOrder');
     };
@@ -280,12 +273,12 @@ const Executors = () => {
 
     // const handleExecutorChecked = (index, isChecked) => {
     //     const familyExecutor = family[index];
-    
+
     //     setFamilyExecutors(prevExecutors => {
     //         const newExecutors = isChecked
     //             ? [...prevExecutors, { _id: familyExecutor._id, role: 'executor' }]
     //             : prevExecutors.filter(ex => ex._id !== familyExecutor._id);
-    
+
     //         // Update the currentOrder peopleAndRoles with the executor role
     //         const updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(personRole => {
     //             if (personRole.personId._id === familyExecutor._id) {
@@ -305,16 +298,16 @@ const Executors = () => {
     //             }
     //             return personRole;
     //         });
-    
+
     //         // Update the currentOrder with the new peopleAndRoles
     //         dispatch(updateCurrentOrderSlice({ ...currentOrder, peopleAndRoles: updatedPeopleAndRoles }));
-    
+
     //         return newExecutors;
     //     });
     // };
     const handleExecutorChecked = (index, isChecked) => {
         const familyExecutor = family[index];
-    
+
         const updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(personRole => {
             if (personRole.personId._id === familyExecutor.personId._id) {
                 if (isChecked) {
@@ -333,11 +326,11 @@ const Executors = () => {
             }
             return personRole;
         });
-    
+
         dispatch(updateCurrentOrderSlice({ ...currentOrder, peopleAndRoles: updatedPeopleAndRoles }));
     };
-    
-    
+
+
 
 
 
@@ -388,7 +381,7 @@ const Executors = () => {
                                             onRemove={() => handleRemoveExecutor(personIndex)}
                                             onEdit={() => handleEditExecutor(personIndex)}
                                             onChecked={(isChecked) => handleExecutorChecked(personIndex, isChecked)}  // Pass the checkbox state
-                                            section="executors"
+                                            section="additional-executors"
                                         />
 
                                     ))}

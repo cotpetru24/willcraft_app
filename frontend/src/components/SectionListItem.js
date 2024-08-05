@@ -151,7 +151,7 @@
 // //         setIsChecked(newCheckedState);
 // //         onChecked(newCheckedState);  // Pass the new checked state to the callback
 // //     };
-    
+
 
 // //     return (
 // //         <div className="section-list-item-container">
@@ -445,13 +445,22 @@ import { useState, useEffect } from "react";
 const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onChecked }) => {
     const [isChecked, setIsChecked] = useState(false);
 
-console.log(`data passed to section list item = ${JSON.stringify(data)}`)
+    console.log(`data passed to section list item = ${JSON.stringify(data)}`)
+
+    // useEffect(() => {
+    //     if (data.role.includes("executor")) {
+    //         setIsChecked(true);
+    //     }
+    // }, [data.role]);
+
 
     useEffect(() => {
-        if (data.role.includes("executor")) {
+        if (data.role && data.role.includes("executor")) {
             setIsChecked(true);
         }
     }, [data.role]);
+    
+
 
     const handleCheckboxChange = () => {
         const newCheckedState = !isChecked;
@@ -548,7 +557,33 @@ console.log(`data passed to section list item = ${JSON.stringify(data)}`)
                                 type="checkbox"
                                 checked={isChecked}
                                 onChange={handleCheckboxChange}
-                                // onChecked={onChecked}
+                            // onChecked={onChecked}
+                            />
+                            Executor
+                        </label>
+                    </div>
+                </>
+            )}
+
+
+            {section === 'additional-executors' && (
+                <>
+                    <div className="section-list-item-group">
+                        <h5>Name: {data.title} {data.fullLegalName}</h5>
+                    </div>
+                    <div className="section-list-item-group">
+                        <h5>Address: {data.fullAddress}</h5>
+                    </div>
+                    <div className="section-list-item-group">
+                        <h5>Date of birth: {data.dob}</h5>
+                    </div>
+                    <div>
+                        <label>
+                            <input
+                                type="checkbox"
+                                checked={isChecked}
+                                onChange={handleCheckboxChange}
+                            // onChecked={onChecked}
                             />
                             Executor
                         </label>

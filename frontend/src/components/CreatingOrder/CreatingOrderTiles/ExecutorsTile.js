@@ -89,6 +89,10 @@ const ExecutorsTile = () => {
     const navigate = useNavigate();
 
     const executorsData = useSelector(state => state.executors)
+    const currentOrder = useSelector(state=>state.currentOrder)
+
+    const family = currentOrder.peopleAndRoles
+    .filter(p => p.role.includes('partner') || p.role.includes('kid') || p.role.includes('spouse'))
 
     const isExecutorsComplete = (data) => {
         return (Array.isArray(data) && (data.length > 0))
