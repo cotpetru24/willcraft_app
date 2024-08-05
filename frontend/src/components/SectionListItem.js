@@ -242,7 +242,7 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
                                 type="checkbox"
                                 checked={isChecked}
                                 onChange={handleCheckboxChange}
-                                onCheched={onChecked}
+                                // onChecked={onChecked}
                             />
                             Executor
                         </label>
