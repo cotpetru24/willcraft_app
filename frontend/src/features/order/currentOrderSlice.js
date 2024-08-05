@@ -69,13 +69,13 @@ export const getOrderThunk = createAsyncThunk(
             }));
 
             const executors = response.peopleAndRoles
-            .filter(p => !p.role.includes(constants.role.TESTATOR))
-            .map(p => ({
-                ...p.personId,
-                role: p.role, // Fix the typo from role to roles
-                _id: p.personId._id
-            }));
-        
+                .filter(p => !p.role.includes(constants.role.TESTATOR))
+                .map(p => ({
+                    ...p.personId,
+                    role: p.role, // Fix the typo from role to roles
+                    _id: p.personId._id
+                }));
+
 
             // const executors = response.peopleAndRoles
             // .filter(p => Array.isArray(p.roles) && !p.roles.includes("testator"))
@@ -84,7 +84,7 @@ export const getOrderThunk = createAsyncThunk(
             //     role: p.role,
             //     _id: p.personId._id
             // }));
-        
+
 
 
 
@@ -130,7 +130,7 @@ export const getOrderThunk = createAsyncThunk(
 
             }
 
-            if(executors){
+            if (executors) {
                 console.log(`update executors slice called, executors: ${executors}`)
                 thunkAPI.dispatch(updateExecutorsSlice(executors))
                 // thunkAPI.dispatch(updateExecutorsSlice(allPeople))
@@ -193,17 +193,19 @@ const currentOrderSlice = createSlice({
             state.orderId = action.payload.orderId;
             state.userId = action.payload.userId;
             state.status = action.payload.status;
-            state.peopleAndRoles = action.payload.peopleAndRoles.map(pr => ({
-                personId: pr.personId._id || pr.personId, // In case personId is populated, take only the _id
-                role: pr.role
-            }));
-            state.assetsAndDistribution = assetsAndDistribution.map(ad => ({
-                assetId: ad.assetId._id || ad.assetId, // In case assetId is populated, take only the _id
-                distribution: (ad.distribution || []).map(dist => ({
-                    personId: dist.personId._id || dist.personId, // In case personId is populated, take only the _id
-                    receivingAmount: dist.receivingAmount
-                }))
-            }));
+            // state.peopleAndRoles = action.payload.peopleAndRoles.map(pr => ({
+            //     personId: pr.personId._id || pr.personId, // In case personId is populated, take only the _id
+            //     role: pr.role
+            // }));
+            // state.assetsAndDistribution = assetsAndDistribution.map(ad => ({
+            //     assetId: ad.assetId._id || ad.assetId, // In case assetId is populated, take only the _id
+            //     distribution: (ad.distribution || []).map(dist => ({
+            //         personId: dist.personId._id || dist.personId, // In case personId is populated, take only the _id
+            //         receivingAmount: dist.receivingAmount
+            //     }))
+            // }));
+            state.peopleAndRoles = action.payload.peopleAndRoles;
+            state.assetsAndDistribution = action.payload.assetsAndDistribution;
         },
         resetCurrentOrderSlice: (state) => initialState,
     },
@@ -276,17 +278,21 @@ const currentOrderSlice = createSlice({
                 state.orderId = action.payload._id;
                 state.userId = action.payload.userId;
                 state.status = action.payload.status;
-                state.peopleAndRoles = action.payload.peopleAndRoles.map(pr => ({
-                    personId: pr.personId._id || pr.personId, // In case personId is populated, take only the _id
-                    role: pr.role
-                }));
-                state.assetsAndDistribution = action.payload.assetsAndDistribution.map(ad => ({
-                    assetId: ad.assetId._id || ad.assetId, // In case assetId is populated, take only the _id
-                    distribution: ad.distribution.map(dist => ({
-                        personId: dist.personId._id || dist.personId, // In case personId is populated, take only the _id
-                        receivingAmount: dist.receivingAmount
-                    }))
-                }));
+                // state.peopleAndRoles = action.payload.peopleAndRoles.map(pr => ({
+                //     personId: pr.personId._id || pr.personId, // In case personId is populated, take only the _id
+                //     role: pr.role
+                // }));
+                // state.assetsAndDistribution = action.payload.assetsAndDistribution.map(ad => ({
+                //     assetId: ad.assetId._id || ad.assetId, // In case assetId is populated, take only the _id
+                //     distribution: ad.distribution.map(dist => ({
+                //         personId: dist.personId._id || dist.personId, // In case personId is populated, take only the _id
+                //         receivingAmount: dist.receivingAmount
+                //     }))
+                // }));
+                state.peopleAndRoles = action.payload.peopleAndRoles;
+                state.assetsAndDistribution = action.payload.assetsAndDistribution;
+
+
             })
 
             .addCase(getOrderThunk.rejected, (state, action) => {
