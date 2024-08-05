@@ -33,129 +33,135 @@ const Executors = () => {
     const dispatch = useDispatch();
 
     const currentOrder = useSelector(state => state.currentOrder);
-    const assets = useSelector(state => state.assets)
 
-    // const allPeople = useSelector(state => state.allPeople)
 
     const spouseOrPartner = useSelector(state => state.spouseOrPartner);
     const kids = useSelector(state => state.kids);
     const additionalBeneficiaries = useSelector(state => state.additionalBeneficiaries)
+    const executors = useSelector(state => state.executors)
+
 
     const family = [].concat(spouseOrPartner, kids, additionalBeneficiaries);
 
-    const [showAssetForm, setshowAssetForm] = useState(false);
-    const [editAssetIndex, setEditAssetIndex] = useState(null); // New state to track the index of the kid being edited
+    const [showExecutorForm, setShowExecutorForm] = useState(false);
+    const [editExecutorIndex, setEditExecutorIndex] = useState(null); // New state to track the index of the kid being edited
 
     // Use useRef to store the "saved" state
-    const savedAssetsData = useRef(null);
+    const savedExecutorsData = useRef(null);
     // const savedTestatorData = useRef(null);
 
-    let asset;
+    let executor;
 
-    const [assetFormData, setAssetFormData] = useState({
+    const [executorFormData, setExecutorFormData] = useState({
         _id: '',
-        assetType: '',
-        bankName: '',
-        provider: '',
-        companyName: '',
-        propertyAddress: '',
-        otherAssetDetails: ''
-
+        title: '',
+        fullLegalName: '',
+        fullAddress: '',
+        dob: '',
+        email: '',
+        tel: ''
     });
 
-    useEffect(() => {
-        if (asset) {
-            setAssetFormData({
-                // _id: assetFormData._id || '',
-                // assetType: assetFormData.assetType || '',
-                // bankName: assetFormData.bankName || '',
-                // provider: assetFormData.provider || '',
-                // companyName: assetFormData.companyName || '',
-                // propertyAddress: assetFormData.propertyAddress || '',
-                // otherAssetDetails: assetFormData.otherAssetDetails || '',
 
+
+    useEffect(() => {
+        if (executor) {
+            setExecutorFormData({
+                _id: executorFormData._id || '',
+                title: executorFormData.title || '',
+                fullLegalName: executorFormData.fullLegalName || '',
+                fullAddress: executorFormData.fullAddress || '',
+                dob: executorFormData.dob || '',
+                email: executorFormData.email || '',
+                tel: executorFormData.tel || ''
             })
         }
         // Store the initial state as "saved" state if it's not already saved
-        if (!savedAssetsData.current) {
-            savedAssetsData.current = JSON.parse(JSON.stringify(assets));
+        if (!savedExecutorsData.current) {
+            savedExecutorsData.current = JSON.parse(JSON.stringify(executors));
         }
-    }, [assets]);
+    }, [executors]);
 
 
-    const handleshowAssetForm = () => {
-        // setshowAssetForm(prevState => !prevState);
+    const handleShowExecutorForm = () => {
+        setShowExecutorForm(prevState => !prevState);
     };
 
     const handleOnChange = (e) => {
         const { name, value } = e.target;
-        setAssetFormData((prevData) => ({
+        setExecutorFormData((prevData) => ({
             ...prevData,
             [name]: value
         }));
     };
 
-    const handleAssetFormAdd = (e) => {
-        // console.log(`asset form add called `)
-        // e.preventDefault();
+    const handleExecutorFormAdd = (e) => {
+        e.preventDefault();
 
-        // if (editAssetIndex !== null) {
-        //     const updatedAssets = assets.map((asset, index) =>
-        //         index === editAssetIndex ? assetFormData : asset
-        //     );
-        //     console.log(`asset form add meets the if condition `)
+        if (editExecutorIndex !== null) {
+            const updatedExecutors = executors.map((executor, index) =>
+                index === editExecutorIndex ? executorFormData : executor
+            );
+            dispatch(updateExecutorsSlice(updatedExecutors));
+            setEditExecutorIndex(null); // Reset the edit index
+        } else {
+            dispatch(updateExecutorsSlice([...executors, executorFormData]));
+        }
 
-        //     dispatch(updateAssetsSlice(updatedAssets));
-        //     setEditAssetIndex(null); // Reset the edit index
-        // } else {
-        //     console.log(`asset form add else statement `)
-
-        //     dispatch(updateAssetsSlice([...assets, assetFormData]));
-        // }
-
-        // resetAssetForm();
-        // setshowAssetForm(false);
+        resetExecutorForm();
+        setShowExecutorForm(false);
     };
 
-    const resetAssetForm = () => {
-        // setAssetFormData({
-        //     _id: '',
-        //     assetType: '',
-        //     bankName: '',
-        //     provider: '',
-        //     companyName: '',
-        //     propertyAddress: '',
-        //     otherAssetDetails: '',
+    const resetExecutorForm = () => {
+        setExecutorFormData({
+            _id: '',
+            title: '',
+            fullLegalName: '',
+            fullAddress: '',
+            dob: '',
+            email: '',
+            tel: ''
 
-        // });
-        // setEditAssetIndex(null); // Reset the edit index
-    };
-
-    const handleRemoveAsset = (index) => {
-        // const updatedAssets = assets.filter((_, i) => i !== index);
-        // dispatch(updateAssetsSlice(updatedAssets));
-    };
-
-    const handleEditAsset = (index) => {
-        const assetToEdit = assets[index];
-        setAssetFormData({
-            _id: assetToEdit._id || '',
-            assetType: assetToEdit.assetType || '',
-            bankName: assetToEdit.bankName || '',
-            provider: assetToEdit.provider || '',
-            companyName: assetToEdit.companyName || '',
-            propertyAddress: assetToEdit.propertyAddress || '',
-            otherAssetDetails: assetToEdit.otherAssetDetails || '',
         });
-        setEditAssetIndex(index); // Set the edit index
-        setshowAssetForm(true);
+        setEditExecutorIndex(null); // Reset the edit index
     };
+
+    const handleRemoveExecutor = (index) => {
+        const updatedExecutors = executors.filter((_, i) => i !== index);
+        dispatch(updateExecutorsSlice(updatedExecutors));
+    };
+
+    const handleEditExecutor = (index) => {
+        const executorToEdit = executors[index];
+        setExecutorFormData({
+            _id: executorToEdit._id || '',
+            title: executorToEdit.title || '',
+            fullLegalName: executorToEdit.fullLegalName || '',
+            fullAddress: executorToEdit.fullAddress || '',
+            dob: executorToEdit.dob || '',
+            email: executorToEdit.email || '',
+            tel: executorToEdit.tel || ''
+        });
+        setEditExecutorIndex(index); // Set the edit index
+        setShowExecutorForm(true);
+    };
+
+
+
+
+
+
+
+
+
 
 
 
 
     const handleSaveAndContinue = async (e) => {
         e.preventDefault();
+        const updatedOrder={...currentOrder}
+        await dispatch(updateOrderThunk(updatedOrder));
 
         // const updatedAssets = [];
 
@@ -214,46 +220,118 @@ const Executors = () => {
         // console.log(`handle back called`);
         // // Revert to the "saved" state
 
-        // if (savedAssetsData.current) {
-        //     dispatch(updateAssetsSlice(savedAssetsData.current));
+        // if (savedExecutorsData.current) {
+        //     dispatch(updateAssetsSlice(savedExecutorsData.current));
         //     console.log(`dispatched update kids slice`);
         // }
         navigate('/creatingOrder');
     };
 
     const handlePlaceSelected = (address) => {
-        setAssetFormData((prevData) => ({
+        setExecutorFormData((prevData) => ({
             ...prevData,
-            propertyAddress: address
+            fullAddress: address
         }));
     };
 
 
-    const handleAssetTypeChange = (e) => {
-        // const selectedType = e.target.value;
-        // setAssetType(selectedType);  // Update the assetType state
-        // setAssetFormData(prevState => ({
-        //     ...prevState,
-        //     assetType: selectedType
-        // }));
-    };
 
 
-    // const handleExecutorChecked = (index) => {
+    // const [familyExecutors, setFamilyExecutors] = useState([]);
+
+
+    // const handleExecutorChecked = (index, isChecked) => {
     //     const executor = family[index];
-    //     dispatch(updateExecutorsSlice(executor));
+    //     if (isChecked) {
+    //         dispatch(updateExecutorsSlice(executor));
+    //     } else {
+    //         dispatch(removeExecutorSlice(executor._id));
+    //     }
+    // };
+
+    // const handleExecutorChecked = (index, isChecked) => {
+    //     const familyExecutor = family[index];
+    //     if (isChecked) {
+    //         setFamilyExecutors(prevExecutors => [...prevExecutors, { _id: familyExecutor._id, role: 'executor' }]);
+    //     } else {
+    //         setFamilyExecutors(prevExecutors => prevExecutors.filter(ex => ex._id !== familyExecutor._id));
+    //     }
+    //     console.log(`family executors are: ${JSON.stringify(familyExecutors)}`)
+    // };
+
+    const [familyExecutors, setFamilyExecutors] = useState([]);
+
+    // const handleExecutorChecked = (index, isChecked) => {
+    //     const familyExecutor = family[index];
+    //     if (isChecked) {
+    //         setFamilyExecutors(prevExecutors => [...prevExecutors, { _id: familyExecutor._id, role: 'executor' }]);
+    //     } else {
+    //         setFamilyExecutors(prevExecutors => prevExecutors.filter(ex => ex._id !== familyExecutor._id));
+    //     }
+    //     console.log(`family executors are: ${JSON.stringify(familyExecutors)}`)
     // };
 
 
+    // const handleExecutorChecked = (index, isChecked) => {
+    //     const familyExecutor = family[index];
+    
+    //     setFamilyExecutors(prevExecutors => {
+    //         const newExecutors = isChecked
+    //             ? [...prevExecutors, { _id: familyExecutor._id, role: 'executor' }]
+    //             : prevExecutors.filter(ex => ex._id !== familyExecutor._id);
+    
+    //         // Update the currentOrder peopleAndRoles with the executor role
+    //         const updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(personRole => {
+    //             if (personRole.personId._id === familyExecutor._id) {
+    //                 if (isChecked) {
+    //                     // Add the executor role if it doesn't already exist
+    //                     return {
+    //                         ...personRole,
+    //                         role: personRole.role.includes('executor') ? personRole.role : [...personRole.role, 'executor']
+    //                     };
+    //                 } else {
+    //                     // Remove the executor role
+    //                     return {
+    //                         ...personRole,
+    //                         role: personRole.role.filter(role => role !== 'executor')
+    //                     };
+    //                 }
+    //             }
+    //             return personRole;
+    //         });
+    
+    //         // Update the currentOrder with the new peopleAndRoles
+    //         dispatch(updateCurrentOrderSlice({ ...currentOrder, peopleAndRoles: updatedPeopleAndRoles }));
+    
+    //         return newExecutors;
+    //     });
+    // };
     const handleExecutorChecked = (index, isChecked) => {
-        const executor = family[index];
-        if (isChecked) {
-            dispatch(updateExecutorsSlice(executor));
-        } else {
-            dispatch(removeExecutorSlice(executor._id));
-        }
+        const familyExecutor = family[index];
+    
+        const updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(personRole => {
+            if (personRole.personId._id === familyExecutor._id) {
+                if (isChecked) {
+                    // Add the executor role if it doesn't already exist
+                    return {
+                        ...personRole,
+                        role: personRole.role.includes('executor') ? personRole.role : [...personRole.role, 'executor']
+                    };
+                } else {
+                    // Remove the executor role
+                    return {
+                        ...personRole,
+                        role: personRole.role.filter(role => role !== 'executor')
+                    };
+                }
+            }
+            return personRole;
+        });
+    
+        dispatch(updateCurrentOrderSlice({ ...currentOrder, peopleAndRoles: updatedPeopleAndRoles }));
     };
-
+    
+    
 
 
 
@@ -279,10 +357,10 @@ const Executors = () => {
                                     {family.map((person, personIndex) => (
                                         <SectionListItem
                                             key={`person-${personIndex}`}
-                                            buttonsDisabled={showAssetForm}
+                                            buttonsDisabled={showExecutorForm}
                                             data={person}
-                                            onRemove={() => handleRemoveAsset(personIndex)}
-                                            onEdit={() => handleEditAsset(personIndex)}
+                                            onRemove={() => handleRemoveExecutor(personIndex)}
+                                            onEdit={() => handleEditExecutor(personIndex)}
                                             onChecked={(isChecked) => handleExecutorChecked(personIndex, isChecked)}  // Pass the checkbox state
                                             section="executors"
                                         />
@@ -290,12 +368,37 @@ const Executors = () => {
                                     ))}
 
                                 </div>
+
+
+
+
+                                <div className="section-list-container">
+                                    <h3>additional executors</h3>
+                                    {executors.map((person, personIndex) => (
+                                        <SectionListItem
+                                            key={`person-${personIndex}`}
+                                            buttonsDisabled={showExecutorForm}
+                                            data={person}
+                                            onRemove={() => handleRemoveExecutor(personIndex)}
+                                            onEdit={() => handleEditExecutor(personIndex)}
+                                            onChecked={(isChecked) => handleExecutorChecked(personIndex, isChecked)}  // Pass the checkbox state
+                                            section="executors"
+                                        />
+
+                                    ))}
+
+                                </div>
+
+
+
+
+
                                 <div className="sectio-add-btn-container">
                                     <button
                                         className="section-add-btn"
-                                        onClick={handleshowAssetForm}
-                                        style={showAssetForm ? styles.disabledButton : {}}
-                                        disabled={showAssetForm}
+                                        onClick={handleShowExecutorForm}
+                                        style={showExecutorForm ? styles.disabledButton : {}}
+                                        disabled={showExecutorForm}
                                     >
                                         +Add Executor
                                     </button>
@@ -305,102 +408,93 @@ const Executors = () => {
 
                         </div>
 
-                        {showAssetForm &&
+                        {showExecutorForm &&
                             (
                                 <div className="section-form-container">
-                                    <form onSubmit={handleAssetFormAdd}>
+                                    <form onSubmit={handleExecutorFormAdd}>
                                         <div className="form-main-container">
-                                            <div className="form-group">
-                                                <label htmlFor="assetType">Asset type</label>
-                                                <select
-                                                    id="assetType"
-                                                    name="assetType"
-                                                    value={assetFormData.assetType}
-                                                    onChange={handleAssetTypeChange}
-                                                    required
-                                                >
-                                                    <option value="" disabled>Select asset type</option>
-                                                    {Object.values(constants.assetType).map((assetType, index) => (
-                                                        <option key={index} value={assetType}>
-                                                            {assetType}
-                                                        </option>
-                                                    ))}
-                                                </select>
+                                            <div className="form-title-and-fullName-container">
+                                                <div className="name-group">
+                                                    <label htmlFor="title">Title</label>
+                                                    <select
+                                                        id="title"
+                                                        name="title"
+                                                        value={executorFormData.title}
+                                                        onChange={handleOnChange}
+                                                        required
+                                                    >
+                                                        {Object.values(constants.title).map((title, index) => (
+                                                            <option key={index} value={title}>
+                                                                {title}
+                                                            </option>
+                                                        ))}
+                                                    </select>
+                                                </div>
+                                                <div className="name-group">
+                                                    <label htmlFor="fullLegalName">Full legal name</label>
+                                                    <input
+                                                        type="text"
+                                                        className="fullLegalName"
+                                                        id="fullLegalName"
+                                                        name="fullLegalName"
+                                                        value={executorFormData.fullLegalName}
+                                                        onChange={handleOnChange}
+                                                        required
+                                                    />
+                                                </div>
                                             </div>
-                                            {assetFormData.assetType === constants.assetType.PROPERTY && (
-                                                <div className="form-group">
-                                                    <label htmlFor="propertyAddress">Property address</label>
-                                                    <AddressAutocomplete
-                                                        id="propertyAddress"
-                                                        name="propertyAddress"
-                                                        value={assetFormData.propertyAddress}
-                                                        onPlaceSelected={handlePlaceSelected}
-                                                        handleInputChange={handleOnChange}
-                                                    />
-                                                </div>
-                                            )}
-                                            {assetFormData.assetType === constants.assetType.BANK_ACCOUNT && (
-                                                <div className="form-group">
-                                                    <label htmlFor="bankName">Bank name</label>
-                                                    <input
-                                                        type="text"
-                                                        id="bankName"
-                                                        name="bankName"
-                                                        value={assetFormData.bankName}
-                                                        onChange={handleOnChange}
-                                                    />
-                                                </div>
-                                            )}
-                                            {assetFormData.assetType === constants.assetType.STOCKS_AND_SHARES && (
-                                                <div className="form-group">
-                                                    <label htmlFor="companyName">Company name</label>
-                                                    <input
-                                                        type="text"
-                                                        id="companyName"
-                                                        name="companyName"
-                                                        value={assetFormData.companyName}
-                                                        onChange={handleOnChange}
-                                                    />
-                                                </div>
-                                            )}
-                                            {/* {(assetFormData.assetType === constants.assetType.PENSION || assetType === constants.assetType.LIFE_INSURANCE) && (
                                             <div className="form-group">
-                                                <label htmlFor="provider">Provider</label>
-                                                <input
-                                                    type="text"
-                                                    id="provider"
-                                                    name="provider"
-                                                    value={assetFormData.provider}
+                                                <label htmlFor="fullAddress">Full address</label>
+                                                <AddressAutocomplete
+                                                    name="fullAddress"
+                                                    value={executorFormData.fullAddress}
+                                                    onPlaceSelected={handlePlaceSelected}
+                                                    handleInputChange={handleOnChange}
+                                                />
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="dob">Date of Birth</label>
+                                                <DateInput
+                                                    id="dob"
+                                                    name="dob"
+                                                    value={executorFormData.dob}
                                                     onChange={handleOnChange}
                                                 />
                                             </div>
-                                        )} */}
-                                            {assetFormData.assetType === constants.assetType.OTHER && (
-                                                <div className="form-group">
-                                                    <label htmlFor="otherAssetDetails">Details</label>
-                                                    <input
-                                                        type="text"
-                                                        id="otherAssetDetails"
-                                                        name="otherAssetDetails"
-                                                        value={assetFormData.otherAssetDetails}
-                                                        onChange={handleOnChange}
-                                                    />
-                                                </div>
-                                            )}
+                                            <div className="form-group">
+                                                <label htmlFor="email">Email (optional)</label>
+                                                <input
+                                                    type="email"
+                                                    id="email"
+                                                    name="email"
+                                                    value={executorFormData.email}
+                                                    onChange={handleOnChange}
+                                                />
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="tel">Phone Number (optional)</label>
+                                                <input
+                                                    type="tel"
+                                                    id="tel"
+                                                    name="tel"
+                                                    value={executorFormData.tel}
+                                                    onChange={handleOnChange}
+                                                />
+                                            </div>
                                         </div>
                                         <div className="form-btns-container">
                                             <button
                                                 className="form-btn"
                                                 type="button"
                                                 onClick={() => {
-                                                    handleshowAssetForm();
-                                                    resetAssetForm();
+                                                    handleShowExecutorForm();
+                                                    resetExecutorForm();
                                                 }}
                                             >Cancel</button>
                                             <button
                                                 className="form-btn"
                                                 type="submit"
-                                            >{editAssetIndex !== null ? "Update" : "Add"}</button>
+                                            >{editExecutorIndex !== null ? "Update" : "Add"}</button>
                                         </div>
                                     </form>
                                 </div>
@@ -415,8 +509,17 @@ const Executors = () => {
                         <OrderNavigation
                             onBack={handleBack}
                             onSaveAndContinue={handleSaveAndContinue}
-                            buttonsDisabled={showAssetForm}
+                            buttonsDisabled={showExecutorForm}
                         />
+                    </div>
+                    <div className="section-list-container">
+                        <h3>Selected Executors</h3>
+                        {familyExecutors.map((executor, executorIndex) => (
+                            <div key={executorIndex}>
+                                <p>{executor.fullLegalName}</p>
+                                <p>{executor.role}</p>
+                            </div>
+                        ))}
                     </div>
                 </>
             </section >
