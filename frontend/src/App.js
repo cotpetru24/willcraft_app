@@ -26,7 +26,7 @@ function App() {
   return (
     <>
       <Router>
-        <div className='container'>
+        <div className='container-fluid'>
           <Header />
           <Routes>
             <Route path='/' element={<Home />} />;

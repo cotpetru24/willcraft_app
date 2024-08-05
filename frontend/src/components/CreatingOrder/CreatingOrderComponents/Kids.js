@@ -159,7 +159,7 @@ const Kids = () => {
         }));
     };
 
-    
+
     const handleKidFormAdd = (e) => {
         e.preventDefault();
 
@@ -222,44 +222,6 @@ const Kids = () => {
     };
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//-------------- to clear the html and kids section is ready--------------------
-////////////////////////////////////////////////////////////////////////
-
-    
     return (
         <>
             <section className="section-container">

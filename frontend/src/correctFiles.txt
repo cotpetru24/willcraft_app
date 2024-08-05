@@ -7,6 +7,9 @@ SpouseOrPartner.js => All Checked
 KidsTile.js =>All Checked
 SpouseOrPartnerTile.js => All Checked
 TestatorTile.js => All Checked
+kids.js => All Checked
 kidsThunks.js => All Checked
 kidsSlice.js => All Checked -------=> May need to add extraReducers similar to spouseOrPartnerSlice or testatorSlice
-SectionListItem.js => All Checked
+Assets.js => All Checked
+orderAssetsService.js => All Checked
+orderAssetsSlice.js => All Checked -------=> May need to add extraReducers similar to spouseOrPartnerSlice or testatorSlice

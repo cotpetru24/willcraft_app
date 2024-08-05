@@ -21,8 +21,9 @@ export const store = configureStore({
     testator:testatorReducer,
     spouseOrPartner: spouseOrPartnerReducer,
     kids: kidsReducer,
-    assets: assetsReducer,
     additionalBeneficiaries: additionalBeneficiariesReducer,
+    assets: assetsReducer,
+
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
   devTools: process.env.NODE_ENV !== 'production',

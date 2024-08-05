@@ -1,6 +1,3 @@
-
-
-
 import OrderNavigation from "../CreatigOrderNavigation";
 import constants from "../../../common/constants";
 import AddressAutocomplete from "../../Common/AddressAutocomplete";
@@ -95,7 +92,7 @@ const AssetsDistribution = () => {
     };
 
     const handleAdditionalBeneficiaryFormAdd = (e) => {
-        console.log(`asset form add called `)
+        console.log(`additional beneficiary form add called `)
         e.preventDefault();
 
         if (editAdditionalBeneficiaryIndex !== null) {
@@ -105,9 +102,45 @@ const AssetsDistribution = () => {
             console.log(`asset form add meets the if condition `)
 
             dispatch(updateAdditionalBeneficiariesSlice(updatedAdditionalBeneficiaries));
+
+
+//---------------add the beneficiary to the assets slice=> distrubition
+        //---------------add the beneficiary to the assets slice=> distribution
+        const assetIdToUpdate = additionalBeneficiaryFormData._id;
+        console.log(`asset to update = ${additionalBeneficiaryFormData._id}`)
+        const updatedAssets = assets.map(asset => {
+            if (asset._id === assetIdToUpdate) {
+                return {
+                    ...asset,
+                    distribution: [...(asset.distribution || []), additionalBeneficiaryFormData]
+                };
+            }
+            return asset;
+        });
+
+        console.log(`updated assets = ${JSON.stringify(updatedAssets)}`)
+        dispatch(updateAssetsSlice(updatedAssets));
+
+
+
             setEditAdditionalBeneficiaryIndex(null); // Reset the edit index
         } else {
-            console.log(`asset form add else statement `)
+            console.log(`additional beneficiary form add else statement `)
+                    //---------------add the beneficiary to the assets slice=> distribution
+        const assetIdToUpdate = additionalBeneficiaryFormData._id;
+        console.log(`asset to update = ${additionalBeneficiaryFormData._id}`)
+        const updatedAssets = assets.map(asset => {
+            if (asset._id === assetIdToUpdate) {
+                return {
+                    ...asset,
+                    distribution: [...(asset.distribution || []), additionalBeneficiaryFormData]
+                };
+            }
+            return asset;
+        });
+
+        console.log(`updated assets = ${JSON.stringify(updatedAssets)}`)
+        dispatch(updateAssetsSlice(updatedAssets));
 
             dispatch(updateAdditionalBeneficiariesSlice([...additionalBeneficiaries, additionalBeneficiaryFormData]));
         }
@@ -226,18 +259,6 @@ const AssetsDistribution = () => {
             propertyAddress: address
         }));
     };
-
-
-
-    // const [assetType, setAssetType] = useState('');
-    // const handleAssetTypeChange = (e) => {
-    //     const selectedType = e.target.value;
-    //     setAssetType(selectedType);
-    // };
-
-
-
-
 
     return (
         <>

@@ -1,7 +1,4 @@
 import axios from "axios";
-import { normalize } from "normalizr";
-import { assets } from "../../schemas/schemas";
-
 const API_URL = '/api/assets/'
 
 export const updateAsset = async (assetData, token)=>{
@@ -24,8 +21,6 @@ export const createAsset = async (assetData, token) => {
     const response = await axios.post(API_URL, assetData, config);
     return response.data;
 }
-
-
 
 
 const orderAssetsService = {updateAsset, createAsset};
