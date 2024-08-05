@@ -222,25 +222,7 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section }) =
                     </div>
                 </>
             )}
-            {(section !== 'assetsDistribution-asset' && section !== 'assetDistribution-people') && (
-                <div className="section-list-item-btns-container">
-                    <button
-                        className="section-list-item-btn"
-                        style={buttonsDisabled ? styles.disabledButton : {}}
-                        disabled={buttonsDisabled}
-                        onClick={onEdit}
-                    >Edit
-                    </button>
-                    <button
-                        className="section-list-item-btn"
-                        style={buttonsDisabled ? styles.disabledButton : {}}
-                        disabled={buttonsDisabled}
-                        onClick={onRemove}
-                    >Remove
-                    </button>
-                </div>
-            )}
-                        {section === 'executors' && (
+            {section === 'executors' && (
                 <>
                     <div className="section-list-item-group">
                         <h5>Name: {data.title} {data.fullLegalName}</h5>
@@ -263,6 +245,25 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section }) =
                     </div>
                 </>
             )}
+            {(section !== 'assetsDistribution-asset' && section !== 'assetDistribution-people') && (
+                <div className="section-list-item-btns-container">
+                    <button
+                        className="section-list-item-btn"
+                        style={buttonsDisabled ? styles.disabledButton : {}}
+                        disabled={buttonsDisabled}
+                        onClick={onEdit}
+                    >Edit
+                    </button>
+                    <button
+                        className="section-list-item-btn"
+                        style={buttonsDisabled ? styles.disabledButton : {}}
+                        disabled={buttonsDisabled}
+                        onClick={onRemove}
+                    >Remove
+                    </button>
+                </div>
+            )}
+
         </div>
     )
 }
