@@ -142,13 +142,16 @@
 import styles from "../common/styles";
 import { useState } from "react";
 
-const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section }) => {
+const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onChecked }) => {
 
     const [isChecked, setIsChecked] = useState(false);
 
     const handleCheckboxChange = () => {
-        setIsChecked(!isChecked);
+        const newCheckedState = !isChecked;
+        setIsChecked(newCheckedState);
+        onChecked(newCheckedState);  // Pass the new checked state to the callback
     };
+    
 
     return (
         <div className="section-list-item-container">
@@ -239,6 +242,7 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section }) =
                                 type="checkbox"
                                 checked={isChecked}
                                 onChange={handleCheckboxChange}
+                                onCheched={onChecked}
                             />
                             Executor
                         </label>

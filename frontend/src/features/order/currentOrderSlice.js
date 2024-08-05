@@ -68,13 +68,13 @@ export const getOrderThunk = createAsyncThunk(
                 _id: p.personId._id
             }));
 
-            const executors = response.peopleAndRoles
-                .filter(p => !p.role.includes(constants.role.TESTATOR))
-                .map(p => ({
-                    ...p.personId,
-                    role: p.role, // Fix the typo from role to roles
-                    _id: p.personId._id
-                }));
+            // const executors = response.peopleAndRoles
+            //     .filter(p => !p.role.includes(constants.role.TESTATOR))
+            //     .map(p => ({
+            //         ...p.personId,
+            //         role: p.role, // Fix the typo from role to roles
+            //         _id: p.personId._id
+            //     }));
 
 
             // const executors = response.peopleAndRoles
@@ -130,12 +130,12 @@ export const getOrderThunk = createAsyncThunk(
 
             }
 
-            if (executors) {
-                console.log(`update executors slice called, executors: ${executors}`)
-                thunkAPI.dispatch(updateExecutorsSlice(executors))
-                // thunkAPI.dispatch(updateExecutorsSlice(allPeople))
+            // if (executors) {
+            //     console.log(`update executors slice called, executors: ${executors}`)
+            //     thunkAPI.dispatch(updateExecutorsSlice(executors))
+            //     // thunkAPI.dispatch(updateExecutorsSlice(allPeople))
 
-            }
+            // }
 
 
             // if (allPeople) {

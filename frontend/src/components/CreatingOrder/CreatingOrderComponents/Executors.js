@@ -18,6 +18,7 @@ import { createPerson } from "../../../features/people/peopleService";
 import { createKidThunk } from "../../../features/people/kids/kidsThunks";
 import { updateAssetsSlice, createAssetThunk, updateAssetThunk } from "../../../features/orderAssets/orderAssetsSlice"
 import { Button } from 'react-bootstrap'
+import { removeExecutorSlice, updateExecutorsSlice } from "../../../features/executors/executorsSlice";
 
 
 
@@ -38,9 +39,9 @@ const Executors = () => {
 
     const spouseOrPartner = useSelector(state => state.spouseOrPartner);
     const kids = useSelector(state => state.kids);
-    const additionalBeneficiaries = useSelector(state=>state.additionalBeneficiaries)
+    const additionalBeneficiaries = useSelector(state => state.additionalBeneficiaries)
 
-    const family = [].concat(spouseOrPartner, kids,additionalBeneficiaries);
+    const family = [].concat(spouseOrPartner, kids, additionalBeneficiaries);
 
     const [showAssetForm, setshowAssetForm] = useState(false);
     const [editAssetIndex, setEditAssetIndex] = useState(null); // New state to track the index of the kid being edited
@@ -83,7 +84,7 @@ const Executors = () => {
 
 
     const handleshowAssetForm = () => {
-        setshowAssetForm(prevState => !prevState);
+        // setshowAssetForm(prevState => !prevState);
     };
 
     const handleOnChange = (e) => {
@@ -95,44 +96,44 @@ const Executors = () => {
     };
 
     const handleAssetFormAdd = (e) => {
-        console.log(`asset form add called `)
-        e.preventDefault();
+        // console.log(`asset form add called `)
+        // e.preventDefault();
 
-        if (editAssetIndex !== null) {
-            const updatedAssets = assets.map((asset, index) =>
-                index === editAssetIndex ? assetFormData : asset
-            );
-            console.log(`asset form add meets the if condition `)
+        // if (editAssetIndex !== null) {
+        //     const updatedAssets = assets.map((asset, index) =>
+        //         index === editAssetIndex ? assetFormData : asset
+        //     );
+        //     console.log(`asset form add meets the if condition `)
 
-            dispatch(updateAssetsSlice(updatedAssets));
-            setEditAssetIndex(null); // Reset the edit index
-        } else {
-            console.log(`asset form add else statement `)
+        //     dispatch(updateAssetsSlice(updatedAssets));
+        //     setEditAssetIndex(null); // Reset the edit index
+        // } else {
+        //     console.log(`asset form add else statement `)
 
-            dispatch(updateAssetsSlice([...assets, assetFormData]));
-        }
+        //     dispatch(updateAssetsSlice([...assets, assetFormData]));
+        // }
 
-        resetAssetForm();
-        setshowAssetForm(false);
+        // resetAssetForm();
+        // setshowAssetForm(false);
     };
 
     const resetAssetForm = () => {
-        setAssetFormData({
-            _id: '',
-            assetType: '',
-            bankName: '',
-            provider: '',
-            companyName: '',
-            propertyAddress: '',
-            otherAssetDetails: '',
+        // setAssetFormData({
+        //     _id: '',
+        //     assetType: '',
+        //     bankName: '',
+        //     provider: '',
+        //     companyName: '',
+        //     propertyAddress: '',
+        //     otherAssetDetails: '',
 
-        });
-        setEditAssetIndex(null); // Reset the edit index
+        // });
+        // setEditAssetIndex(null); // Reset the edit index
     };
 
     const handleRemoveAsset = (index) => {
-        const updatedAssets = assets.filter((_, i) => i !== index);
-        dispatch(updateAssetsSlice(updatedAssets));
+        // const updatedAssets = assets.filter((_, i) => i !== index);
+        // dispatch(updateAssetsSlice(updatedAssets));
     };
 
     const handleEditAsset = (index) => {
@@ -156,50 +157,50 @@ const Executors = () => {
     const handleSaveAndContinue = async (e) => {
         e.preventDefault();
 
-        const updatedAssets = [];
+        // const updatedAssets = [];
 
-        // Create each kid and update kids slice with returned IDs
-        for (const asset of assets) {
-            let response;
-            if (asset._id) {
-                console.log(`asset data sent to create asset thunk = ${JSON.stringify(asset)}`)
-                response = await dispatch(updateAssetThunk(asset)).unwrap();
-            }
-            else {
-                console.log(`asset data sent to update asset thunk = ${JSON.stringify(asset)}`)
-                response = await dispatch(createAssetThunk(asset)).unwrap();
-            }
-            updatedAssets.push({
-                ...asset,
-                _id: response._id
-            });
+        // // Create each kid and update kids slice with returned IDs
+        // for (const asset of assets) {
+        //     let response;
+        //     if (asset._id) {
+        //         console.log(`asset data sent to create asset thunk = ${JSON.stringify(asset)}`)
+        //         response = await dispatch(updateAssetThunk(asset)).unwrap();
+        //     }
+        //     else {
+        //         console.log(`asset data sent to update asset thunk = ${JSON.stringify(asset)}`)
+        //         response = await dispatch(createAssetThunk(asset)).unwrap();
+        //     }
+        //     updatedAssets.push({
+        //         ...asset,
+        //         _id: response._id
+        //     });
 
-        }
+        // }
 
-        console.log(`updated assets = ${JSON.stringify(updatedAssets)}`)
-
-
-        // Update kids slice with new kids including their IDs
-        await dispatch(updateAssetsSlice(updatedAssets));
-
-        // Prepare updated order with the new kids IDs
-        const updatedOrder = {
-            ...currentOrder,
-            assetsAndDistribution: [
-                // ...currentOrder.assetsAndDistribution, // Remove existing kids to avoid duplicates
-                ...updatedAssets.map(asset => ({
-                    assetId: asset._id,
-                    assetDistribution: []
-                }))
-            ]
-        };
-        console.log(`updated order = ${JSON.stringify(updatedOrder)}`)
+        // console.log(`updated assets = ${JSON.stringify(updatedAssets)}`)
 
 
-        // Update the currentOrder slice
-        await dispatch(updateCurrentOrderSlice(updatedOrder));
-        // Update the order in the backend
-        await dispatch(updateOrderThunk(updatedOrder));
+        // // Update kids slice with new kids including their IDs
+        // await dispatch(updateAssetsSlice(updatedAssets));
+
+        // // Prepare updated order with the new kids IDs
+        // const updatedOrder = {
+        //     ...currentOrder,
+        //     assetsAndDistribution: [
+        //         // ...currentOrder.assetsAndDistribution, // Remove existing kids to avoid duplicates
+        //         ...updatedAssets.map(asset => ({
+        //             assetId: asset._id,
+        //             assetDistribution: []
+        //         }))
+        //     ]
+        // };
+        // console.log(`updated order = ${JSON.stringify(updatedOrder)}`)
+
+
+        // // Update the currentOrder slice
+        // await dispatch(updateCurrentOrderSlice(updatedOrder));
+        // // Update the order in the backend
+        // await dispatch(updateOrderThunk(updatedOrder));
 
         navigate('/creatingOrder');
     };
@@ -210,13 +211,13 @@ const Executors = () => {
 
 
     const handleBack = () => {
-        console.log(`handle back called`);
-        // Revert to the "saved" state
+        // console.log(`handle back called`);
+        // // Revert to the "saved" state
 
-        if (savedAssetsData.current) {
-            dispatch(updateAssetsSlice(savedAssetsData.current));
-            console.log(`dispatched update kids slice`);
-        }
+        // if (savedAssetsData.current) {
+        //     dispatch(updateAssetsSlice(savedAssetsData.current));
+        //     console.log(`dispatched update kids slice`);
+        // }
         navigate('/creatingOrder');
     };
 
@@ -228,30 +229,31 @@ const Executors = () => {
     };
 
 
-
-    const [assetType, setAssetType] = useState('');
-    // const handleAssetTypeChange = (e) => {
-    //     const selectedType = e.target.value;
-    //     setAssetType(selectedType);
-    // };
-
-    // const handleAssetTypeChange = (e) => {
-    //     const selectedType = e.target.value;
-    //     setAssetFormData(prevState => ({
-    //         ...prevState,
-    //         assetType: selectedType
-    //     }));
-    // };
-
-
     const handleAssetTypeChange = (e) => {
-        const selectedType = e.target.value;
-        setAssetType(selectedType);  // Update the assetType state
-        setAssetFormData(prevState => ({
-            ...prevState,
-            assetType: selectedType
-        }));
+        // const selectedType = e.target.value;
+        // setAssetType(selectedType);  // Update the assetType state
+        // setAssetFormData(prevState => ({
+        //     ...prevState,
+        //     assetType: selectedType
+        // }));
     };
+
+
+    // const handleExecutorChecked = (index) => {
+    //     const executor = family[index];
+    //     dispatch(updateExecutorsSlice(executor));
+    // };
+
+
+    const handleExecutorChecked = (index, isChecked) => {
+        const executor = family[index];
+        if (isChecked) {
+            dispatch(updateExecutorsSlice(executor));
+        } else {
+            dispatch(removeExecutorSlice(executor._id));
+        }
+    };
+
 
 
 
@@ -281,8 +283,10 @@ const Executors = () => {
                                             data={person}
                                             onRemove={() => handleRemoveAsset(personIndex)}
                                             onEdit={() => handleEditAsset(personIndex)}
+                                            onChecked={(isChecked) => handleExecutorChecked(personIndex, isChecked)}  // Pass the checkbox state
                                             section="executors"
                                         />
+
                                     ))}
 
                                 </div>
@@ -359,18 +363,18 @@ const Executors = () => {
                                                     />
                                                 </div>
                                             )}
-                                            {(assetFormData.assetType === constants.assetType.PENSION || assetType === constants.assetType.LIFE_INSURANCE) && (
-                                                <div className="form-group">
-                                                    <label htmlFor="provider">Provider</label>
-                                                    <input
-                                                        type="text"
-                                                        id="provider"
-                                                        name="provider"
-                                                        value={assetFormData.provider}
-                                                        onChange={handleOnChange}
-                                                    />
-                                                </div>
-                                            )}
+                                            {/* {(assetFormData.assetType === constants.assetType.PENSION || assetType === constants.assetType.LIFE_INSURANCE) && (
+                                            <div className="form-group">
+                                                <label htmlFor="provider">Provider</label>
+                                                <input
+                                                    type="text"
+                                                    id="provider"
+                                                    name="provider"
+                                                    value={assetFormData.provider}
+                                                    onChange={handleOnChange}
+                                                />
+                                            </div>
+                                        )} */}
                                             {assetFormData.assetType === constants.assetType.OTHER && (
                                                 <div className="form-group">
                                                     <label htmlFor="otherAssetDetails">Details</label>

@@ -63,10 +63,14 @@ const executorsSlice = createSlice({
         state.push(action.payload);
       }
     },
+    removeExecutorSlice: (state, action) => {
+      return state.filter(executor => executor._id !== action.payload);
+  },
+  
     resetExecutorsSlice: (state) => initialState,
   },
 });
 
 
-export const { resetExecutorsSlice, updateExecutorsSlice } = executorsSlice.actions;
+export const { resetExecutorsSlice, updateExecutorsSlice, removeExecutorSlice } = executorsSlice.actions;
 export default executorsSlice.reducer;
