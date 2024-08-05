@@ -6,6 +6,7 @@ import constants from "../../common/constants";
 import { updateKidsSlice } from "../people/kids/kidsSlice";
 import { updateAssetsSlice } from "../orderAssets/orderAssetsSlice";
 import { updateAllPeopleSlice } from "../people/peopleSlice";
+import { updateExecutorsSlice } from "../executors/executorsSlice";
 
 
 const initialState = {
@@ -67,6 +68,26 @@ export const getOrderThunk = createAsyncThunk(
                 _id: p.personId._id
             }));
 
+            const executors = response.peopleAndRoles
+            .filter(p => !p.role.includes(constants.role.TESTATOR))
+            .map(p => ({
+                ...p.personId,
+                role: p.role, // Fix the typo from role to roles
+                _id: p.personId._id
+            }));
+        
+
+            // const executors = response.peopleAndRoles
+            // .filter(p => Array.isArray(p.roles) && !p.roles.includes("testator"))
+            // .map(p => ({
+            //     ...p.personId,
+            //     role: p.role,
+            //     _id: p.personId._id
+            // }));
+        
+
+
+
             // const assets = response.assetsAndDistribution
 
             const assets = response.assetsAndDistribution.map(a => ({
@@ -106,6 +127,13 @@ export const getOrderThunk = createAsyncThunk(
 
             if (assets) {
                 thunkAPI.dispatch(updateAssetsSlice(assets))
+
+            }
+
+            if(executors){
+                console.log(`update executors slice called, executors: ${executors}`)
+                thunkAPI.dispatch(updateExecutorsSlice(executors))
+                // thunkAPI.dispatch(updateExecutorsSlice(allPeople))
 
             }
 

@@ -9,6 +9,11 @@ import stepReducer from '../features/orderSteps/orderStepSlice'
 import kidsReducer from '../features/people/kids/kidsSlice'
 import assetsReducer from '../features/orderAssets/orderAssetsSlice'
 import additionalBeneficiariesReducer from '../features/people/additionalBeneficiaries/additionalBeneficiariesSlice'
+import executorsReducer from '../features/executors/executorsSlice'
+
+
+
+
 export const store = configureStore({
   reducer: {
     auth: authReducer,  
@@ -23,6 +28,7 @@ export const store = configureStore({
     kids: kidsReducer,
     additionalBeneficiaries: additionalBeneficiariesReducer,
     assets: assetsReducer,
+    executors: executorsReducer,
 
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
