@@ -281,7 +281,7 @@ const Executors = () => {
                                             data={person}
                                             onRemove={() => handleRemoveAsset(personIndex)}
                                             onEdit={() => handleEditAsset(personIndex)}
-                                            section="assetDistribution-people"
+                                            section="executors"
                                         />
                                     ))}
 

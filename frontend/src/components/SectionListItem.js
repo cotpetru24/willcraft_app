@@ -240,6 +240,29 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section }) =
                     </button>
                 </div>
             )}
+                        {section === 'executors' && (
+                <>
+                    <div className="section-list-item-group">
+                        <h5>Name: {data.title} {data.fullLegalName}</h5>
+                    </div>
+                    <div className="section-list-item-group">
+                        <h5>Address: {data.fullAddress}</h5>
+                    </div>
+                    <div className="section-list-item-group">
+                        <h5>Date of birth: {data.dob}</h5>
+                    </div>
+                    <div>
+                        <label>
+                            <input
+                                type="checkbox"
+                                checked={isChecked}
+                                onChange={handleCheckboxChange}
+                            />
+                            Executor
+                        </label>
+                    </div>
+                </>
+            )}
         </div>
     )
 }
