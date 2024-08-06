@@ -1,6 +1,3 @@
-
-
-
 import OrderNavigation from "../CreatigOrderNavigation";
 import constants from "../../../common/constants";
 import AddressAutocomplete from "../../Common/AddressAutocomplete";
@@ -8,10 +5,7 @@ import DateInput from "../../Common/DateInput";
 import SectionListItem from "../../SectionListItem";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { updateTestatorSlice } from "../../../features/people/testator/testatorSlice";
 import { useState, useRef, useEffect } from "react";
-import testatorThunks from "../../../features/people/testator/testatorThunks";
-import { resetKidsSlice, updateKidsSlice } from "../../../features/people/kids/kidsSlice";
 import styles from "../../../common/styles";
 import { updateCurrentOrderSlice, updateOrderThunk } from "../../../features/order/currentOrderSlice";
 import { createPerson } from "../../../features/people/peopleService";
@@ -20,12 +14,6 @@ import { updateAssetsSlice, createAssetThunk, updateAssetThunk } from "../../../
 import { Button } from 'react-bootstrap'
 import { removeExecutorSlice, updateExecutorsSlice } from "../../../features/executors/executorsSlice";
 import { createExecutorThunk, updateExecutorThunk } from "../../../features/executors/executorsThunks";
-
-
-
-
-
-
 
 
 const Executors = () => {
@@ -40,14 +28,6 @@ const Executors = () => {
     const additionalBeneficiaries = useSelector(state => state.additionalBeneficiaries)
     const executors = useSelector(state => state.executors)
 
-
-    // const family = [].concat(spouseOrPartner, kids, additionalBeneficiaries);
-
-    // const family = currentOrder.peopleAndRoles
-    //     .filter(p => p.role.includes('partner') || p.role.includes('kid') || p.role.includes('spouse'))
-    // // .map(p => p.personId);
-
-
     const [family, setFamily] = useState([]);
 
     useEffect(() => {
@@ -56,25 +36,12 @@ const Executors = () => {
         setFamily(updatedFamily);
     }, [currentOrder.peopleAndRoles, currentOrder]);
     
-
-
-
-
-
-
-
-
-
-
-
-
-
     const [showExecutorForm, setShowExecutorForm] = useState(false);
     const [editExecutorIndex, setEditExecutorIndex] = useState(null); // New state to track the index of the kid being edited
 
     // Use useRef to store the "saved" state
     const savedExecutorsData = useRef(null);
-    // const savedTestatorData = useRef(null);
+    const savedCurrentOrderData = useRef(null);
 
     let executor;
 
@@ -105,6 +72,9 @@ const Executors = () => {
         // Store the initial state as "saved" state if it's not already saved
         if (!savedExecutorsData.current) {
             savedExecutorsData.current = JSON.parse(JSON.stringify(executors));
+        }
+        if (!savedCurrentOrderData.current){
+            savedCurrentOrderData.current=JSON.parse(JSON.stringify(currentOrder))
         }
     }, [executors]);
 
@@ -236,13 +206,17 @@ const Executors = () => {
 
 
     const handleBack = () => {
-        // console.log(`handle back called`);
-        // // Revert to the "saved" state
+        console.log(`handle back called`);
+        // Revert to the "saved" state
 
-        // if (savedExecutorsData.current) {
-        //     dispatch(updateAssetsSlice(savedExecutorsData.current));
-        //     console.log(`dispatched update kids slice`);
-        // }
+        if (savedExecutorsData.current) {
+            dispatch(updateExecutorsSlice(savedExecutorsData.current));
+            console.log(`dispatched update executors slice`);
+        }
+        if (savedCurrentOrderData.current) {
+            dispatch(updateCurrentOrderSlice(savedCurrentOrderData.current));
+            console.log(`dispatched update current order slice`);
+        }
         navigate('/creatingOrder');
     };
 
@@ -254,77 +228,9 @@ const Executors = () => {
     };
 
 
-
-
-    // const [familyExecutors, setFamilyExecutors] = useState([]);
-
-
-    // const handleExecutorChecked = (index, isChecked) => {
-    //     const executor = family[index];
-    //     if (isChecked) {
-    //         dispatch(updateExecutorsSlice(executor));
-    //     } else {
-    //         dispatch(removeExecutorSlice(executor._id));
-    //     }
-    // };
-
-    // const handleExecutorChecked = (index, isChecked) => {
-    //     const familyExecutor = family[index];
-    //     if (isChecked) {
-    //         setFamilyExecutors(prevExecutors => [...prevExecutors, { _id: familyExecutor._id, role: 'executor' }]);
-    //     } else {
-    //         setFamilyExecutors(prevExecutors => prevExecutors.filter(ex => ex._id !== familyExecutor._id));
-    //     }
-    //     console.log(`family executors are: ${JSON.stringify(familyExecutors)}`)
-    // };
-
     const [familyExecutors, setFamilyExecutors] = useState([]);
 
-    // const handleExecutorChecked = (index, isChecked) => {
-    //     const familyExecutor = family[index];
-    //     if (isChecked) {
-    //         setFamilyExecutors(prevExecutors => [...prevExecutors, { _id: familyExecutor._id, role: 'executor' }]);
-    //     } else {
-    //         setFamilyExecutors(prevExecutors => prevExecutors.filter(ex => ex._id !== familyExecutor._id));
-    //     }
-    //     console.log(`family executors are: ${JSON.stringify(familyExecutors)}`)
-    // };
 
-
-    // const handleExecutorChecked = (index, isChecked) => {
-    //     const familyExecutor = family[index];
-
-    //     setFamilyExecutors(prevExecutors => {
-    //         const newExecutors = isChecked
-    //             ? [...prevExecutors, { _id: familyExecutor._id, role: 'executor' }]
-    //             : prevExecutors.filter(ex => ex._id !== familyExecutor._id);
-
-    //         // Update the currentOrder peopleAndRoles with the executor role
-    //         const updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(personRole => {
-    //             if (personRole.personId._id === familyExecutor._id) {
-    //                 if (isChecked) {
-    //                     // Add the executor role if it doesn't already exist
-    //                     return {
-    //                         ...personRole,
-    //                         role: personRole.role.includes('executor') ? personRole.role : [...personRole.role, 'executor']
-    //                     };
-    //                 } else {
-    //                     // Remove the executor role
-    //                     return {
-    //                         ...personRole,
-    //                         role: personRole.role.filter(role => role !== 'executor')
-    //                     };
-    //                 }
-    //             }
-    //             return personRole;
-    //         });
-
-    //         // Update the currentOrder with the new peopleAndRoles
-    //         dispatch(updateCurrentOrderSlice({ ...currentOrder, peopleAndRoles: updatedPeopleAndRoles }));
-
-    //         return newExecutors;
-    //     });
-    // };
     const handleExecutorChecked = (index, isChecked) => {
         const familyExecutor = family[index];
 

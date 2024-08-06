@@ -248,17 +248,20 @@ const currentOrderSlice = createSlice({
                 state.orderId = action.payload._id;
                 state.userId = action.payload.userId;
                 state.status = action.payload.status;
-                state.peopleAndRoles = action.payload.peopleAndRoles.map(pr => ({
-                    personId: pr.personId._id || pr.personId, // In case personId is populated, take only the _id
-                    role: pr.role
-                }));
-                state.assetsAndDistribution = action.payload.assetsAndDistribution.map(ad => ({
-                    assetId: ad.assetId._id || ad.assetId, // In case assetId is populated, take only the _id
-                    distribution: ad.distribution.map(dist => ({
-                        personId: dist.personId._id || dist.personId, // In case personId is populated, take only the _id
-                        receivingAmount: dist.receivingAmount
-                    }))
-                }));
+                // state.peopleAndRoles = action.payload.peopleAndRoles.map(pr => ({
+                //     personId: pr.personId._id || pr.personId, // In case personId is populated, take only the _id
+                //     role: pr.role
+                // }));
+                state.peopleAndRoles=action.payload.peopleAndRoles;
+
+                // state.assetsAndDistribution = action.payload.assetsAndDistribution.map(ad => ({
+                //     assetId: ad.assetId._id || ad.assetId, // In case assetId is populated, take only the _id
+                //     distribution: ad.distribution.map(dist => ({
+                //         personId: dist.personId._id || dist.personId, // In case personId is populated, take only the _id
+                //         receivingAmount: dist.receivingAmount
+                //     }))
+                // }));
+                state.assetsAndDistribution = action.payload.assetsAndDistribution
             })
 
             .addCase(updateOrderThunk.rejected, (state, action) => {
