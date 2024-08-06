@@ -9,7 +9,10 @@ import { resetCurrentOrderSlice } from "../../features/currentOrder/currentOrder
 import { resetTestatorSlice } from "../../features/people/testator/testatorSlice";
 import { resetSpouseOrPartnerSlice } from "../../features/people/spouseOrPartner/spouseOrPartnerSlice";
 import { resetKidsSlice } from "../../features/people/kids/kidsSlice";
+import { resetAdditionalExecutorsSlice } from "../../features/additionalExecutors/additionalExecutorsSlice";
+import { resetAssetsSlice } from "../../features/orderAssets/orderAssetsSlice";
 
+import { resetOrderState } from "../../utils/reduxUtils";
 
 
 
@@ -27,10 +30,13 @@ const OrdersList = () => {
 
 
     const handleCreateWill = async () => {
-        await dispatch(resetCurrentOrderSlice())
-        await dispatch(resetTestatorSlice())
-        await dispatch(resetSpouseOrPartnerSlice())
-        await dispatch(resetKidsSlice())
+        // await dispatch(resetCurrentOrderSlice())
+        // await dispatch(resetTestatorSlice())
+        // await dispatch(resetSpouseOrPartnerSlice())
+        // await dispatch(resetKidsSlice())
+        // await dispatch(resetAdditionalExecutorsSlice())
+        // await dispatch(resetAssetsSlice())
+        resetOrderState(dispatch)
         // await dispatch(resetChildren())
         navigate('/creatingOrder');
     };
@@ -48,9 +54,9 @@ const OrdersList = () => {
             (
                 <>
                     <section>
-                        <button 
-                        id="create-my-will-btn"
-                        onClick={handleCreateWill}
+                        <button
+                            id="create-my-will-btn"
+                            onClick={handleCreateWill}
                         >Create a new Will
                         </button>
                     </section>

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { resetTestatorSlice } from "../../features/people/testator/testatorSlice";
 import { resetSpouseOrPartnerSlice } from "../../features/people/spouseOrPartner/spouseOrPartnerSlice";
 import { resetKidsSlice } from "../../features/people/kids/kidsSlice";
+import { resetOrderState } from "../../utils/reduxUtils";
 
 export const OrderProgressBar = ({ currentValue, maxValue }) => (
     <>
@@ -47,9 +48,7 @@ const OrderItem = ({ order }) => {
                 {order.status === "CreatingOrder" && (
                     <button
                         onClick={async () => {
-                            await dispatch(resetTestatorSlice());
-                            await dispatch(resetSpouseOrPartnerSlice());
-                            await dispatch(resetKidsSlice())
+                            await resetOrderState(dispatch)
 
                             console.log(`should have loaded order id :${order._id}`);
                             await dispatch(getOrderThunk(order._id));

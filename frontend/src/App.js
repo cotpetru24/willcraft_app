@@ -42,16 +42,7 @@ function App() {
             <Route path='/assets' element={<Assets/>}/>;
             <Route path='/assetsDistribution' element={<AssetsDistribution/>}/>;
             <Route path='/executors' element={<Executors/>}/>;
-
-
-
-            {/* 
-            <Route path='/executors' element={<Executor />} />;
-            <Route path='/progressBar' element={<ProgressBar />} />;
-            <Route path='/assets' element={<AssetForm />} />
-               */}
-
-               
+              
           </Routes>
           <Footer />
         </div>

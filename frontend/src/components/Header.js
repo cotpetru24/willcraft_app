@@ -20,6 +20,7 @@ const Header = () => {
             .unwrap() // Ensure the thunk result is unwrapped for proper chaining
             .then(() => {
                 dispatch(reset());
+                localStorage.clear();  // Clears the entire local storage
                 console.log('Navigating to home...');
                 navigate('/');
             })
