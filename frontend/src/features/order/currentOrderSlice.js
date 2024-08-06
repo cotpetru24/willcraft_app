@@ -6,7 +6,7 @@ import constants from "../../common/constants";
 import { updateKidsSlice } from "../people/kids/kidsSlice";
 import { updateAssetsSlice } from "../orderAssets/orderAssetsSlice";
 import { updateAllPeopleSlice } from "../people/peopleSlice";
-import { updateExecutorsSlice } from "../executors/executorsSlice";
+import { updateAdditionalExecutorsSlice } from "../additionalExecutors/additionalExecutorsSlice";
 
 
 const initialState = {
@@ -67,7 +67,7 @@ export const getOrderThunk = createAsyncThunk(
                 // _id: p._id
                 _id: p.personId._id
             }));
-            const executors = response.peopleAndRoles.filter(p => p.role.includes(constants.role.ADDITIONAL_EXECUTOR)).map(p => ({
+            const additionalExecutors = response.peopleAndRoles.filter(p => p.role.includes(constants.role.ADDITIONAL_EXECUTOR)).map(p => ({
                 ...p.personId,
                 role: p.role,
                 // _id: p._id
@@ -135,7 +135,7 @@ export const getOrderThunk = createAsyncThunk(
                 thunkAPI.dispatch(updateAssetsSlice(assets))
 
             }
-            if (executors) thunkAPI.dispatch(updateExecutorsSlice(executors))
+            if (additionalExecutors) thunkAPI.dispatch(updateAdditionalExecutorsSlice(additionalExecutors))
 
             // if (executors) {
             //     console.log(`update executors slice called, executors: ${executors}`)

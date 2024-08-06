@@ -12,9 +12,9 @@ import { createPerson } from "../../../features/people/peopleService";
 import { createKidThunk } from "../../../features/people/kids/kidsThunks";
 import { updateAssetsSlice, createAssetThunk, updateAssetThunk } from "../../../features/orderAssets/orderAssetsSlice"
 import { Button } from 'react-bootstrap'
-import { removeExecutorSlice, updateExecutorsSlice } from "../../../features/executors/executorsSlice";
-import { createExecutorThunk, updateExecutorThunk } from "../../../features/executors/executorsThunks";
-
+// import { removeAdditionalExecutorSlice, updateAdditionalExecutorsSlice } from "../../../features/additionalExecutors/additionalExecutorsSlice";
+import { createExecutorThunk, updateExecutorThunk } from "../../../features/additionalExecutors/additionalExecutorsThunks";
+import {updateAdditionalExecutorsSlice} from "../../../features/additionalExecutors/additionalExecutorsSlice"
 
 const Executors = () => {
     const navigate = useNavigate();
@@ -26,7 +26,7 @@ const Executors = () => {
     const spouseOrPartner = useSelector(state => state.spouseOrPartner);
     const kids = useSelector(state => state.kids);
     const additionalBeneficiaries = useSelector(state => state.additionalBeneficiaries)
-    const executors = useSelector(state => state.executors)
+    const additionalExecutors = useSelector(state => state.additionalExecutors)
 
     const [family, setFamily] = useState([]);
 
@@ -40,12 +40,12 @@ const Executors = () => {
     const [editExecutorIndex, setEditExecutorIndex] = useState(null); // New state to track the index of the kid being edited
 
     // Use useRef to store the "saved" state
-    const savedExecutorsData = useRef(null);
+    const savedAdditionalExecutorsData = useRef(null);
     const savedCurrentOrderData = useRef(null);
 
     let executor;
 
-    const [executorFormData, setExecutorFormData] = useState({
+    const [additionalExecutorFormData, setExecutorFormData] = useState({
         _id: '',
         title: '',
         fullLegalName: '',
@@ -60,23 +60,23 @@ const Executors = () => {
     useEffect(() => {
         if (executor) {
             setExecutorFormData({
-                _id: executorFormData._id || '',
-                title: executorFormData.title || '',
-                fullLegalName: executorFormData.fullLegalName || '',
-                fullAddress: executorFormData.fullAddress || '',
-                dob: executorFormData.dob || '',
-                email: executorFormData.email || '',
-                tel: executorFormData.tel || ''
+                _id: additionalExecutorFormData._id || '',
+                title: additionalExecutorFormData.title || '',
+                fullLegalName: additionalExecutorFormData.fullLegalName || '',
+                fullAddress: additionalExecutorFormData.fullAddress || '',
+                dob: additionalExecutorFormData.dob || '',
+                email: additionalExecutorFormData.email || '',
+                tel: additionalExecutorFormData.tel || ''
             })
         }
         // Store the initial state as "saved" state if it's not already saved
-        if (!savedExecutorsData.current) {
-            savedExecutorsData.current = JSON.parse(JSON.stringify(executors));
+        if (!savedAdditionalExecutorsData.current) {
+            savedAdditionalExecutorsData.current = JSON.parse(JSON.stringify(additionalExecutors));
         }
         if (!savedCurrentOrderData.current){
             savedCurrentOrderData.current=JSON.parse(JSON.stringify(currentOrder))
         }
-    }, [executors]);
+    }, [additionalExecutors]);
 
 
     const handleShowExecutorForm = () => {
@@ -95,13 +95,13 @@ const Executors = () => {
         e.preventDefault();
 
         if (editExecutorIndex !== null) {
-            const updatedExecutors = executors.map((executor, index) =>
-                index === editExecutorIndex ? executorFormData : executor
+            const updatedAdditionalExecutors = additionalExecutors.map((executor, index) =>
+                index === editExecutorIndex ? additionalExecutorFormData : executor
             );
-            dispatch(updateExecutorsSlice(updatedExecutors));
+            dispatch(updateAdditionalExecutorsSlice(updatedAdditionalExecutors));
             setEditExecutorIndex(null); // Reset the edit index
         } else {
-            dispatch(updateExecutorsSlice([...executors, executorFormData]));
+            dispatch(updateAdditionalExecutorsSlice([...additionalExecutors, additionalExecutorFormData]));
         }
 
         resetExecutorForm();
@@ -123,12 +123,12 @@ const Executors = () => {
     };
 
     const handleRemoveExecutor = (index) => {
-        const updatedExecutors = executors.filter((_, i) => i !== index);
-        dispatch(updateExecutorsSlice(updatedExecutors));
+        const updatedAdditionalExecutors = additionalExecutors.filter((_, i) => i !== index);
+        dispatch(updateAdditionalExecutorsSlice(updatedAdditionalExecutors));
     };
 
     const handleEditExecutor = (index) => {
-        const executorToEdit = executors[index];
+        const executorToEdit = additionalExecutors[index];
         setExecutorFormData({
             _id: executorToEdit._id || '',
             title: executorToEdit.title || '',
@@ -159,15 +159,15 @@ const Executors = () => {
         const updatedOrder = { ...currentOrder }
         await dispatch(updateOrderThunk(updatedOrder));
 
-        const updatedExecutors = [];
-        for (const executor of executors) {
+        const updatedAdditionlExecutors = [];
+        for (const executor of additionalExecutors) {
             let response;
             if (executor._id) {
                 response = await dispatch(updateExecutorThunk(executor)).unwrap();
             } else {
                 response = await dispatch(createExecutorThunk(executor)).unwrap();
             }
-            updatedExecutors.push({
+            updatedAdditionlExecutors.push({
                 ...executor,
                 _id: response._id
             });
@@ -175,14 +175,14 @@ const Executors = () => {
 
 
         // Update kids slice with new kids including their IDs
-        await dispatch(updateExecutorsSlice(updatedExecutors));
+        await dispatch(updateAdditionalExecutorsSlice(updatedAdditionlExecutors));
 
         // Prepare updated order with the new kids IDs
         const updatedOrderWithIds = {
             ...currentOrder,
             peopleAndRoles: [
                 ...currentOrder.peopleAndRoles.filter(pr => !pr.role.includes(constants.role.ADDITIONAL_EXECUTOR)), // Remove existing kids to avoid duplicates
-                ...updatedExecutors.map(executor => ({
+                ...updatedAdditionlExecutors.map(executor => ({
                     personId: executor._id,
                     role: [constants.role.ADDITIONAL_EXECUTOR]
                 }))
@@ -209,8 +209,8 @@ const Executors = () => {
         console.log(`handle back called`);
         // Revert to the "saved" state
 
-        if (savedExecutorsData.current) {
-            dispatch(updateExecutorsSlice(savedExecutorsData.current));
+        if (savedAdditionalExecutorsData.current) {
+            dispatch(updateAdditionalExecutorsSlice(savedAdditionalExecutorsData.current));
             console.log(`dispatched update executors slice`);
         }
         if (savedCurrentOrderData.current) {
@@ -299,7 +299,7 @@ const Executors = () => {
 
                                 <div className="section-list-container">
                                     <h3>additional executors</h3>
-                                    {executors.map((person, personIndex) => (
+                                    {additionalExecutors.map((person, personIndex) => (
                                         <SectionListItem
                                             key={`person-${personIndex}`}
                                             buttonsDisabled={showExecutorForm}
@@ -344,7 +344,7 @@ const Executors = () => {
                                                     <select
                                                         id="title"
                                                         name="title"
-                                                        value={executorFormData.title}
+                                                        value={additionalExecutorFormData.title}
                                                         onChange={handleOnChange}
                                                         required
                                                     >
@@ -362,7 +362,7 @@ const Executors = () => {
                                                         className="fullLegalName"
                                                         id="fullLegalName"
                                                         name="fullLegalName"
-                                                        value={executorFormData.fullLegalName}
+                                                        value={additionalExecutorFormData.fullLegalName}
                                                         onChange={handleOnChange}
                                                         required
                                                     />
@@ -372,7 +372,7 @@ const Executors = () => {
                                                 <label htmlFor="fullAddress">Full address</label>
                                                 <AddressAutocomplete
                                                     name="fullAddress"
-                                                    value={executorFormData.fullAddress}
+                                                    value={additionalExecutorFormData.fullAddress}
                                                     onPlaceSelected={handlePlaceSelected}
                                                     handleInputChange={handleOnChange}
                                                 />
@@ -382,7 +382,7 @@ const Executors = () => {
                                                 <DateInput
                                                     id="dob"
                                                     name="dob"
-                                                    value={executorFormData.dob}
+                                                    value={additionalExecutorFormData.dob}
                                                     onChange={handleOnChange}
                                                 />
                                             </div>
@@ -392,7 +392,7 @@ const Executors = () => {
                                                     type="email"
                                                     id="email"
                                                     name="email"
-                                                    value={executorFormData.email}
+                                                    value={additionalExecutorFormData.email}
                                                     onChange={handleOnChange}
                                                 />
                                             </div>
@@ -402,7 +402,7 @@ const Executors = () => {
                                                     type="tel"
                                                     id="tel"
                                                     name="tel"
-                                                    value={executorFormData.tel}
+                                                    value={additionalExecutorFormData.tel}
                                                     onChange={handleOnChange}
                                                 />
                                             </div>
