@@ -10,7 +10,7 @@ import { useState, useRef, useEffect } from "react";
 import testatorThunks from "../../../features/people/testator/testatorThunks";
 import { resetKidsSlice, updateKidsSlice } from "../../../features/people/kids/kidsSlice";
 import styles from "../../../common/styles";
-import { updateCurrentOrderSlice, updateOrderThunk } from "../../../features/order/currentOrderSlice";
+import { updateCurrentOrderSlice, updateOrderThunk } from "../../../features/currentOrder/currentOrderSlice";
 import { createKidThunk, updateKidThunk } from "../../../features/people/kids/kidsThunks";
 
 

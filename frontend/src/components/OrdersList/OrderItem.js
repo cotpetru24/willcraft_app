@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { deleteOrder } from "../../features/orders/ordersSlice";
-import { getOrderThunk } from "../../features/order/currentOrderSlice";
+import { getOrderThunk } from "../../features/currentOrder/currentOrderSlice";
 import { useNavigate } from "react-router-dom";
 import { resetTestatorSlice } from "../../features/people/testator/testatorSlice";
 import { resetSpouseOrPartnerSlice } from "../../features/people/spouseOrPartner/spouseOrPartnerSlice";

@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger'
 import authReducer from '../features/auth/authSlice';
-import currentOrderReducer from '../features/order/currentOrderSlice';
+import currentOrderReducer from '../features/currentOrder/currentOrderSlice';
 import ordersReducer from '../features/orders/ordersSlice';
 import testatorReducer from '../features/people/testator/testatorSlice';
 import spouseOrPartnerReducer from '../features/people/spouseOrPartner/spouseOrPartnerSlice';
