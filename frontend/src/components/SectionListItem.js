@@ -577,20 +577,9 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
                     <div className="section-list-item-group">
                         <h5>Date of birth: {data.dob}</h5>
                     </div>
-                    <div>
-                        <label>
-                            <input
-                                type="checkbox"
-                                checked={isChecked}
-                                onChange={handleCheckboxChange}
-                            // onChecked={onChecked}
-                            />
-                            Executor
-                        </label>
-                    </div>
                 </>
             )}
-            {(section !== 'assetsDistribution-asset' && section !== 'assetDistribution-people') && (
+            {(section !== 'assetsDistribution-asset' && section !== 'assetDistribution-people' && section !== 'executors') && (
                 <div className="section-list-item-btns-container">
                     <button
                         className="section-list-item-btn"

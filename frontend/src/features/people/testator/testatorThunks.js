@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { createOrderThunk } from "../../order/currentOrderSlice";
+import { createOrderThunk } from "../../currentOrder/currentOrderSlice";
 import peopleService from "../peopleService";
 import constants from "../../../common/constants";
 

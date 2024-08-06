@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useRef, useEffect } from "react";
 import styles from "../../../common/styles";
-import { updateCurrentOrderSlice, updateOrderThunk } from "../../../features/order/currentOrderSlice";
+import { updateCurrentOrderSlice, updateOrderThunk } from "../../../features/currentOrder/currentOrderSlice";
 import { createPerson } from "../../../features/people/peopleService";
 import { createKidThunk } from "../../../features/people/kids/kidsThunks";
 import { updateAssetsSlice, createAssetThunk, updateAssetThunk } from "../../../features/orderAssets/orderAssetsSlice"
