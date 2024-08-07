@@ -225,24 +225,22 @@ const AssetsDistribution = () => {
     };
 
 
-
-
-
     // const handleBeneficiaryChecked = (personIndex, assetIndex, isChecked) => {
     //     const familyBeneficiary = family[personIndex];
-    //     const assetToUpdate = assets[assetIndex]
+    //     const assetToUpdate = assets[assetIndex];
 
+    //     // Update the peopleAndRoles array in currentOrder
     //     const updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(personRole => {
     //         if (personRole.personId._id === familyBeneficiary.personId._id) {
     //             if (isChecked) {
-    //                 // Add the executor role if it doesn't already exist
+    //                 // Add the beneficiary role if it doesn't already exist
     //                 return {
     //                     ...personRole,
     //                     role: personRole.role.includes('beneficiary') ? personRole.role
     //                         : [...personRole.role, 'beneficiary']
     //                 };
     //             } else {
-    //                 // Remove the executor role
+    //                 // Remove the beneficiary role
     //                 return {
     //                     ...personRole,
     //                     role: personRole.role.filter(role => role !== 'beneficiary')
@@ -252,28 +250,540 @@ const AssetsDistribution = () => {
     //         return personRole;
     //     });
 
-    //     const updatedAssetDistribution = {
-    //         ...assets[assetIndex],
-    //         distribution: [
-    //             {
-    //                 personId: familyBeneficiary._id,
-    //                 percentage: "percentage here"
-    //             }
 
-    //         ]
+    //     // Update the distribution array for the asset
+    //     const updatedDistribution = isChecked
+    //         ? [...assetToUpdate.distribution, {
+    //             personId: familyBeneficiary.personId._id,
+    //             title: familyBeneficiary.personId.title,
+    //             fullLegalName: familyBeneficiary.personId.fullLegalName,
+    //             fullAddress: familyBeneficiary.personId.fullAddress,
+    //             dob: familyBeneficiary.personId.dob,
+    //             email: familyBeneficiary.personId.email || '',
+    //             tel: familyBeneficiary.personId.tel || '',
+    //             receivingAmount: "percentage here"
+    //         }]
+    //         : assetToUpdate.distribution.filter(d => d.personId !== familyBeneficiary.personId._id);
+
+    //     // Create the updated asset object
+    //     const updatedAsset = { ...assetToUpdate, distribution: updatedDistribution };
+
+    //     // Update the assets array
+    //     const updatedAssets = assets.map((asset, index) => index === assetIndex ? updatedAsset : asset);
 
 
-    //     };
 
-    //     dispatch(updatedAssetDistribution({ ...assets, updatedAssetDistribution }))
 
-    //     dispatch(updateCurrentOrderSlice({ ...currentOrder, peopleAndRoles: updatedPeopleAndRoles }));
+    //     // Update the assetsAndDistribution in currentOrder
+    //     const updatedCurrentOrderAssetDistribution = currentOrder.assetsAndDistribution.map(asset => {
+    //         if (asset.assetId._id === assetToUpdate._id) {
+    //             return {
+    //                 ...asset,
+    //                 distribution: updatedDistribution
+    //             };
+    //         }
+    //         return asset;
+    //     });
+
+
+
+
+    //     // Dispatch the updated assets slice
+    //     dispatch(updateAssetsSlice(updatedAssets));
+
+    //     // // Dispatch the updated current order slice
+    //     // dispatch(updateCurrentOrderSlice({ ...currentOrder, peopleAndRoles: updatedPeopleAndRoles }));
+    //     // Dispatch the updated current order slice
+    //     dispatch(updateCurrentOrderSlice({
+    //         ...currentOrder,
+    //         peopleAndRoles: updatedPeopleAndRoles,
+    //         assetsAndDistribution: updatedCurrentOrderAssetDistribution
+    //     }));
     // };
+
+
+
+
+
+
+
+
+
+
+
+
+    // const handleBeneficiaryChecked = (personIndex, assetIndex, isChecked) => {
+    //     const familyBeneficiary = family[personIndex];
+    //     const assetToUpdate = assets[assetIndex];
+    
+    //     // Update the peopleAndRoles array in currentOrder
+    //     const updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(personRole => {
+    //         if (personRole.personId._id === familyBeneficiary.personId._id) {
+    //             if (isChecked) {
+    //                 // Add the beneficiary role if it doesn't already exist
+    //                 return {
+    //                     ...personRole,
+    //                     role: personRole.role.includes('beneficiary') ? personRole.role
+    //                         : [...personRole.role, 'beneficiary']
+    //                 };
+    //             } else {
+    //                 // Remove the beneficiary role
+    //                 return {
+    //                     ...personRole,
+    //                     role: personRole.role.filter(role => role !== 'beneficiary')
+    //                 };
+    //             }
+    //         }
+    //         return personRole;
+    //     });
+    
+    //     // Update the distribution array for the asset
+    //     const updatedDistribution = isChecked
+    //         ? [...assetToUpdate.distribution, {
+    //             personId: familyBeneficiary.personId._id,
+    //             title: familyBeneficiary.personId.title,
+    //             fullLegalName: familyBeneficiary.personId.fullLegalName,
+    //             fullAddress: familyBeneficiary.personId.fullAddress,
+    //             dob: familyBeneficiary.personId.dob,
+    //             email: familyBeneficiary.personId.email || '',
+    //             tel: familyBeneficiary.personId.tel || '',
+    //             receivingAmount: "percentage here"
+    //         }]
+    //         : assetToUpdate.distribution.filter(d => d.personId._id !== familyBeneficiary.personId._id); // Ensure correct ID comparison
+    
+    //     // Create the updated asset object
+    //     const updatedAsset = { ...assetToUpdate, distribution: updatedDistribution };
+    
+    //     // Update the assets array
+    //     const updatedAssets = assets.map((asset, index) => index === assetIndex ? updatedAsset : asset);
+    
+    //     // Update the assetsAndDistribution in currentOrder
+    //     const updatedCurrentOrderAssetDistribution = currentOrder.assetsAndDistribution.map(asset => {
+    //         if (asset.assetId._id === assetToUpdate._id) {
+    //             return {
+    //                 ...asset,
+    //                 distribution: updatedDistribution
+    //             };
+    //         }
+    //         return asset;
+    //     });
+    
+    //     // Dispatch the updated assets slice
+    //     dispatch(updateAssetsSlice(updatedAssets));
+    
+    //     // Dispatch the updated current order slice
+    //     dispatch(updateCurrentOrderSlice({
+    //         ...currentOrder,
+    //         peopleAndRoles: updatedPeopleAndRoles,
+    //         assetsAndDistribution: updatedCurrentOrderAssetDistribution
+    //     }));
+    // };
+    
+
+
+
+
+
+
+    // const handleBeneficiaryChecked = (personIndex, assetIndex, isChecked) => {
+    //     const familyBeneficiary = family[personIndex];
+    //     const assetToUpdate = assets[assetIndex];
+    
+    //     // Update the peopleAndRoles array in currentOrder
+    //     const updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(personRole => {
+    //         if (personRole.personId._id === familyBeneficiary.personId._id) {
+    //             if (isChecked) {
+    //                 // Add the beneficiary role if it doesn't already exist
+    //                 return {
+    //                     ...personRole,
+    //                     role: personRole.role.includes('beneficiary') ? personRole.role
+    //                         : [...personRole.role, 'beneficiary']
+    //                 };
+    //             } else {
+    //                 // Remove the beneficiary role
+    //                 return {
+    //                     ...personRole,
+    //                     role: personRole.role.filter(role => role !== 'beneficiary')
+    //                 };
+    //             }
+    //         }
+    //         return personRole;
+    //     });
+    
+    //     // Update the distribution array for the asset
+    //     const updatedDistribution = isChecked
+    //         ? [...assetToUpdate.distribution, {
+    //             personId: familyBeneficiary.personId._id,
+    //             title: familyBeneficiary.personId.title,
+    //             fullLegalName: familyBeneficiary.personId.fullLegalName,
+    //             fullAddress: familyBeneficiary.personId.fullAddress,
+    //             dob: familyBeneficiary.personId.dob,
+    //             email: familyBeneficiary.personId.email || '',
+    //             tel: familyBeneficiary.personId.tel || '',
+    //             receivingAmount: "percentage here"
+    //         }]
+    //         : assetToUpdate.distribution.filter(d => d.personId._id !== familyBeneficiary.personId._id);
+    
+    //     // Create the updated asset object
+    //     const updatedAsset = { ...assetToUpdate, distribution: updatedDistribution };
+    
+    //     // Update the assets array
+    //     const updatedAssets = assets.map((asset, index) => index === assetIndex ? updatedAsset : asset);
+    
+    //     // Update the assetsAndDistribution in currentOrder
+    //     const updatedCurrentOrderAssetDistribution = currentOrder.assetsAndDistribution.map(asset => {
+    //         if (asset.assetId._id === assetToUpdate._id) {
+    //             return {
+    //                 ...asset,
+    //                 distribution: updatedDistribution
+    //             };
+    //         }
+    //         return asset;
+    //     });
+    
+    //     // Dispatch the updated assets slice
+    //     dispatch(updateAssetsSlice(updatedAssets));
+    
+    //     // Dispatch the updated current order slice
+    //     dispatch(updateCurrentOrderSlice({
+    //         ...currentOrder,
+    //         peopleAndRoles: updatedPeopleAndRoles,
+    //         assetsAndDistribution: updatedCurrentOrderAssetDistribution
+    //     }));
+    // };
+    
+
+
+
+    // const handleBeneficiaryChecked = (personIndex, assetIndex, isChecked) => {
+    //     const familyBeneficiary = family[personIndex];
+    //     const assetToUpdate = assets[assetIndex];
+    
+    //     // Update the peopleAndRoles array in currentOrder
+    //     const updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(personRole => {
+    //         if (personRole.personId._id === familyBeneficiary.personId._id) {
+    //             if (isChecked) {
+    //                 // Add the beneficiary role if it doesn't already exist
+    //                 return {
+    //                     ...personRole,
+    //                     role: personRole.role.includes('beneficiary') ? personRole.role
+    //                         : [...personRole.role, 'beneficiary']
+    //                 };
+    //             } else {
+    //                 // Remove the beneficiary role
+    //                 return {
+    //                     ...personRole,
+    //                     role: personRole.role.filter(role => role !== 'beneficiary')
+    //                 };
+    //             }
+    //         }
+    //         return personRole;
+    //     });
+    
+    //     // Update the distribution array for the asset
+    //     const updatedDistribution = isChecked
+    //         ? [...assetToUpdate.distribution, {
+    //             personId: familyBeneficiary.personId._id,
+    //             title: familyBeneficiary.personId.title,
+    //             fullLegalName: familyBeneficiary.personId.fullLegalName,
+    //             fullAddress: familyBeneficiary.personId.fullAddress,
+    //             dob: familyBeneficiary.personId.dob,
+    //             email: familyBeneficiary.personId.email || '',
+    //             tel: familyBeneficiary.personId.tel || '',
+    //             receivingAmount: "percentage here"
+    //         }]
+    //         : assetToUpdate.distribution.filter(d => d.personId._id !== familyBeneficiary.personId._id);
+    
+    //     // Create the updated asset object
+    //     const updatedAsset = { ...assetToUpdate, distribution: updatedDistribution };
+    
+    //     // Update the assets array
+    //     const updatedAssets = assets.map((asset, index) => index === assetIndex ? updatedAsset : asset);
+    
+    //     // Update the assetsAndDistribution in currentOrder
+    //     const updatedCurrentOrderAssetDistribution = currentOrder.assetsAndDistribution.map(asset => {
+    //         if (asset.assetId._id === assetToUpdate._id) {
+    //             return {
+    //                 ...asset,
+    //                 distribution: updatedDistribution
+    //             };
+    //         }
+    //         return asset;
+    //     });
+    
+    //     // Dispatch the updated assets slice
+    //     dispatch(updateAssetsSlice(updatedAssets));
+    
+    //     // Dispatch the updated current order slice
+    //     dispatch(updateCurrentOrderSlice({
+    //         ...currentOrder,
+    //         peopleAndRoles: updatedPeopleAndRoles,
+    //         assetsAndDistribution: updatedCurrentOrderAssetDistribution
+    //     }));
+    // };
+    
+
+
+    // const handleBeneficiaryChecked = (personIndex, assetIndex, isChecked) => {
+    //     const familyBeneficiary = family[personIndex];
+    //     const assetToUpdate = assets[assetIndex];
+    
+    //     // Update the peopleAndRoles array in currentOrder
+    //     const updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(personRole => {
+    //         if (personRole.personId._id === familyBeneficiary.personId._id) {
+    //             if (isChecked) {
+    //                 // Add the beneficiary role if it doesn't already exist
+    //                 return {
+    //                     ...personRole,
+    //                     role: personRole.role.includes('beneficiary') ? personRole.role
+    //                         : [...personRole.role, 'beneficiary']
+    //                 };
+    //             } else {
+    //                 // Remove the beneficiary role
+    //                 return {
+    //                     ...personRole,
+    //                     role: personRole.role.filter(role => role !== 'beneficiary')
+    //                 };
+    //             }
+    //         }
+    //         return personRole;
+    //     });
+    
+    //     // Update the distribution array for the asset
+    //     let updatedDistribution;
+    //     if (isChecked) {
+    //         // Add person to distribution if not already present
+    //         if (!assetToUpdate.distribution.some(d => d.personId._id === familyBeneficiary.personId._id)) {
+    //             updatedDistribution = [...assetToUpdate.distribution, {
+    //                 personId: familyBeneficiary.personId._id,
+    //                 title: familyBeneficiary.personId.title,
+    //                 fullLegalName: familyBeneficiary.personId.fullLegalName,
+    //                 fullAddress: familyBeneficiary.personId.fullAddress,
+    //                 dob: familyBeneficiary.personId.dob,
+    //                 email: familyBeneficiary.personId.email || '',
+    //                 tel: familyBeneficiary.personId.tel || '',
+    //                 receivingAmount: "percentage here"
+    //             }];
+    //         } else {
+    //             updatedDistribution = assetToUpdate.distribution;
+    //         }
+    //     } else {
+    //         // Remove person from distribution
+    //         updatedDistribution = assetToUpdate.distribution.filter(d => d.personId._id !== familyBeneficiary.personId._id);
+    //     }
+    
+    //     // Create the updated asset object
+    //     const updatedAsset = { ...assetToUpdate, distribution: updatedDistribution };
+    
+    //     // Update the assets array
+    //     const updatedAssets = assets.map((asset, index) => index === assetIndex ? updatedAsset : asset);
+    
+    //     // Update the assetsAndDistribution in currentOrder
+    //     const updatedCurrentOrderAssetDistribution = currentOrder.assetsAndDistribution.map(asset => {
+    //         if (asset.assetId._id === assetToUpdate._id) {
+    //             return {
+    //                 ...asset,
+    //                 distribution: updatedDistribution
+    //             };
+    //         }
+    //         return asset;
+    //     });
+    
+    //     // Dispatch the updated assets slice
+    //     dispatch(updateAssetsSlice(updatedAssets));
+    
+    //     // Dispatch the updated current order slice
+    //     dispatch(updateCurrentOrderSlice({
+    //         ...currentOrder,
+    //         peopleAndRoles: updatedPeopleAndRoles,
+    //         assetsAndDistribution: updatedCurrentOrderAssetDistribution
+    //     }));
+    // };
+    
+
+    // const handleBeneficiaryChecked = (personIndex, assetIndex, isChecked) => {
+    //     const familyBeneficiary = family[personIndex];
+    //     const assetToUpdate = assets[assetIndex];
+    
+    //     console.log(`Handling beneficiary check: ${isChecked}, Person: ${familyBeneficiary.personId.fullLegalName}, Asset: ${assetToUpdate.assetType}`);
+    
+    //     // Update the peopleAndRoles array in currentOrder
+    //     const updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(personRole => {
+    //         if (personRole.personId._id === familyBeneficiary.personId._id) {
+    //             if (isChecked) {
+    //                 // Add the beneficiary role if it doesn't already exist
+    //                 return {
+    //                     ...personRole,
+    //                     role: personRole.role.includes('beneficiary') ? personRole.role
+    //                         : [...personRole.role, 'beneficiary']
+    //                 };
+    //             } else {
+    //                 // Remove the beneficiary role
+    //                 return {
+    //                     ...personRole,
+    //                     role: personRole.role.filter(role => role !== 'beneficiary')
+    //                 };
+    //             }
+    //         }
+    //         return personRole;
+    //     });
+    
+    //     console.log(`Updated people and roles: ${JSON.stringify(updatedPeopleAndRoles)}`);
+    
+    //     // Update the distribution array for the asset
+    //     let updatedDistribution;
+    //     if (isChecked) {
+    //         // Add person to distribution if not already present
+    //         if (!assetToUpdate.distribution.some(d => d.personId._id === familyBeneficiary.personId._id)) {
+    //             updatedDistribution = [...assetToUpdate.distribution, {
+    //                 personId: familyBeneficiary.personId._id,
+    //                 title: familyBeneficiary.personId.title,
+    //                 fullLegalName: familyBeneficiary.personId.fullLegalName,
+    //                 fullAddress: familyBeneficiary.personId.fullAddress,
+    //                 dob: familyBeneficiary.personId.dob,
+    //                 email: familyBeneficiary.personId.email || '',
+    //                 tel: familyBeneficiary.personId.tel || '',
+    //                 receivingAmount: "percentage here"
+    //             }];
+    //         } else {
+    //             updatedDistribution = assetToUpdate.distribution;
+    //         }
+    //     } else {
+    //         // Remove person from distribution
+    //         updatedDistribution = assetToUpdate.distribution.filter(d => d.personId._id !== familyBeneficiary.personId._id);
+    //     }
+    
+    //     console.log(`Updated distribution: ${JSON.stringify(updatedDistribution)}`);
+    
+    //     // Create the updated asset object
+    //     const updatedAsset = { ...assetToUpdate, distribution: updatedDistribution };
+    
+    //     // Update the assets array
+    //     const updatedAssets = assets.map((asset, index) => index === assetIndex ? updatedAsset : asset);
+    
+    //     console.log(`Updated assets: ${JSON.stringify(updatedAssets)}`);
+    
+    //     // Update the assetsAndDistribution in currentOrder
+    //     const updatedCurrentOrderAssetDistribution = currentOrder.assetsAndDistribution.map(asset => {
+    //         if (asset.assetId._id === assetToUpdate._id) {
+    //             return {
+    //                 ...asset,
+    //                 distribution: updatedDistribution
+    //             };
+    //         }
+    //         return asset;
+    //     });
+    
+    //     console.log(`Updated current order asset distribution: ${JSON.stringify(updatedCurrentOrderAssetDistribution)}`);
+    
+    //     // Dispatch the updated assets slice
+    //     dispatch(updateAssetsSlice(updatedAssets));
+    
+    //     // Dispatch the updated current order slice
+    //     dispatch(updateCurrentOrderSlice({
+    //         ...currentOrder,
+    //         peopleAndRoles: updatedPeopleAndRoles,
+    //         assetsAndDistribution: updatedCurrentOrderAssetDistribution
+    //     }));
+    // };
+    
+
+    // const handleBeneficiaryChecked = (personIndex, assetIndex, isChecked) => {
+    //     const familyBeneficiary = family[personIndex];
+    //     const assetToUpdate = assets[assetIndex];
+    
+    //     console.log(`Handling beneficiary check: ${isChecked}, Person: ${familyBeneficiary.personId.fullLegalName}, Asset: ${assetToUpdate.assetType}`);
+    
+    //     // Update the peopleAndRoles array in currentOrder
+    //     const updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(personRole => {
+    //         if (personRole.personId._id === familyBeneficiary.personId._id) {
+    //             if (isChecked) {
+    //                 // Add the beneficiary role if it doesn't already exist
+    //                 return {
+    //                     ...personRole,
+    //                     role: personRole.role.includes('beneficiary') ? personRole.role
+    //                         : [...personRole.role, 'beneficiary']
+    //                 };
+    //             } else {
+    //                 // Remove the beneficiary role
+    //                 return {
+    //                     ...personRole,
+    //                     role: personRole.role.filter(role => role !== 'beneficiary')
+    //                 };
+    //             }
+    //         }
+    //         return personRole;
+    //     });
+    
+    //     console.log(`Updated people and roles: ${JSON.stringify(updatedPeopleAndRoles)}`);
+    
+    //     // Update the distribution array for the asset
+    //     let updatedDistribution;
+    //     if (isChecked) {
+    //         // Add person to distribution if not already present
+    //         if (!assetToUpdate.distribution.some(d => d.personId._id === familyBeneficiary.personId._id)) {
+    //             updatedDistribution = [...assetToUpdate.distribution, {
+    //                 personId: familyBeneficiary.personId._id,
+    //                 title: familyBeneficiary.personId.title,
+    //                 fullLegalName: familyBeneficiary.personId.fullLegalName,
+    //                 fullAddress: familyBeneficiary.personId.fullAddress,
+    //                 dob: familyBeneficiary.personId.dob,
+    //                 email: familyBeneficiary.personId.email || '',
+    //                 tel: familyBeneficiary.personId.tel || '',
+    //                 receivingAmount: "percentage here"
+    //             }];
+    //         } else {
+    //             updatedDistribution = assetToUpdate.distribution;
+    //         }
+    //     } else {
+    //         // Remove person from distribution
+    //         updatedDistribution = assetToUpdate.distribution.filter(d => d.personId._id !== familyBeneficiary.personId._id);
+    //     }
+    
+    //     console.log(`Updated distribution: ${JSON.stringify(updatedDistribution)}`);
+    
+    //     // Create the updated asset object
+    //     const updatedAsset = { ...assetToUpdate, distribution: updatedDistribution };
+    
+    //     // Update the assets array
+    //     const updatedAssets = assets.map((asset, index) => index === assetIndex ? updatedAsset : asset);
+    
+    //     console.log(`Updated assets: ${JSON.stringify(updatedAssets)}`);
+    
+    //     // Update the assetsAndDistribution in currentOrder
+    //     const updatedCurrentOrderAssetDistribution = currentOrder.assetsAndDistribution.map(asset => {
+    //         if (asset.assetId._id === assetToUpdate._id) {
+    //             return {
+    //                 ...asset,
+    //                 distribution: updatedDistribution
+    //             };
+    //         }
+    //         return asset;
+    //     });
+    
+    //     console.log(`Updated current order asset distribution: ${JSON.stringify(updatedCurrentOrderAssetDistribution)}`);
+    
+    //     // Dispatch the updated assets slice
+    //     dispatch(updateAssetsSlice(updatedAssets));
+    
+    //     // Dispatch the updated current order slice
+    //     dispatch(updateCurrentOrderSlice({
+    //         ...currentOrder,
+    //         peopleAndRoles: updatedPeopleAndRoles,
+    //         assetsAndDistribution: updatedCurrentOrderAssetDistribution
+    //     }));
+    
+    //     console.log('Dispatched updated state');
+    // };
+    
+
 
     const handleBeneficiaryChecked = (personIndex, assetIndex, isChecked) => {
         const familyBeneficiary = family[personIndex];
         const assetToUpdate = assets[assetIndex];
-
+    
+        console.log(`Handling beneficiary check: ${isChecked}, Person: ${familyBeneficiary.personId.fullLegalName}, Asset: ${assetToUpdate.assetType}`);
+    
         // Update the peopleAndRoles array in currentOrder
         const updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(personRole => {
             if (personRole.personId._id === familyBeneficiary.personId._id) {
@@ -294,41 +804,44 @@ const AssetsDistribution = () => {
             }
             return personRole;
         });
-
-        // const updatedCurrentOrderAssetDistribution = currentOrder.assetsAndDistribution.map(asset =>{
-        //     if(asset.assetId._id === assetToUpdate._id){
-        //         return {
-        //             ...asset.distibution,
-        //             {personId:familyBeneficiary.personId._id,
-        //                 percentage: "percentage here"
-        //             }
-        //         }
-        //     }
-        // })        
-
+    
+        console.log(`Updated people and roles: ${JSON.stringify(updatedPeopleAndRoles)}`);
+    
         // Update the distribution array for the asset
-        const updatedDistribution = isChecked
-            ? [...assetToUpdate.distribution, {
-                personId: familyBeneficiary.personId._id,
-                title: familyBeneficiary.personId.title,
-                fullLegalName: familyBeneficiary.personId.fullLegalName,
-                fullAddress: familyBeneficiary.personId.fullAddress,
-                dob: familyBeneficiary.personId.dob,
-                email: familyBeneficiary.personId.email || '',
-                tel: familyBeneficiary.personId.tel || '',
-                receivingAmount: "percentage here"
-            }]
-            : assetToUpdate.distribution.filter(d => d.personId !== familyBeneficiary.personId._id);
-
+        let updatedDistribution;
+        if (isChecked) {
+            // Add person to distribution if not already present
+            if (!assetToUpdate.distribution.some(d => d.personId._id === familyBeneficiary.personId._id)) {
+                updatedDistribution = [...assetToUpdate.distribution, {
+                    personId: familyBeneficiary.personId._id,
+                    title: familyBeneficiary.personId.title,
+                    fullLegalName: familyBeneficiary.personId.fullLegalName,
+                    fullAddress: familyBeneficiary.personId.fullAddress,
+                    dob: familyBeneficiary.personId.dob,
+                    email: familyBeneficiary.personId.email || '',
+                    tel: familyBeneficiary.personId.tel || '',
+                    receivingAmount: "percentage here"
+                }];
+            } else {
+                updatedDistribution = assetToUpdate.distribution;
+            }
+        } else {
+            // Remove person from distribution
+            console.log(`should have remove the person`)
+            updatedDistribution = assetToUpdate.distribution.filter(d => d.personId._id !== familyBeneficiary.personId._id);
+            console.log(`this should have the person removed ${JSON.stringify(updatedDistribution)}`)
+        }
+    
+        console.log(`Updated distribution: ${JSON.stringify(updatedDistribution)}`);
+    
         // Create the updated asset object
         const updatedAsset = { ...assetToUpdate, distribution: updatedDistribution };
-
+    
         // Update the assets array
         const updatedAssets = assets.map((asset, index) => index === assetIndex ? updatedAsset : asset);
-
-
-
-
+    
+        console.log(`Updated assets: ${JSON.stringify(updatedAssets)}`);
+    
         // Update the assetsAndDistribution in currentOrder
         const updatedCurrentOrderAssetDistribution = currentOrder.assetsAndDistribution.map(asset => {
             if (asset.assetId._id === assetToUpdate._id) {
@@ -339,23 +852,22 @@ const AssetsDistribution = () => {
             }
             return asset;
         });
-
-
-
-
+    
+        console.log(`Updated current order asset distribution: ${JSON.stringify(updatedCurrentOrderAssetDistribution)}`);
+    
         // Dispatch the updated assets slice
         dispatch(updateAssetsSlice(updatedAssets));
-
-        // // Dispatch the updated current order slice
-        // dispatch(updateCurrentOrderSlice({ ...currentOrder, peopleAndRoles: updatedPeopleAndRoles }));
+    
         // Dispatch the updated current order slice
         dispatch(updateCurrentOrderSlice({
             ...currentOrder,
             peopleAndRoles: updatedPeopleAndRoles,
             assetsAndDistribution: updatedCurrentOrderAssetDistribution
         }));
+    
+        console.log('Dispatched updated state');
     };
-
+    
 
 
 
@@ -387,19 +899,16 @@ const AssetsDistribution = () => {
                                             section="assetsDistribution-asset"
                                         />
                                         {family.map((person, personIndex) => (
-                                            <>
-                                                {/* console.log(`family person assets distribution = ${JSON.stringify(person)}`) */}
-                                                <SectionListItem
-                                                    key={`asset-${assetIndex}-person-${personIndex}`}
-                                                    buttonsDisabled={showAdditionalBeneficiaryForm}
-                                                    data={person.personId}
-                                                    onRemove={() => handleRemoveAdditionalBeneficiary(personIndex)}
-                                                    onEdit={() => handleEditAdditionalBeneficiary(personIndex)}
-                                                    onChecked={(isChecked) => handleBeneficiaryChecked(personIndex, assetIndex, isChecked)}  // Pass the checkbox state
-
-                                                    section="assetDistribution-people"
-                                                />
-                                            </>
+                                            <SectionListItem
+                                                key={`asset-${assetIndex}-person-${personIndex}`}
+                                                buttonsDisabled={showAdditionalBeneficiaryForm}
+                                                data={person.personId}
+                                                onRemove={() => handleRemoveAdditionalBeneficiary(personIndex)}
+                                                onEdit={() => handleEditAdditionalBeneficiary(personIndex)}
+                                                onChecked={(isChecked) => handleBeneficiaryChecked(personIndex, assetIndex, isChecked)}  // Pass the checkbox state
+                                                section="assetDistribution-people"
+                                                asset={asset} // Pass only the relevant asset to the SectionListItem
+                                            />
                                         ))}
                                         <button
                                             className="section-add-btn"

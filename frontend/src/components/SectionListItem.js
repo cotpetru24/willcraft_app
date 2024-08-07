@@ -6,7 +6,7 @@
 import styles from "../common/styles";
 import { useState, useEffect } from "react";
 
-const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onChecked }) => {
+const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onChecked, asset }) => {
     const [isChecked, setIsChecked] = useState(false);
 
     // console.log(`data passed to section list item = ${JSON.stringify(data)}`)
@@ -18,16 +18,72 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
     // }, [data.role]);
 
 
+    // useEffect(() => {
+    //     if (data.role && data.role.includes("executor")) {
+    //         setIsChecked(true);
+    //     }
+    // }, [data.role]);
+
+
+
+    // useEffect(() => {
+    //     if (data.role && data.role.includes("executor")) {
+    //         setIsChecked(true);
+    //     }
+
+    //     if (section === 'assetDistribution-people' && asset) {
+    //         const isInDistribution = asset.distribution.some(dist => dist.personId._id === data._id);
+    //         if (isInDistribution) {
+    //             setIsChecked(true);
+    //         }
+    //     }
+    // }, [data.role, section, asset, data._id]);
+
+
+
+    // useEffect(() => {
+    //     if (data.role && data.role.includes("executor")) {
+    //         setIsChecked(true);
+    //     }
+
+    //     if (section === 'assetDistribution-people' && asset) {
+    //         const isInDistribution = asset.distribution.some(dist => dist.personId._id === data._id);
+    //         setIsChecked(isInDistribution);
+    //     }
+    // }, [data.role, section, asset, data._id]);
+
+
+
+
+    // useEffect(() => {
+    //     if (data.role && data.role.includes("executor")) {
+    //         setIsChecked(true);
+    //     }
+
+    //     if (section === 'assetDistribution-people' && asset) {
+    //         const isInDistribution = asset.distribution.some(dist => dist.personId._id === data._id);
+    //         setIsChecked(isInDistribution);
+    //     }
+    // }, [data.role, section, asset, data._id]);
+
+
+
     useEffect(() => {
         if (data.role && data.role.includes("executor")) {
             setIsChecked(true);
         }
-    }, [data.role]);
+
+        if (section === 'assetDistribution-people' && asset) {
+            const isInDistribution = asset.distribution.some(dist => dist.personId._id === data._id);
+            setIsChecked(isInDistribution);
+        }
+    }, [data.role, section,  data._id]);
 
 
 
     const handleCheckboxChange = () => {
         const newCheckedState = !isChecked;
+        console.log(`Checkbox state changing to: ${newCheckedState} for person: ${data.fullLegalName}`);
         setIsChecked(newCheckedState);
         onChecked(newCheckedState);  // Pass the new checked state to the callback
     };
