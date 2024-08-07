@@ -72,8 +72,8 @@ const AssetsDistribution = () => {
         if (!savedAdditionalBeneficiariesData.current) {
             savedAdditionalBeneficiariesData.current = JSON.parse(JSON.stringify(assets));
         }
-        if (!savedCurrentOrderData.current){
-            savedCurrentOrderData.current=JSON.parse(JSON.stringify(currentOrder))
+        if (!savedCurrentOrderData.current) {
+            savedCurrentOrderData.current = JSON.parse(JSON.stringify(currentOrder))
         }
     }, [additionalBeneficiaryFormData, assets]);
 
@@ -228,19 +228,64 @@ const AssetsDistribution = () => {
 
 
 
-    const handleBeneficiaryChecked = (index, isChecked) => {
-        const familyBeneficiary = family[index];
+    // const handleBeneficiaryChecked = (personIndex, assetIndex, isChecked) => {
+    //     const familyBeneficiary = family[personIndex];
+    //     const assetToUpdate = assets[assetIndex]
 
+    //     const updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(personRole => {
+    //         if (personRole.personId._id === familyBeneficiary.personId._id) {
+    //             if (isChecked) {
+    //                 // Add the executor role if it doesn't already exist
+    //                 return {
+    //                     ...personRole,
+    //                     role: personRole.role.includes('beneficiary') ? personRole.role
+    //                         : [...personRole.role, 'beneficiary']
+    //                 };
+    //             } else {
+    //                 // Remove the executor role
+    //                 return {
+    //                     ...personRole,
+    //                     role: personRole.role.filter(role => role !== 'beneficiary')
+    //                 };
+    //             }
+    //         }
+    //         return personRole;
+    //     });
+
+    //     const updatedAssetDistribution = {
+    //         ...assets[assetIndex],
+    //         distribution: [
+    //             {
+    //                 personId: familyBeneficiary._id,
+    //                 percentage: "percentage here"
+    //             }
+
+    //         ]
+
+
+    //     };
+
+    //     dispatch(updatedAssetDistribution({ ...assets, updatedAssetDistribution }))
+
+    //     dispatch(updateCurrentOrderSlice({ ...currentOrder, peopleAndRoles: updatedPeopleAndRoles }));
+    // };
+
+    const handleBeneficiaryChecked = (personIndex, assetIndex, isChecked) => {
+        const familyBeneficiary = family[personIndex];
+        const assetToUpdate = assets[assetIndex];
+    
+        // Update the peopleAndRoles array in currentOrder
         const updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(personRole => {
             if (personRole.personId._id === familyBeneficiary.personId._id) {
                 if (isChecked) {
-                    // Add the executor role if it doesn't already exist
+                    // Add the beneficiary role if it doesn't already exist
                     return {
                         ...personRole,
-                        role: personRole.role.includes('beneficiary') ? personRole.role : [...personRole.role, 'beneficiary']
+                        role: personRole.role.includes('beneficiary') ? personRole.role
+                            : [...personRole.role, 'beneficiary']
                     };
                 } else {
-                    // Remove the executor role
+                    // Remove the beneficiary role
                     return {
                         ...personRole,
                         role: personRole.role.filter(role => role !== 'beneficiary')
@@ -250,10 +295,65 @@ const AssetsDistribution = () => {
             return personRole;
         });
 
-        dispatch(updateCurrentOrderSlice({ ...currentOrder, peopleAndRoles: updatedPeopleAndRoles }));
+        // const updatedCurrentOrderAssetDistribution = currentOrder.assetsAndDistribution.map(asset =>{
+        //     if(asset.assetId._id === assetToUpdate._id){
+        //         return {
+        //             ...asset.distibution,
+        //             {personId:familyBeneficiary.personId._id,
+        //                 percentage: "percentage here"
+        //             }
+        //         }
+        //     }
+        // })        
+    
+        // Update the distribution array for the asset
+        const updatedDistribution = isChecked
+            ? [...assetToUpdate.distribution, { 
+                personId: familyBeneficiary.personId._id, 
+                title: familyBeneficiary.personId.title,
+                fullLegalName: familyBeneficiary.personId.fullLegalName,
+                fullAddress: familyBeneficiary.personId.fullAddress,
+                dob: familyBeneficiary.personId.dob,
+                email: familyBeneficiary.personId.email || '',
+                tel: familyBeneficiary.personId.tel || '',
+                percentage: "percentage here" }]
+            : assetToUpdate.distribution.filter(d => d.personId !== familyBeneficiary.personId._id);
+    
+        // Create the updated asset object
+        const updatedAsset = { ...assetToUpdate, distribution: updatedDistribution };
+    
+        // Update the assets array
+        const updatedAssets = assets.map((asset, index) => index === assetIndex ? updatedAsset : asset);
+    
+
+
+
+    // Update the assetsAndDistribution in currentOrder
+    const updatedCurrentOrderAssetDistribution = currentOrder.assetsAndDistribution.map(asset => {
+        if (asset.assetId._id === assetToUpdate._id) {
+            return {
+                ...asset,
+                distribution: updatedDistribution
+            };
+        }
+        return asset;
+    });
+
+
+
+
+        // Dispatch the updated assets slice
+        dispatch(updateAssetsSlice(updatedAssets));
+    
+        // // Dispatch the updated current order slice
+        // dispatch(updateCurrentOrderSlice({ ...currentOrder, peopleAndRoles: updatedPeopleAndRoles }));
+            // Dispatch the updated current order slice
+    dispatch(updateCurrentOrderSlice({
+        ...currentOrder,
+        peopleAndRoles: updatedPeopleAndRoles,
+        assetsAndDistribution: updatedCurrentOrderAssetDistribution
+    }));
     };
-
-
 
 
 
@@ -287,17 +387,17 @@ const AssetsDistribution = () => {
                                         />
                                         {family.map((person, personIndex) => (
                                             <>
-                                            {/* console.log(`family person assets distribution = ${JSON.stringify(person)}`) */}
-                                            <SectionListItem
-                                                key={`asset-${assetIndex}-person-${personIndex}`}
-                                                buttonsDisabled={showAdditionalBeneficiaryForm}
-                                                data={person.personId}
-                                                onRemove={() => handleRemoveAdditionalBeneficiary(personIndex)}
-                                                onEdit={() => handleEditAdditionalBeneficiary(personIndex)}
-                                                onChecked={(isChecked) => handleBeneficiaryChecked(personIndex, isChecked)}  // Pass the checkbox state
+                                                {/* console.log(`family person assets distribution = ${JSON.stringify(person)}`) */}
+                                                <SectionListItem
+                                                    key={`asset-${assetIndex}-person-${personIndex}`}
+                                                    buttonsDisabled={showAdditionalBeneficiaryForm}
+                                                    data={person.personId}
+                                                    onRemove={() => handleRemoveAdditionalBeneficiary(personIndex)}
+                                                    onEdit={() => handleEditAdditionalBeneficiary(personIndex)}
+                                                    onChecked={(isChecked) => handleBeneficiaryChecked(personIndex, assetIndex, isChecked)}  // Pass the checkbox state
 
-                                                section="assetDistribution-people"
-                                            />
+                                                    section="assetDistribution-people"
+                                                />
                                             </>
                                         ))}
                                         <button
