@@ -8,7 +8,7 @@ import KidsTile from "./CreatingOrderTiles/KidsTile";
 import AssetsTile from "./CreatingOrderTiles/AssetsTile";
 import AssetsDistributionTile from "./CreatingOrderTiles/AssetsDistributionTile";
 import ExecutorsTile from "./CreatingOrderTiles/ExecutorsTile";
-
+import GenerateWillButton from '../../features/generatewillbtn';
 
 
 
@@ -46,6 +46,7 @@ const CreatingOrder = () => {
                         <p>Please fill out the will checklist to complete your will.
                             If you have any questions, message, email or call us on 024 1234 5678.</p>
                     </div>
+                    <GenerateWillButton />
                 </div>
 
             </div>
