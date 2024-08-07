@@ -175,33 +175,33 @@ const AssetsDistribution = () => {
     const handleSaveAndContinue = async (e) => {
         e.preventDefault();
 
-        const updatedAssets = [];
+        // const updatedAssets = [];
 
-        for (const asset of assets) {
-            let response;
-            if (asset._id) {
-                response = await dispatch(updateAssetThunk(asset)).unwrap();
-            } else {
-                response = await dispatch(createAssetThunk(asset)).unwrap();
-            }
-            updatedAssets.push({
-                ...asset,
-                _id: response._id
-            });
-        }
+        // for (const asset of assets) {
+        //     let response;
+        //     if (asset._id) {
+        //         response = await dispatch(updateAssetThunk(asset)).unwrap();
+        //     } else {
+        //         response = await dispatch(createAssetThunk(asset)).unwrap();
+        //     }
+        //     updatedAssets.push({
+        //         ...asset,
+        //         _id: response._id
+        //     });
+        // }
 
-        await dispatch(updateAssetsSlice(updatedAssets));
+        // await dispatch(updateAssetsSlice(updatedAssets));
 
-        const updatedOrder = {
-            ...currentOrder,
-            assetsAndDistribution: updatedAssets.map(asset => ({
-                assetId: asset._id,
-                assetDistribution: asset.distribution || []
-            }))
-        };
+        // const updatedOrder = {
+        //     ...currentOrder,
+        //     assetsAndDistribution: updatedAssets.map(asset => ({
+        //         assetId: asset._id,
+        //         assetDistribution: asset.distribution || []
+        //     }))
+        // };
 
-        await dispatch(updateCurrentOrderSlice(updatedOrder));
-        await dispatch(updateOrderThunk(updatedOrder));
+        // await dispatch(updateCurrentOrderSlice(updatedOrder));
+        await dispatch(updateOrderThunk(currentOrder));
 
         navigate('/creatingOrder');
     };
@@ -273,7 +273,7 @@ const AssetsDistribution = () => {
     const handleBeneficiaryChecked = (personIndex, assetIndex, isChecked) => {
         const familyBeneficiary = family[personIndex];
         const assetToUpdate = assets[assetIndex];
-    
+
         // Update the peopleAndRoles array in currentOrder
         const updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(personRole => {
             if (personRole.personId._id === familyBeneficiary.personId._id) {
@@ -305,54 +305,55 @@ const AssetsDistribution = () => {
         //         }
         //     }
         // })        
-    
+
         // Update the distribution array for the asset
         const updatedDistribution = isChecked
-            ? [...assetToUpdate.distribution, { 
-                personId: familyBeneficiary.personId._id, 
+            ? [...assetToUpdate.distribution, {
+                personId: familyBeneficiary.personId._id,
                 title: familyBeneficiary.personId.title,
                 fullLegalName: familyBeneficiary.personId.fullLegalName,
                 fullAddress: familyBeneficiary.personId.fullAddress,
                 dob: familyBeneficiary.personId.dob,
                 email: familyBeneficiary.personId.email || '',
                 tel: familyBeneficiary.personId.tel || '',
-                percentage: "percentage here" }]
+                receivingAmount: "percentage here"
+            }]
             : assetToUpdate.distribution.filter(d => d.personId !== familyBeneficiary.personId._id);
-    
+
         // Create the updated asset object
         const updatedAsset = { ...assetToUpdate, distribution: updatedDistribution };
-    
+
         // Update the assets array
         const updatedAssets = assets.map((asset, index) => index === assetIndex ? updatedAsset : asset);
-    
 
 
 
-    // Update the assetsAndDistribution in currentOrder
-    const updatedCurrentOrderAssetDistribution = currentOrder.assetsAndDistribution.map(asset => {
-        if (asset.assetId._id === assetToUpdate._id) {
-            return {
-                ...asset,
-                distribution: updatedDistribution
-            };
-        }
-        return asset;
-    });
+
+        // Update the assetsAndDistribution in currentOrder
+        const updatedCurrentOrderAssetDistribution = currentOrder.assetsAndDistribution.map(asset => {
+            if (asset.assetId._id === assetToUpdate._id) {
+                return {
+                    ...asset,
+                    distribution: updatedDistribution
+                };
+            }
+            return asset;
+        });
 
 
 
 
         // Dispatch the updated assets slice
         dispatch(updateAssetsSlice(updatedAssets));
-    
+
         // // Dispatch the updated current order slice
         // dispatch(updateCurrentOrderSlice({ ...currentOrder, peopleAndRoles: updatedPeopleAndRoles }));
-            // Dispatch the updated current order slice
-    dispatch(updateCurrentOrderSlice({
-        ...currentOrder,
-        peopleAndRoles: updatedPeopleAndRoles,
-        assetsAndDistribution: updatedCurrentOrderAssetDistribution
-    }));
+        // Dispatch the updated current order slice
+        dispatch(updateCurrentOrderSlice({
+            ...currentOrder,
+            peopleAndRoles: updatedPeopleAndRoles,
+            assetsAndDistribution: updatedCurrentOrderAssetDistribution
+        }));
     };
 
 
