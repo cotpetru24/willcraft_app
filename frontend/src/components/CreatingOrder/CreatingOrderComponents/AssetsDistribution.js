@@ -125,12 +125,19 @@ const AssetsDistribution = () => {
             //     additionalBeneficiaryThunks.createAdditionalBeficiaryThunk(additionalBeneficiaryFormData)).unwrap()
             await dispatch(updateAdditionalBeneficiariesSlice([...additionalBeneficiaries, createAdditionalBeficiaryResponse]));
 
+
+
+
+
+
+
+
             const assetIdToUpdate = additionalBeneficiaryFormData.assetId;
             const updatedAssets = assets.map(asset => {
                 if (asset._id === assetIdToUpdate) {
                     return {
                         ...asset,
-                        distribution: [...(asset.distribution || []), additionalBeneficiaryFormData]
+                        distribution: [...(asset.distribution || []), createAdditionalBeficiaryResponse]
                     };
                 }
                 return asset;

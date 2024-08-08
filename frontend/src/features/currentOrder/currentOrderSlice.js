@@ -7,6 +7,7 @@ import { updateKidsSlice } from "../people/kids/kidsSlice";
 import { updateAssetsSlice } from "../orderAssets/orderAssetsSlice";
 import { updateAllPeopleSlice } from "../people/peopleSlice";
 import { updateAdditionalExecutorsSlice } from "../additionalExecutors/additionalExecutorsSlice";
+import { updateAdditionalBeneficiariesSlice } from "../people/additionalBeneficiaries/additionalBeneficiariesSlice";
 
 
 const initialState = {
@@ -74,6 +75,12 @@ export const getOrderThunk = createAsyncThunk(
                 _id: p.personId._id
             }));
 
+            const additionalBeneficiaries = response.peopleAndRoles.filter(p => p.role.includes('additional beneficiary')).map(p => ({
+                ...p.personId,
+                role: p.role,
+                _id: p.personId._id
+            }))
+
             // const executors = response.peopleAndRoles
             //     .filter(p => !p.role.includes(constants.role.TESTATOR))
             //     .map(p => ({
@@ -134,6 +141,12 @@ export const getOrderThunk = createAsyncThunk(
 
             }
             if (additionalExecutors) thunkAPI.dispatch(updateAdditionalExecutorsSlice(additionalExecutors))
+
+
+
+            if (additionalBeneficiaries) thunkAPI.dispatch(updateAdditionalBeneficiariesSlice(additionalBeneficiaries))
+
+
 
             // if (executors) {
             //     console.log(`update executors slice called, executors: ${executors}`)
@@ -250,7 +263,7 @@ const currentOrderSlice = createSlice({
                 //     personId: pr.personId._id || pr.personId, // In case personId is populated, take only the _id
                 //     role: pr.role
                 // }));
-                state.peopleAndRoles=action.payload.peopleAndRoles;
+                state.peopleAndRoles = action.payload.peopleAndRoles;
 
                 // state.assetsAndDistribution = action.payload.assetsAndDistribution.map(ad => ({
                 //     assetId: ad.assetId._id || ad.assetId, // In case assetId is populated, take only the _id
