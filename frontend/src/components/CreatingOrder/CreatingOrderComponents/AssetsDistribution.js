@@ -24,17 +24,17 @@ const AssetsDistribution = () => {
     const kids = useSelector(state => state.kids);
     // const family = [].concat(spouseOrPartner, kids);
 
-
+    const [receivingAmount, setReceivingAmount] = useState('');
 
     const [family, setFamily] = useState([]);
 
     useEffect(() => {
         const updatedFamily = currentOrder.peopleAndRoles
-            .filter(p => 
-                p.role.includes('partner') 
-                || p.role.includes('kid') 
+            .filter(p =>
+                p.role.includes('partner')
+                || p.role.includes('kid')
                 || p.role.includes('spouse')
-                || p.role.includes('additional beneficiary')            );
+                || p.role.includes('additional beneficiary'));
         setFamily(updatedFamily);
     }, [currentOrder.peopleAndRoles, currentOrder]);
 
@@ -89,13 +89,199 @@ const AssetsDistribution = () => {
         setShowAdditionalBeneficiaryForm(prevState => !prevState);
     };
 
-    const handleOnChange = (e) => {
-        const { name, value } = e.target;
-        setAdditionalBeneficiaryFormData((prevData) => ({
-            ...prevData,
-            [name]: value
-        }));
+    // const handleOnChange = (e) => {
+    //     const { name, value } = e.target;
+    //     setAdditionalBeneficiaryFormData((prevData) => ({
+    //         ...prevData,
+    //         [name]: value
+    //     }));
+    // };
+
+
+
+
+
+    // const handleOnChange = (event, personId, assetIndex) => {
+    //     const { value } = event.target;
+
+    //     // Update the distribution array for the specific asset
+    //     const updatedAssets = assets.map((asset, index) => {
+    //         if (index === assetIndex) {
+    //             const updatedDistribution = asset.distribution.map(distribution => {
+    //                 if (distribution.personId=== personId) {
+    //                     return {
+    //                         ...distribution,
+    //                         receivingAmount: value,
+    //                     };
+    //                 }
+    //                 return distribution;
+    //             });
+    //             return {
+    //                 ...asset,
+    //                 distribution: updatedDistribution,
+    //             };
+    //         }
+    //         return asset;
+    //     });
+
+    //     // Dispatch the updated assets
+    //     dispatch(updateAssetsSlice(updatedAssets));
+    // };
+
+
+
+    // const handleOnChange = (event, assetIndex, personId) => {
+    //     if (!event || !event.target) {
+    //         console.error("Event is undefined or target is missing");
+    //         return;
+    //     }
+
+    //     const { value } = event.target;
+
+    //     // Use the assetIndex and personId to update the correct asset's distribution
+    //     const updatedAssets = assets.map((asset, index) => {
+    //         if (index === assetIndex) {
+    //             const updatedDistribution = asset.distribution.map(dist => {
+    //                 if (dist.personId._id === personId) {
+    //                     return { ...dist, receivingAmount: value };
+    //                 }
+    //                 return dist;
+    //             });
+    //             return { ...asset, distribution: updatedDistribution };
+    //         }
+    //         return asset;
+    //     });
+
+    //     dispatch(updateAssetsSlice(updatedAssets));
+    // };
+
+
+    // const handleOnChange = (event, assetIndex, personId) => {
+    //     if (!event || !event.target) {
+    //         console.error("Event is undefined or target is missing");
+    //         return;
+    //     }
+
+    //     const { value } = event.target;
+
+    //     // Update the local state first to reflect changes immediately in the UI
+    //     setReceivingAmount(value);
+
+    //     // Use the assetIndex and personId to update the correct asset's distribution
+    //     const updatedAssets = assets.map((asset, index) => {
+    //         if (index === assetIndex) {
+    //             const updatedDistribution = asset.distribution.map(dist => {
+    //                 if (dist.personId._id === personId) {
+    //                     return { ...dist, receivingAmount: value };
+    //                 }
+    //                 return dist;
+    //             });
+    //             return { ...asset, distribution: updatedDistribution };
+    //         }
+    //         return asset;
+    //     });
+
+    //     // Dispatch the updated assets to the Redux slice
+    //     dispatch(updateAssetsSlice(updatedAssets));
+    // };
+
+    // const handleOnChange = (value, assetIndex, personId) => {
+    //     const updatedAssets = assets.map((asset, index) => {
+    //         if (index === assetIndex) {
+    //             const updatedDistribution = asset.distribution.map(dist => {
+    //                 if (dist.personId._id === personId) {
+    //                     return { ...dist, receivingAmount: value };
+    //                 }
+    //                 return dist;
+    //             });
+    //             return { ...asset, distribution: updatedDistribution };
+    //         }
+    //         return asset;
+    //     });
+
+    //     dispatch(updateAssetsSlice(updatedAssets));
+    // };
+
+// AssetsDistribution.js
+
+// const handleOnChange = (value, assetIndex, personId) => {
+//     const updatedAssets = assets.map((asset, index) => {
+//         if (index === assetIndex) {
+//             const updatedDistribution = asset.distribution.map(dist => {
+//                 if (dist.personId._id === personId) {
+//                     return { ...dist, receivingAmount: value };
+//                 }
+//                 return dist;
+//             });
+//             return { ...asset, distribution: updatedDistribution };
+//         }
+//         return asset;
+//     });
+
+//     dispatch(updateAssetsSlice(updatedAssets));
+
+//     // Update current order
+//     const updatedAssetsAndDistribution = updatedAssets.map(asset => ({
+//         assetId: asset._id || asset.assetId,
+//         distribution: asset.distribution.map(dist => ({
+//             personId: dist.personId._id ? dist.personId._id : dist.personId,
+//             receivingAmount: dist.receivingAmount || 'percentage here'
+//         }))
+//     }));
+
+//     const updatedOrder = {
+//         ...currentOrder,
+//         assetsAndDistribution: updatedAssetsAndDistribution
+//     };
+
+//     dispatch(updateCurrentOrderSlice(updatedOrder));
+// };
+const handleOnChange = (value, assetIndex, personId) => {
+    console.log(`handleOnChange called with value: ${value}, assetIndex: ${assetIndex}, personId: ${personId}`);
+
+    const updatedAssets = assets.map((asset, index) => {
+        if (index === assetIndex) {
+            const updatedDistribution = asset.distribution.map(dist => {
+                if (dist.personId=== personId) {
+                    console.log(`Updating receivingAmount for personId: ${personId} to value: ${value}`);
+                    return { ...dist, receivingAmount: value };
+                }
+                return dist;
+            });
+            return { ...asset, distribution: updatedDistribution };
+        }
+        return asset;
+    });
+
+    console.log('Updated assets:', updatedAssets);
+    dispatch(updateAssetsSlice(updatedAssets));
+
+    // Update current order
+    const updatedAssetsAndDistribution = updatedAssets.map(asset => ({
+        assetId: asset._id || asset.assetId,
+        distribution: asset.distribution.map(dist => ({
+            personId: dist.personId._id ? dist.personId._id : dist.personId,
+            receivingAmount: dist.receivingAmount || 'percentage here'
+        }))
+    }));
+
+    const updatedOrder = {
+        ...currentOrder,
+        assetsAndDistribution: updatedAssetsAndDistribution
     };
+
+    console.log('Updated order:', updatedOrder);
+    dispatch(updateCurrentOrderSlice(updatedOrder));
+};
+
+
+
+
+
+
+
+
+
 
 
 
@@ -117,17 +303,17 @@ const AssetsDistribution = () => {
 
             const updatedBeneficiaries = [...additionalBeneficiaries, { personId: createAdditionalBeficiaryResponse }];
             await dispatch(updateAdditionalBeneficiariesSlice(updatedBeneficiaries));
-            
+
             const updatedOrder = {
                 ...currentOrder,
                 peopleAndRoles: [
-                    ...currentOrder.peopleAndRoles.filter(pr => !pr.role.includes('additional beneficiary')), 
+                    ...currentOrder.peopleAndRoles.filter(pr => !pr.role.includes('additional beneficiary')),
                     ...updatedBeneficiaries.map(beneficiary => ({
                         personId: beneficiary.personId,
                         role: ['additional beneficiary']
                     }))
                 ]
-                
+
             };
 
             // Update the order in the backend
@@ -139,30 +325,6 @@ const AssetsDistribution = () => {
         resetAdditionalBeneficiaryForm();
         setShowAdditionalBeneficiaryForm(false);
     };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     const resetAdditionalBeneficiaryForm = () => {
         setAdditionalBeneficiaryFormData({
@@ -177,18 +339,6 @@ const AssetsDistribution = () => {
         });
         setEditAdditionalBeneficiaryIndex(null);
     };
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     const handleRemoveAdditionalBeneficiary = (index) => {
@@ -409,29 +559,29 @@ const AssetsDistribution = () => {
                             <div className="section-list-container">
 
 
-                            {additionalBeneficiaries.length > 0 && (
-                                            <>
-                                                <h4> Additional beneficiaries</h4>
-                                                {additionalBeneficiaries.map((person, personIndex) => (
-                                                    <SectionListItem
-                                                        key={`person-${personIndex}`}
-                                                        buttonsDisabled={showAdditionalBeneficiaryForm}
-                                                        data={{ ...person.personId, role: 'additional beneficiary' }}
-                                                        onRemove={() => handleRemoveAdditionalBeneficiary(personIndex)}
-                                                        onEdit={() => handleEditAdditionalBeneficiary(personIndex)}
-                                                        section="assetDistribution-additionalBeneficiary"
-                                                    />
-                                                ))}
-                                            </>
-                                        )}
-                                        <button
-                                            className="section-add-btn"
-                                            onClick={() => handleShowAdditionalBeneficiaryForm()}
-                                            style={showAdditionalBeneficiaryForm ? styles.disabledButton : {}}
-                                            disabled={showAdditionalBeneficiaryForm}
-                                        >
-                                            +Add Beneficiary
-                                        </button>
+                                {additionalBeneficiaries.length > 0 && (
+                                    <>
+                                        <h4> Additional beneficiaries</h4>
+                                        {additionalBeneficiaries.map((person, personIndex) => (
+                                            <SectionListItem
+                                                key={`person-${personIndex}`}
+                                                buttonsDisabled={showAdditionalBeneficiaryForm}
+                                                data={{ ...person.personId, role: 'additional beneficiary' }}
+                                                onRemove={() => handleRemoveAdditionalBeneficiary(personIndex)}
+                                                onEdit={() => handleEditAdditionalBeneficiary(personIndex)}
+                                                section="assetDistribution-additionalBeneficiary"
+                                            />
+                                        ))}
+                                    </>
+                                )}
+                                <button
+                                    className="section-add-btn"
+                                    onClick={() => handleShowAdditionalBeneficiaryForm()}
+                                    style={showAdditionalBeneficiaryForm ? styles.disabledButton : {}}
+                                    disabled={showAdditionalBeneficiaryForm}
+                                >
+                                    +Add Beneficiary
+                                </button>
 
 
 
@@ -451,11 +601,14 @@ const AssetsDistribution = () => {
                                                 data={person.personId}
                                                 onRemove={() => handleRemoveAdditionalBeneficiary(personIndex)}
                                                 onEdit={() => handleEditAdditionalBeneficiary(personIndex)}
-                                                onChecked={(isChecked) => handleBeneficiaryChecked(personIndex, assetIndex, isChecked)}  // Pass the checkbox state
+                                                onChecked={(isChecked) => handleBeneficiaryChecked(personIndex, assetIndex, isChecked)}
                                                 section="assetDistribution-beneficiary"
-                                                asset={asset} // Pass only the relevant asset to the SectionListItem
+                                                asset={asset}
+                                                onChange={handleOnChange} // Pass the handleOnChange function
+                                                assetIndex={assetIndex} // Pass the asset index
                                             />
                                         ))}
+
                                     </div>
                                 ))}
                             </div>

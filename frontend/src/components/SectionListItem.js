@@ -6,8 +6,9 @@
 import styles from "../common/styles";
 import { useState, useEffect } from "react";
 
-const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onChecked, asset }) => {
+const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onChecked, asset, onChange, assetIndex }) => {
     const [isChecked, setIsChecked] = useState(false);
+    const [receivingAmount, setReceivingAmount] = useState('');
 
 
 
@@ -16,11 +17,32 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
             setIsChecked(true);
         }
 
+        // if (section === 'assetDistribution-beneficiary' && asset?.distribution) {
+        //     const isInDistribution = asset.distribution.some(dist => dist.personId._id === data._id);
+        //     setIsChecked(isInDistribution);
+
+
+        //     if (isInDistribution) {
+        //         const currentAmount = asset.distribution.find(dist => dist.personId._id === data._id)?.receivingAmount || '';
+        //         setReceivingAmount(currentAmount);
+        //     }
+
+        // }
+
+
         if (section === 'assetDistribution-beneficiary' && asset?.distribution) {
             const isInDistribution = asset.distribution.some(dist => dist.personId._id === data._id);
             setIsChecked(isInDistribution);
-        }
     
+            if (isInDistribution) {
+                const currentAmount = asset.distribution.find(dist => dist.personId._id === data._id)?.receivingAmount || '';
+                setReceivingAmount(currentAmount);
+            }
+        }
+        
+
+
+
         if (section === 'assetDistribution-additionalBeneficiary' && asset?.distribution) {
             const isInDistribution = asset.distribution.some(dist => dist.personId?._id === data._id);
             setIsChecked(isInDistribution);
@@ -36,13 +58,21 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
         // }
     }, [data.role, section, data._id]);
 
-
+    const currentReceivingAmount = asset?.distribution?.find(dist => dist.personId._id === data._id)?.receivingAmount || '';
 
     const handleCheckboxChange = () => {
         const newCheckedState = !isChecked;
         console.log(`section item => Checkbox state changing to: ${newCheckedState} for person: ${data.fullLegalName}`);
         setIsChecked(newCheckedState);
         onChecked(newCheckedState);  // Pass the new checked state to the callback
+    };
+
+
+
+    const handleAmountChange = (event) => {
+        const value = event.target.value;
+        setReceivingAmount(value);
+        onChange(value, assetIndex, data._id); // Pass the value, assetIndex, and data._id to the parent
     };
 
     return (
@@ -112,8 +142,13 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
                         </label>
                         {isChecked && (
                             <>
-                                <p>share</p>
-                                <input type="text" style={{ display: 'block', marginTop: '10px' }} />
+                                <p>Share</p>
+                                <input
+                                    type="text"
+                                    value={receivingAmount} // Bind the input value to the receivingAmount state
+                                    style={{ display: 'block', marginTop: '10px' }}
+                                    onChange={handleAmountChange} // Handle the change event
+                                />
                             </>
                         )}
                     </div>
