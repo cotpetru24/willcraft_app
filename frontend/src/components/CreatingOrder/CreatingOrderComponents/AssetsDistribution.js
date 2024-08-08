@@ -401,7 +401,7 @@ const AssetsDistribution = () => {
                                                     <SectionListItem
                                                         key={`asset-${assetIndex}-person-${personIndex}`}
                                                         buttonsDisabled={showAdditionalBeneficiaryForm}
-                                                        data={person.personId}
+                                                        data={{...person.personId, role:'additional beneficiary'}}
                                                         onRemove={() => handleRemoveAdditionalBeneficiary(personIndex)}
                                                         onEdit={() => handleEditAdditionalBeneficiary(personIndex)}
                                                         onChecked={(isChecked) => handleBeneficiaryChecked(personIndex, assetIndex, isChecked)}  // Pass the checkbox state
