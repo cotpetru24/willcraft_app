@@ -785,25 +785,90 @@ const AssetsDistribution = () => {
         console.log(`asset distribution => Handling beneficiary check: ${isChecked}, Person: ${familyBeneficiary.personId.fullLegalName}, Asset: ${assetToUpdate.assetType}`);
 
         // Update the peopleAndRoles array in currentOrder
-        const updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(personRole => {
-            if (personRole.personId._id === familyBeneficiary.personId._id) {
-                if (isChecked) {
-                    // Add the beneficiary role if it doesn't already exist
-                    return {
-                        ...personRole,
-                        role: personRole.role.includes('beneficiary') ? personRole.role
-                            : [...personRole.role, 'beneficiary']
-                    };
-                } else {
-                    // Remove the beneficiary role
-                    return {
-                        ...personRole,
-                        role: personRole.role.filter(role => role !== 'beneficiary')
-                    };
-                }
+        // const updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(personRole => {
+        //     if (personRole.personId._id === familyBeneficiary.personId._id) {
+        //         if (isChecked) {
+        //             // Add the beneficiary role if it doesn't already exist
+        //             return {
+        //                 ...personRole,
+        //                 role: personRole.role.includes('beneficiary') ? personRole.role
+        //                     : [...personRole.role, 'beneficiary']
+        //             };
+        //         } else {
+        //             // Remove the beneficiary role
+        //             return {
+        //                 ...personRole,
+        //                 role: personRole.role.filter(role => role !== 'beneficiary')
+        //             };
+        //         }
+        //     }
+        //     return personRole;
+        // });
+
+
+        // let updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(personRole => {
+        //     if (personRole.personId._id === familyBeneficiary.personId._id) {
+        //         if (isChecked) {
+        //             return {
+        //                 ...personRole,
+        //                 role: personRole.role.includes('beneficiary') ? personRole.role : [...personRole.role, 'beneficiary']
+        //             };
+        //         } else {
+        //             // Check if the person is a beneficiary for any other asset
+        //             const isBeneficiaryForOtherAssets = currentOrder.assetsAndDistribution.some(asset => 
+        //                 asset.distribution.some(dist => {
+        //                     const distPersonId = typeof dist.personId === 'object' ? dist.personId._id : dist.personId;
+        //                     return distPersonId === familyBeneficiary.personId._id;
+        //                 })
+        //             );
+    
+        //             if (!isBeneficiaryForOtherAssets) {
+        //                 return {
+        //                     ...personRole,
+        //                     role: personRole.role.filter(role => role !== 'beneficiary')
+        //                 };
+        //             }
+        //         }
+        //     }
+        //     return personRole;
+        // });
+
+
+
+
+// Update the peopleAndRoles array in currentOrder
+let updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(personRole => {
+    if (personRole.personId._id === familyBeneficiary.personId._id) {
+        if (isChecked) {
+            return {
+                ...personRole,
+                role: personRole.role.includes('beneficiary') ? personRole.role : [...personRole.role, 'beneficiary']
+            };
+        } else {
+            // Check if the person is a beneficiary for any other asset
+            const isBeneficiaryForOtherAssets = currentOrder.assetsAndDistribution.some(asset => 
+                asset.distribution.some(dist => {
+                    const distPersonId = typeof dist.personId === 'object' ? dist.personId._id : dist.personId;
+                    return distPersonId === familyBeneficiary.personId._id && asset.assetId._id !== assetToUpdate._id;
+                })
+            );
+
+            console.log(`Is ${familyBeneficiary.personId.fullLegalName} a beneficiary for other assets?`, isBeneficiaryForOtherAssets);
+
+            if (!isBeneficiaryForOtherAssets) {
+                return {
+                    ...personRole,
+                    role: personRole.role.filter(role => role !== 'beneficiary')
+                };
             }
-            return personRole;
-        });
+        }
+    }
+    return personRole;
+});
+
+
+
+
 
         // console.log(`Updated people and roles: ${JSON.stringify(updatedPeopleAndRoles)}`);
 
