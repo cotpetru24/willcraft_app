@@ -13,7 +13,7 @@ const initialState = {
 export const getOrders = createAsyncThunk(
     'orders/getAllUserOrders',
     async (_, thunkAPI) => {
-        console.log(`get all orders called din orders slice`)
+
         try {
             const token = thunkAPI.getState().auth.user.token
             return await ordersService.getOrders(token)

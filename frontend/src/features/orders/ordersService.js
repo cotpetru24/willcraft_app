@@ -2,7 +2,6 @@ import axios from "axios";
 const API_URL = '/api/orders/';
 
 const getOrders = async (token) => {
-    console.log(`get all users orders called in ordersService`)
     const config = {
         headers: {
             Authorization: `Bearer ${token}`

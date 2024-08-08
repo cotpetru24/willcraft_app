@@ -102,7 +102,7 @@ export const getOrderThunk = createAsyncThunk(
             }))
 
             // const spouseOrPartner = response.peopleAndRoles.find(p => p.role.includes("spouse" || "partner"));
-            console.log(`spouseorpartner payload = ${JSON.stringify(spouseOrPartner)}`)
+            // console.log(`spouseorpartner payload = ${JSON.stringify(spouseOrPartner)}`)
 
 
             // Ensure response contains the testator data
@@ -117,7 +117,6 @@ export const getOrderThunk = createAsyncThunk(
             //     thunkAPI.dispatch(updateKidsSlice(kids))
             // }
             // thunkAPI.dispatch(updateSpouseOrPartnerSlice(spouseOrPartner.personId))
-            console.log(`kids length = ${kids.length}`)
             // if (kids) {
             //     thunkAPI.dispatch(updateKidsSlice(kids.map(kid => kid.personId)));
             // }
@@ -126,7 +125,6 @@ export const getOrderThunk = createAsyncThunk(
             //     thunkAPI.dispatch(updateKidsSlice(kids.map(kid => kid.personId)));
             // }
             if (Array.isArray(kids) && kids.length > 0) {
-                console.log(`kids length = ${kids.length}`)
 
                 thunkAPI.dispatch(updateKidsSlice(kids));
             }

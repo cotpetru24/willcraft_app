@@ -50,7 +50,7 @@ const OrderItem = ({ order }) => {
                         onClick={async () => {
                             await resetOrderState(dispatch)
 
-                            console.log(`should have loaded order id :${order._id}`);
+                            // console.log(`should have loaded order id :${order._id}`);
                             await dispatch(getOrderThunk(order._id));
                             navigate('/creatingOrder');
                         }}
