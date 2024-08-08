@@ -119,7 +119,7 @@ const AssetsDistribution = () => {
             setEditAdditionalBeneficiaryIndex(null);
         } else {
 
-            const createAdditionalBeficiaryResponse=  await dispatch(
+            const createAdditionalBeficiaryResponse = await dispatch(
                 additionalBeneficiaryThunks.createAdditionalBeficiaryThunk(additionalBeneficiaryFormData)).unwrap();
             // const createAdditionalBeficiaryResponse = dispatch(
             //     additionalBeneficiaryThunks.createAdditionalBeficiaryThunk(additionalBeneficiaryFormData)).unwrap()
@@ -144,6 +144,37 @@ const AssetsDistribution = () => {
             });
 
             dispatch(updateAssetsSlice(updatedAssets));
+
+
+
+
+
+
+
+            const updatedOrder = {
+                ...currentOrder,
+                assetsAndDistribution: updatedAssets,
+                peopleAndRoles: [
+                    ...currentOrder.peopleAndRoles.filter(pr => !pr.role.includes('additional beneficiary')), // Remove existing aditional beneficiaries to avoid duplicates
+                    ...additionalBeneficiaries.map(beneficiary => ({
+                        personId: beneficiary._id,
+                        role: ['additional beneficiary']
+                    }))
+                ]
+            };
+            // Update the currentOrder slice
+            await dispatch(updateCurrentOrderSlice(updatedOrder));
+            // Update the order in the backend
+            await dispatch(updateOrderThunk(updatedOrder));
+
+
+
+
+
+
+
+
+
         }
 
         resetAdditionalBeneficiaryForm();
@@ -408,7 +439,7 @@ const AssetsDistribution = () => {
                                                     <SectionListItem
                                                         key={`asset-${assetIndex}-person-${personIndex}`}
                                                         buttonsDisabled={showAdditionalBeneficiaryForm}
-                                                        data={{...person.personId, role:'additional beneficiary'}}
+                                                        data={{ ...person.personId, role: 'additional beneficiary' }}
                                                         onRemove={() => handleRemoveAdditionalBeneficiary(personIndex)}
                                                         onEdit={() => handleEditAdditionalBeneficiary(personIndex)}
                                                         onChecked={(isChecked) => handleBeneficiaryChecked(personIndex, assetIndex, isChecked)}  // Pass the checkbox state
