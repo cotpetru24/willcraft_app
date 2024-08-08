@@ -83,7 +83,7 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
 
     const handleCheckboxChange = () => {
         const newCheckedState = !isChecked;
-        console.log(`Checkbox state changing to: ${newCheckedState} for person: ${data.fullLegalName}`);
+        console.log(`section item => Checkbox state changing to: ${newCheckedState} for person: ${data.fullLegalName}`);
         setIsChecked(newCheckedState);
         onChecked(newCheckedState);  // Pass the new checked state to the callback
     };

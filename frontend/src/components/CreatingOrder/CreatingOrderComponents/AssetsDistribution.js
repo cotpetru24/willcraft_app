@@ -315,7 +315,7 @@ const AssetsDistribution = () => {
     // const handleBeneficiaryChecked = (personIndex, assetIndex, isChecked) => {
     //     const familyBeneficiary = family[personIndex];
     //     const assetToUpdate = assets[assetIndex];
-    
+
     //     // Update the peopleAndRoles array in currentOrder
     //     const updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(personRole => {
     //         if (personRole.personId._id === familyBeneficiary.personId._id) {
@@ -336,7 +336,7 @@ const AssetsDistribution = () => {
     //         }
     //         return personRole;
     //     });
-    
+
     //     // Update the distribution array for the asset
     //     const updatedDistribution = isChecked
     //         ? [...assetToUpdate.distribution, {
@@ -350,13 +350,13 @@ const AssetsDistribution = () => {
     //             receivingAmount: "percentage here"
     //         }]
     //         : assetToUpdate.distribution.filter(d => d.personId._id !== familyBeneficiary.personId._id); // Ensure correct ID comparison
-    
+
     //     // Create the updated asset object
     //     const updatedAsset = { ...assetToUpdate, distribution: updatedDistribution };
-    
+
     //     // Update the assets array
     //     const updatedAssets = assets.map((asset, index) => index === assetIndex ? updatedAsset : asset);
-    
+
     //     // Update the assetsAndDistribution in currentOrder
     //     const updatedCurrentOrderAssetDistribution = currentOrder.assetsAndDistribution.map(asset => {
     //         if (asset.assetId._id === assetToUpdate._id) {
@@ -367,10 +367,10 @@ const AssetsDistribution = () => {
     //         }
     //         return asset;
     //     });
-    
+
     //     // Dispatch the updated assets slice
     //     dispatch(updateAssetsSlice(updatedAssets));
-    
+
     //     // Dispatch the updated current order slice
     //     dispatch(updateCurrentOrderSlice({
     //         ...currentOrder,
@@ -378,7 +378,7 @@ const AssetsDistribution = () => {
     //         assetsAndDistribution: updatedCurrentOrderAssetDistribution
     //     }));
     // };
-    
+
 
 
 
@@ -388,7 +388,7 @@ const AssetsDistribution = () => {
     // const handleBeneficiaryChecked = (personIndex, assetIndex, isChecked) => {
     //     const familyBeneficiary = family[personIndex];
     //     const assetToUpdate = assets[assetIndex];
-    
+
     //     // Update the peopleAndRoles array in currentOrder
     //     const updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(personRole => {
     //         if (personRole.personId._id === familyBeneficiary.personId._id) {
@@ -409,7 +409,7 @@ const AssetsDistribution = () => {
     //         }
     //         return personRole;
     //     });
-    
+
     //     // Update the distribution array for the asset
     //     const updatedDistribution = isChecked
     //         ? [...assetToUpdate.distribution, {
@@ -423,13 +423,13 @@ const AssetsDistribution = () => {
     //             receivingAmount: "percentage here"
     //         }]
     //         : assetToUpdate.distribution.filter(d => d.personId._id !== familyBeneficiary.personId._id);
-    
+
     //     // Create the updated asset object
     //     const updatedAsset = { ...assetToUpdate, distribution: updatedDistribution };
-    
+
     //     // Update the assets array
     //     const updatedAssets = assets.map((asset, index) => index === assetIndex ? updatedAsset : asset);
-    
+
     //     // Update the assetsAndDistribution in currentOrder
     //     const updatedCurrentOrderAssetDistribution = currentOrder.assetsAndDistribution.map(asset => {
     //         if (asset.assetId._id === assetToUpdate._id) {
@@ -440,10 +440,10 @@ const AssetsDistribution = () => {
     //         }
     //         return asset;
     //     });
-    
+
     //     // Dispatch the updated assets slice
     //     dispatch(updateAssetsSlice(updatedAssets));
-    
+
     //     // Dispatch the updated current order slice
     //     dispatch(updateCurrentOrderSlice({
     //         ...currentOrder,
@@ -451,14 +451,14 @@ const AssetsDistribution = () => {
     //         assetsAndDistribution: updatedCurrentOrderAssetDistribution
     //     }));
     // };
-    
+
 
 
 
     // const handleBeneficiaryChecked = (personIndex, assetIndex, isChecked) => {
     //     const familyBeneficiary = family[personIndex];
     //     const assetToUpdate = assets[assetIndex];
-    
+
     //     // Update the peopleAndRoles array in currentOrder
     //     const updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(personRole => {
     //         if (personRole.personId._id === familyBeneficiary.personId._id) {
@@ -479,7 +479,7 @@ const AssetsDistribution = () => {
     //         }
     //         return personRole;
     //     });
-    
+
     //     // Update the distribution array for the asset
     //     const updatedDistribution = isChecked
     //         ? [...assetToUpdate.distribution, {
@@ -493,13 +493,13 @@ const AssetsDistribution = () => {
     //             receivingAmount: "percentage here"
     //         }]
     //         : assetToUpdate.distribution.filter(d => d.personId._id !== familyBeneficiary.personId._id);
-    
+
     //     // Create the updated asset object
     //     const updatedAsset = { ...assetToUpdate, distribution: updatedDistribution };
-    
+
     //     // Update the assets array
     //     const updatedAssets = assets.map((asset, index) => index === assetIndex ? updatedAsset : asset);
-    
+
     //     // Update the assetsAndDistribution in currentOrder
     //     const updatedCurrentOrderAssetDistribution = currentOrder.assetsAndDistribution.map(asset => {
     //         if (asset.assetId._id === assetToUpdate._id) {
@@ -510,10 +510,10 @@ const AssetsDistribution = () => {
     //         }
     //         return asset;
     //     });
-    
+
     //     // Dispatch the updated assets slice
     //     dispatch(updateAssetsSlice(updatedAssets));
-    
+
     //     // Dispatch the updated current order slice
     //     dispatch(updateCurrentOrderSlice({
     //         ...currentOrder,
@@ -521,13 +521,13 @@ const AssetsDistribution = () => {
     //         assetsAndDistribution: updatedCurrentOrderAssetDistribution
     //     }));
     // };
-    
+
 
 
     // const handleBeneficiaryChecked = (personIndex, assetIndex, isChecked) => {
     //     const familyBeneficiary = family[personIndex];
     //     const assetToUpdate = assets[assetIndex];
-    
+
     //     // Update the peopleAndRoles array in currentOrder
     //     const updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(personRole => {
     //         if (personRole.personId._id === familyBeneficiary.personId._id) {
@@ -548,7 +548,7 @@ const AssetsDistribution = () => {
     //         }
     //         return personRole;
     //     });
-    
+
     //     // Update the distribution array for the asset
     //     let updatedDistribution;
     //     if (isChecked) {
@@ -571,13 +571,13 @@ const AssetsDistribution = () => {
     //         // Remove person from distribution
     //         updatedDistribution = assetToUpdate.distribution.filter(d => d.personId._id !== familyBeneficiary.personId._id);
     //     }
-    
+
     //     // Create the updated asset object
     //     const updatedAsset = { ...assetToUpdate, distribution: updatedDistribution };
-    
+
     //     // Update the assets array
     //     const updatedAssets = assets.map((asset, index) => index === assetIndex ? updatedAsset : asset);
-    
+
     //     // Update the assetsAndDistribution in currentOrder
     //     const updatedCurrentOrderAssetDistribution = currentOrder.assetsAndDistribution.map(asset => {
     //         if (asset.assetId._id === assetToUpdate._id) {
@@ -588,10 +588,10 @@ const AssetsDistribution = () => {
     //         }
     //         return asset;
     //     });
-    
+
     //     // Dispatch the updated assets slice
     //     dispatch(updateAssetsSlice(updatedAssets));
-    
+
     //     // Dispatch the updated current order slice
     //     dispatch(updateCurrentOrderSlice({
     //         ...currentOrder,
@@ -599,14 +599,14 @@ const AssetsDistribution = () => {
     //         assetsAndDistribution: updatedCurrentOrderAssetDistribution
     //     }));
     // };
-    
+
 
     // const handleBeneficiaryChecked = (personIndex, assetIndex, isChecked) => {
     //     const familyBeneficiary = family[personIndex];
     //     const assetToUpdate = assets[assetIndex];
-    
+
     //     console.log(`Handling beneficiary check: ${isChecked}, Person: ${familyBeneficiary.personId.fullLegalName}, Asset: ${assetToUpdate.assetType}`);
-    
+
     //     // Update the peopleAndRoles array in currentOrder
     //     const updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(personRole => {
     //         if (personRole.personId._id === familyBeneficiary.personId._id) {
@@ -627,9 +627,9 @@ const AssetsDistribution = () => {
     //         }
     //         return personRole;
     //     });
-    
+
     //     console.log(`Updated people and roles: ${JSON.stringify(updatedPeopleAndRoles)}`);
-    
+
     //     // Update the distribution array for the asset
     //     let updatedDistribution;
     //     if (isChecked) {
@@ -652,17 +652,17 @@ const AssetsDistribution = () => {
     //         // Remove person from distribution
     //         updatedDistribution = assetToUpdate.distribution.filter(d => d.personId._id !== familyBeneficiary.personId._id);
     //     }
-    
+
     //     console.log(`Updated distribution: ${JSON.stringify(updatedDistribution)}`);
-    
+
     //     // Create the updated asset object
     //     const updatedAsset = { ...assetToUpdate, distribution: updatedDistribution };
-    
+
     //     // Update the assets array
     //     const updatedAssets = assets.map((asset, index) => index === assetIndex ? updatedAsset : asset);
-    
+
     //     console.log(`Updated assets: ${JSON.stringify(updatedAssets)}`);
-    
+
     //     // Update the assetsAndDistribution in currentOrder
     //     const updatedCurrentOrderAssetDistribution = currentOrder.assetsAndDistribution.map(asset => {
     //         if (asset.assetId._id === assetToUpdate._id) {
@@ -673,12 +673,12 @@ const AssetsDistribution = () => {
     //         }
     //         return asset;
     //     });
-    
+
     //     console.log(`Updated current order asset distribution: ${JSON.stringify(updatedCurrentOrderAssetDistribution)}`);
-    
+
     //     // Dispatch the updated assets slice
     //     dispatch(updateAssetsSlice(updatedAssets));
-    
+
     //     // Dispatch the updated current order slice
     //     dispatch(updateCurrentOrderSlice({
     //         ...currentOrder,
@@ -686,14 +686,14 @@ const AssetsDistribution = () => {
     //         assetsAndDistribution: updatedCurrentOrderAssetDistribution
     //     }));
     // };
-    
+
 
     // const handleBeneficiaryChecked = (personIndex, assetIndex, isChecked) => {
     //     const familyBeneficiary = family[personIndex];
     //     const assetToUpdate = assets[assetIndex];
-    
+
     //     console.log(`Handling beneficiary check: ${isChecked}, Person: ${familyBeneficiary.personId.fullLegalName}, Asset: ${assetToUpdate.assetType}`);
-    
+
     //     // Update the peopleAndRoles array in currentOrder
     //     const updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(personRole => {
     //         if (personRole.personId._id === familyBeneficiary.personId._id) {
@@ -714,9 +714,9 @@ const AssetsDistribution = () => {
     //         }
     //         return personRole;
     //     });
-    
+
     //     console.log(`Updated people and roles: ${JSON.stringify(updatedPeopleAndRoles)}`);
-    
+
     //     // Update the distribution array for the asset
     //     let updatedDistribution;
     //     if (isChecked) {
@@ -739,17 +739,17 @@ const AssetsDistribution = () => {
     //         // Remove person from distribution
     //         updatedDistribution = assetToUpdate.distribution.filter(d => d.personId._id !== familyBeneficiary.personId._id);
     //     }
-    
+
     //     console.log(`Updated distribution: ${JSON.stringify(updatedDistribution)}`);
-    
+
     //     // Create the updated asset object
     //     const updatedAsset = { ...assetToUpdate, distribution: updatedDistribution };
-    
+
     //     // Update the assets array
     //     const updatedAssets = assets.map((asset, index) => index === assetIndex ? updatedAsset : asset);
-    
+
     //     console.log(`Updated assets: ${JSON.stringify(updatedAssets)}`);
-    
+
     //     // Update the assetsAndDistribution in currentOrder
     //     const updatedCurrentOrderAssetDistribution = currentOrder.assetsAndDistribution.map(asset => {
     //         if (asset.assetId._id === assetToUpdate._id) {
@@ -760,30 +760,30 @@ const AssetsDistribution = () => {
     //         }
     //         return asset;
     //     });
-    
+
     //     console.log(`Updated current order asset distribution: ${JSON.stringify(updatedCurrentOrderAssetDistribution)}`);
-    
+
     //     // Dispatch the updated assets slice
     //     dispatch(updateAssetsSlice(updatedAssets));
-    
+
     //     // Dispatch the updated current order slice
     //     dispatch(updateCurrentOrderSlice({
     //         ...currentOrder,
     //         peopleAndRoles: updatedPeopleAndRoles,
     //         assetsAndDistribution: updatedCurrentOrderAssetDistribution
     //     }));
-    
+
     //     console.log('Dispatched updated state');
     // };
-    
+
 
 
     const handleBeneficiaryChecked = (personIndex, assetIndex, isChecked) => {
         const familyBeneficiary = family[personIndex];
         const assetToUpdate = assets[assetIndex];
-    
-        console.log(`Handling beneficiary check: ${isChecked}, Person: ${familyBeneficiary.personId.fullLegalName}, Asset: ${assetToUpdate.assetType}`);
-    
+
+        console.log(`asset distribution => Handling beneficiary check: ${isChecked}, Person: ${familyBeneficiary.personId.fullLegalName}, Asset: ${assetToUpdate.assetType}`);
+
         // Update the peopleAndRoles array in currentOrder
         const updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(personRole => {
             if (personRole.personId._id === familyBeneficiary.personId._id) {
@@ -804,14 +804,16 @@ const AssetsDistribution = () => {
             }
             return personRole;
         });
-    
-        console.log(`Updated people and roles: ${JSON.stringify(updatedPeopleAndRoles)}`);
-    
+
+        // console.log(`Updated people and roles: ${JSON.stringify(updatedPeopleAndRoles)}`);
+
         // Update the distribution array for the asset
         let updatedDistribution;
         if (isChecked) {
+            console.log(`is checked in assets distribution`)
             // Add person to distribution if not already present
             if (!assetToUpdate.distribution.some(d => d.personId._id === familyBeneficiary.personId._id)) {
+                console.log(`person is not in the asset distribution, person will be now added`)
                 updatedDistribution = [...assetToUpdate.distribution, {
                     personId: familyBeneficiary.personId._id,
                     title: familyBeneficiary.personId.title,
@@ -825,25 +827,40 @@ const AssetsDistribution = () => {
             } else {
                 updatedDistribution = assetToUpdate.distribution;
             }
-        } else {
+         } 
+        //else {
+        //     // Remove person from distribution
+        //     console.log(`should have remove the person with id= ${familyBeneficiary.personId._id} from --------- ${JSON.stringify(assetToUpdate.distribution)}`)
+        //     updatedDistribution = assetToUpdate.distribution.filter(d => d.personId._id !== familyBeneficiary.personId._id);
+        //     console.log(`this should have the person removed ${JSON.stringify(updatedDistribution)}`)
+        // }
+
+
+        else {
             // Remove person from distribution
-            console.log(`should have remove the person`)
-            updatedDistribution = assetToUpdate.distribution.filter(d => d.personId._id !== familyBeneficiary.personId._id);
+            console.log(`should have removed the person with id= ${familyBeneficiary.personId._id} from --------- ${JSON.stringify(assetToUpdate.distribution)}`)
+            updatedDistribution = assetToUpdate.distribution.filter(d => {
+                const distPersonId = typeof d.personId === 'object' ? d.personId._id : d.personId;
+                return distPersonId !== familyBeneficiary.personId._id;
+            });
             console.log(`this should have the person removed ${JSON.stringify(updatedDistribution)}`)
         }
-    
-        console.log(`Updated distribution: ${JSON.stringify(updatedDistribution)}`);
-    
+
+
+
+        // console.log(`Updated distribution: ${JSON.stringify(updatedDistribution)}`);
+
         // Create the updated asset object
         const updatedAsset = { ...assetToUpdate, distribution: updatedDistribution };
-    
+
         // Update the assets array
         const updatedAssets = assets.map((asset, index) => index === assetIndex ? updatedAsset : asset);
-    
-        console.log(`Updated assets: ${JSON.stringify(updatedAssets)}`);
-    
+
+        // console.log(`Updated assets: ${JSON.stringify(updatedAssets)}`);
+
         // Update the assetsAndDistribution in currentOrder
         const updatedCurrentOrderAssetDistribution = currentOrder.assetsAndDistribution.map(asset => {
+            console.log(`asset distribution should have been updated`)
             if (asset.assetId._id === assetToUpdate._id) {
                 return {
                     ...asset,
@@ -852,22 +869,22 @@ const AssetsDistribution = () => {
             }
             return asset;
         });
-    
-        console.log(`Updated current order asset distribution: ${JSON.stringify(updatedCurrentOrderAssetDistribution)}`);
-    
+
+        // console.log(`Updated current order asset distribution: ${JSON.stringify(updatedCurrentOrderAssetDistribution)}`);
+
         // Dispatch the updated assets slice
         dispatch(updateAssetsSlice(updatedAssets));
-    
+
         // Dispatch the updated current order slice
         dispatch(updateCurrentOrderSlice({
             ...currentOrder,
             peopleAndRoles: updatedPeopleAndRoles,
             assetsAndDistribution: updatedCurrentOrderAssetDistribution
         }));
-    
+
         console.log('Dispatched updated state');
     };
-    
+
 
 
 
