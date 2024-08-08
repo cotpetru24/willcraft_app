@@ -68,15 +68,17 @@ export const getOrderThunk = createAsyncThunk(
                 // _id: p._id
                 _id: p.personId._id
             }));
-            const additionalExecutors = response.peopleAndRoles.filter(p => p.role.includes(constants.role.ADDITIONAL_EXECUTOR)).map(p => ({
+            const additionalExecutors = response.peopleAndRoles.filter(
+                p => p.role.includes(constants.role.ADDITIONAL_EXECUTOR)).map(p => ({
                 ...p.personId,
                 role: p.role,
                 // _id: p._id
                 _id: p.personId._id
             }));
 
-            const additionalBeneficiaries = response.peopleAndRoles.filter(p => p.role.includes('additional beneficiary')).map(p => ({
-                ...p.personId,
+            const additionalBeneficiaries = response.peopleAndRoles.filter(
+                p => p.role.includes('additional beneficiary')).map(p => ({
+                ...p,
                 role: p.role,
                 _id: p.personId._id
             }))
@@ -120,17 +122,7 @@ export const getOrderThunk = createAsyncThunk(
             if (spouseOrPartner) {
                 thunkAPI.dispatch(updateSpouseOrPartnerSlice(spouseOrPartner.personId))
             }
-            // if (kids) {
-            //     thunkAPI.dispatch(updateKidsSlice(kids))
-            // }
-            // thunkAPI.dispatch(updateSpouseOrPartnerSlice(spouseOrPartner.personId))
-            // if (kids) {
-            //     thunkAPI.dispatch(updateKidsSlice(kids.map(kid => kid.personId)));
-            // }
-            // if (Array.isArray(kids) && kids.length > 0) {
-            //     console.log(`kids length = ${kids.length}`)
-            //     thunkAPI.dispatch(updateKidsSlice(kids.map(kid => kid.personId)));
-            // }
+
             if (Array.isArray(kids) && kids.length > 0) {
 
                 thunkAPI.dispatch(updateKidsSlice(kids));

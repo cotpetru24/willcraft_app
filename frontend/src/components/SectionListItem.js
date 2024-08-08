@@ -9,82 +9,25 @@ import { useState, useEffect } from "react";
 const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onChecked, asset }) => {
     const [isChecked, setIsChecked] = useState(false);
 
-    // console.log(`data passed to section list item = ${JSON.stringify(data)}`)
-
-    // useEffect(() => {
-    //     if (data.role.includes("executor")) {
-    //         setIsChecked(true);
-    //     }
-    // }, [data.role]);
-
-
-    // useEffect(() => {
-    //     if (data.role && data.role.includes("executor")) {
-    //         setIsChecked(true);
-    //     }
-    // }, [data.role]);
-
-
-
-    // useEffect(() => {
-    //     if (data.role && data.role.includes("executor")) {
-    //         setIsChecked(true);
-    //     }
-
-    //     if (section === 'assetDistribution-beneficiary' && asset) {
-    //         const isInDistribution = asset.distribution.some(dist => dist.personId._id === data._id);
-    //         if (isInDistribution) {
-    //             setIsChecked(true);
-    //         }
-    //     }
-    // }, [data.role, section, asset, data._id]);
-
-
-
-    // useEffect(() => {
-    //     if (data.role && data.role.includes("executor")) {
-    //         setIsChecked(true);
-    //     }
-
-    //     if (section === 'assetDistribution-beneficiary' && asset) {
-    //         const isInDistribution = asset.distribution.some(dist => dist.personId._id === data._id);
-    //         setIsChecked(isInDistribution);
-    //     }
-    // }, [data.role, section, asset, data._id]);
-
-
-
-
-    // useEffect(() => {
-    //     if (data.role && data.role.includes("executor")) {
-    //         setIsChecked(true);
-    //     }
-
-    //     if (section === 'assetDistribution-beneficiary' && asset) {
-    //         const isInDistribution = asset.distribution.some(dist => dist.personId._id === data._id);
-    //         setIsChecked(isInDistribution);
-    //     }
-    // }, [data.role, section, asset, data._id]);
-
 
 
     useEffect(() => {
         if (data.role && data.role.includes("executor")) {
             setIsChecked(true);
         }
-        // if (section !== 'assetDistribution-additionalBeneficiary' && data.role && data.role.includes("executor")) {
-        //     setIsChecked(true);
-        // }
 
-        if (section === 'assetDistribution-beneficiary' && asset) {
+        if (section === 'assetDistribution-beneficiary' && asset?.distribution) {
             const isInDistribution = asset.distribution.some(dist => dist.personId._id === data._id);
             setIsChecked(isInDistribution);
         }
-
-        if (section === 'assetDistribution-additionalBeneficiary' && asset) {
-            const isInDistribution = asset.distribution.some(dist => dist.personId._id === data._id);
+    
+        if (section === 'assetDistribution-additionalBeneficiary' && asset?.distribution) {
+            const isInDistribution = asset.distribution.some(dist => dist.personId?._id === data._id);
             setIsChecked(isInDistribution);
         }
+
+
+
 
         // if (section === 'assetDistribution-additionalBeneficiary' && asset) {
         //     const isInDistribution = asset.distribution.some(dist => dist.personId && dist.personId._id && dist.personId._id === data._id);
@@ -188,22 +131,6 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
                     </div>
                     <div className="section-list-item-group">
                         <h5>Date of birth: {data.dob}</h5>
-                    </div>
-                    <div>
-                        <label>
-                            <input
-                                type="checkbox"
-                                checked={isChecked}
-                                onChange={handleCheckboxChange}
-                            />
-                            Beneficiary
-                        </label>
-                        {isChecked && (
-                            <>
-                                <p>share</p>
-                                <input type="text" style={{ display: 'block', marginTop: '10px' }} />
-                            </>
-                        )}
                     </div>
                 </>
             )}

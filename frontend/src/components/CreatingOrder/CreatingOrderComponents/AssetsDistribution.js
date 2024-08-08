@@ -30,7 +30,11 @@ const AssetsDistribution = () => {
 
     useEffect(() => {
         const updatedFamily = currentOrder.peopleAndRoles
-            .filter(p => p.role.includes('partner') || p.role.includes('kid') || p.role.includes('spouse'));
+            .filter(p => 
+                p.role.includes('partner') 
+                || p.role.includes('kid') 
+                || p.role.includes('spouse')
+                || p.role.includes('additional beneficiary')            );
         setFamily(updatedFamily);
     }, [currentOrder.peopleAndRoles, currentOrder]);
 
@@ -78,10 +82,9 @@ const AssetsDistribution = () => {
         }
     }, [additionalBeneficiaryFormData, assets]);
 
-    const handleShowAdditionalBeneficiaryForm = (assetId = '') => {
+    const handleShowAdditionalBeneficiaryForm = () => {
         setAdditionalBeneficiaryFormData((prevData) => ({
             ...prevData,
-            assetId: assetId // Set the assetId when showing the form
         }));
         setShowAdditionalBeneficiaryForm(prevState => !prevState);
     };
@@ -94,6 +97,9 @@ const AssetsDistribution = () => {
         }));
     };
 
+
+
+
     const handleAdditionalBeneficiaryFormAdd = async (e) => {
         e.preventDefault();
 
@@ -103,83 +109,60 @@ const AssetsDistribution = () => {
             );
 
             dispatch(updateAdditionalBeneficiariesSlice(updatedAdditionalBeneficiaries));
-
-            const assetIdToUpdate = additionalBeneficiaryFormData.assetId;
-            const updatedAssets = assets.map(asset => {
-                if (asset._id === assetIdToUpdate) {
-                    return {
-                        ...asset,
-                        distribution: [...(asset.distribution || []), additionalBeneficiaryFormData]
-                    };
-                }
-                return asset;
-            });
-
-            dispatch(updateAssetsSlice(updatedAssets));
             setEditAdditionalBeneficiaryIndex(null);
         } else {
 
             const createAdditionalBeficiaryResponse = await dispatch(
                 additionalBeneficiaryThunks.createAdditionalBeficiaryThunk(additionalBeneficiaryFormData)).unwrap();
-            // const createAdditionalBeficiaryResponse = dispatch(
-            //     additionalBeneficiaryThunks.createAdditionalBeficiaryThunk(additionalBeneficiaryFormData)).unwrap()
-            await dispatch(updateAdditionalBeneficiariesSlice([...additionalBeneficiaries, createAdditionalBeficiaryResponse]));
 
-
-
-
-
-
-
-
-            const assetIdToUpdate = additionalBeneficiaryFormData.assetId;
-            const updatedAssets = assets.map(asset => {
-                if (asset._id === assetIdToUpdate) {
-                    return {
-                        ...asset,
-                        distribution: [...(asset.distribution || []), createAdditionalBeficiaryResponse]
-                    };
-                }
-                return asset;
-            });
-
-            dispatch(updateAssetsSlice(updatedAssets));
-
-
-
-
-
-
-
+            const updatedBeneficiaries = [...additionalBeneficiaries, { personId: createAdditionalBeficiaryResponse }];
+            await dispatch(updateAdditionalBeneficiariesSlice(updatedBeneficiaries));
+            
             const updatedOrder = {
                 ...currentOrder,
-                assetsAndDistribution: updatedAssets,
                 peopleAndRoles: [
-                    ...currentOrder.peopleAndRoles.filter(pr => !pr.role.includes('additional beneficiary')), // Remove existing aditional beneficiaries to avoid duplicates
-                    ...additionalBeneficiaries.map(beneficiary => ({
-                        personId: beneficiary._id,
+                    ...currentOrder.peopleAndRoles.filter(pr => !pr.role.includes('additional beneficiary')), 
+                    ...updatedBeneficiaries.map(beneficiary => ({
+                        personId: beneficiary.personId,
                         role: ['additional beneficiary']
                     }))
                 ]
+                
             };
-            // Update the currentOrder slice
-            await dispatch(updateCurrentOrderSlice(updatedOrder));
+
             // Update the order in the backend
             await dispatch(updateOrderThunk(updatedOrder));
-
-
-
-
-
-
-
-
-
+            // Update the currentOrder slice
+            await dispatch(updateCurrentOrderSlice(updatedOrder));
         }
 
         resetAdditionalBeneficiaryForm();
         setShowAdditionalBeneficiaryForm(false);
     };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     const resetAdditionalBeneficiaryForm = () => {
         setAdditionalBeneficiaryFormData({
@@ -194,6 +177,19 @@ const AssetsDistribution = () => {
         });
         setEditAdditionalBeneficiaryIndex(null);
     };
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     const handleRemoveAdditionalBeneficiary = (index) => {
         const updatedAdditionalBeneficiaries = additionalBeneficiaries.filter((_, i) => i !== index);
@@ -245,7 +241,7 @@ const AssetsDistribution = () => {
         // };
 
         // await dispatch(updateCurrentOrderSlice(updatedOrder));
-        await dispatch(updateOrderThunk(currentOrder));
+        // await dispatch(updateOrderThunk(currentOrder));
 
         navigate('/creatingOrder');
     };
@@ -411,6 +407,34 @@ const AssetsDistribution = () => {
                     <div className="section-content-container">
                         <div className="section-controll-container">
                             <div className="section-list-container">
+
+
+                            {additionalBeneficiaries.length > 0 && (
+                                            <>
+                                                <h4> Additional beneficiaries</h4>
+                                                {additionalBeneficiaries.map((person, personIndex) => (
+                                                    <SectionListItem
+                                                        key={`person-${personIndex}`}
+                                                        buttonsDisabled={showAdditionalBeneficiaryForm}
+                                                        data={{ ...person.personId, role: 'additional beneficiary' }}
+                                                        onRemove={() => handleRemoveAdditionalBeneficiary(personIndex)}
+                                                        onEdit={() => handleEditAdditionalBeneficiary(personIndex)}
+                                                        section="assetDistribution-additionalBeneficiary"
+                                                    />
+                                                ))}
+                                            </>
+                                        )}
+                                        <button
+                                            className="section-add-btn"
+                                            onClick={() => handleShowAdditionalBeneficiaryForm()}
+                                            style={showAdditionalBeneficiaryForm ? styles.disabledButton : {}}
+                                            disabled={showAdditionalBeneficiaryForm}
+                                        >
+                                            +Add Beneficiary
+                                        </button>
+
+
+
                                 {assets.map((asset, assetIndex) => (
                                     <div className="asset-distribution-container" key={`asset-${assetIndex}`}>
                                         <SectionListItem
@@ -432,31 +456,6 @@ const AssetsDistribution = () => {
                                                 asset={asset} // Pass only the relevant asset to the SectionListItem
                                             />
                                         ))}
-                                        {additionalBeneficiaries.length > 0 && (
-                                            <>
-                                                <h4> Additional beneficiaries</h4>
-                                                {additionalBeneficiaries.map((person, personIndex) => (
-                                                    <SectionListItem
-                                                        key={`asset-${assetIndex}-person-${personIndex}`}
-                                                        buttonsDisabled={showAdditionalBeneficiaryForm}
-                                                        data={{ ...person.personId, role: 'additional beneficiary' }}
-                                                        onRemove={() => handleRemoveAdditionalBeneficiary(personIndex)}
-                                                        onEdit={() => handleEditAdditionalBeneficiary(personIndex)}
-                                                        onChecked={(isChecked) => handleBeneficiaryChecked(personIndex, assetIndex, isChecked)}  // Pass the checkbox state
-                                                        section="assetDistribution-additionalBeneficiary"
-                                                        asset={asset} // Pass only the relevant asset to the SectionListItem
-                                                    />
-                                                ))}
-                                            </>
-                                        )}
-                                        <button
-                                            className="section-add-btn"
-                                            onClick={() => handleShowAdditionalBeneficiaryForm(asset._id)}
-                                            style={showAdditionalBeneficiaryForm ? styles.disabledButton : {}}
-                                            disabled={showAdditionalBeneficiaryForm}
-                                        >
-                                            +Add Beneficiary
-                                        </button>
                                     </div>
                                 ))}
                             </div>
