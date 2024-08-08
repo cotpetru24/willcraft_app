@@ -31,7 +31,7 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
     //         setIsChecked(true);
     //     }
 
-    //     if (section === 'assetDistribution-people' && asset) {
+    //     if (section === 'assetDistribution-beneficiary' && asset) {
     //         const isInDistribution = asset.distribution.some(dist => dist.personId._id === data._id);
     //         if (isInDistribution) {
     //             setIsChecked(true);
@@ -46,7 +46,7 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
     //         setIsChecked(true);
     //     }
 
-    //     if (section === 'assetDistribution-people' && asset) {
+    //     if (section === 'assetDistribution-beneficiary' && asset) {
     //         const isInDistribution = asset.distribution.some(dist => dist.personId._id === data._id);
     //         setIsChecked(isInDistribution);
     //     }
@@ -60,7 +60,7 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
     //         setIsChecked(true);
     //     }
 
-    //     if (section === 'assetDistribution-people' && asset) {
+    //     if (section === 'assetDistribution-beneficiary' && asset) {
     //         const isInDistribution = asset.distribution.some(dist => dist.personId._id === data._id);
     //         setIsChecked(isInDistribution);
     //     }
@@ -72,12 +72,26 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
         if (data.role && data.role.includes("executor")) {
             setIsChecked(true);
         }
+        // if (section !== 'assetDistribution-additionalBeneficiary' && data.role && data.role.includes("executor")) {
+        //     setIsChecked(true);
+        // }
 
-        if (section === 'assetDistribution-people' && asset) {
+        if (section === 'assetDistribution-beneficiary' && asset) {
             const isInDistribution = asset.distribution.some(dist => dist.personId._id === data._id);
             setIsChecked(isInDistribution);
         }
-    }, [data.role, section,  data._id]);
+
+        if (section === 'assetDistribution-additionalBeneficiary' && asset) {
+            const isInDistribution = asset.distribution.some(dist => dist.personId._id === data._id);
+            setIsChecked(isInDistribution);
+        }
+
+        // if (section === 'assetDistribution-additionalBeneficiary' && asset) {
+        //     const isInDistribution = asset.distribution.some(dist => dist.personId && dist.personId._id && dist.personId._id === data._id);
+        //     setIsChecked(isInDistribution);
+        //     console.log(`data passed to seclion list item = ${JSON.stringify(data)}`)
+        // }
+    }, [data.role, section, data._id]);
 
 
 
@@ -100,37 +114,6 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
                     </div>
                     <div className="section-list-item-group">
                         <h5>Date of birth: {data.dob}</h5>
-                    </div>
-                </>
-            )}
-            {section === 'assetDistribution-people' && (
-                <>
-                    {/* {console.log(`family person assets distribution = ${JSON.stringify(data)}`)} */}
-
-                    <div className="section-list-item-group">
-                        <h5>Name: {data.title} {data.fullLegalName}</h5>
-                    </div>
-                    <div className="section-list-item-group">
-                        <h5>Address: {data.fullAddress}</h5>
-                    </div>
-                    <div className="section-list-item-group">
-                        <h5>Date of birth: {data.dob}</h5>
-                    </div>
-                    <div>
-                        <label>
-                            <input
-                                type="checkbox"
-                                checked={isChecked}
-                                onChange={handleCheckboxChange}
-                            />
-                            Beneficiary
-                        </label>
-                        {isChecked && (
-                            <>
-                                <p>share</p>
-                                <input type="text" style={{ display: 'block', marginTop: '10px' }} />
-                            </>
-                        )}
                     </div>
                 </>
             )}
@@ -162,6 +145,68 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
                     </div>
                 </>
             )}
+            {section === 'assetDistribution-beneficiary' && (
+                <>
+                    {/* {console.log(`family person assets distribution = ${JSON.stringify(data)}`)} */}
+
+                    <div className="section-list-item-group">
+                        <h5>Name: {data.title} {data.fullLegalName}</h5>
+                    </div>
+                    <div className="section-list-item-group">
+                        <h5>Address: {data.fullAddress}</h5>
+                    </div>
+                    <div className="section-list-item-group">
+                        <h5>Date of birth: {data.dob}</h5>
+                    </div>
+                    <div>
+                        <label>
+                            <input
+                                type="checkbox"
+                                checked={isChecked}
+                                onChange={handleCheckboxChange}
+                            />
+                            Beneficiary
+                        </label>
+                        {isChecked && (
+                            <>
+                                <p>share</p>
+                                <input type="text" style={{ display: 'block', marginTop: '10px' }} />
+                            </>
+                        )}
+                    </div>
+                </>
+            )}
+            {section === 'assetDistribution-additionalBeneficiary' && (
+                <>
+                    {/* {console.log(`family person assets distribution = ${JSON.stringify(data)}`)} */}
+
+                    <div className="section-list-item-group">
+                        <h5>Name: {data.title} {data.fullLegalName}</h5>
+                    </div>
+                    <div className="section-list-item-group">
+                        <h5>Address: {data.fullAddress}</h5>
+                    </div>
+                    <div className="section-list-item-group">
+                        <h5>Date of birth: {data.dob}</h5>
+                    </div>
+                    <div>
+                        <label>
+                            <input
+                                type="checkbox"
+                                checked={isChecked}
+                                onChange={handleCheckboxChange}
+                            />
+                            Beneficiary
+                        </label>
+                        {isChecked && (
+                            <>
+                                <p>share</p>
+                                <input type="text" style={{ display: 'block', marginTop: '10px' }} />
+                            </>
+                        )}
+                    </div>
+                </>
+            )}
             {section === 'executors' && (
                 <>
                     <div className="section-list-item-group">
@@ -186,8 +231,6 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
                     </div>
                 </>
             )}
-
-
             {section === 'additional-executors' && (
                 <>
                     <div className="section-list-item-group">
@@ -201,7 +244,7 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
                     </div>
                 </>
             )}
-            {(section !== 'assetsDistribution-asset' && section !== 'assetDistribution-people' && section !== 'executors') && (
+            {(section !== 'assetsDistribution-asset' && section !== 'assetDistribution-beneficiary' && section !== 'executors') && (
                 <div className="section-list-item-btns-container">
                     <button
                         className="section-list-item-btn"

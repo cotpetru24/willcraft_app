@@ -15,4 +15,5 @@ export const resetOrderState = async (dispatch) =>{
     await dispatch(resetAdditionalBeneficiariesSlice())
     await dispatch(resetAdditionalExecutorsSlice())
     await dispatch(resetAssetsSlice())
+    await dispatch(resetAdditionalBeneficiariesSlice())
 }
