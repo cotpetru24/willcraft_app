@@ -202,77 +202,77 @@ const AssetsDistribution = () => {
     //     dispatch(updateAssetsSlice(updatedAssets));
     // };
 
-// AssetsDistribution.js
+    // AssetsDistribution.js
 
-// const handleOnChange = (value, assetIndex, personId) => {
-//     const updatedAssets = assets.map((asset, index) => {
-//         if (index === assetIndex) {
-//             const updatedDistribution = asset.distribution.map(dist => {
-//                 if (dist.personId._id === personId) {
-//                     return { ...dist, receivingAmount: value };
-//                 }
-//                 return dist;
-//             });
-//             return { ...asset, distribution: updatedDistribution };
-//         }
-//         return asset;
-//     });
+    // const handleOnChange = (value, assetIndex, personId) => {
+    //     const updatedAssets = assets.map((asset, index) => {
+    //         if (index === assetIndex) {
+    //             const updatedDistribution = asset.distribution.map(dist => {
+    //                 if (dist.personId._id === personId) {
+    //                     return { ...dist, receivingAmount: value };
+    //                 }
+    //                 return dist;
+    //             });
+    //             return { ...asset, distribution: updatedDistribution };
+    //         }
+    //         return asset;
+    //     });
 
-//     dispatch(updateAssetsSlice(updatedAssets));
+    //     dispatch(updateAssetsSlice(updatedAssets));
 
-//     // Update current order
-//     const updatedAssetsAndDistribution = updatedAssets.map(asset => ({
-//         assetId: asset._id || asset.assetId,
-//         distribution: asset.distribution.map(dist => ({
-//             personId: dist.personId._id ? dist.personId._id : dist.personId,
-//             receivingAmount: dist.receivingAmount || 'percentage here'
-//         }))
-//     }));
+    //     // Update current order
+    //     const updatedAssetsAndDistribution = updatedAssets.map(asset => ({
+    //         assetId: asset._id || asset.assetId,
+    //         distribution: asset.distribution.map(dist => ({
+    //             personId: dist.personId._id ? dist.personId._id : dist.personId,
+    //             receivingAmount: dist.receivingAmount || 'percentage here'
+    //         }))
+    //     }));
 
-//     const updatedOrder = {
-//         ...currentOrder,
-//         assetsAndDistribution: updatedAssetsAndDistribution
-//     };
+    //     const updatedOrder = {
+    //         ...currentOrder,
+    //         assetsAndDistribution: updatedAssetsAndDistribution
+    //     };
 
-//     dispatch(updateCurrentOrderSlice(updatedOrder));
-// };
-const handleOnChange = (value, assetIndex, personId) => {
-    console.log(`handleOnChange called with value: ${value}, assetIndex: ${assetIndex}, personId: ${personId}`);
+    //     dispatch(updateCurrentOrderSlice(updatedOrder));
+    // };
+    const handleOnChange = (value, assetIndex, personId) => {
+        console.log(`handleOnChange called with value: ${value}, assetIndex: ${assetIndex}, personId: ${personId}`);
 
-    const updatedAssets = assets.map((asset, index) => {
-        if (index === assetIndex) {
-            const updatedDistribution = asset.distribution.map(dist => {
-                if (dist.personId=== personId) {
-                    console.log(`Updating receivingAmount for personId: ${personId} to value: ${value}`);
-                    return { ...dist, receivingAmount: value };
-                }
-                return dist;
-            });
-            return { ...asset, distribution: updatedDistribution };
-        }
-        return asset;
-    });
+        const updatedAssets = assets.map((asset, index) => {
+            if (index === assetIndex) {
+                const updatedDistribution = asset.distribution.map(dist => {
+                    if (dist.personId === personId) {
+                        console.log(`Updating receivingAmount for personId: ${personId} to value: ${value}`);
+                        return { ...dist, receivingAmount: value };
+                    }
+                    return dist;
+                });
+                return { ...asset, distribution: updatedDistribution };
+            }
+            return asset;
+        });
 
-    console.log('Updated assets:', updatedAssets);
-    dispatch(updateAssetsSlice(updatedAssets));
+        console.log('Updated assets:', updatedAssets);
+        dispatch(updateAssetsSlice(updatedAssets));
 
-    // Update current order
-    const updatedAssetsAndDistribution = updatedAssets.map(asset => ({
-        assetId: asset._id || asset.assetId,
-        distribution: asset.distribution.map(dist => ({
-            personId: dist.personId._id ? dist.personId._id : dist.personId,
-            receivingAmount: dist.receivingAmount || 'percentage here'
-        }))
-    }));
+        // Update current order
+        const updatedAssetsAndDistribution = updatedAssets.map(asset => ({
+            assetId: asset._id || asset.assetId,
+            distribution: asset.distribution.map(dist => ({
+                personId: dist.personId._id ? dist.personId._id : dist.personId,
+                receivingAmount: dist.receivingAmount || 'percentage here'
+            }))
+        }));
 
-    const updatedOrder = {
-        ...currentOrder,
-        assetsAndDistribution: updatedAssetsAndDistribution
+        const updatedOrder = {
+            ...currentOrder,
+            assetsAndDistribution: updatedAssetsAndDistribution
+        };
+
+        console.log('Updated order:', updatedOrder);
+        dispatch(updateCurrentOrderSlice(updatedOrder));
     };
-
-    console.log('Updated order:', updatedOrder);
-    dispatch(updateCurrentOrderSlice(updatedOrder));
-};
 
 
 
@@ -390,8 +390,17 @@ const handleOnChange = (value, assetIndex, personId) => {
         //     }))
         // };
 
+
+
+        const updatedOrder = {
+            ...currentOrder
+        };
+
+        await dispatch(updateOrderThunk(updatedOrder));
+
+
+
         // await dispatch(updateCurrentOrderSlice(updatedOrder));
-        // await dispatch(updateOrderThunk(currentOrder));
 
         navigate('/creatingOrder');
     };
