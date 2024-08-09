@@ -301,46 +301,46 @@ const AssetsDistribution = () => {
 
         if (editAdditionalBeneficiaryIndex !== null) {
             const updatedAdditionalBeneficiaries = additionalBeneficiaries.map((beneficiary, index) =>
-                index === editAdditionalBeneficiaryIndex ? {personId:additionalBeneficiaryFormData} : {personId:beneficiary}
+                index === editAdditionalBeneficiaryIndex ? { personId: additionalBeneficiaryFormData } : { personId: beneficiary.personId }
             );
-        
+
             // Dispatch update to the additional beneficiaries slice
             dispatch(updateAdditionalBeneficiariesSlice(updatedAdditionalBeneficiaries));
-        
+
             // Dispatch the thunk to update the beneficiary details in the database
             await dispatch(additionalBeneficiaryThunks.updateAdditionalBeficiaryThunk(additionalBeneficiaryFormData));
-        
+
             // Update the assets slice
             const updatedAssets = assets.map(asset => {
                 if (asset.distribution.some(dist => dist.personId === additionalBeneficiaryFormData._id)) {
                     return {
                         ...asset,
                         distribution: asset.distribution.map(dist =>
-                            dist.personId === additionalBeneficiaryFormData._id ? 
-                            { ...dist, ...additionalBeneficiaryFormData } : dist
+                            dist.personId === additionalBeneficiaryFormData._id ?
+                                { ...dist, ...additionalBeneficiaryFormData } : dist
                         )
                     };
                 }
                 return asset;
             });
-        
+
             dispatch(updateAssetsSlice(updatedAssets));
-        
+
             // Update the current order slice
             const updatedOrder = {
                 ...currentOrder,
-                peopleAndRoles: currentOrder.peopleAndRoles.map(pr => 
-                    pr.personId._id === additionalBeneficiaryFormData._id ? 
-                    { ...pr, personId: additionalBeneficiaryFormData } : pr
+                peopleAndRoles: currentOrder.peopleAndRoles.map(pr =>
+                    pr.personId._id === additionalBeneficiaryFormData._id ?
+                        { ...pr, personId: additionalBeneficiaryFormData } : pr
                 ),
                 assetsAndDistribution: updatedAssets.map(asset => ({
                     assetId: asset._id,
                     distribution: asset.distribution
                 }))
             };
-        
+
             await dispatch(updateCurrentOrderSlice(updatedOrder));
-        
+
             // Reset the form and state
             setEditAdditionalBeneficiaryIndex(null);
             resetAdditionalBeneficiaryForm();
@@ -394,9 +394,15 @@ const AssetsDistribution = () => {
     };
 
 
-    const handleRemoveAdditionalBeneficiary = (index) => {
+    const handleRemoveAdditionalBeneficiary = async (index) => {
         const updatedAdditionalBeneficiaries = additionalBeneficiaries.filter((_, i) => i !== index);
-        dispatch(updateAdditionalBeneficiariesSlice(updatedAdditionalBeneficiaries));
+        const beneficiaryToDelete = additionalBeneficiaries.find((_, i) => i == index);
+        console.log(`benId to delete = ${JSON.stringify(beneficiaryToDelete)}`)
+        console.log(`ben id =${ JSON.stringify(beneficiaryToDelete.personId._id)}`)
+        await dispatch(updateAdditionalBeneficiariesSlice(updatedAdditionalBeneficiaries));
+
+
+        await dispatch(additionalBeneficiaryThunks.deleteAdditionalBeficiaryThunk(beneficiaryToDelete.personId._id))
     };
 
     const handleEditAdditionalBeneficiary = (index) => {
@@ -605,7 +611,7 @@ const AssetsDistribution = () => {
             [name]: value,
         });
     };
-    
+
 
 
 

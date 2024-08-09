@@ -23,10 +23,25 @@ export const updatePerson = async (personData, token)=>{
     return response.data;
 }
 
+
+
+
+export const deletePerson = async (id, token)=>{
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    console.log(`beneficary to delete  id= ${id}`)
+
+    const response = await axios.delete(API_URL+id, config)
+    return response.data;
+}
+
 // export const getPerson = async () => {
 //     const response = await axios.get(API_URL);
 //     return response;
 // }
-const peopleService = { createPerson, updatePerson };
+const peopleService = { createPerson, updatePerson,deletePerson };
 
 export default peopleService;
