@@ -46,6 +46,7 @@ import Kids from './components/CreatingOrder/CreatingOrderComponents/Kids';
 import Assets from './components/CreatingOrder/CreatingOrderComponents/Assets';
 import AssetsDistribution from './components/CreatingOrder/CreatingOrderComponents/AssetsDistribution';
 import Executors from './components/CreatingOrder/CreatingOrderComponents/Executors';
+import PaymentPage from './components/ChechOutForm';
 
 function App() {
 
@@ -69,6 +70,7 @@ function App() {
             <Route path='/assets' element={<Assets/>}/>;
             <Route path='/assetsDistribution' element={<AssetsDistribution/>}/>;
             <Route path='/executors' element={<Executors/>}/>;
+            <Route path='/ChechOutForm' element={<PaymentPage/>}/>
               
           </Routes>
           <Footer />

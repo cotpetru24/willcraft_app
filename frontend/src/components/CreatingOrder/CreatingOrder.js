@@ -47,6 +47,7 @@ const CreatingOrder = () => {
                             If you have any questions, message, email or call us on 024 1234 5678.</p>
                     </div>
                     <GenerateWillButton />
+                    <button onClick={()=>navigate('/ChechOutForm')}>Stripe</button>
                 </div>
 
             </div>
