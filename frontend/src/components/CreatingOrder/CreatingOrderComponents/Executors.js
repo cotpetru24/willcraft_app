@@ -32,7 +32,12 @@ const Executors = () => {
 
     useEffect(() => {
         const updatedFamily = currentOrder.peopleAndRoles
-            .filter(p => p.role.includes('partner') || p.role.includes('kid') || p.role.includes('spouse'));
+            .filter(p => 
+                p.role.includes('partner') 
+                || p.role.includes('kid') 
+                || p.role.includes('spouse') 
+                || p.role.includes('beneficiary') 
+                || p.role.includes('additional beneficiary'));
         setFamily(updatedFamily);
     }, [currentOrder.peopleAndRoles, currentOrder]);
     
