@@ -289,14 +289,67 @@ const AssetsDistribution = () => {
     const handleAdditionalBeneficiaryFormAdd = async (e) => {
         e.preventDefault();
 
+        // if (editAdditionalBeneficiaryIndex !== null) {
+        //     const updatedAdditionalBeneficiaries = additionalBeneficiaries.map((beneficiary, index) =>
+        //         index === editAdditionalBeneficiaryIndex ? additionalBeneficiaryFormData : beneficiary
+        //     );
+
+        //     dispatch(updateAdditionalBeneficiariesSlice(updatedAdditionalBeneficiaries));
+        //     setEditAdditionalBeneficiaryIndex(null);
+        // } 
+
+
         if (editAdditionalBeneficiaryIndex !== null) {
             const updatedAdditionalBeneficiaries = additionalBeneficiaries.map((beneficiary, index) =>
-                index === editAdditionalBeneficiaryIndex ? additionalBeneficiaryFormData : beneficiary
+                index === editAdditionalBeneficiaryIndex ? {personId:additionalBeneficiaryFormData} : {personId:beneficiary}
             );
-
+        
+            // Dispatch update to the additional beneficiaries slice
             dispatch(updateAdditionalBeneficiariesSlice(updatedAdditionalBeneficiaries));
+        
+            // Dispatch the thunk to update the beneficiary details in the database
+            await dispatch(additionalBeneficiaryThunks.updateAdditionalBeficiaryThunk(additionalBeneficiaryFormData));
+        
+            // Update the assets slice
+            const updatedAssets = assets.map(asset => {
+                if (asset.distribution.some(dist => dist.personId === additionalBeneficiaryFormData._id)) {
+                    return {
+                        ...asset,
+                        distribution: asset.distribution.map(dist =>
+                            dist.personId === additionalBeneficiaryFormData._id ? 
+                            { ...dist, ...additionalBeneficiaryFormData } : dist
+                        )
+                    };
+                }
+                return asset;
+            });
+        
+            dispatch(updateAssetsSlice(updatedAssets));
+        
+            // Update the current order slice
+            const updatedOrder = {
+                ...currentOrder,
+                peopleAndRoles: currentOrder.peopleAndRoles.map(pr => 
+                    pr.personId._id === additionalBeneficiaryFormData._id ? 
+                    { ...pr, personId: additionalBeneficiaryFormData } : pr
+                ),
+                assetsAndDistribution: updatedAssets.map(asset => ({
+                    assetId: asset._id,
+                    distribution: asset.distribution
+                }))
+            };
+        
+            await dispatch(updateCurrentOrderSlice(updatedOrder));
+        
+            // Reset the form and state
             setEditAdditionalBeneficiaryIndex(null);
-        } else {
+            resetAdditionalBeneficiaryForm();
+            setShowAdditionalBeneficiaryForm(false);
+        }
+
+
+
+        else {
 
             const createAdditionalBeficiaryResponse = await dispatch(
                 additionalBeneficiaryThunks.createAdditionalBeficiaryThunk(additionalBeneficiaryFormData)).unwrap();
@@ -349,14 +402,14 @@ const AssetsDistribution = () => {
     const handleEditAdditionalBeneficiary = (index) => {
         const beneficiaryToEdit = additionalBeneficiaries[index];
         setAdditionalBeneficiaryFormData({
-            _id: beneficiaryToEdit._id || '',
-            title: beneficiaryToEdit.title || '',
-            fullLegalName: beneficiaryToEdit.fullLegalName || '',
-            fullAddress: beneficiaryToEdit.fullAddress || '',
-            dob: beneficiaryToEdit.dob || '',
-            email: beneficiaryToEdit.email || '',
-            tel: beneficiaryToEdit.tel || '',
-            assetId: beneficiaryToEdit.assetId || ''
+            _id: beneficiaryToEdit.personId._id || '',
+            title: beneficiaryToEdit.personId.title || '',
+            fullLegalName: beneficiaryToEdit.personId.fullLegalName || '',
+            fullAddress: beneficiaryToEdit.personId.fullAddress || '',
+            dob: beneficiaryToEdit.personId.dob || '',
+            email: beneficiaryToEdit.personId.email || '',
+            tel: beneficiaryToEdit.personId.tel || '',
+            // assetId: beneficiaryToEdit.assetId || ''
         });
         setEditAdditionalBeneficiaryIndex(index);
         setShowAdditionalBeneficiaryForm(true);
