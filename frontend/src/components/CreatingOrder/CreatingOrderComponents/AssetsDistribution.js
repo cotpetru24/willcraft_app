@@ -545,7 +545,14 @@ const AssetsDistribution = () => {
         console.log('Dispatched updated state');
     };
 
-
+    const handleOnBenFormChange = (event) => {
+        const { name, value } = event.target;
+        setAdditionalBeneficiaryFormData({
+            ...additionalBeneficiaryFormData,
+            [name]: value,
+        });
+    };
+    
 
 
 
@@ -635,7 +642,7 @@ const AssetsDistribution = () => {
                                                     id="title"
                                                     name="title"
                                                     value={additionalBeneficiaryFormData.title}
-                                                    onChange={handleOnChange}
+                                                    onChange={handleOnBenFormChange}
                                                     required
                                                 >
                                                     {Object.values(constants.title).map((title, index) => (
@@ -653,7 +660,7 @@ const AssetsDistribution = () => {
                                                     id="fullLegalName"
                                                     name="fullLegalName"
                                                     value={additionalBeneficiaryFormData.fullLegalName}
-                                                    onChange={handleOnChange}
+                                                    onChange={handleOnBenFormChange}
                                                     required
                                                 />
                                             </div>
@@ -664,7 +671,7 @@ const AssetsDistribution = () => {
                                                 name="fullAddress"
                                                 value={additionalBeneficiaryFormData.fullAddress}
                                                 onPlaceSelected={handlePlaceSelected}
-                                                handleInputChange={handleOnChange}
+                                                handleInputChange={handleOnBenFormChange}
                                             />
                                         </div>
                                         <div className="form-group">
@@ -673,7 +680,7 @@ const AssetsDistribution = () => {
                                                 id="dob"
                                                 name="dob"
                                                 value={additionalBeneficiaryFormData.dob}
-                                                onChange={handleOnChange}
+                                                onChange={handleOnBenFormChange}
                                             />
                                         </div>
                                         <div className="form-group">
@@ -683,7 +690,7 @@ const AssetsDistribution = () => {
                                                 id="email"
                                                 name="email"
                                                 value={additionalBeneficiaryFormData.email}
-                                                onChange={handleOnChange}
+                                                onChange={handleOnBenFormChange}
                                             />
                                         </div>
                                         <div className="form-group">
@@ -693,7 +700,7 @@ const AssetsDistribution = () => {
                                                 id="tel"
                                                 name="tel"
                                                 value={additionalBeneficiaryFormData.tel}
-                                                onChange={handleOnChange}
+                                                onChange={handleOnBenFormChange}
                                             />
                                         </div>
                                     </div>
