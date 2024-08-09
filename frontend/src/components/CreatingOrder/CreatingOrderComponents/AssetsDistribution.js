@@ -421,6 +421,19 @@ const AssetsDistribution = () => {
         setShowAdditionalBeneficiaryForm(true);
     };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
     const handleSaveAndContinue = async (e) => {
         e.preventDefault();
 
@@ -464,6 +477,27 @@ const AssetsDistribution = () => {
         navigate('/creatingOrder');
     };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
     const handleBack = () => {
         if (savedAdditionalBeneficiariesData.current) {
             dispatch(updateAdditionalBeneficiariesSlice(savedAdditionalBeneficiariesData.current));

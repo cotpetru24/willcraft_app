@@ -41,15 +41,25 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
         }
         
 
+////////// ---------------this works fine -------don't delete until fullly tested
+
+        // if (section === 'assetDistribution-additionalBeneficiary' && asset?.distribution) {
+        //     const isInDistribution = asset.distribution.some(dist => dist.personId?._id === data._id);
+        //     setIsChecked(isInDistribution);
+        // }
 
 
-        if (section === 'assetDistribution-additionalBeneficiary' && asset?.distribution) {
-            const isInDistribution = asset.distribution.some(dist => dist.personId?._id === data._id);
-            setIsChecked(isInDistribution);
+        if (section === 'assetDistribution-beneficiary' && asset?.distribution) {
+            const distribution = asset.distribution.find(dist => dist.personId._id === data._id);
+    
+            if (distribution) {
+                setIsChecked(true);
+                setReceivingAmount(distribution.receivingAmount || '');
+            } else {
+                setIsChecked(false);
+                setReceivingAmount('');
+            }
         }
-
-
-
 
         // if (section === 'assetDistribution-additionalBeneficiary' && asset) {
         //     const isInDistribution = asset.distribution.some(dist => dist.personId && dist.personId._id && dist.personId._id === data._id);
