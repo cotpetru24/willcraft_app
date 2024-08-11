@@ -23,10 +23,9 @@ const Home = () => {
 
     return (
         <>
-            <Container fluid className="pt-5">
+            <Container  className="pt-5">
                 <Row className="justify-content-center" >
-                    {/* style={{ height: '100vh' }} */}
-                    <Col md={{ span: 3 }}>
+                    <Col md={{ span: 4 }}>
                         <h1>Will writing made simple</h1>
                         <Container className="pt-3">
                             <h5><FontAwesomeIcon
@@ -74,7 +73,7 @@ const Home = () => {
                             )}
                         </Row>
                     </Col>
-                    <Col md={{ span: 7 }}>
+                    <Col md={{ span: 8 }}>
                         <img src="/hero1.png" style={{ width: '100%' }} alt="Home" />
                     </Col>
                 </Row>

@@ -43,7 +43,7 @@ const Header = () => {
                         <img id="header-logo" src='/logo10.png' alt='WillCraft Logo' />
                     </Link>
                 </Col> */}
-                <Col md={{ span: 2, offset: 10 }}>
+                <Col md={{ span: 3, offset: 10 }}>
                     {user ? (
                         <Row className='pt-3'>
                             <h4>Welcome back {user ? user.firstName : ''}!</h4>
