@@ -1,5 +1,5 @@
-import React from "react";
-
+import React from 'react';
+import Card from 'react-bootstrap/Card'
 
 
 // Function to set recipe rating stars
@@ -9,25 +9,23 @@ export function formatReviewRating(rating) {
     return yellowStar.repeat(rating) + grayStar.repeat(5 - rating);
 }
 
-
 const HomeReview = () => {
+
+
     return (
-        <section className="review-container">
-               <p>
-                The process was seamless and easy to follow. I appreciate the detailed instructions and
-                the quick turnaround time. Will definitely use this service again.
-            </p>
-            <h4 className="review-container-text">
-                Jane
-            </h4 >
-            <p className="review-container-text">May 1990</p>
-            <div className="review-starts-container" dangerouslySetInnerHTML={{ __html: formatReviewRating(4) }}></div>
-            {/* <h4>Great Service!</h4> */}
-         
-
-        </section>
-    )
-
-}
+        <Card className='home-review-card m-2' bg="light" text="dark">
+            <Card.Body>
+                <Card.Title>Great Service!</Card.Title>
+                <Card.Text>
+                    The process was seamless and easy to follow. I appreciate the detailed instructions and
+                    the quick turnaround time. Will definitely use this service again.
+                    <h5>Jane</h5>
+                    <div className="review-starts-container" dangerouslySetInnerHTML={{ __html: formatReviewRating(4) }}></div>
+                </Card.Text>
+            </Card.Body>
+        </Card>
+    );
+};
 
 export default HomeReview;
+

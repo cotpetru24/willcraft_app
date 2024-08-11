@@ -26,8 +26,8 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import './newcss.css'; // Import custom styles
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './index2.css'; // Import custom styles
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './components/Home';
 import Login from './components/Authentication/Login';
@@ -54,7 +54,7 @@ function App() {
   return (
     <>
       <Router>
-        <div className='container-fluid'>
+        <div className='container-fluid root'>
           <Header />
           <Routes>
             <Route path='/' element={<Home />} />;
@@ -67,11 +67,11 @@ function App() {
             <Route path='/testator' element={<Testator />} />;
             <Route path='/spouseOrPartner' element={<SpouseOrPartner />} />;
             <Route path='/kids' element={<Kids />} />;
-            <Route path='/assets' element={<Assets/>}/>;
-            <Route path='/assetsDistribution' element={<AssetsDistribution/>}/>;
-            <Route path='/executors' element={<Executors/>}/>;
-            <Route path='/ChechOutForm' element={<PaymentPage/>}/>
-              
+            <Route path='/assets' element={<Assets />} />;
+            <Route path='/assetsDistribution' element={<AssetsDistribution />} />;
+            <Route path='/executors' element={<Executors />} />;
+            <Route path='/ChechOutForm' element={<PaymentPage />} />
+
           </Routes>
           <Footer />
         </div>

@@ -6,10 +6,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckSquare, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { login, reset } from '../features/auth/authSlice';
 import './Common/FontAwesomeSetup';
-import AboutUs from "./AboutUs";
-import Pricing from "./Prices";
-import ReviewsCarousel from "./ReviewsCarousel";
+import Container from "react-bootstrap/esm/Container";
+import { Col, Row } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import HowDoesItWork from "./HowDoesItWork";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
+import Carousel from "react-bootstrap/Carousel";
 
 
 const Home = () => {
@@ -19,91 +23,93 @@ const Home = () => {
 
     return (
         <>
-            <section className="home-section-heading">
-
-                <div className="hero-section-container">
-                    <h1>Will writing made simple</h1>
-                    {/* <p><FontAwesomeIcon icon={faCheckSquare} className="custom-icon" style={{ color: 'green' }} />no appointments</p>
-                    <p><FontAwesomeIcon icon={faCheckSquare} className="custom-icon" style={{ color: 'green' }} />no solicitors</p>
-                    <p><FontAwesomeIcon icon={faCheckSquare} className="custom-icon" style={{ color: 'green' }} />step by Step guide</p>
-                    <p><FontAwesomeIcon icon={faCheckSquare} className="custom-icon" style={{ color: 'green' }} />ready in 10 minutes</p>
-                    <p><FontAwesomeIcon icon={faCheckSquare} className="custom-icon" style={{ color: 'green' }} />starting from £20</p> */}
-                    
-
-                    <p><FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />no appointments</p>
-                    <p><FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />no solicitors</p>
-                    <p><FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />step by Step guide</p>
-                    <p><FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />ready in 10 minutes</p>
-                    <p><FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />starting from £20</p>
-
-
-                    {user ? (
-                        <Link to='/dashboard'>
-                            <button id="get-started-btn">Get Started</button>
-
-                        </Link>
-                    ) : (
-                        <Link to='/login'>
-                            <button id="get-started-btn">Get Started  
-                            {/* <img src="./feather.png" alt="feather icon" style={{ height: '30px' }} />                   */}
-                                      </button>
-
-                        </Link>
-                    )}
-
-
-                </div>
-
-                <img src="/hero1.png" style={{ width: '60%' }} alt="Home" />
-                {/* <img src="/robot.svg" style={{ width: '35%' }} alt="Home" /> */}
-
-
-
-
-            </section>
-            <section className="how-it-works-section">
-                <h1 id="how-it-works-heading">How it works:</h1>
-                <div className="how-it-works-container">
-                    {/* <div className="how-it-works-subcontainer">
-                        <img src="/type.webp" style={{ width: '150px' }} alt="type" />
-                        <p>1.Enter your details</p>
-                    </div>
-                    <div className="how-it-works-subcontainer">
-                        <img src="/print.webp" style={{ width: '150px' }} alt="type" />
-                        <p>2.Print your will</p>
-                    </div>
-
-                    <div className="how-it-works-subcontainer">
-                        <img src="/sign.webp" style={{ width: '150px' }} alt="type" />
-                        <p>3.Sign it</p>
-
-                    </div> */}
-                    <img src="./how_it_works.png" style={{ width: '80%' }}/>
-                </div>
-            </section>
-
-{/* <section>
-    <AboutUs/>
-</section> */}
-{/* <section className="pricing-section">
-<h1><Link to="/">Pricing</Link></h1>
-
-<Pricing/>
-</section> */}
-            <section className="home-reviews-section">
-                <h1><Link to="/">Testimonials</Link></h1>
-
-                {/* <div className="home-reviews-container">
-                    <HomeReview />
-                    <HomeReview />
-                    <HomeReview />
-                    <HomeReview />
-
-
-                </div> */}
-                <ReviewsCarousel/>
-                <h4>Rating 4.8/5 based on 123 reviews. <Link to="/">View all reviews</Link></h4>
-            </section>
+            <Container fluid className="pt-5">
+                <Row className="justify-content-center" >
+                    {/* style={{ height: '100vh' }} */}
+                    <Col md={{ span: 3 }}>
+                        <h1>Will writing made simple</h1>
+                        <Container className="pt-3">
+                            <h5><FontAwesomeIcon
+                                icon={faCheckCircle}
+                                className="custom-icon"
+                                style={{ color: 'green' }} /> no appointments</h5>
+                            <h5><FontAwesomeIcon
+                                icon={faCheckCircle}
+                                className="custom-icon"
+                                style={{ color: 'green' }} /> no solicitors</h5>
+                            <h5><FontAwesomeIcon
+                                icon={faCheckCircle}
+                                className="custom-icon"
+                                style={{ color: 'green' }} /> step by Step guide</h5>
+                            <h5><FontAwesomeIcon
+                                icon={faCheckCircle}
+                                className="custom-icon"
+                                style={{ color: 'green' }} /> ready in 10 minutes</h5>
+                            <h5><FontAwesomeIcon
+                                icon={faCheckCircle}
+                                className="custom-icon"
+                                style={{ color: 'green' }} /> starting from £20</h5>
+                        </Container>
+                        <Row className="p-2 pt-3">
+                            {user ? (
+                                <Container >
+                                    <Link to='/dashboard'>
+                                        <Button
+                                            className='mb-5'
+                                            id="get-started-btn">
+                                            Get Started
+                                        </Button>
+                                    </Link>
+                                </Container>
+                            ) : (
+                                <Container >
+                                    <Link to='/login'>
+                                        <Button
+                                            className='mb-5'
+                                            id="get-started-btn">
+                                            Get Started
+                                        </Button>
+                                    </Link>
+                                </Container>
+                            )}
+                        </Row>
+                    </Col>
+                    <Col md={{ span: 7 }}>
+                        <img src="/hero1.png" style={{ width: '100%' }} alt="Home" />
+                    </Col>
+                </Row>
+            </Container>
+            <Container>
+                <Row className="pt-5 mb-5 section-header">
+                    <Col>
+                        <h2>How does it work</h2>
+                    </Col>
+                </Row>
+                <HowDoesItWork />
+            </Container>
+            <Container>
+                <Row className="pt-5 mb-5 section-header">
+                    <Col>
+                        <h2>Testimonials</h2>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col className="d-flex justify-content-center">
+                        <HomeReview />
+                    </Col>
+                    <Col className="d-flex justify-content-center">
+                        <HomeReview />
+                    </Col>
+                    <Col className="d-flex justify-content-center">
+                        <HomeReview />
+                    </Col>
+                </Row>
+                <Row className="p-4">
+                    <Col className="d-flex justify-content-center">
+                        <h4>Rating 4.8/5 based on 123 reviews. <Link to="/">View all reviews</Link></h4>
+                    </Col>
+                </Row>
+            </Container>
         </>
     );
 }

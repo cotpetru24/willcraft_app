@@ -1,0 +1,81 @@
+.root {
+    padding: 0px;
+}
+
+.main-header {
+    background-color: #131921;
+    color: rgba(255, 255, 255, 0.87);
+    min-height: 80px;
+}
+
+.header-nav-link {
+    color: rgba(255, 255, 255, 0.87);
+
+}
+
+.header-nav-link:hover {
+    color: #e0218a
+}
+
+.header-nav-link.active {
+    color: #e0218a !important;
+}
+
+#message-form-textarea {
+    height: 100px;
+}
+#send-message-btn{
+    border: none;
+    background-color: #e0218a !important;
+}
+#send-message-btn:hover{
+    background-color: #0d6efd !important;
+}
+
+.main-footer {
+    background-color: #131921;
+    color: rgba(255, 255, 255, 0.87);
+
+}
+
+#sendEmailLink {
+    text-decoration: none;
+    color: #e0218a;
+}
+
+#sendEmailLink:hover {
+    color: #0d6efd;
+}
+
+.social-media-icons a{
+    color: #e0218a;
+}
+.social-media-icons a:hover{
+    color: #0d6efd;
+}
+
+#header-logo{
+    height: 40px;
+}
+
+#get-started-btn{
+    background-color: #e0218a;
+    border: none;
+    width:210px
+}
+#get-started-btn:hover{
+    background-color: #0d6efd;
+
+}
+
+.home-review-card{
+    width: 20rem;
+}
+
+.rating-stars{
+    height: 25px;
+}
+
+.section-header{
+    border-bottom: 1px solid rgb(180, 176, 176);
+}
