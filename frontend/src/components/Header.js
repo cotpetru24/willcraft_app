@@ -38,9 +38,9 @@ const Header = () => {
     return (
         <Container fluid className='main-header'>
             <Row>
-                <Col md={{ span: 3, offset: 10 }}>
+                <Col md={{ span: 3, offset: 9 }}>
                     {user ? (
-                        <Row className='pt-3'>
+                        <Row className='pt-3 text-end'>
                             <h4>Welcome back {user ? user.firstName : ''}!</h4>
                         </Row>
                     ) : null}
@@ -135,76 +135,9 @@ const Header = () => {
                                     </Offcanvas>
                                 </Container>
                             </Navbar>
-
-
-
-
-                            {/* <Row className='pb-2'>
-                                <Nav variant='underline' defaultActiveKey="/">
-                                    <Nav.Item>
-                                        <LinkContainer to="/">
-                                            <Nav.Link className='header-nav-link'>Home</Nav.Link>
-                                        </LinkContainer>
-                                    </Nav.Item>
-                                    <Nav.Item>
-                                        <LinkContainer to="/aboutus">
-                                            <Nav.Link className='header-nav-link'>About us</Nav.Link>
-                                        </LinkContainer>
-                                    </Nav.Item>
-                                    <Nav.Item>
-                                        <LinkContainer to="/prices">
-                                            <Nav.Link className='header-nav-link'>Prices</Nav.Link>
-                                        </LinkContainer>
-                                    </Nav.Item>
-                                    <Nav.Item>
-                                        <LinkContainer to="/dashboard">
-                                            <Nav.Link className='header-nav-link'>My Wills</Nav.Link>
-                                        </LinkContainer>
-                                    </Nav.Item>
-                                    <Nav.Item>
-                                        <LinkContainer to="/progressBar">
-                                            <Nav.Link className='header-nav-link'>My Account</Nav.Link>
-                                        </LinkContainer>
-                                    </Nav.Item>
-                                    <Nav.Item>
-                                        <Nav.Link className='header-nav-link' onClick={logoutfn}>Logout</Nav.Link>
-                                    </Nav.Item>
-                                </Nav>
-                            </Row> */}
                         </>
-
                     ) : (
                         <>
-                            {/* <Row className="align-items-centrew" style={{ height: '100%' }}>
-                                <Nav variant='underline' defaultActiveKey="/">
-                                    <Navbar.Brand className='me-auto'>
-                                        <Link to='/'>
-                                            <img id="header-logo" src='/logo10.png' alt='WillCraft Logo' />
-                                        </Link>
-                                    </Navbar.Brand>
-                                    <Nav.Item>
-                                        <LinkContainer to="/">
-                                            <Nav.Link className='header-nav-link'>Home</Nav.Link>
-                                        </LinkContainer>
-                                    </Nav.Item>
-                                    <Nav.Item>
-                                        <LinkContainer to="/aboutus">
-                                            <Nav.Link className='header-nav-link'>About us</Nav.Link>
-                                        </LinkContainer>
-                                    </Nav.Item>
-                                    <Nav.Item>
-                                        <LinkContainer to="/prices">
-                                            <Nav.Link className='header-nav-link'>Prices</Nav.Link>
-                                        </LinkContainer>
-                                    </Nav.Item>
-                                    <Nav.Item>
-                                        <LinkContainer to="/login">
-                                            <Nav.Link className='header-nav-link'>Login</Nav.Link>
-                                        </LinkContainer>
-                                    </Nav.Item>
-                                </Nav>
-                            </Row> */}
-
                             <Row className="align-items-center" style={{ height: '100%' }}>
                                 <Nav variant='underline' className="w-100">
                                     <Navbar.Brand className='me-auto'>
@@ -234,7 +167,6 @@ const Header = () => {
                                     </Nav.Item>
                                 </Nav>
                             </Row>
-
                         </>
                     )}
                 </Col>
