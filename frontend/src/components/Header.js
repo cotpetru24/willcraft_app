@@ -72,7 +72,7 @@ const Header = () => {
                                             </Nav.Item>
                                             <Nav.Item>
                                                 <LinkContainer to="/aboutus">
-                                                    <Nav.Link className='header-nav-link'>About Us</Nav.Link>
+                                                    <Nav.Link className='header-nav-link'>About us</Nav.Link>
                                                 </LinkContainer>
                                             </Nav.Item>
                                             <Nav.Item>
@@ -109,7 +109,7 @@ const Header = () => {
                                                 </Nav.Item>
                                                 <Nav.Item>
                                                     <LinkContainer to="/aboutus" onClick={handleClose}>
-                                                        <Nav.Link>About Us</Nav.Link>
+                                                        <Nav.Link>About us</Nav.Link>
                                                     </LinkContainer>
                                                 </Nav.Item>
                                                 <Nav.Item>
@@ -148,7 +148,7 @@ const Header = () => {
                                     </Nav.Item>
                                     <Nav.Item>
                                         <LinkContainer to="/aboutus">
-                                            <Nav.Link className='header-nav-link'>About Us</Nav.Link>
+                                            <Nav.Link className='header-nav-link'>About us</Nav.Link>
                                         </LinkContainer>
                                     </Nav.Item>
                                     <Nav.Item>
@@ -189,7 +189,7 @@ const Header = () => {
                                     </Nav.Item>
                                     <Nav.Item>
                                         <LinkContainer to="/aboutus">
-                                            <Nav.Link className='header-nav-link'>About Us</Nav.Link>
+                                            <Nav.Link className='header-nav-link'>About us</Nav.Link>
                                         </LinkContainer>
                                     </Nav.Item>
                                     <Nav.Item>
@@ -219,7 +219,7 @@ const Header = () => {
                                     </Nav.Item>
                                     <Nav.Item>
                                         <LinkContainer to="/aboutus">
-                                            <Nav.Link className='header-nav-link'>About Us</Nav.Link>
+                                            <Nav.Link className='header-nav-link'>About us</Nav.Link>
                                         </LinkContainer>
                                     </Nav.Item>
                                     <Nav.Item>

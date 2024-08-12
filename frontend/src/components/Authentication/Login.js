@@ -5,6 +5,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Spinner from '../Spinner';
 import { login, reset } from '../../features/auth/authSlice'
+import Container from "react-bootstrap/esm/Container";
+import Row from "react-bootstrap/esm/Row";
+import Form from 'react-bootstrap/Form';
+import Button from "react-bootstrap/esm/Button";
+import Col from "react-bootstrap/esm/Col";
+
 
 
 const Login = () => {
@@ -39,36 +45,50 @@ const Login = () => {
     return (
         isLoading ? <Spinner /> : (
             <>
-                <section className="auth-form">
-                    <section className="heading">
-                        <h1>Login</h1>
-                    </section>
-                    <section className="form">
-                        <form onSubmit={onSubmit}>
-                            <div className="form-group">
-                                <label htmlFor="email">Email</label>
-
-                                <input type="email" className="form-control" id="email" name="email" value={email}
-                                    placeholder="Please enter your email" onChange={onChange} />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="password">Password</label>
-
-                                <input type="password" className="form-control" id="password" name="password" value={password}
-                                    placeholder="Please eneter your password" onChange={onChange} />
-                            </div>
-                            <div className="form-group">
-                                <button type="submit" className="btn">Login</button>
-                            </div>
-                            <div className="form-group login-register-toggle-container">
-                                <p>Don't have an account?</p>
-                                <Link to='/register'>
-                                    Register
-                                </Link>
-                            </div>
-                        </form>
-                    </section>
-                </section>
+                <Container className="mt-5 mb-4">
+                    <Row className="mt-3 mb-4 justify-content-center">
+                        <Col xs={12} md={4} className="mx-auto">
+                            <h1 className="auth-header">Login</h1>
+                        </Col>
+                    </Row>
+                    <Row className="justify-content-center">
+                        <Col xs={12} md={4} className="mx-auto">
+                            <Form onSubmit={onSubmit}>
+                                <Form.Group className="mb-3" controlId="formGroupEmail">
+                                    <Form.Label>Email address</Form.Label>
+                                    <Form.Control
+                                        type="email"
+                                        placeholder="Enter email"
+                                        id="email"
+                                        name="email"
+                                        value={email}
+                                        onChange={onChange} />
+                                </Form.Group>
+                                <Form.Group className="mb-3" controlId="formGroupPassword">
+                                    <Form.Label>Password</Form.Label>
+                                    <Form.Control
+                                        placeholder="Enter password"
+                                        type="password"
+                                        className="form-control"
+                                        id="password"
+                                        name="password"
+                                        value={password}
+                                        onChange={onChange} />
+                                </Form.Group>
+                                <Button variant="primary" type="submit" className="w-100 mt-3">
+                                    Login
+                                </Button>
+                            </Form>
+                        </Col>
+                    </Row>
+                    <Row className="mt-3 justify-content-start">
+                        <Col xs={12} md={4} className="mx-auto">
+                            <p>
+                                Don't have an account? <Link to='/register'>Register</Link>
+                            </p>
+                        </Col>
+                    </Row>
+                </Container>
             </>
         )
     )
