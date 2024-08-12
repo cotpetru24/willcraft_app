@@ -9,7 +9,7 @@ import Row from "react-bootstrap/Row";
 const AboutUs = () => {
     return (
         <Container>
-            <Row className="g-5">
+            <Row>
                 <Col xs={{ order: 1, span:12 }} md={{ order: 1, span:6 }}>
                     <img src="./Education.png" style={{ width: '100%' }} />
                 </Col>
