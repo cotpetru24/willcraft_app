@@ -81,7 +81,7 @@ const Prices = () => {
                 <Row className="mt-5 justify-content-center align-items-stretch">
                     <Col xs={12} md={5}>
                         <Card className='home-review-card m-2 d-flex flex-column' bg="light" text="dark" style={{ width: '32rem', height: '100%' }}>
-                            <Card.Img variant="top" src="./accept_terms.png" />
+                            <Card.Img variant="top" src="./fill_out.png" />
                             <Card.Body className="flex-grow-1 d-flex flex-column">
                                 <Card.Title>Wills starting from £20 + VAT</Card.Title>
                                 <Card.Text>
@@ -95,7 +95,7 @@ const Prices = () => {
                     </Col>
                     <Col xs={12} md={5}>
                         <Card className='home-review-card m-2 d-flex flex-column' bg="light" text="dark" style={{ width: '32rem', height: '100%' }}>
-                            <Card.Img variant="top" src="./printing_invoice.png" />
+                            <Card.Img variant="top" src="./printer_v.2.png" />
                             <Card.Body className="flex-grow-1 d-flex flex-column">
                                 <Card.Title>Printing service for £10 + VAT</Card.Title>
                                 <Card.Text>
@@ -112,7 +112,7 @@ const Prices = () => {
                 <Row className="mt-5 mb-5 justify-content-center align-items-stretch">
                     <Col xs={12} md={5}>
                         <Card className='home-review-card m-2 d-flex flex-column' bg="light" text="dark" style={{ width: '32rem', height: '100%' }}>
-                            <Card.Img variant="top" src="./storage.png" />
+                            <Card.Img variant="top" src="./top_secret.png" />
                             <Card.Body className="flex-grow-1 d-flex flex-column">
                                 <Card.Title>Document storage at £25 per annum</Card.Title>
                                 <Card.Text>
@@ -125,7 +125,7 @@ const Prices = () => {
                     </Col>
                     <Col xs={12} md={5}>
                         <Card className='home-review-card m-2 d-flex flex-column' bg="light" text="dark" style={{ width: '32rem', height: '100%' }}>
-                            <Card.Img variant="top" src="./storage.png" />
+                            <Card.Img variant="top" src="./consulting.png" />
                             <Card.Body className="flex-grow-1 d-flex flex-column">
                                 <Card.Title>Custom Wills and Consultations</Card.Title>
                                 <Card.Text>

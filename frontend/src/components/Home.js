@@ -78,7 +78,7 @@ const Home = () => {
                     </Col>
                 </Row>
             </Container>
-            <Container>
+            <Container className="mt-5">
                 <Row className="pt-5 mb-5 section-header">
                     <Col>
                         <h2>How does it work</h2>
@@ -86,7 +86,7 @@ const Home = () => {
                 </Row>
                 <HowDoesItWork />
             </Container>
-            <Container>
+            <Container className="mb-5 mt-5">
                 <Row className="pt-5 mb-5 section-header">
                     <Col>
                         <h2>Testimonials</h2>
