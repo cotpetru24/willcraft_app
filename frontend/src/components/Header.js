@@ -206,7 +206,7 @@ const Header = () => {
                             </Row> */}
 
                             <Row className="align-items-center" style={{ height: '100%' }}>
-                                <Nav variant='underline' defaultActiveKey="/" className="w-100">
+                                <Nav variant='underline' className="w-100">
                                     <Navbar.Brand className='me-auto'>
                                         <Link to='/'>
                                             <img id="header-logo" src='/logo-latest.png' alt='WillCraft Logo' />

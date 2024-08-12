@@ -13,7 +13,7 @@ const HomeReview = () => {
 
 
     return (
-        <Card className='home-review-card m-2' bg="light" text="dark">
+        <Card className='home-review-card m-2 shadow' bg="light" text="dark" >
             <Card.Body>
                 <Card.Title>Jane - Great Service!</Card.Title>
                 <Card.Text>
