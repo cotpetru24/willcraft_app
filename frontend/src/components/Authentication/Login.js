@@ -55,17 +55,19 @@ const Login = () => {
                         <Col xs={12} md={4} className="mx-auto">
                             <Form onSubmit={onSubmit}>
                                 <Form.Group className="mb-3" controlId="formGroupEmail">
-                                    <Form.Label>Email address</Form.Label>
+                                    <Form.Label className="bold-label">Email address</Form.Label>
                                     <Form.Control
                                         type="email"
                                         placeholder="Enter email"
                                         id="email"
                                         name="email"
                                         value={email}
-                                        onChange={onChange} />
+                                        onChange={onChange}
+                                        required
+                                    />
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="formGroupPassword">
-                                    <Form.Label>Password</Form.Label>
+                                    <Form.Label className="bold-label">Password</Form.Label>
                                     <Form.Control
                                         placeholder="Enter password"
                                         type="password"
@@ -73,7 +75,9 @@ const Login = () => {
                                         id="password"
                                         name="password"
                                         value={password}
-                                        onChange={onChange} />
+                                        onChange={onChange}
+                                        required
+                                    />
                                 </Form.Group>
                                 <Button variant="primary" type="submit" className="w-100 mt-3">
                                     Login

@@ -4,12 +4,19 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import Spinner from "../Spinner";
-import {register, reset} from '../../features/auth/authSlice';
+import { register, reset } from '../../features/auth/authSlice';
+import Container from "react-bootstrap/esm/Container";
+import Row from "react-bootstrap/esm/Row";
+import Form from 'react-bootstrap/Form';
+import Button from "react-bootstrap/esm/Button";
+import Col from "react-bootstrap/esm/Col";
 
 
 const Register = () => {
-    const [formData, setFormData] = useState({ firstName: '', lastName: '', 
-        email: '', password: '', password2: '' });
+    const [formData, setFormData] = useState({
+        firstName: '', lastName: '',
+        email: '', password: '', password2: ''
+    });
     const { firstName, lastName, email, password, password2 } = formData;
 
     const navigate = useNavigate();
@@ -45,58 +52,91 @@ const Register = () => {
 
 
     return (
-        isLoading ? <Spinner/> : (
+        isLoading ? <Spinner /> : (
             <>
-                <section className="auth-form">
-
-                    <section className="heading">
-                        <h1>Register</h1>
-                    </section>
-
-                    <section className="form">
-                        <form onSubmit={onSubmit}>
-                            <div className="form-group">
-
-                            <label htmlFor="firstName">First Name</label>
-                                <input type="text" className="form-control" id="firstName" name="firstName" value={firstName}
-                                    placeholder="Enter your first name" onChange={onChange} />
-                            </div>
-                            <div className="form-group">
-                            <label htmlFor="lastName">Last Name</label>
-
-                                <input type="text" className="form-control" id="lastName" name="lastName" value={lastName}
-                                    placeholder="Enter your last name" onChange={onChange} />
-                            </div>
-                            <div className="form-group">
-                            <label htmlFor="email">Email</label>
-
-                                <input type="email" className="form-control" id="email" name="email" value={email}
-                                    placeholder="Enter your email" onChange={onChange} />
-                            </div>
-                            <div className="form-group">
-                            <label htmlFor="password">Password</label>
-
-                                <input type="password" className="form-control" id="password" name="password" value={password}
-                                    placeholder="Enter the password" onChange={onChange} />
-                            </div>
-                            <div className="form-group">
-                            <label htmlFor="password2">Confirm Password</label>
-
-                                <input type="password" className="form-control" id="password2" name="password2" value={password2}
-                                    placeholder="Confirm the password" onChange={onChange} />
-                            </div>
-                            <div className="form-group">
-                                <button type="submit" className="login-register-toggle-btn">Register</button>
-                            </div>
-                            <div className="form-group login-register-toggle-container">
-                                <p>Don't have an account?</p>
-                                <Link to='/login'>
-                                    Login
-                                </Link>
-                            </div>
-                        </form>
-                    </section>
-                </section>
+                <Container className="mt-5 mb-4">
+                    <Row className="mt-3 mb-4 justify-content-center">
+                        <Col xs={12} md={4} className="mx-auto">
+                            <h1 className="auth-header">Register</h1>
+                        </Col>
+                    </Row>
+                    <Row className="justify-content-center">
+                        <Col xs={12} md={4} className="mx-auto">
+                            <Form onSubmit={onSubmit}>
+                                <Form.Group className="mb-3" controlId="formGroupFirstName">
+                                    <Form.Label className="bold-label">First Name</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Your first name"
+                                        id="firstName"
+                                        name="firstName"
+                                        value={firstName}
+                                        onChange={onChange}
+                                        required
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-3" controlId="formGroupLastName">
+                                    <Form.Label className="bold-label">Last Name</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Your last name"
+                                        id="lastName"
+                                        name="lastName"
+                                        value={lastName}
+                                        onChange={onChange}
+                                        required
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-3" controlId="formGroupEmail">
+                                    <Form.Label className="bold-label">Email address</Form.Label>
+                                    <Form.Control
+                                        type="email"
+                                        placeholder="Your email"
+                                        id="email"
+                                        name="email"
+                                        value={email}
+                                        onChange={onChange}
+                                        required
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-3" controlId="formGroupPassword">
+                                    <Form.Label className="bold-label">Password</Form.Label>
+                                    <Form.Control
+                                        type="password"
+                                        placeholder="Password"
+                                        id="password"
+                                        name="password"
+                                        value={password}
+                                        onChange={onChange}
+                                        required
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-3" controlId="formGroupPassword">
+                                    <Form.Label className="bold-label">Confirm password</Form.Label>
+                                    <Form.Control
+                                        type="password"
+                                        placeholder="Confirm password"
+                                        id="password2"
+                                        name="password2"
+                                        value={password2}
+                                        onChange={onChange}
+                                        required
+                                    />
+                                </Form.Group>
+                                <Button variant="primary" type="submit" className="w-100 mt-3">
+                                    Register
+                                </Button>
+                            </Form>
+                        </Col>
+                    </Row>
+                    <Row className="mt-3 justify-content-start">
+                        <Col xs={12} md={4} className="mx-auto">
+                            <p>
+                                Already have an account? <Link to='/login'>Login</Link>
+                            </p>
+                        </Col>
+                    </Row>
+                </Container >
             </>
         )
     )
