@@ -75,7 +75,7 @@ const SpouseOrPartnerCard = () => {
                                 </Row>
                                 <Row className=" d-flex justify-content-end">
                                     <Col xs="auto">
-                                        <Button variant="primary m-1"
+                                        <Button variant="primary"
                                             onClick={() => navigate('/spouseOrPartner')}
                                             className="creating-order-tile-btns"
                                         >Edit</Button>
@@ -93,7 +93,7 @@ const SpouseOrPartnerCard = () => {
                                         </Row>
                                         <Row className=" d-flex justify-content-end">
                                             <Col xs="auto">
-                                                <Button variant="primary m-1"
+                                                <Button variant="primary"
                                                     onClick={() => navigate('/spouseOrPartner')}
                                                     className="creating-order-tile-btns"
                                                 >Edit</Button>
@@ -109,7 +109,7 @@ const SpouseOrPartnerCard = () => {
                                         </Row>
                                         <Row className=" d-flex justify-content-end">
                                             <Col xs="auto">
-                                                <Button variant="primary m-1"
+                                                <Button variant="primary"
                                                     onClick={() => navigate('/spouseOrPartner')}
                                                     className="creating-order-tile-btns"
                                                 >Edit</Button>
@@ -125,7 +125,7 @@ const SpouseOrPartnerCard = () => {
                                         </Row>
                                         <Row className=" d-flex justify-content-end">
                                             <Col xs="auto">
-                                                <Button variant="primary m-1"
+                                                <Button variant="primary"
                                                     onClick={() => navigate('/spouseOrPartner')}
                                                     className="creating-order-tile-btns"
                                                 >Get Started</Button>
