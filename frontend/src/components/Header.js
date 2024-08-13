@@ -64,7 +64,7 @@ const Header = () => {
                                         </Button>
 
                                         <Navbar.Collapse className="d-none d-lg-flex justify-content-end">
-                                            <Nav variant='underline' defaultActiveKey="/" className="ms-auto">
+                                            <Nav variant='underline' className="ms-auto">
                                                 <Nav.Item>
                                                     <LinkContainer to="/">
                                                         <Nav.Link className='header-nav-link'>Home</Nav.Link>
@@ -148,7 +148,7 @@ const Header = () => {
                                         </Button>
 
                                         <Navbar.Collapse className="d-none d-lg-flex justify-content-end">
-                                            <Nav variant='underline' defaultActiveKey="/" className="ms-auto">
+                                            <Nav variant='underline' className="ms-auto">
                                                 <Nav.Item>
                                                     <LinkContainer to="/">
                                                         <Nav.Link className='header-nav-link'>Home</Nav.Link>
