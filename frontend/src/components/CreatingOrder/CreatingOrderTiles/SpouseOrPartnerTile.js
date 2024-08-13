@@ -79,7 +79,7 @@ const SpouseOrPartnerTile = () => {
                                             <Col xs="auto">
                                                 <Button variant="primary m-1"
                                                     onClick={() => navigate('/spouseOrPartner')}
-                                                    className="order-item-btns"
+                                                    className="creating-order-tile-btns"
                                                 >Edit</Button>
                                             </Col>
                                         </Row>
@@ -97,7 +97,7 @@ const SpouseOrPartnerTile = () => {
                                                     <Col xs="auto">
                                                         <Button variant="primary m-1"
                                                             onClick={() => navigate('/spouseOrPartner')}
-                                                            className="order-item-btns"
+                                                            className="creating-order-tile-btns"
                                                         >Edit</Button>
                                                     </Col>
                                                 </Row>
@@ -113,7 +113,7 @@ const SpouseOrPartnerTile = () => {
                                                     <Col xs="auto">
                                                         <Button variant="primary m-1"
                                                             onClick={() => navigate('/spouseOrPartner')}
-                                                            className="order-item-btns"
+                                                            className="creating-order-tile-btns"
                                                         >Edit</Button>
                                                     </Col>
                                                 </Row>
@@ -129,7 +129,7 @@ const SpouseOrPartnerTile = () => {
                                                     <Col xs="auto">
                                                         <Button variant="primary m-1"
                                                             onClick={() => navigate('/spouseOrPartner')}
-                                                            className="order-item-btns"
+                                                            className="creating-order-tile-btns"
                                                         >Get Started</Button>
                                                     </Col>
                                                 </Row>

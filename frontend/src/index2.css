@@ -124,3 +124,10 @@
 .order-item-p-span {
     font-weight: 600;
 }
+
+.order-nav-btn{
+    width: 200px;
+}
+.creating-order-tile-btns{
+    width: 150px;
+}

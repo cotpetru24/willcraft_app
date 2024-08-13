@@ -70,13 +70,13 @@ const TestatorCard = () => {
                                 {allNecessaryFieldsSpecified ? (
                                     <Button variant="primary m-1"
                                         onClick={() => navigate('/testator')}
-                                        className="order-item-btns"
+                                        className="creating-order-tile-btns"
                                     >Edit</Button>
                                 ) : (
 
                                     <Button variant="warning m-1"
                                         onClick={() => navigate('/testator')}
-                                        className="order-item-btns"
+                                        className="creating-order-tile-btns"
                                     >Get Started</Button>
                                 )}
                             </Col>
