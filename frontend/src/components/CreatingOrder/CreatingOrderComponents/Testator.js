@@ -10,10 +10,7 @@ import testatorThunks from "../../../features/people/testator/testatorThunks";
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/esm/Row";
 import Form from 'react-bootstrap/Form';
-import Button from "react-bootstrap/esm/Button";
 import Col from "react-bootstrap/esm/Col";
-
-
 
 
 const Testator = () => {
@@ -105,7 +102,6 @@ const Testator = () => {
 
   return (
     <>
-
       <Container className="mt-5 mb-4">
         <Row className="mt-3 mb-4 justify-content-center">
           <Col xs={12} md={4} className="mx-auto">

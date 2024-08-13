@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import OrderNavigation from "../CreatigOrderNavigation";
+import CreatingOrderNavigation from "../CreatigOrderNavigation";
 import constants from "../../../common/constants";
 import AddressAutocomplete from "../../Common/AddressAutocomplete";
 import DateInput from "../../Common/DateInput";
@@ -10,7 +10,10 @@ import { updateSpouseOrPartnerSlice, resetSpouseOrPartnerSlice } from "../../../
 import spouseOrPartnerThunks from "../../../features/people/spouseOrPartner/spouseOrPartnerThunks";
 import { updateCurrentOrderSlice, updateOrderThunk } from "../../../features/currentOrder/currentOrderSlice";
 import testatorThunks from "../../../features/people/testator/testatorThunks";
-
+import Container from "react-bootstrap/esm/Container";
+import Row from "react-bootstrap/esm/Row";
+import Form from 'react-bootstrap/Form';
+import Col from "react-bootstrap/esm/Col";
 
 
 const SpouseOrPartner = () => {
@@ -103,10 +106,10 @@ const SpouseOrPartner = () => {
       && (currentMaritalStatus !== constants.maritalStatus.MARRIED
         && currentMaritalStatus !== constants.maritalStatus.PARTNER)) {
 
-      updatedPeopleAndRoles = currentOrder.peopleAndRoles.filter(pr => 
+      updatedPeopleAndRoles = currentOrder.peopleAndRoles.filter(pr =>
         !pr.role.includes(constants.role.SPOUSE) && !pr.role.includes(constants.role.PARTNER)
       );
-      
+
       // Update the current order slice
       const updatedOrder = {
         ...currentOrder,
@@ -201,155 +204,151 @@ const SpouseOrPartner = () => {
 
   return (
     <>
-      <section>
 
-        <div className="creatingOrder-section-heading-container">
-          <h1>Your details</h1>
-        </div>
-
-        <div className="marital-status-container">
-          <div>
+      <Container className="mt-5 mb-5">
+        <Row>
+          <Col className="d-flex justify-content-center pb-3">
             <h4>What is your marital status?</h4>
-          </div>
-          <div className="marital-status-options-container">
-            <div className="marital-status-radio-container">
-              <input
-                type="radio"
-                id="marital-status-married"
-                name="marital-status"
-                value={constants.maritalStatus.MARRIED}
-                checked={currentMaritalStatus === constants.maritalStatus.MARRIED}
-                onChange={handleMaritalStatusChange}></input>
-              <label htmlFor="marital-status-married">Married</label>
-            </div>
-            <div className="marital-status-radio-container">
-              <input
-                type="radio"
-                id="marital-status-partner"
-                name="marital-status"
-                value={constants.maritalStatus.PARTNER}
-                checked={currentMaritalStatus === constants.maritalStatus.PARTNER}
-                onChange={handleMaritalStatusChange}></input>
-              <label htmlFor="marital-status-partner">Living with partner</label>
-            </div>
-            <div className="marital-status-radio-container">
-              <input
-                type="radio"
-                id="marital-status-widowed"
-                name="marital-status"
-                value={constants.maritalStatus.WIDOWED}
-                checked={currentMaritalStatus === constants.maritalStatus.WIDOWED}
-                onChange={handleMaritalStatusChange}></input>
-              <label htmlFor="marital-status-widowed">Widowed</label>
-            </div>
-            <div className="marital-status-radio-container">
-              <input
-                type="radio"
-                id="marital-status-single"
-                name="marital-status"
-                value={constants.maritalStatus.SINGLE}
-                checked={currentMaritalStatus === constants.maritalStatus.SINGLE}
-                onChange={handleMaritalStatusChange}></input>
-              <label htmlFor="marital-status-single">Single</label>
-            </div>
-          </div>
-        </div>
+          </Col>
+        </Row>
+        <Row className="d-flex justify-content-center">
+          <Col xs={{ span: 11, offset: 1 }} md={{ span: 2, offset: 0 }} className="d-flex justify-content-md-center justify-content-xs-start p-1 p-md-0">
+            <input
+              type="radio"
+              id="marital-status-married"
+              name="marital-status"
+              value={constants.maritalStatus.MARRIED}
+              checked={currentMaritalStatus === constants.maritalStatus.MARRIED}
+              onChange={handleMaritalStatusChange}></input>
+            <label htmlFor="marital-status-married">Married</label>
+          </Col>
+          <Col xs={{ span: 11, offset: 1 }} md={{ span: 2, offset: 0 }} className="d-flex justify-content-md-center justify-content-xs-start p-1 p-md-0">
+            <input
+              type="radio"
+              id="marital-status-partner"
+              name="marital-status"
+              value={constants.maritalStatus.PARTNER}
+              checked={currentMaritalStatus === constants.maritalStatus.PARTNER}
+              onChange={handleMaritalStatusChange}></input>
+            <label htmlFor="marital-status-partner">Living with partner</label>
+          </Col>
+          <Col xs={{ span: 11, offset: 1 }} md={{ span: 2, offset: 0 }} className="d-flex justify-content-md-center justify-content-xs-start p-1 p-md-0">
+            <input
+              type="radio"
+              id="marital-status-widowed"
+              name="marital-status"
+              value={constants.maritalStatus.WIDOWED}
+              checked={currentMaritalStatus === constants.maritalStatus.WIDOWED}
+              onChange={handleMaritalStatusChange}></input>
+            <label htmlFor="marital-status-widowed">Widowed</label>
+          </Col>
+          <Col xs={{ span: 11, offset: 1 }} md={{ span: 2, offset: 0 }} className="d-flex justify-content-md-center justify-content-xs-start p-1 p-md-0">
+            <input
+              type="radio"
+              id="marital-status-single"
+              name="marital-status"
+              value={constants.maritalStatus.SINGLE}
+              checked={currentMaritalStatus === constants.maritalStatus.SINGLE}
+              onChange={handleMaritalStatusChange}></input>
+            <label htmlFor="marital-status-single">Single</label>
+          </Col>
+        </Row >
+      </Container>
 
-
+      <Container className="mt-5">
         {(currentMaritalStatus === constants.maritalStatus.MARRIED
           || currentMaritalStatus === constants.maritalStatus.PARTNER)
           &&
-          (
-            <div className="section-form-container">
-
-              <form onSubmit={handleSaveAndContinue}>
-                <div className="form-heading">
-                  <h3>Please enter your {currentMaritalStatus === constants.maritalStatus.MARRIED
-                    ? constants.role.SPOUSE
-                    : currentMaritalStatus === constants.maritalStatus.PARTNER
-                      ? constants.role.PARTNER : ""} details.</h3>
-                </div>
-                <div className="form-main-container">
-                  <div className="form-title-and-fullName-container">
-                    <div className="name-group">
-                      <label htmlFor="title">Title</label>
-                      <select
-                        id="title"
-                        name="title"
-                        value={spouseOrPartnerFormData.title}
-                        onChange={handleOnChange}
-                        required
-                      >
-                        {Object.values(constants.title).map((title, index) => (
-                          <option key={index} value={title}>
-                            {title}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="name-group">
-                      <label htmlFor="fullLegalName">Full legal name</label>
-                      <input
-                        type="text"
-                        id="fullLegalName"
-                        name="fullLegalName"
-                        value={spouseOrPartnerFormData.fullLegalName}
-                        onChange={handleOnChange}
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="fullAddress">Full address</label>
+          (<>
+            <Row className="mb-4">
+              <Col className="d-flex justify-content-center">
+                <h4>Please enter your {currentMaritalStatus === constants.maritalStatus.MARRIED
+                  ? constants.role.SPOUSE
+                  : currentMaritalStatus === constants.maritalStatus.PARTNER
+                    ? constants.role.PARTNER : ""} details.</h4>
+              </Col>
+            </Row>
+            <Row className="justify-content-center">
+              <Col xs={12} md={4} className="mx-auto">
+                <Form>
+                  <Form.Group className="mb-3" controlId="formGroupTitle">
+                    <Form.Label className="bold-label">Title</Form.Label>
+                    <Form.Control
+                      as="select"
+                      id="title"
+                      name="title"
+                      value={spouseOrPartnerFormData.title}
+                      onChange={handleOnChange}
+                      required
+                    >
+                      {Object.values(constants.title).map((title, index) => (
+                        <option key={index} value={title}>
+                          {title}
+                        </option>
+                      ))}
+                    </Form.Control>
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="formGroupFullLegalName">
+                    <Form.Label className="bold-label">Full legal name</Form.Label>
+                    <Form.Control
+                      type="text"
+                      id="fullLegalName"
+                      name="fullLegalName"
+                      value={spouseOrPartnerFormData.fullLegalName}
+                      onChange={handleOnChange}
+                      required
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="formGroupFullAddress">
+                    <Form.Label className="bold-label">Full address</Form.Label>
                     <AddressAutocomplete
                       name="fullAddress"
                       value={spouseOrPartnerFormData.fullAddress}
                       onPlaceSelected={handlePlaceSelected}
                       handleInputChange={handleOnChange}
                     />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="dob">Date of Birth</label>
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="formGroupDob">
+                    <Form.Label className="bold-label">Date of birth</Form.Label>
+                    <Form.Control
+                      required
+                    />
                     <DateInput
                       id="dob"
                       name="dob"
                       value={spouseOrPartnerFormData.dob}
                       onChange={handleOnChange}
                     />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="email">Email (optional)</label>
-                    <input
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="formGroupEmail">
+                    <Form.Label className="bold-label">Email (optional)</Form.Label>
+                    <Form.Control
                       type="email"
                       id="email"
                       name="email"
                       value={spouseOrPartnerFormData.email}
                       onChange={handleOnChange}
                     />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="tel">Phone Number (optional)</label>
-                    <input
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="formGroupPhone">
+                    <Form.Label className="bold-label">Phone Number (optional)</Form.Label>
+                    <Form.Control
                       type="tel"
                       id="tel"
                       name="tel"
                       value={spouseOrPartnerFormData.tel}
                       onChange={handleOnChange}
                     />
-                  </div>
-                </div>
-              </form>
-            </div>
-          )}
-
-        <div className="section-navigation-container">
-          <OrderNavigation
-            onBack={handleBack}
-            onSaveAndContinue={handleSaveAndContinue}
-          />
-        </div>
-
-      </section>
+                  </Form.Group>
+                </Form>
+              </Col>
+            </Row>
+          </>)}
+      </Container >
+      <CreatingOrderNavigation
+        onBack={handleBack}
+        onSaveAndContinue={handleSaveAndContinue}
+      />
     </>
   );
 }
