@@ -22,7 +22,7 @@ const CreatingOrderNavigation = ({ onBack, onSaveAndContinue, buttonsDisabled })
             style={buttonsDisabled ?
               styles.disabledButton : {}}
             disabled={buttonsDisabled}
-          >Back
+          >Cancel
           </Button>
         </Col>
         <Col className='d-flex justify-content-end'>

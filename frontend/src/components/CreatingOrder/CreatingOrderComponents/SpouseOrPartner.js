@@ -204,7 +204,6 @@ const SpouseOrPartner = () => {
 
   return (
     <>
-
       <Container className="mt-5 mb-5">
         <Row>
           <Col className="d-flex justify-content-center pb-3">
@@ -212,7 +211,8 @@ const SpouseOrPartner = () => {
           </Col>
         </Row>
         <Row className="d-flex justify-content-center">
-          <Col xs={{ span: 11, offset: 1 }} md={{ span: 2, offset: 0 }} className="d-flex justify-content-md-center justify-content-xs-start p-1 p-md-0">
+          <Col xs={{ span: 11, offset: 1 }} md={{ span: 2, offset: 0 }} 
+          className="d-flex justify-content-md-center justify-content-xs-start p-1 p-md-0">
             <input
               type="radio"
               id="marital-status-married"
@@ -222,7 +222,8 @@ const SpouseOrPartner = () => {
               onChange={handleMaritalStatusChange}></input>
             <label htmlFor="marital-status-married">Married</label>
           </Col>
-          <Col xs={{ span: 11, offset: 1 }} md={{ span: 2, offset: 0 }} className="d-flex justify-content-md-center justify-content-xs-start p-1 p-md-0">
+          <Col xs={{ span: 11, offset: 1 }} md={{ span: 2, offset: 0 }} 
+          className="d-flex justify-content-md-center justify-content-xs-start p-1 p-md-0">
             <input
               type="radio"
               id="marital-status-partner"
@@ -232,7 +233,8 @@ const SpouseOrPartner = () => {
               onChange={handleMaritalStatusChange}></input>
             <label htmlFor="marital-status-partner">Living with partner</label>
           </Col>
-          <Col xs={{ span: 11, offset: 1 }} md={{ span: 2, offset: 0 }} className="d-flex justify-content-md-center justify-content-xs-start p-1 p-md-0">
+          <Col xs={{ span: 11, offset: 1 }} md={{ span: 2, offset: 0 }} 
+          className="d-flex justify-content-md-center justify-content-xs-start p-1 p-md-0">
             <input
               type="radio"
               id="marital-status-widowed"
@@ -242,7 +244,8 @@ const SpouseOrPartner = () => {
               onChange={handleMaritalStatusChange}></input>
             <label htmlFor="marital-status-widowed">Widowed</label>
           </Col>
-          <Col xs={{ span: 11, offset: 1 }} md={{ span: 2, offset: 0 }} className="d-flex justify-content-md-center justify-content-xs-start p-1 p-md-0">
+          <Col xs={{ span: 11, offset: 1 }} md={{ span: 2, offset: 0 }} 
+          className="d-flex justify-content-md-center justify-content-xs-start p-1 p-md-0">
             <input
               type="radio"
               id="marital-status-single"
