@@ -1,6 +1,7 @@
 // AddressAutocomplete.js
 import React, { useEffect, useRef } from 'react';
 import { useLoadScript } from '@react-google-maps/api';
+import Form from 'react-bootstrap/Form';
 
 const libraries = ['places'];
 
@@ -33,14 +34,24 @@ const AddressAutocomplete = ({ name, value, onPlaceSelected, handleInputChange }
   }
 
   return (
-    <input
+    // <input
+    //   type="text"
+    //   ref={inputRef}
+    //   name={name}
+    //   value={value}
+    //   onChange={handleInputChange}
+    //   placeholder="Enter a UK address"
+    //   style={{ width: '100%', padding: '10px' }}
+    // />
+
+    <Form.Control
+      required
       type="text"
       ref={inputRef}
       name={name}
       value={value}
       onChange={handleInputChange}
       placeholder="Enter a UK address"
-      style={{ width: '100%', padding: '10px' }}
     />
   );
 };
