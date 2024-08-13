@@ -60,8 +60,20 @@
 }
 
 #header-logo{
-    height: 40px;
+    height: auto;
+    max-height: 40px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
 }
+
+@media (max-width: 575.98px) {
+    .align-items-xs-end {
+      align-items: flex-end !important;
+      padding-bottom: 5px;
+    }
+  }
+  
 
 #get-started-btn{
     background-color: #e0218a;
