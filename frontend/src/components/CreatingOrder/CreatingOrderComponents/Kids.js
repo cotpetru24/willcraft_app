@@ -16,7 +16,7 @@ import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/esm/Row";
 import Form from 'react-bootstrap/Form';
 import Col from "react-bootstrap/esm/Col";
-import { Button, ButtonGroup } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
 
 
 
@@ -274,134 +274,139 @@ const Kids = () => {
                 (
                     <>
                         <Container>
-                            <Row>
-                                <Col>
-                                    {kids.map((kid, index) => (
-                                        <SectionListItem
-                                            key={index}
-                                            buttonsDisabled={showKidsForm}
-                                            data={kid}
-                                            onRemove={() => handleRemoveKid(index)}
-                                            onEdit={() => handleEditKid(index)}
-                                            section="kids"
-                                        />
-                                    ))}
+                            <Row className="justify-content-between">
+                                <Col md={5} className="mt-4">
+                                    <Row>
+                                        <Col >
+                                            {kids.map((kid, index) => (
+                                                <SectionListItem
+                                                    key={index}
+                                                    buttonsDisabled={showKidsForm}
+                                                    data={kid}
+                                                    onRemove={() => handleRemoveKid(index)}
+                                                    onEdit={() => handleEditKid(index)}
+                                                    section="kids"
+                                                />
+                                            ))}
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col>
+                                            <Button
+                                                variant="primary"
+                                                className="m-3"
+                                                onClick={handleShowKidsForm}
+                                                style={showKidsForm ? styles.disabledButton : {}}
+                                                disabled={showKidsForm}
+                                            >
+                                                +Add children
+                                            </Button>
+                                        </Col>
+                                    </Row>
                                 </Col>
-                            </Row>
-                            <Row>
-                                <Col>
-                                    <Button
-                                        variant="primary"
-                                        className="mt-3"
-                                        onClick={handleShowKidsForm}
-                                        style={showKidsForm ? styles.disabledButton : {}}
-                                        disabled={showKidsForm}
-                                    >
-                                        +Add children
-                                    </Button>
+                                <Col md={4} >
+                                    {showKidsForm && (
+                                        <Row>
+                                            <Col >
+                                                <Form onSubmit={handleKidFormAdd}>
+                                                    <Form.Group className="mb-3" controlId="formGroupTitle">
+                                                        <Form.Label className="bold-label">Title</Form.Label>
+                                                        <Form.Control
+                                                            as="select"
+                                                            id="title"
+                                                            name="title"
+                                                            value={kidFormData.title}
+                                                            onChange={handleOnChange}
+                                                            required
+                                                        >
+                                                            {Object.values(constants.title).map((title, index) => (
+                                                                <option key={index} value={title}>
+                                                                    {title}
+                                                                </option>
+                                                            ))}
+                                                        </Form.Control>
+                                                    </Form.Group>
+                                                    <Form.Group className="mb-3" controlId="formGroupFullLegalName">
+                                                        <Form.Label className="bold-label">Full legal name</Form.Label>
+                                                        <Form.Control
+                                                            type="text"
+                                                            id="fullLegalName"
+                                                            name="fullLegalName"
+                                                            value={kidFormData.fullLegalName}
+                                                            onChange={handleOnChange}
+                                                            required
+                                                        />
+                                                    </Form.Group>
+                                                    <Form.Group className="mb-3" controlId="formGroupFullAddress">
+                                                        <Form.Label className="bold-label">Full address</Form.Label>
+                                                        <AddressAutocomplete
+                                                            name="fullAddress"
+                                                            value={kidFormData.fullAddress}
+                                                            onPlaceSelected={handlePlaceSelected}
+                                                            handleInputChange={handleOnChange}
+                                                        />
+                                                    </Form.Group>
+                                                    <Form.Group className="mb-3" controlId="formGroupDob">
+                                                        <Form.Label className="bold-label">Date of birth</Form.Label>
+                                                        <DateInput
+                                                            id="dob"
+                                                            name="dob"
+                                                            value={kidFormData.dob}
+                                                            onChange={handleOnChange}
+                                                            required
+                                                        />
+                                                    </Form.Group>
+                                                    <Form.Group className="mb-3" controlId="formGroupEmail">
+                                                        <Form.Label className="bold-label">Email (optional)</Form.Label>
+                                                        <Form.Control
+                                                            type="email"
+                                                            id="email"
+                                                            name="email"
+                                                            value={kidFormData.email}
+                                                            onChange={handleOnChange}
+                                                        />
+                                                    </Form.Group>
+                                                    <Form.Group className="mb-3" controlId="formGroupPhone">
+                                                        <Form.Label className="bold-label">Phone Number (optional)</Form.Label>
+                                                        <Form.Control
+                                                            type="tel"
+                                                            id="tel"
+                                                            name="tel"
+                                                            value={kidFormData.tel}
+                                                            onChange={handleOnChange}
+                                                        />
+                                                    </Form.Group>
+                                                    <Row>
+                                                        <Col>
+                                                            <Button
+                                                                variant="primary"
+                                                                className="m-1 add-edit-form-btn"
+                                                                type="button"
+                                                                onClick={() => {
+                                                                    handleShowKidsForm();
+                                                                    resetKidForm();
+                                                                }}
+                                                            >
+                                                                Cancel
+                                                            </Button>
+                                                        </Col>
+                                                        <Col className="d-flex justify-content-end">
+                                                            <Button
+                                                                variant="primary"
+                                                                className="m-1 add-edit-form-btn"
+                                                                type="submit"
+                                                            >
+                                                                {editKidIndex !== null ? "Update" : "Add"}
+                                                            </Button>
+                                                        </Col>
+                                                    </Row>
+                                                </Form>
+                                            </Col>
+                                        </Row>
+                                    )}
                                 </Col>
                             </Row>
                         </Container>
-
-                        {showKidsForm && (
-                            <Container>
-                                <Row className="justify-content-center">
-                                    <Col xs={12} md={4} className="mx-auto">
-                                        <Form onSubmit={handleKidFormAdd} >
-                                            <Form.Group className="mb-3" controlId="formGroupTitle">
-                                                <Form.Label className="bold-label">Title</Form.Label>
-                                                <Form.Control
-                                                    as="select"
-                                                    id="title"
-                                                    name="title"
-                                                    value={kidFormData.title}
-                                                    onChange={handleOnChange}
-                                                    required
-                                                >
-                                                    {Object.values(constants.title).map((title, index) => (
-                                                        <option key={index} value={title}>
-                                                            {title}
-                                                        </option>
-                                                    ))}
-                                                </Form.Control>
-                                            </Form.Group>
-                                            <Form.Group className="mb-3" controlId="formGroupFullLegalName">
-                                                <Form.Label className="bold-label">Full legal name</Form.Label>
-                                                <Form.Control
-                                                    type="text"
-                                                    id="fullLegalName"
-                                                    name="fullLegalName"
-                                                    value={kidFormData.fullLegalName}
-                                                    onChange={handleOnChange}
-                                                    required
-                                                />
-                                            </Form.Group>
-                                            <Form.Group className="mb-3" controlId="formGroupFullAddress">
-                                                <Form.Label className="bold-label">Full address</Form.Label>
-                                                <AddressAutocomplete
-                                                    name="fullAddress"
-                                                    value={kidFormData.fullAddress}
-                                                    onPlaceSelected={handlePlaceSelected}
-                                                    handleInputChange={handleOnChange}
-                                                />
-                                            </Form.Group>
-                                            <Form.Group className="mb-3" controlId="formGroupDob">
-                                                <Form.Label className="bold-label">Date of birth</Form.Label>
-                                                <Form.Control
-                                                    required
-                                                />
-                                                <DateInput
-                                                    id="dob"
-                                                    name="dob"
-                                                    value={kidFormData.dob}
-                                                    onChange={handleOnChange}
-                                                />
-                                            </Form.Group>
-                                            <Form.Group className="mb-3" controlId="formGroupEmail">
-                                                <Form.Label className="bold-label">Email (optional)</Form.Label>
-                                                <Form.Control
-                                                    type="email"
-                                                    id="email"
-                                                    name="email"
-                                                    value={kidFormData.email}
-                                                    onChange={handleOnChange}
-                                                />
-                                            </Form.Group>
-                                            <Form.Group className="mb-3" controlId="formGroupPhone">
-                                                <Form.Label className="bold-label">Phone Number (optional)</Form.Label>
-                                                <Form.Control
-                                                    type="tel"
-                                                    id="tel"
-                                                    name="tel"
-                                                    value={kidFormData.tel}
-                                                    onChange={handleOnChange}
-                                                />
-                                            </Form.Group>
-                                            <Row>
-                                                <Col>
-                                                    <Button
-                                                        variant="primary"
-                                                        className="m-1 add-edit-form-btn"
-                                                        type="button"
-                                                        onClick={() => {
-                                                            handleShowKidsForm();
-                                                            resetKidForm();
-                                                        }}
-                                                    >Cancel</Button>
-                                                </Col>
-                                                <Col className=" d-flex justify-content-end">
-                                                    <Button
-                                                        variant="primary"
-                                                        className="m-1 add-edit-form-btn"
-                                                        type="submit"
-                                                    >{editKidIndex !== null ? "Update" : "Add"}</Button>
-                                                </Col>
-                                            </Row>
-                                        </Form>
-                                    </Col>
-                                </Row>
-                            </Container>
-                        )}
                     </>
                 )
             }

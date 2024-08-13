@@ -35,7 +35,7 @@ const OrderItem = ({ order }) => {
                         </Row>
                         <Row className=" d-flex justify-content-end">
                             <Col xs="auto">
-                                <Button variant="warning m-1"
+                                <Button variant="warning m-1 order-item-btn"
                                     onClick={() => dispatch(deleteOrder(order._id))}
                                     className="order-item-btns"
                                 >Delete</Button>
@@ -45,7 +45,7 @@ const OrderItem = ({ order }) => {
                                 )}
 
                                 {order.status === "CreatingOrder" && (
-                                    <Button variant="success m-1"
+                                    <Button variant="success m-1 order-item-btn"
                                         onClick={async () => {
                                             await resetOrderState(dispatch)
                                             await dispatch(getOrderThunk(order._id));

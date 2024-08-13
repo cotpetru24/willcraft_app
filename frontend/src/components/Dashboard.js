@@ -45,10 +45,11 @@ const Dashboard = () => {
                     >Create a new Will</Button>
                 </Col>
             </Row>
-
-            <section>
-                <OrdersList />
-            </section>
+            <Row>
+                <Col>
+                    <OrdersList />
+                </Col>
+            </Row>
         </Container>
     )
 

@@ -68,13 +68,13 @@ const TestatorCard = () => {
                         <Row className=" d-flex justify-content-end">
                             <Col xs="auto">
                                 {allNecessaryFieldsSpecified ? (
-                                    <Button variant="primary m-1"
+                                    <Button variant="primary"
                                         onClick={() => navigate('/testator')}
                                         className="creating-order-tile-btns"
                                     >Edit</Button>
                                 ) : (
 
-                                    <Button variant="warning m-1"
+                                    <Button variant="primary"
                                         onClick={() => navigate('/testator')}
                                         className="creating-order-tile-btns"
                                     >Get Started</Button>

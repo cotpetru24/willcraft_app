@@ -1,10 +1,11 @@
-
-
-
-
-
 import styles from "../common/styles";
 import { useState, useEffect } from "react";
+import Container from "react-bootstrap/esm/Container";
+import Row from "react-bootstrap/esm/Row";
+import Form from 'react-bootstrap/Form';
+import Col from "react-bootstrap/esm/Col";
+import Button from "react-bootstrap/esm/Button";
+import Card from "react-bootstrap/esm/Card";
 
 const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onChecked, asset, onChange, assetIndex }) => {
     const [isChecked, setIsChecked] = useState(false);
@@ -33,15 +34,15 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
         if (section === 'assetDistribution-beneficiary' && asset?.distribution) {
             const isInDistribution = asset.distribution.some(dist => dist.personId._id === data._id);
             setIsChecked(isInDistribution);
-    
+
             if (isInDistribution) {
                 const currentAmount = asset.distribution.find(dist => dist.personId._id === data._id)?.receivingAmount || '';
                 setReceivingAmount(currentAmount);
             }
         }
-        
 
-////////// ---------------this works fine -------don't delete until fullly tested
+
+        ////////// ---------------this works fine -------don't delete until fullly tested
 
         // if (section === 'assetDistribution-additionalBeneficiary' && asset?.distribution) {
         //     const isInDistribution = asset.distribution.some(dist => dist.personId?._id === data._id);
@@ -51,7 +52,7 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
 
         if (section === 'assetDistribution-beneficiary' && asset?.distribution) {
             const distribution = asset.distribution.find(dist => dist.personId._id === data._id);
-    
+
             if (distribution) {
                 setIsChecked(true);
                 setReceivingAmount(distribution.receivingAmount || '');
@@ -86,155 +87,167 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
     };
 
     return (
-        <div className="section-list-item-container">
-            {section === 'kids' && (
-                <>
-                    <div className="section-list-item-group">
-                        <h5>Name: {data.title} {data.fullLegalName}</h5>
-                    </div>
-                    <div className="section-list-item-group">
-                        <h5>Address: {data.fullAddress}</h5>
-                    </div>
-                    <div className="section-list-item-group">
-                        <h5>Date of birth: {data.dob}</h5>
-                    </div>
-                </>
-            )}
-            {section === 'assets' && (
-                <>
-                    <div className="section-list-item-group">
-                        <h5>Asset Type: {data.assetType}</h5>
-                    </div>
-                    <div className="section-list-item-group">
-                        {data.assetType === 'Property' && <h5>Address: {data.propertyAddress}</h5>}
-                        {data.assetType === 'Bank Account' && <h5>Bank Name: {data.bankName}</h5>}
-                        {data.assetType === 'Stocks and shares' && <h5>Company Name: {data.companyName}</h5>}
-                        {(data.assetType === 'Pension' || data.assetType === 'Life insurance') && <h5>Provider: {data.provider}</h5>}
-                        {data.assetType === 'Other' && <h5>Details: {data.otherAssetDetails}</h5>}
-                    </div>
-                </>
-            )}
-            {section === 'assetsDistribution-asset' && (
-                <>
-                    <div className="section-list-item-group">
-                        <h5>Asset Type: {data.assetType}</h5>
-                    </div>
-                    <div className="section-list-item-group">
-                        {data.assetType === 'Property' && <h5>Address: {data.propertyAddress}</h5>}
-                        {data.assetType === 'Bank Account' && <h5>Bank Name: {data.bankName}</h5>}
-                        {data.assetType === 'Stocks and shares' && <h5>Company Name: {data.companyName}</h5>}
-                        {(data.assetType === 'Pension' || data.assetType === 'Life insurance') && <h5>Provider: {data.provider}</h5>}
-                        {data.assetType === 'Other' && <h5>Details: {data.otherAssetDetails}</h5>}
-                    </div>
-                </>
-            )}
-            {section === 'assetDistribution-beneficiary' && (
-                <>
-                    {/* {console.log(`family person assets distribution = ${JSON.stringify(data)}`)} */}
+        <Container className="mb-3">
+            <Row>
+                <Col>
+                    <Card className='shadow' bg="light" text="dark" style={{ borderColor: 'green' }}>
+                        <Card.Body>
+                            <Card.Text>
+                                {section === 'kids' && (
+                                    <>
+                                        <Row>
+                                            <Col>
+                                                <p className="order-item-p"><span className="order-item-p-span">
+                                                    Name: </span>Name: {data.title} {data.fullLegalName}</p>
+                                                <p className="order-item-p"><span className="order-item-p-span">
+                                                    Date of birth: </span>{data.fullAddress}</p>
+                                                <p className="order-item-p"><span className="order-item-p-span">
+                                                    Address: </span>{data.dob}</p>
+                                            </Col>
+                                        </Row>
+                                    </>
+                                )}
+                                {section === 'assets' && (
+                                    <>
+                                        <div className="section-list-item-group">
+                                            <h5>Asset Type: {data.assetType}</h5>
+                                        </div>
+                                        <div className="section-list-item-group">
+                                            {data.assetType === 'Property' && <h5>Address: {data.propertyAddress}</h5>}
+                                            {data.assetType === 'Bank Account' && <h5>Bank Name: {data.bankName}</h5>}
+                                            {data.assetType === 'Stocks and shares' && <h5>Company Name: {data.companyName}</h5>}
+                                            {(data.assetType === 'Pension' || data.assetType === 'Life insurance') && <h5>Provider: {data.provider}</h5>}
+                                            {data.assetType === 'Other' && <h5>Details: {data.otherAssetDetails}</h5>}
+                                        </div>
+                                    </>
+                                )}
+                                {section === 'assetsDistribution-asset' && (
+                                    <>
+                                        <div className="section-list-item-group">
+                                            <h5>Asset Type: {data.assetType}</h5>
+                                        </div>
+                                        <div className="section-list-item-group">
+                                            {data.assetType === 'Property' && <h5>Address: {data.propertyAddress}</h5>}
+                                            {data.assetType === 'Bank Account' && <h5>Bank Name: {data.bankName}</h5>}
+                                            {data.assetType === 'Stocks and shares' && <h5>Company Name: {data.companyName}</h5>}
+                                            {(data.assetType === 'Pension' || data.assetType === 'Life insurance') && <h5>Provider: {data.provider}</h5>}
+                                            {data.assetType === 'Other' && <h5>Details: {data.otherAssetDetails}</h5>}
+                                        </div>
+                                    </>
+                                )}
+                                {section === 'assetDistribution-beneficiary' && (
+                                    <>
+                                        {/* {console.log(`family person assets distribution = ${JSON.stringify(data)}`)} */}
 
-                    <div className="section-list-item-group">
-                        <h5>Name: {data.title} {data.fullLegalName}</h5>
-                    </div>
-                    <div className="section-list-item-group">
-                        <h5>Address: {data.fullAddress}</h5>
-                    </div>
-                    <div className="section-list-item-group">
-                        <h5>Date of birth: {data.dob}</h5>
-                    </div>
-                    <div>
-                        <label>
-                            <input
-                                type="checkbox"
-                                checked={isChecked}
-                                onChange={handleCheckboxChange}
-                            />
-                            Beneficiary
-                        </label>
-                        {isChecked && (
-                            <>
-                                <p>Share</p>
-                                <input
-                                    type="text"
-                                    value={receivingAmount} // Bind the input value to the receivingAmount state
-                                    style={{ display: 'block', marginTop: '10px' }}
-                                    onChange={handleAmountChange} // Handle the change event
-                                />
-                            </>
-                        )}
-                    </div>
-                </>
-            )}
-            {section === 'assetDistribution-additionalBeneficiary' && (
-                <>
-                    {/* {console.log(`family person assets distribution = ${JSON.stringify(data)}`)} */}
+                                        <div className="section-list-item-group">
+                                            <h5>Name: {data.title} {data.fullLegalName}</h5>
+                                        </div>
+                                        <div className="section-list-item-group">
+                                            <h5>Address: {data.fullAddress}</h5>
+                                        </div>
+                                        <div className="section-list-item-group">
+                                            <h5>Date of birth: {data.dob}</h5>
+                                        </div>
+                                        <div>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    checked={isChecked}
+                                                    onChange={handleCheckboxChange}
+                                                />
+                                                Beneficiary
+                                            </label>
+                                            {isChecked && (
+                                                <>
+                                                    <p>Share</p>
+                                                    <input
+                                                        type="text"
+                                                        value={receivingAmount} // Bind the input value to the receivingAmount state
+                                                        style={{ display: 'block', marginTop: '10px' }}
+                                                        onChange={handleAmountChange} // Handle the change event
+                                                    />
+                                                </>
+                                            )}
+                                        </div>
+                                    </>
+                                )}
+                                {section === 'assetDistribution-additionalBeneficiary' && (
+                                    <>
+                                        {/* {console.log(`family person assets distribution = ${JSON.stringify(data)}`)} */}
 
-                    <div className="section-list-item-group">
-                        <h5>Name: {data.title} {data.fullLegalName}</h5>
-                    </div>
-                    <div className="section-list-item-group">
-                        <h5>Address: {data.fullAddress}</h5>
-                    </div>
-                    <div className="section-list-item-group">
-                        <h5>Date of birth: {data.dob}</h5>
-                    </div>
-                </>
-            )}
-            {section === 'executors' && (
-                <>
-                    <div className="section-list-item-group">
-                        <h5>Name: {data.personId.title} {data.personId.fullLegalName}</h5>
-                    </div>
-                    <div className="section-list-item-group">
-                        <h5>Address: {data.personId.fullAddress}</h5>
-                    </div>
-                    <div className="section-list-item-group">
-                        <h5>Date of birth: {data.personId.dob}</h5>
-                    </div>
-                    <div>
-                        <label>
-                            <input
-                                type="checkbox"
-                                checked={isChecked}
-                                onChange={handleCheckboxChange}
-                            // onChecked={onChecked}
-                            />
-                            Executor
-                        </label>
-                    </div>
-                </>
-            )}
-            {section === 'additional-executors' && (
-                <>
-                    <div className="section-list-item-group">
-                        <h5>Name: {data.title} {data.fullLegalName}</h5>
-                    </div>
-                    <div className="section-list-item-group">
-                        <h5>Address: {data.fullAddress}</h5>
-                    </div>
-                    <div className="section-list-item-group">
-                        <h5>Date of birth: {data.dob}</h5>
-                    </div>
-                </>
-            )}
-            {(section !== 'assetsDistribution-asset' && section !== 'assetDistribution-beneficiary' && section !== 'executors') && (
-                <div className="section-list-item-btns-container">
-                    <button
-                        className="section-list-item-btn"
-                        style={buttonsDisabled ? styles.disabledButton : {}}
-                        disabled={buttonsDisabled}
-                        onClick={onEdit}
-                    >Edit
-                    </button>
-                    <button
-                        className="section-list-item-btn"
-                        style={buttonsDisabled ? styles.disabledButton : {}}
-                        disabled={buttonsDisabled}
-                        onClick={onRemove}
-                    >Remove
-                    </button>
-                </div>
-            )}
-        </div>
+                                        <div className="section-list-item-group">
+                                            <h5>Name: {data.title} {data.fullLegalName}</h5>
+                                        </div>
+                                        <div className="section-list-item-group">
+                                            <h5>Address: {data.fullAddress}</h5>
+                                        </div>
+                                        <div className="section-list-item-group">
+                                            <h5>Date of birth: {data.dob}</h5>
+                                        </div>
+                                    </>
+                                )}
+                                {section === 'executors' && (
+                                    <>
+                                        <div className="section-list-item-group">
+                                            <h5>Name: {data.personId.title} {data.personId.fullLegalName}</h5>
+                                        </div>
+                                        <div className="section-list-item-group">
+                                            <h5>Address: {data.personId.fullAddress}</h5>
+                                        </div>
+                                        <div className="section-list-item-group">
+                                            <h5>Date of birth: {data.personId.dob}</h5>
+                                        </div>
+                                        <div>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    checked={isChecked}
+                                                    onChange={handleCheckboxChange}
+                                                // onChecked={onChecked}
+                                                />
+                                                Executor
+                                            </label>
+                                        </div>
+                                    </>
+                                )}
+                                {section === 'additional-executors' && (
+                                    <>
+                                        <div className="section-list-item-group">
+                                            <h5>Name: {data.title} {data.fullLegalName}</h5>
+                                        </div>
+                                        <div className="section-list-item-group">
+                                            <h5>Address: {data.fullAddress}</h5>
+                                        </div>
+                                        <div className="section-list-item-group">
+                                            <h5>Date of birth: {data.dob}</h5>
+                                        </div>
+                                    </>
+                                )}
+                                {(section !== 'assetsDistribution-asset' && section !== 'assetDistribution-beneficiary' && section !== 'executors') && (
+                                    <Row className=" d-flex justify-content-end mt-1">
+                                        <Col xs="auto">
+                                            <Button variant="primary"
+                                                className="section-list-item-card-btn m-1"
+                                                style={buttonsDisabled ? styles.disabledButton : {}}
+                                                disabled={buttonsDisabled}
+                                                onClick={onEdit}
+                                            >Edit
+                                            </Button>
+                                            <Button
+                                                className="section-list-item-card-btn m-1"
+                                                style={buttonsDisabled ? styles.disabledButton : {}}
+                                                disabled={buttonsDisabled}
+                                                onClick={onRemove}
+                                            >Remove
+                                            </Button>
+                                        </Col>
+                                    </Row>)}
+                            </Card.Text>
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
+        </Container >
     );
 }
 

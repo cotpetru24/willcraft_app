@@ -126,12 +126,19 @@
 }
 
 .order-nav-btn{
-    width: 180px;
+    width: 160px;
 }
 .creating-order-tile-btns{
     width: 150px;
 }
 
 .add-edit-form-btn{
+    width:100px
+}
+
+.section-list-item-card-btn{
+    width:90px
+}
+.order-item-btn{
     width:100px
 }
