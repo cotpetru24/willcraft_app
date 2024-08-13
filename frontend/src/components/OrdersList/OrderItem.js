@@ -20,7 +20,6 @@ const OrderItem = ({ order }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     return (
-
         <Container className="mb-5">
             <Card className='shadow' bg="light" text="dark" >
                 <Card.Body>
@@ -46,7 +45,7 @@ const OrderItem = ({ order }) => {
                                 )}
 
                                 {order.status === "CreatingOrder" && (
-                                    <Button variant="primary m-1"
+                                    <Button variant="success m-1"
                                         onClick={async () => {
                                             await resetOrderState(dispatch)
                                             await dispatch(getOrderThunk(order._id));

@@ -4,6 +4,8 @@ import OrdersList from "./OrdersList/OrdersList";
 import { resetOrderState } from "../utils/reduxUtils";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Container } from "react-bootstrap";
+import { Col, Row, Button } from "react-bootstrap";
 
 
 export const OrderProgressBar = ({ currentValue, maxValue }) => (
@@ -27,25 +29,27 @@ const Dashboard = () => {
 
 
     return (
-        <>
+        <Container style={{ minHeight: "45vh" }}>
 
+            <Row className="pt-5 mb-4 section-header">
+                <Col>
+                    <h2>My Wills</h2>
+                </Col>
+            </Row>
 
-            <section className="about-us-container">
-                <h2>My Wills</h2>
-            </section>
-
-            <section>
-                <button
-                    id="create-my-will-btn"
-                    onClick={handleCreateWill}
-                >Create a new Will
-                </button>
-            </section>
+            <Row className="pb-4">
+                <Col>
+                    <Button variant="primary  m-3"
+                        onClick={handleCreateWill}
+                        className="order-item-btns"
+                    >Create a new Will</Button>
+                </Col>
+            </Row>
 
             <section>
                 <OrdersList />
             </section>
-        </>
+        </Container>
     )
 
 }

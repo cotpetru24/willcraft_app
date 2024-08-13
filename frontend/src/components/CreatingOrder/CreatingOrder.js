@@ -1,22 +1,28 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
-import TestatorTile from "./CreatingOrderTiles/TestatorTile";
 import SpouseOrPartnerTile from "./CreatingOrderTiles/SpouseOrPartnerTile";
-import ProgressBar from "../ProgressBar";
-import KidsTile from "./CreatingOrderTiles/KidsTile";
+import ProgressBar from 'react-bootstrap/ProgressBar';import KidsTile from "./CreatingOrderTiles/KidsTile";
 import AssetsTile from "./CreatingOrderTiles/AssetsTile";
 import AssetsDistributionTile from "./CreatingOrderTiles/AssetsDistributionTile";
 import ExecutorsTile from "./CreatingOrderTiles/ExecutorsTile";
 import GenerateWillButton from '../../features/generatewillbtn';
+import TestatorCard from "./CreatingOrderTiles/TestatorCard";
 
-
+export const OrderProgressBar = () => {
+    const now = 60;
+    return <ProgressBar className="mb-3" now={now} label={`${now}%`} />;
+};
 
 const CreatingOrder = () => {
+
+
+
     const navigate = useNavigate();
     const { user } = useSelector(state => state.auth)
 
-    return (
+    return (<>
+    
         <section className="creatingOrder-container">
 
             <div className="creatingOrder-header">
@@ -25,14 +31,14 @@ const CreatingOrder = () => {
                 </div>
                 <div className="creatingOrder-header-progressBar">
                     <p>0 of 5 steps Completed </p>
-                    <ProgressBar />
-                </div>
+                    <OrderProgressBar/>  
+                    </div>
             </div>
 
             <div className="creatingOrder-tiles-and-instructions-container">
 
                 <div className="creatingOrder-tiles">
-                    <TestatorTile />
+                    <TestatorCard />
                     <SpouseOrPartnerTile />
                     <KidsTile/>
                     <AssetsTile/>
@@ -53,6 +59,7 @@ const CreatingOrder = () => {
             </div>
             
         </section>
+        </>
     )
 
 }
