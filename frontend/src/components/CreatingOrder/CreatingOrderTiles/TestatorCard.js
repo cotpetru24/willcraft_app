@@ -45,10 +45,10 @@ const TestatorCard = () => {
                 <Card.Body>
                     <Card.Title >
                         <Row>
-                            <Col>
+                            <Col xs={10}>
                                 <h2>About you</h2>
                             </Col>
-                            <Col className="d-flex justify-content-end">
+                            <Col className="d-flex justify-content-end align-items-center">
                                 {allNecessaryFieldsSpecified ? (
                                     <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />
                                 ) : (

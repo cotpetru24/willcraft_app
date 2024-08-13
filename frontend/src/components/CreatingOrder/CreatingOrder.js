@@ -1,13 +1,14 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
-import SpouseOrPartnerTile from "./CreatingOrderTiles/SpouseOrPartnerTile";
-import ProgressBar from 'react-bootstrap/ProgressBar';import KidsTile from "./CreatingOrderTiles/KidsTile";
+import ProgressBar from 'react-bootstrap/ProgressBar';
+import KidsCard from "./CreatingOrderTiles/KidsCard";
 import AssetsTile from "./CreatingOrderTiles/AssetsTile";
 import AssetsDistributionTile from "./CreatingOrderTiles/AssetsDistributionTile";
 import ExecutorsTile from "./CreatingOrderTiles/ExecutorsTile";
 import GenerateWillButton from '../../features/generatewillbtn';
 import TestatorCard from "./CreatingOrderTiles/TestatorCard";
+import SpouseOrPartnerCard from "./CreatingOrderTiles/SpouseOrPartnerCard";
 
 export const OrderProgressBar = () => {
     const now = 60;
@@ -22,7 +23,7 @@ const CreatingOrder = () => {
     const { user } = useSelector(state => state.auth)
 
     return (<>
-    
+
         <section className="creatingOrder-container">
 
             <div className="creatingOrder-header">
@@ -31,19 +32,19 @@ const CreatingOrder = () => {
                 </div>
                 <div className="creatingOrder-header-progressBar">
                     <p>0 of 5 steps Completed </p>
-                    <OrderProgressBar/>  
-                    </div>
+                    <OrderProgressBar />
+                </div>
             </div>
 
             <div className="creatingOrder-tiles-and-instructions-container">
 
                 <div className="creatingOrder-tiles">
                     <TestatorCard />
-                    <SpouseOrPartnerTile />
-                    <KidsTile/>
-                    <AssetsTile/>
-                    <AssetsDistributionTile/>
-                    <ExecutorsTile/>
+                    <SpouseOrPartnerCard />
+                    <KidsCard />
+                    <AssetsTile />
+                    <AssetsDistributionTile />
+                    <ExecutorsTile />
                 </div>
                 <div className=" creatingOrder-instructions">
                     <div className="creatingOrder-tile">
@@ -53,13 +54,13 @@ const CreatingOrder = () => {
                             If you have any questions, message, email or call us on 024 1234 5678.</p>
                     </div>
                     <GenerateWillButton />
-                    <button onClick={()=>navigate('/ChechOutForm')}>Stripe</button>
+                    <button onClick={() => navigate('/ChechOutForm')}>Stripe</button>
                 </div>
 
             </div>
-            
+
         </section>
-        </>
+    </>
     )
 
 }

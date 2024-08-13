@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckSquare, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 
 
-const KidsTile = () => {
+const KidsCard = () => {
     const navigate = useNavigate();
 
     const testator = useSelector(state => state.testator)
@@ -77,4 +77,4 @@ const KidsTile = () => {
     );
 }
 
-export default KidsTile;
+export default KidsCard;
