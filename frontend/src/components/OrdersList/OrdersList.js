@@ -5,19 +5,6 @@ import { getOrders, reset } from "../../features/orders/ordersSlice";
 import Spinner from "../Spinner";
 import { useNavigate } from "react-router-dom";
 import OrderItem from "./OrderItem";
-import { resetCurrentOrderSlice } from "../../features/currentOrder/currentOrderSlice";
-import { resetTestatorSlice } from "../../features/people/testator/testatorSlice";
-import { resetSpouseOrPartnerSlice } from "../../features/people/spouseOrPartner/spouseOrPartnerSlice";
-import { resetKidsSlice } from "../../features/people/kids/kidsSlice";
-import { resetAdditionalExecutorsSlice } from "../../features/additionalExecutors/additionalExecutorsSlice";
-import { resetAssetsSlice } from "../../features/orderAssets/orderAssetsSlice";
-
-import { resetOrderState } from "../../utils/reduxUtils";
-
-
-
-
-
 
 
 const OrdersList = () => {
@@ -29,17 +16,7 @@ const OrdersList = () => {
     const order = useSelector(state => state.order)
 
 
-    const handleCreateWill = async () => {
-        // await dispatch(resetCurrentOrderSlice())
-        // await dispatch(resetTestatorSlice())
-        // await dispatch(resetSpouseOrPartnerSlice())
-        // await dispatch(resetKidsSlice())
-        // await dispatch(resetAdditionalExecutorsSlice())
-        // await dispatch(resetAssetsSlice())
-        resetOrderState(dispatch)
-        // await dispatch(resetChildren())
-        navigate('/creatingOrder');
-    };
+
 
 
     useEffect(() => {
@@ -53,13 +30,7 @@ const OrdersList = () => {
         isLoading ? <Spinner /> :
             (
                 <>
-                    <section>
-                        <button
-                            id="create-my-will-btn"
-                            onClick={handleCreateWill}
-                        >Create a new Will
-                        </button>
-                    </section>
+
                     <section className="orders-list">
                         {orders.length > 0 ? (
                             <div className="orders">
