@@ -213,40 +213,40 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
                                     </>
                                 )}
                                 {section === 'executors' && (
+
                                     <>
-                                        <div className="section-list-item-group">
-                                            <h5>Name: {data.personId.title} {data.personId.fullLegalName}</h5>
-                                        </div>
-                                        <div className="section-list-item-group">
-                                            <h5>Address: {data.personId.fullAddress}</h5>
-                                        </div>
-                                        <div className="section-list-item-group">
-                                            <h5>Date of birth: {data.personId.dob}</h5>
-                                        </div>
-                                        <div>
-                                            <label>
-                                                <input
+                                        <Row>
+                                            <Col>
+                                                <p className="order-item-p"><span className="order-item-p-span">
+                                                    Name:  </span>{data.personId.title} {data.personId.fullLegalName}</p>
+                                                <p className="order-item-p"><span className="order-item-p-span">
+                                                    Date of birth:  </span>{data.personId.fullAddress}</p>
+                                                <p className="order-item-p"><span className="order-item-p-span">
+                                                    Address:  </span>{data.personId.dob}</p>
+                                                <Form.Check
                                                     type="checkbox"
+                                                    label="Executor"
                                                     checked={isChecked}
                                                     onChange={handleCheckboxChange}
+                                                    disabled={buttonsDisabled}
                                                 // onChecked={onChecked}
                                                 />
-                                                Executor
-                                            </label>
-                                        </div>
+                                            </Col>
+                                        </Row>
                                     </>
                                 )}
                                 {section === 'additional-executors' && (
                                     <>
-                                        <div className="section-list-item-group">
-                                            <h5>Name: {data.title} {data.fullLegalName}</h5>
-                                        </div>
-                                        <div className="section-list-item-group">
-                                            <h5>Address: {data.fullAddress}</h5>
-                                        </div>
-                                        <div className="section-list-item-group">
-                                            <h5>Date of birth: {data.dob}</h5>
-                                        </div>
+                                        <Row>
+                                            <Col>
+                                                <p className="order-item-p"><span className="order-item-p-span">
+                                                    Name:  </span>{data.title} {data.fullLegalName}</p>
+                                                <p className="order-item-p"><span className="order-item-p-span">
+                                                    Date of birth:  </span>{data.fullAddress}</p>
+                                                <p className="order-item-p"><span className="order-item-p-span">
+                                                    Address:  </span>{data.dob}</p>
+                                            </Col>
+                                        </Row>
                                     </>
                                 )}
                                 {(section !== 'assetsDistribution-asset' && section !== 'assetDistribution-beneficiary' && section !== 'executors') && (

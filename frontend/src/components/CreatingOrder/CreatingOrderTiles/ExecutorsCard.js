@@ -23,7 +23,7 @@ const ExecutorsCard = () => {
         return (Array.isArray(data) && (data.length > 0))
     };
 
-    const allNecessaryFieldsSpecified = isExecutorsComplete(executorsData);
+    const allNecessaryFieldsSpecified = isExecutorsComplete(allExecutors);
 
     return (
         <>

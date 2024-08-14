@@ -35,9 +35,9 @@ const Executors = () => {
     useEffect(() => {
         const updatedFamily = currentOrder.peopleAndRoles
             .filter(p =>
-                p.role.includes('partner')
+                p.role.includes('spouse')
+                || p.role.includes('partner')
                 || p.role.includes('kid')
-                || p.role.includes('spouse')
                 || p.role.includes('beneficiary')
                 || p.role.includes('additional beneficiary'));
         setFamily(updatedFamily);
@@ -296,7 +296,7 @@ const Executors = () => {
                                         section="executors"
                                     />
                                 ))}
-                                {additionalExecutors.length>0 && <h4 className="p-4">Additional executors</h4>}
+                                {additionalExecutors.length > 0 && <h4 className="p-4">Additional executors</h4>}
                                 {additionalExecutors.map((person, personIndex) => (
                                     <SectionListItem
                                         key={`person-${personIndex}`}
