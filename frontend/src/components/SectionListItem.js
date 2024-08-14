@@ -100,9 +100,9 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
                                                 <p className="order-item-p"><span className="order-item-p-span">
                                                     Name:  </span>{data.title} {data.fullLegalName}</p>
                                                 <p className="order-item-p"><span className="order-item-p-span">
-                                                    Date of birth:  </span>{data.fullAddress}</p>
+                                                    Date of birth:  </span>{new Date(data.dob).toLocaleDateString()}</p>
                                                 <p className="order-item-p"><span className="order-item-p-span">
-                                                    Address:  </span>{data.dob}</p>
+                                                    Address:  </span>{data.fullAddress}</p>
                                             </Col>
                                         </Row>
                                     </>
@@ -172,7 +172,7 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
                                             <h5>Address: {data.fullAddress}</h5>
                                         </div>
                                         <div className="section-list-item-group">
-                                            <h5>Date of birth: {data.dob}</h5>
+                                            <h5>Date of birth: {new Date(data.dob).toLocaleDateString()}</h5>
                                         </div>
                                         <div>
                                             <label>
@@ -208,7 +208,7 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
                                             <h5>Address: {data.fullAddress}</h5>
                                         </div>
                                         <div className="section-list-item-group">
-                                            <h5>Date of birth: {data.dob}</h5>
+                                            <h5>Date of birth: {new Date(data.dob).toLocaleDateString()}</h5>
                                         </div>
                                     </>
                                 )}
@@ -220,9 +220,9 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
                                                 <p className="order-item-p"><span className="order-item-p-span">
                                                     Name:  </span>{data.personId.title} {data.personId.fullLegalName}</p>
                                                 <p className="order-item-p"><span className="order-item-p-span">
-                                                    Date of birth:  </span>{data.personId.fullAddress}</p>
+                                                    Date of birth:  </span>{new Date(data.personId.dob).toLocaleDateString()}</p>
                                                 <p className="order-item-p"><span className="order-item-p-span">
-                                                    Address:  </span>{data.personId.dob}</p>
+                                                    Address:  </span>{data.personId.fullAddress}</p>
                                                 <Form.Check
                                                     type="checkbox"
                                                     label="Executor"
@@ -242,9 +242,9 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
                                                 <p className="order-item-p"><span className="order-item-p-span">
                                                     Name:  </span>{data.title} {data.fullLegalName}</p>
                                                 <p className="order-item-p"><span className="order-item-p-span">
-                                                    Date of birth:  </span>{data.fullAddress}</p>
+                                                    Date of birth:  </span>{new Date(data.dob).toLocaleDateString()}</p>
                                                 <p className="order-item-p"><span className="order-item-p-span">
-                                                    Address:  </span>{data.dob}</p>
+                                                    Address:  </span>{data.fullAddress}</p>
                                             </Col>
                                         </Row>
                                     </>

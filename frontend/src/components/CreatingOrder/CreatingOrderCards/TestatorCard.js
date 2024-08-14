@@ -61,7 +61,7 @@ const TestatorCard = () => {
                         <Row>
                             <Col>
                                 <p className="order-item-p"><span className="order-item-p-span">Name: </span>{testatorInitialData.testatorTitle} {testatorInitialData.testatorFullLegalName}</p>
-                                <p className="order-item-p"><span className="order-item-p-span">Date of birth: </span>{testatorInitialData.testatorDob}</p>
+                                <p className="order-item-p"><span className="order-item-p-span">Date of birth: </span>{new Date(testatorInitialData.testatorDob).toLocaleDateString()}</p>
                                 <p className="order-item-p"><span className="order-item-p-span">Address: </span>{testatorInitialData.testatorFullAddress}</p>
                             </Col>
                         </Row>

@@ -51,7 +51,7 @@ const KidsCard = () => {
                                                     {kid.title} {kid.fullLegalName}
                                                 </p>
                                                 <p className="order-item-p">
-                                                    <span className="order-item-p-span">Date of birth: </span>{kid.dob}
+                                                    <span className="order-item-p-span">Date of birth: </span>{new Date(kid.dob).toLocaleDateString()}
                                                 </p>
                                                 <p className="order-item-p">
                                                     <span className="order-item-p-span">Address: </span>{kid.fullAddress}

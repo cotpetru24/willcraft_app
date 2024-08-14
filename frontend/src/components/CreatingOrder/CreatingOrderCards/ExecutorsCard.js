@@ -55,7 +55,7 @@ const ExecutorsCard = () => {
                                                     {executor.personId.title} {executor.personId.fullLegalName}
                                                 </p>
                                                 <p className="order-item-p">
-                                                    <span className="order-item-p-span">Date of birth: </span>{executor.personId.dob}
+                                                    <span className="order-item-p-span">Date of birth: </span>{new Date(executor.personId.dob).toLocaleDateString()}
                                                 </p>
                                                 <p className="order-item-p">
                                                     <span className="order-item-p-span">Address: </span>{executor.personId.fullAddress}

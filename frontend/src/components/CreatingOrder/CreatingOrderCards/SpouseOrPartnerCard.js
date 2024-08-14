@@ -69,7 +69,7 @@ const SpouseOrPartnerCard = () => {
                                     <Col>
                                         <p className="order-item-p"><span className="order-item-p-span">Name: </span>
                                             {spouseOrPartnerInitialData.spouseOrPartnerTitle} {spouseOrPartnerInitialData.spouseOrPartnerLegalName}</p>
-                                        <p className="order-item-p"><span className="order-item-p-span">Date of birth: </span>{spouseOrPartnerInitialData.spouseOrPartnerDob}</p>
+                                        <p className="order-item-p"><span className="order-item-p-span">Date of birth: </span>{new Date(spouseOrPartnerInitialData.spouseOrPartnerDob).toLocaleDateString()}</p>
                                         <p className="order-item-p"><span className="order-item-p-span">Address: </span>{spouseOrPartnerInitialData.spouseOrPartnerFullAddress}</p>
                                     </Col>
                                 </Row>
