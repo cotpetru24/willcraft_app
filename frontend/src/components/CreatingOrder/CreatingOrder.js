@@ -5,7 +5,7 @@ import ProgressBar from 'react-bootstrap/ProgressBar';
 import KidsCard from "./CreatingOrderTiles/KidsCard";
 import AssetsCard from "./CreatingOrderTiles/AssetsCard";
 import AssetsDistributionTile from "./CreatingOrderTiles/AssetsDistributionTile";
-import ExecutorsTile from "./CreatingOrderTiles/ExecutorsTile";
+import ExecutorsCard from "./CreatingOrderTiles/ExecutorsCard";
 import GenerateWillButton from '../../features/generatewillbtn';
 import TestatorCard from "./CreatingOrderTiles/TestatorCard";
 import SpouseOrPartnerCard from "./CreatingOrderTiles/SpouseOrPartnerCard";
@@ -44,7 +44,7 @@ const CreatingOrder = () => {
                     <KidsCard />
                     <AssetsCard />
                     <AssetsDistributionTile />
-                    <ExecutorsTile />
+                    <ExecutorsCard />
                 </div>
                 <div className=" creatingOrder-instructions">
                     <div className="creatingOrder-tile">

@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckSquare, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 
 
-const ExecutorsTile = () => {
+const ExecutorsCard = () => {
     const navigate = useNavigate();
 
     const executorsData = useSelector(state => state.additionalExecutors)
@@ -75,4 +75,4 @@ const ExecutorsTile = () => {
     );
 }
 
-export default ExecutorsTile;
+export default ExecutorsCard;
