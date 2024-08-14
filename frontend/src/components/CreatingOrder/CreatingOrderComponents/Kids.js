@@ -249,8 +249,11 @@ const Kids = () => {
                             id="has-children-yes"
                             name="has-children"
                             value="yes"
+                            disabled={showKidsForm}
                             checked={currentHasChildrenStatus === "yes"}
                             onChange={handleHasChildrenStatusChange}
+                            disabled={showKidsForm}
+
                         >
                         </input>
                         <label htmlFor="has-children-yes">Yes</label>
@@ -264,6 +267,7 @@ const Kids = () => {
                             value="no"
                             checked={currentHasChildrenStatus === "no"}
                             onChange={handleHasChildrenStatusChange}
+                            disabled={showKidsForm}
                         >
                         </input>
                         <label htmlFor="has-children-no">No</label>
