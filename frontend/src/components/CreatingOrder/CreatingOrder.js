@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import KidsCard from "./CreatingOrderTiles/KidsCard";
-import AssetsTile from "./CreatingOrderTiles/AssetsTile";
+import AssetsCard from "./CreatingOrderTiles/AssetsCard";
 import AssetsDistributionTile from "./CreatingOrderTiles/AssetsDistributionTile";
 import ExecutorsTile from "./CreatingOrderTiles/ExecutorsTile";
 import GenerateWillButton from '../../features/generatewillbtn';
@@ -42,7 +42,7 @@ const CreatingOrder = () => {
                     <TestatorCard />
                     <SpouseOrPartnerCard />
                     <KidsCard />
-                    <AssetsTile />
+                    <AssetsCard />
                     <AssetsDistributionTile />
                     <ExecutorsTile />
                 </div>
