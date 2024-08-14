@@ -1,4 +1,3 @@
-import OrderNavigation from "../CreatigOrderNavigation";
 import constants from "../../../common/constants";
 import AddressAutocomplete from "../../Common/AddressAutocomplete";
 import DateInput from "../../Common/DateInput";
@@ -11,10 +10,13 @@ import { updateCurrentOrderSlice, updateOrderThunk } from "../../../features/cur
 import { createPerson } from "../../../features/people/peopleService";
 import { createKidThunk } from "../../../features/people/kids/kidsThunks";
 import { updateAssetsSlice, createAssetThunk, updateAssetThunk } from "../../../features/orderAssets/orderAssetsSlice"
-import { Button } from 'react-bootstrap'
 // import { removeAdditionalExecutorSlice, updateAdditionalExecutorsSlice } from "../../../features/additionalExecutors/additionalExecutorsSlice";
 import { createExecutorThunk, updateExecutorThunk } from "../../../features/additionalExecutors/additionalExecutorsThunks";
-import {updateAdditionalExecutorsSlice} from "../../../features/additionalExecutors/additionalExecutorsSlice"
+import { updateAdditionalExecutorsSlice } from "../../../features/additionalExecutors/additionalExecutorsSlice"
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import CreatingOrderNavigation from "../CreatigOrderNavigation";
+
+
 
 const Executors = () => {
     const navigate = useNavigate();
@@ -32,15 +34,15 @@ const Executors = () => {
 
     useEffect(() => {
         const updatedFamily = currentOrder.peopleAndRoles
-            .filter(p => 
-                p.role.includes('partner') 
-                || p.role.includes('kid') 
-                || p.role.includes('spouse') 
-                || p.role.includes('beneficiary') 
+            .filter(p =>
+                p.role.includes('partner')
+                || p.role.includes('kid')
+                || p.role.includes('spouse')
+                || p.role.includes('beneficiary')
                 || p.role.includes('additional beneficiary'));
         setFamily(updatedFamily);
     }, [currentOrder.peopleAndRoles, currentOrder]);
-    
+
     const [showExecutorForm, setShowExecutorForm] = useState(false);
     const [editExecutorIndex, setEditExecutorIndex] = useState(null); // New state to track the index of the kid being edited
 
@@ -78,8 +80,8 @@ const Executors = () => {
         if (!savedAdditionalExecutorsData.current) {
             savedAdditionalExecutorsData.current = JSON.parse(JSON.stringify(additionalExecutors));
         }
-        if (!savedCurrentOrderData.current){
-            savedCurrentOrderData.current=JSON.parse(JSON.stringify(currentOrder))
+        if (!savedCurrentOrderData.current) {
+            savedCurrentOrderData.current = JSON.parse(JSON.stringify(currentOrder))
         }
     }, [additionalExecutors]);
 
@@ -195,7 +197,7 @@ const Executors = () => {
         };
 
 
-        
+
 
         // Update the currentOrder slice
         await dispatch(updateCurrentOrderSlice(updatedOrderWithIds));
@@ -267,195 +269,196 @@ const Executors = () => {
 
     return (
         <>
-            <section className="section-container">
-                <div>
-                    <div className="creatingOrder-section-heading-container">
-                        <h1>Executors</h1>
-                    </div>
-                    <div className="has-children-container">
-                        <div>
-                            <h4>Please select or/and add the executors of the will.</h4>
-                        </div>
-                    </div>
-                </div>
+            <Container>
+                <Row className="mt-3 mb-4 justify-content-center">
+                    <Col xs={12} md={4} className="mx-auto">
+                        <h1 className="auth-header">Executors</h1>
+                    </Col>
+                </Row>
+                <Row className="mt-3 mb-4 justify-content-center">
+                    <Col xs={12} className="mx-auto d-flex justify-content-center">
+                        <h5>Please select or/and add the executors of the will.</h5>
+                    </Col>
+                </Row>
 
-                <>
-                    <div>
-                        <div className="section-content-container">
-                            <div className="section-controll-container">
-                                <div className="section-list-container">
-                                    {family.map((person, personIndex) => (
-                                        <SectionListItem
-                                            key={`person-${personIndex}`}
-                                            buttonsDisabled={showExecutorForm}
-                                            data={person}
-                                            onRemove={() => handleRemoveExecutor(personIndex)}
-                                            onEdit={() => handleEditExecutor(personIndex)}
-                                            onChecked={(isChecked) => handleExecutorChecked(personIndex, isChecked)}  // Pass the checkbox state
-                                            section="executors"
-                                        />
+                <Row className="justify-content-between">
+                    <Col md={5} className="mt-4">
+                        <Row>
+                            <Col >
+                                {family.map((person, personIndex) => (
+                                    <SectionListItem
+                                        key={`person-${personIndex}`}
+                                        buttonsDisabled={showExecutorForm}
+                                        data={person}
+                                        onRemove={() => handleRemoveExecutor(personIndex)}
+                                        onEdit={() => handleEditExecutor(personIndex)}
+                                        onChecked={(isChecked) => handleExecutorChecked(personIndex, isChecked)}  // Pass the checkbox state
+                                        section="executors"
+                                    />
+                                ))}
+                                {additionalExecutors.length>0 && <h4 className="p-4">Additional executors</h4>}
+                                {additionalExecutors.map((person, personIndex) => (
+                                    <SectionListItem
+                                        key={`person-${personIndex}`}
+                                        buttonsDisabled={showExecutorForm}
+                                        data={person}
+                                        onRemove={() => handleRemoveExecutor(personIndex)}
+                                        onEdit={() => handleEditExecutor(personIndex)}
+                                        onChecked={(isChecked) => handleExecutorChecked(personIndex, isChecked)}  // Pass the checkbox state
+                                        section="additional-executors"
+                                    />
+                                ))}
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Button
+                                    variant="primary"
+                                    className="m-3"
+                                    onClick={handleShowExecutorForm}
+                                    style={showExecutorForm ? styles.disabledButton : {}}
+                                    disabled={showExecutorForm}
+                                >
+                                    +Add Executor
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Col>
+                    <Col md={4} className="pt-4">
+                        {showExecutorForm && (
+                            <Row>
+                                <Col >
+                                    <Form onSubmit={handleExecutorFormAdd}>
+                                        <Form.Group className="mb-3" controlId="formGroupTitle">
+                                            <Form.Label className="bold-label">Title</Form.Label>
+                                            <Form.Control
+                                                as="select"
+                                                id="title"
+                                                name="title"
+                                                value={additionalExecutorFormData.title}
+                                                onChange={handleOnChange}
+                                                required
+                                            >
+                                                {Object.values(constants.title).map((title, index) => (
+                                                    <option key={index} value={title}>
+                                                        {title}
+                                                    </option>
+                                                ))}
+                                            </Form.Control>
+                                        </Form.Group>
+                                        <Form.Group className="mb-3" controlId="formGroupFullLegalName">
+                                            <Form.Label className="bold-label">Full legal name</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                id="fullLegalName"
+                                                name="fullLegalName"
+                                                value={additionalExecutorFormData.fullLegalName}
+                                                onChange={handleOnChange}
+                                                required
+                                            />
+                                        </Form.Group>
+                                        <Form.Group className="mb-3" controlId="formGroupFullAddress">
+                                            <Form.Label className="bold-label">Full address</Form.Label>
+                                            <AddressAutocomplete
+                                                name="fullAddress"
+                                                value={additionalExecutorFormData.fullAddress}
+                                                onPlaceSelected={handlePlaceSelected}
+                                                handleInputChange={handleOnChange}
+                                                required
+                                            />
+                                        </Form.Group>
+                                        <Form.Group className="mb-3" controlId="formGroupDob">
+                                            <Form.Label className="bold-label">Date of birth</Form.Label>
+                                            <DateInput
+                                                id="dob"
+                                                name="dob"
+                                                value={additionalExecutorFormData.dob}
+                                                onChange={handleOnChange}
+                                                required
+                                            />
+                                        </Form.Group>
+                                        <Form.Group className="mb-3" controlId="formGroupEmail">
+                                            <Form.Label className="bold-label">Email (optional)</Form.Label>
+                                            <Form.Control
+                                                type="email"
+                                                id="email"
+                                                name="email"
+                                                value={additionalExecutorFormData.email}
+                                                onChange={handleOnChange}
+                                            />
+                                        </Form.Group>
+                                        <Form.Group className="mb-3" controlId="formGroupPhone">
+                                            <Form.Label className="bold-label">Phone Number (optional)</Form.Label>
+                                            <Form.Control
+                                                type="tel"
+                                                id="tel"
+                                                name="tel"
+                                                value={additionalExecutorFormData.tel}
+                                                onChange={handleOnChange}
+                                            />
+                                        </Form.Group>
+                                        <Row>
+                                            <Col>
+                                                <Button
+                                                    variant="primary"
+                                                    className="m-1 add-edit-form-btn"
+                                                    type="button"
+                                                    onClick={() => {
+                                                        handleShowExecutorForm();
+                                                        resetExecutorForm();
+                                                    }}
+                                                >
+                                                    Cancel
+                                                </Button>
+                                            </Col>
+                                            <Col className="d-flex justify-content-end">
+                                                <Button
+                                                    variant="primary"
+                                                    className="m-1 add-edit-form-btn"
+                                                    type="submit"
+                                                >
+                                                    {editExecutorIndex !== null ? "Update" : "Add"}
+                                                </Button>
+                                            </Col>
+                                        </Row>
+                                    </Form>
+                                </Col>
+                            </Row>
+                        )}
+                    </Col>
+                </Row>
+            </Container>
+            <>
+                <Container className="mt-5">
+                    <CreatingOrderNavigation
+                        onBack={handleBack}
+                        onSaveAndContinue={handleSaveAndContinue}
+                    />
+                </Container>
+            </>
 
-                                    ))}
-
-                                </div>
-
-
-
-
-                                <div className="section-list-container">
-                                    <h3>additional executors</h3>
-                                    {additionalExecutors.map((person, personIndex) => (
-                                        <SectionListItem
-                                            key={`person-${personIndex}`}
-                                            buttonsDisabled={showExecutorForm}
-                                            data={person}
-                                            onRemove={() => handleRemoveExecutor(personIndex)}
-                                            onEdit={() => handleEditExecutor(personIndex)}
-                                            onChecked={(isChecked) => handleExecutorChecked(personIndex, isChecked)}  // Pass the checkbox state
-                                            section="additional-executors"
-                                        />
-
-                                    ))}
-
-                                </div>
 
 
 
 
 
-                                <div className="sectio-add-btn-container">
-                                    <button
-                                        className="section-add-btn"
-                                        onClick={handleShowExecutorForm}
-                                        style={showExecutorForm ? styles.disabledButton : {}}
-                                        disabled={showExecutorForm}
-                                    >
-                                        +Add Executor
-                                    </button>
-                                </div>
 
-                            </div>
-
-                        </div>
-
-                        {showExecutorForm &&
-                            (
-                                <div className="section-form-container">
-                                    <form onSubmit={handleExecutorFormAdd}>
-                                        <div className="form-main-container">
-                                            <div className="form-title-and-fullName-container">
-                                                <div className="name-group">
-                                                    <label htmlFor="title">Title</label>
-                                                    <select
-                                                        id="title"
-                                                        name="title"
-                                                        value={additionalExecutorFormData.title}
-                                                        onChange={handleOnChange}
-                                                        required
-                                                    >
-                                                        {Object.values(constants.title).map((title, index) => (
-                                                            <option key={index} value={title}>
-                                                                {title}
-                                                            </option>
-                                                        ))}
-                                                    </select>
-                                                </div>
-                                                <div className="name-group">
-                                                    <label htmlFor="fullLegalName">Full legal name</label>
-                                                    <input
-                                                        type="text"
-                                                        className="fullLegalName"
-                                                        id="fullLegalName"
-                                                        name="fullLegalName"
-                                                        value={additionalExecutorFormData.fullLegalName}
-                                                        onChange={handleOnChange}
-                                                        required
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className="form-group">
-                                                <label htmlFor="fullAddress">Full address</label>
-                                                <AddressAutocomplete
-                                                    name="fullAddress"
-                                                    value={additionalExecutorFormData.fullAddress}
-                                                    onPlaceSelected={handlePlaceSelected}
-                                                    handleInputChange={handleOnChange}
-                                                />
-                                            </div>
-                                            <div className="form-group">
-                                                <label htmlFor="dob">Date of Birth</label>
-                                                <DateInput
-                                                    id="dob"
-                                                    name="dob"
-                                                    value={additionalExecutorFormData.dob}
-                                                    onChange={handleOnChange}
-                                                />
-                                            </div>
-                                            <div className="form-group">
-                                                <label htmlFor="email">Email (optional)</label>
-                                                <input
-                                                    type="email"
-                                                    id="email"
-                                                    name="email"
-                                                    value={additionalExecutorFormData.email}
-                                                    onChange={handleOnChange}
-                                                />
-                                            </div>
-                                            <div className="form-group">
-                                                <label htmlFor="tel">Phone Number (optional)</label>
-                                                <input
-                                                    type="tel"
-                                                    id="tel"
-                                                    name="tel"
-                                                    value={additionalExecutorFormData.tel}
-                                                    onChange={handleOnChange}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="form-btns-container">
-                                            <button
-                                                className="form-btn"
-                                                type="button"
-                                                onClick={() => {
-                                                    handleShowExecutorForm();
-                                                    resetExecutorForm();
-                                                }}
-                                            >Cancel</button>
-                                            <button
-                                                className="form-btn"
-                                                type="submit"
-                                            >{editExecutorIndex !== null ? "Update" : "Add"}</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            )
-                        }
-                    </div>
-                </>
-                {/* )
-                } */}
-                <>
-                    <div className="section-navigation-container">
-                        <OrderNavigation
-                            onBack={handleBack}
-                            onSaveAndContinue={handleSaveAndContinue}
-                            buttonsDisabled={showExecutorForm}
-                        />
-                    </div>
-                    <div className="section-list-container">
-                        <h3>Selected Executors</h3>
-                        {familyExecutors.map((executor, executorIndex) => (
-                            <div key={executorIndex}>
-                                <p>{executor.fullLegalName}</p>
-                                <p>{executor.role}</p>
-                            </div>
-                        ))}
-                    </div>
-                </>
-            </section >
         </>
     )
 }
 
 export default Executors;
 
+
+
+// <>
+// <div className="section-list-container">
+//     <h3>Selected Executors</h3>
+//     {familyExecutors.map((executor, executorIndex) => (
+//         <div key={executorIndex}>
+//             <p>{executor.fullLegalName}</p>
+//             <p>{executor.role}</p>
+//         </div>
+//     ))}
+// </div>
+// </>
