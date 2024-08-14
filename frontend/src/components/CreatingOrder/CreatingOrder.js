@@ -2,13 +2,13 @@ import React from "react";
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import ProgressBar from 'react-bootstrap/ProgressBar';
-import KidsCard from "./CreatingOrderTiles/KidsCard";
-import AssetsCard from "./CreatingOrderTiles/AssetsCard";
-import AssetsDistributionTile from "./CreatingOrderTiles/AssetsDistributionTile";
-import ExecutorsCard from "./CreatingOrderTiles/ExecutorsCard";
-import GenerateWillButton from '../../features/generatewillbtn';
-import TestatorCard from "./CreatingOrderTiles/TestatorCard";
-import SpouseOrPartnerCard from "./CreatingOrderTiles/SpouseOrPartnerCard";
+import KidsCard from "./CreatingOrderCards/KidsCard";
+import AssetsCard from "./CreatingOrderCards/AssetsCard";
+import AssetsDistributionTile from "./CreatingOrderCards/AssetsDistributionTile";
+import ExecutorsCard from "./CreatingOrderCards/ExecutorsCard";
+import TestatorCard from "./CreatingOrderCards/TestatorCard";
+import SpouseOrPartnerCard from "./CreatingOrderCards/SpouseOrPartnerCard";
+import ProgressAndInstructionsCard from "./CreatingOrderCards/ProgressAndInstructionsCard";
 
 export const OrderProgressBar = () => {
     const now = 60;
@@ -20,7 +20,7 @@ const CreatingOrder = () => {
 
 
     const navigate = useNavigate();
-    const { user } = useSelector(state => state.auth)
+
 
     return (<>
 
@@ -45,17 +45,9 @@ const CreatingOrder = () => {
                     <AssetsCard />
                     <AssetsDistributionTile />
                     <ExecutorsCard />
+                    <ProgressAndInstructionsCard/>
                 </div>
-                <div className=" creatingOrder-instructions">
-                    <div className="creatingOrder-tile">
-                        <p>Order progress</p>
-                        <h2>Welcome {user ? user.firstName : ''}, to your online will writing service</h2>
-                        <p>Please fill out the will checklist to complete your will.
-                            If you have any questions, message, email or call us on 024 1234 5678.</p>
-                    </div>
-                    <GenerateWillButton />
-                    <button onClick={() => navigate('/ChechOutForm')}>Stripe</button>
-                </div>
+
 
             </div>
 
