@@ -64,7 +64,7 @@ const AssetsCard = () => {
                                                 {asset.assetType === 'Bank Account' && (
                                                     <>
                                                         <p className="order-item-p">
-                                                            <span className="order-item-p-span">Bank Name:: </span>
+                                                            <span className="order-item-p-span">Bank Name: </span>
                                                             {asset.bankName}
                                                         </p>
                                                     </>
