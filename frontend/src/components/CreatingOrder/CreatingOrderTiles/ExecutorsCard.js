@@ -1,19 +1,24 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckSquare, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import { Container } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import React from "react";
 
 
 const ExecutorsCard = () => {
     const navigate = useNavigate();
 
     const executorsData = useSelector(state => state.additionalExecutors)
-    const currentOrder = useSelector(state=>state.currentOrder)
+    const currentOrder = useSelector(state => state.currentOrder)
 
 
     const allExecutors = currentOrder.peopleAndRoles
-    .filter(p => p.role.includes('executor') || p.role.includes('additional executor'))
-    
+        .filter(p => p.role.includes('executor') || p.role.includes('additional executor'))
+
     const isExecutorsComplete = (data) => {
         return (Array.isArray(data) && (data.length > 0))
     };
@@ -22,55 +27,71 @@ const ExecutorsCard = () => {
 
     return (
         <>
-            <section >
-                <div className="creatingOrder-tile">
-                    <div className="creatingOrder-tile-heading">
-                        <h2>Executors</h2>
+            <Container className="mb-5">
+                <Card className='shadow' bg="light" text="dark">
+                    <Card.Body>
+                        <Card.Title>
+                            <Row>
+                                <Col xs={10}>
+                                    <h2>Your Executors</h2>
+                                </Col>
+                                <Col className="d-flex justify-content-end align-items-center">
+                                    {allNecessaryFieldsSpecified ? (
+                                        <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />
+                                    ) : (
+                                        <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'grey' }} />
+                                    )}
+                                </Col>
+                            </Row>
+                        </Card.Title>
                         {allNecessaryFieldsSpecified ? (
-                            <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />
+                            <Card.Text>
+                                {allExecutors.map((executor, index) => (
+                                    <React.Fragment key={index}>
+                                        <Row className="mb-4">
+                                            <Col>
+                                                <p className="order-item-p">
+                                                    <span className="order-item-p-span">Name: </span>
+                                                    {executor.personId.title} {executor.personId.fullLegalName}
+                                                </p>
+                                                <p className="order-item-p">
+                                                    <span className="order-item-p-span">Date of birth: </span>{executor.personId.dob}
+                                                </p>
+                                                <p className="order-item-p">
+                                                    <span className="order-item-p-span">Address: </span>{executor.personId.fullAddress}
+                                                </p>
+                                            </Col>
+                                        </Row>
+                                    </React.Fragment>
+                                ))}
+                                <Row className="d-flex justify-content-end">
+                                    <Col xs="auto">
+                                        <Button variant="primary" className="creating-order-tile-btns"
+                                            onClick={() => navigate('/executors')}
+                                        >Edit</Button>
+                                    </Col>
+                                </Row>
+                            </Card.Text>
                         ) : (
-                            <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'grey' }} />
-                        )}
-                    </div>
+                            <>
+                                <Row>
+                                    <Col>
+                                        <p>Tell us about executors </p>
+                                    </Col>
+                                </Row>
+                                <Row className="d-flex justify-content-end">
+                                    <Col xs="auto">
+                                        <Button variant="primary" className="m-1"
+                                            onClick={() => navigate('/executors')}
+                                        >Get Started</Button>
+                                    </Col>
+                                </Row>
+                            </>
 
-                    {allNecessaryFieldsSpecified ? (
-                        <>
-                            {allExecutors.map((executor, index) => (
-                                <div className="creatingOrder-tile-list-container" key={index}>
-                                    <div className="creatingOrder-tile-group">
-                                        <div className="creatingOrder-tile-line-heading">
-                                            <h4>Name:</h4>
-                                        </div>
-                                        <p>{executor.personId.title} {executor.personId.fullLegalName}</p>
-                                    </div>
-                                    <div className="creatingOrder-tile-group">
-                                        <div className="creatingOrder-tile-line-heading">
-                                            <h4>Date of birth:</h4>
-                                        </div>
-                                        <p>{executor.personId.dob}</p>
-                                    </div>
-                                    <div className="creatingOrder-tile-group">
-                                        <div className="creatingOrder-tile-line-heading">
-                                            <h4>Address:</h4>
-                                        </div>
-                                        <p>{executor.personId.fullAddress}</p>
-                                    </div>
-                                </div>
-                            ))}
-                            <div className="creatingOrder-tile-btn-container">
-                                <button className="creatingOrder-tile-btn" onClick={() => navigate('/executors')}>Edit</button>
-                            </div>
-                        </>
-                    ) : (
-                        <>
-                            <p>Tell us about executors…</p>
-                            <div className="creatingOrder-tile-btn-container">
-                                <button className="creatingOrder-tile-btn" onClick={() => navigate('/executors')}>Get Started</button>
-                            </div>
-                        </>
-                    )}
-                </div>
-            </section >
+                        )}
+                    </Card.Body>
+                </Card>
+            </Container>
         </>
     );
 }
