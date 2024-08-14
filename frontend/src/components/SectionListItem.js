@@ -98,27 +98,53 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
                                         <Row>
                                             <Col>
                                                 <p className="order-item-p"><span className="order-item-p-span">
-                                                    Name: </span>Name: {data.title} {data.fullLegalName}</p>
+                                                    Name:  </span>{data.title} {data.fullLegalName}</p>
                                                 <p className="order-item-p"><span className="order-item-p-span">
-                                                    Date of birth: </span>{data.fullAddress}</p>
+                                                    Date of birth:  </span>{data.fullAddress}</p>
                                                 <p className="order-item-p"><span className="order-item-p-span">
-                                                    Address: </span>{data.dob}</p>
+                                                    Address:  </span>{data.dob}</p>
                                             </Col>
                                         </Row>
                                     </>
                                 )}
                                 {section === 'assets' && (
                                     <>
-                                        <div className="section-list-item-group">
-                                            <h5>Asset Type: {data.assetType}</h5>
-                                        </div>
-                                        <div className="section-list-item-group">
-                                            {data.assetType === 'Property' && <h5>Address: {data.propertyAddress}</h5>}
-                                            {data.assetType === 'Bank Account' && <h5>Bank Name: {data.bankName}</h5>}
-                                            {data.assetType === 'Stocks and shares' && <h5>Company Name: {data.companyName}</h5>}
-                                            {(data.assetType === 'Pension' || data.assetType === 'Life insurance') && <h5>Provider: {data.provider}</h5>}
-                                            {data.assetType === 'Other' && <h5>Details: {data.otherAssetDetails}</h5>}
-                                        </div>
+                                        <Row>
+                                            <Col>
+                                                <p className="order-item-p"><span className="order-item-p-span">
+                                                    Asset: </span>{data.assetType}</p>
+                                                {
+                                                    data.assetType === 'Property' &&
+                                                    <p className="order-item-p"><span className="order-item-p-span">
+                                                        Address: </span>{data.propertyAddress}
+                                                    </p>
+                                                }
+                                                {
+                                                    data.assetType === 'Bank Account' &&
+                                                    <p className="order-item-p"><span className="order-item-p-span">
+                                                        Bank Name: </span>{data.bankName}
+                                                    </p>
+                                                }
+                                                {
+                                                    data.assetType === 'Stocks and shares' &&
+                                                    <p className="order-item-p"><span className="order-item-p-span">
+                                                        Company Name: </span>{data.companyName}
+                                                    </p>
+                                                }
+                                                {
+                                                    (data.assetType === 'Pension' || data.assetType === 'Life insurance') &&
+                                                    <p className="order-item-p"><span className="order-item-p-span">
+                                                        Provider: </span>{data.provider}
+                                                    </p>
+                                                }
+                                                {
+                                                    data.assetType === 'Other' &&
+                                                    <p className="order-item-p"><span className="order-item-p-span">
+                                                        Details: </span>{data.otherAssetDetails}
+                                                    </p>
+                                                }
+                                            </Col>
+                                        </Row>
                                     </>
                                 )}
                                 {section === 'assetsDistribution-asset' && (

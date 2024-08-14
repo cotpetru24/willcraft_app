@@ -304,7 +304,7 @@ const Kids = () => {
                                         </Col>
                                     </Row>
                                 </Col>
-                                <Col md={4} >
+                                <Col md={4} className="pt-4">
                                     {showKidsForm && (
                                         <Row>
                                             <Col >

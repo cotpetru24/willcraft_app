@@ -8,6 +8,11 @@ import { useState, useRef, useEffect } from "react";
 import styles from "../../../common/styles";
 import { updateCurrentOrderSlice, updateOrderThunk } from "../../../features/currentOrder/currentOrderSlice";
 import { updateAssetsSlice, createAssetThunk, updateAssetThunk } from "../../../features/orderAssets/orderAssetsSlice"
+import Container from "react-bootstrap/esm/Container";
+import Row from "react-bootstrap/esm/Row";
+import Form from 'react-bootstrap/Form';
+import Col from "react-bootstrap/esm/Col";
+import Button from "react-bootstrap/Button";
 
 
 const Assets = () => {
@@ -196,51 +201,56 @@ const Assets = () => {
 
     return (
         <>
-            <section className="section-container">
-                <div>
-                    <div className="creatingOrder-section-heading-container">
-                        <h1>Your Assets</h1>
-                    </div>
-                    <div className="has-children-container">
-                        <div>
-                            <h4>Please add all the assets that you want to include in the will.</h4>
-                        </div>
-                    </div>
-                </div>
-                <div className="section-content-container">
-                    <div className="section-controll-container">
-                        <div className="section-list-container">
-                            {assets.map((asset, index) => (
-                                <SectionListItem
-                                    key={index}
-                                    buttonsDisabled={showAssetForm}
-                                    data={asset}
-                                    onRemove={() => handleRemoveAsset(index)}
-                                    onEdit={() => handleEditAsset(index)}
-                                    section="assets"
-                                />
-                            ))}
-                        </div>
-                        <div className="sectio-add-btn-container">
-                            <button
-                                className="section-add-btn"
-                                onClick={handleshowAssetForm}
-                                style={showAssetForm ? styles.disabledButton : {}}
-                                disabled={showAssetForm}
-                            >
-                                +Add Asset
-                            </button>
-                        </div>
-                    </div>
-
-                    {showAssetForm &&
-                        (
-                            <div className="section-form-container">
-                                <form onSubmit={handleAssetFormAdd}>
-                                    <div className="form-main-container">
-                                        <div className="form-group">
-                                            <label htmlFor="assetType">Asset type</label>
-                                            <select
+            <Container>
+                <Row className="mt-3 mb-4 justify-content-center">
+                    <Col xs={12} md={4} className="mx-auto">
+                        <h1 className="auth-header">Your Assets</h1>
+                    </Col>
+                </Row>
+                <Row className="mt-3 mb-4 justify-content-center">
+                    <Col xs={12} className="mx-auto d-flex justify-content-center">
+                        <h5>Please add all the assets that you want to include in the will.</h5>
+                    </Col>
+                </Row>
+                <Row className="justify-content-between">
+                    <Col md={5} className="mt-4">
+                        <Row>
+                            <Col >
+                                {assets.map((asset, index) => (
+                                    <SectionListItem
+                                        key={index}
+                                        buttonsDisabled={showAssetForm}
+                                        data={asset}
+                                        onRemove={() => handleRemoveAsset(index)}
+                                        onEdit={() => handleEditAsset(index)}
+                                        section="assets"
+                                    />
+                                ))}
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Button
+                                    variant="primary"
+                                    className="m-3"
+                                    onClick={handleshowAssetForm}
+                                    style={showAssetForm ? styles.disabledButton : {}}
+                                    disabled={showAssetForm}
+                                >
+                                    +Add Asset
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Col>
+                    <Col md={4} className="pt-4">
+                        {showAssetForm && (
+                            <Row>
+                                <Col >
+                                    <Form onSubmit={handleAssetFormAdd}>
+                                        <Form.Group className="mb-3" controlId="formGroupAssetType">
+                                            <Form.Label className="bold-label">Asset type</Form.Label>
+                                            <Form.Control
+                                                as="select"
                                                 id="assetType"
                                                 name="assetType"
                                                 value={assetFormData.assetType}
@@ -253,11 +263,11 @@ const Assets = () => {
                                                         {assetType}
                                                     </option>
                                                 ))}
-                                            </select>
-                                        </div>
+                                            </Form.Control>
+                                        </Form.Group>
                                         {assetFormData.assetType === constants.assetType.PROPERTY && (
-                                            <div className="form-group">
-                                                <label htmlFor="propertyAddress">Property address</label>
+                                            <Form.Group className="mb-3" controlId="formGroupPropertyAddress">
+                                                <Form.Label className="bold-label">Property Address</Form.Label>
                                                 <AddressAutocomplete
                                                     id="propertyAddress"
                                                     name="propertyAddress"
@@ -265,86 +275,95 @@ const Assets = () => {
                                                     onPlaceSelected={handlePlaceSelected}
                                                     handleInputChange={handleOnChange}
                                                 />
-                                            </div>
+                                            </Form.Group>
                                         )}
                                         {assetFormData.assetType === constants.assetType.BANK_ACCOUNT && (
-                                            <div className="form-group">
-                                                <label htmlFor="bankName">Bank name</label>
-                                                <input
+                                            <Form.Group className="mb-3" controlId="formGroupBankName">
+                                                <Form.Label className="bold-label">Bank name</Form.Label>
+                                                <Form.Control
                                                     type="text"
                                                     id="bankName"
                                                     name="bankName"
                                                     value={assetFormData.bankName}
                                                     onChange={handleOnChange}
                                                 />
-                                            </div>
+                                            </Form.Group>
                                         )}
                                         {assetFormData.assetType === constants.assetType.STOCKS_AND_SHARES && (
-                                            <div className="form-group">
-                                                <label htmlFor="companyName">Company name</label>
-                                                <input
+                                            <Form.Group className="mb-3" controlId="formGroupCompanyName">
+                                                <Form.Label className="bold-label">Company name</Form.Label>
+                                                <Form.Control
                                                     type="text"
                                                     id="companyName"
                                                     name="companyName"
                                                     value={assetFormData.companyName}
                                                     onChange={handleOnChange}
                                                 />
-                                            </div>
+                                            </Form.Group>
                                         )}
-                                        {(assetFormData.assetType === constants.assetType.PENSION || assetType === constants.assetType.LIFE_INSURANCE) && (
-                                            <div className="form-group">
-                                                <label htmlFor="provider">Provider</label>
-                                                <input
+                                        {(assetFormData.assetType === constants.assetType.PENSION 
+                                        || assetFormData.assetType === constants.assetType.LIFE_INSURANCE) && (
+                                            <Form.Group className="mb-3" controlId="formGroupProvider">
+                                                <Form.Label className="bold-label">Provider</Form.Label>
+                                                <Form.Control
                                                     type="text"
                                                     id="provider"
                                                     name="provider"
                                                     value={assetFormData.provider}
                                                     onChange={handleOnChange}
                                                 />
-                                            </div>
+                                            </Form.Group>
                                         )}
                                         {assetFormData.assetType === constants.assetType.OTHER && (
-                                            <div className="form-group">
-                                                <label htmlFor="otherAssetDetails">Details</label>
-                                                <input
+                                            <Form.Group className="mb-3" controlId="formGroupAssetDetails">
+                                                <Form.Label className="bold-label">Details</Form.Label>
+                                                <Form.Control
                                                     type="text"
                                                     id="otherAssetDetails"
                                                     name="otherAssetDetails"
                                                     value={assetFormData.otherAssetDetails}
                                                     onChange={handleOnChange}
                                                 />
-                                            </div>
+                                            </Form.Group>
                                         )}
-                                    </div>
-                                    <div className="form-btns-container">
-                                        <button
-                                            className="form-btn"
-                                            type="button"
-                                            onClick={() => {
-                                                handleshowAssetForm();
-                                                resetAssetForm();
-                                            }}
-                                        >Cancel</button>
-                                        <button
-                                            className="form-btn"
-                                            type="submit"
-                                        >{editAssetIndex !== null ? "Update" : "Add"}</button>
-                                    </div>
-                                </form>
-                            </div>
-                        )
-                    }
-                </div>
-                <>
-                    <div className="section-navigation-container">
-                        <OrderNavigation
-                            onBack={handleBack}
-                            onSaveAndContinue={handleSaveAndContinue}
-                            buttonsDisabled={showAssetForm}
-                        />
-                    </div>
-                </>
-            </section>
+                                        <Row>
+                                            <Col>
+                                                <Button
+                                                    variant="primary"
+                                                    className="m-1 add-edit-form-btn"
+                                                    type="button"
+                                                    onClick={() => {
+                                                        handleshowAssetForm();
+                                                        resetAssetForm();
+                                                    }}
+                                                >
+                                                    Cancel
+                                                </Button>
+                                            </Col>
+                                            <Col className="d-flex justify-content-end">
+                                                <Button
+                                                    variant="primary"
+                                                    className="m-1 add-edit-form-btn"
+                                                    type="submit"
+                                                >
+                                                    {editAssetIndex !== null ? "Update" : "Add"}
+                                                </Button>
+                                            </Col>
+                                        </Row>
+                                    </Form>
+                                </Col>
+                            </Row>
+                        )}
+                    </Col>
+                </Row>
+            </Container>
+            <>
+                <OrderNavigation
+                    onBack={handleBack}
+                    onSaveAndContinue={handleSaveAndContinue}
+                    buttonsDisabled={showAssetForm}
+                />
+            </>
         </>
     )
 }
