@@ -252,7 +252,7 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
                                 {(section !== 'assetsDistribution-asset' && section !== 'assetDistribution-beneficiary' && section !== 'executors') && (
                                     <Row className=" d-flex justify-content-end mt-1">
                                         <Col xs="auto">
-                                            <Button variant="primary"
+                                            <Button variant="info"
                                                 className="section-list-item-card-btn m-1"
                                                 style={buttonsDisabled ? styles.disabledButton : {}}
                                                 disabled={buttonsDisabled}
@@ -260,6 +260,7 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
                                             >Edit
                                             </Button>
                                             <Button
+                                                variant="warning"
                                                 className="section-list-item-card-btn m-1"
                                                 style={buttonsDisabled ? styles.disabledButton : {}}
                                                 disabled={buttonsDisabled}

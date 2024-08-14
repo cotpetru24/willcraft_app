@@ -296,7 +296,7 @@ const Kids = () => {
                                     <Row>
                                         <Col>
                                             <Button
-                                                variant="primary"
+                                                variant="success"
                                                 className="m-3"
                                                 onClick={handleShowKidsForm}
                                                 style={showKidsForm ? styles.disabledButton : {}}

@@ -8,6 +8,18 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import React from "react";
 import generateWillPdf from '../../../features/docGen/generateWillPdf';
+import ProgressBar from 'react-bootstrap/ProgressBar';
+
+
+
+
+
+
+
+export const OrderProgressBar = () => {
+    const now = 60;
+    return <ProgressBar className="mb-3" now={now} label={`${now}%`} />;
+};
 
 
 
@@ -40,6 +52,10 @@ const ProgressAndInstructionsCard = () => {
                             </Row>
                         </Card.Title>
                         <Card.Text>
+                            <Row>
+                                <p>0 of 5 steps Completed </p>
+                                <OrderProgressBar />
+                            </Row>
                             <Row className="mb-4">
                                 <Col>
                                     <p className="order-item-p">
@@ -59,19 +75,16 @@ const ProgressAndInstructionsCard = () => {
                                         onClick={() => navigate('/ChechOutForm')}
                                     >Stripe</Button>
                                 </Col>
+                                <Col xs="auto">
+                                    <Button variant="primary" className="creating-order-tile-btns"
+                                        onClick={generateWillPdf}
+                                    >Generate the Will</Button>
+                                </Col>
                             </Row>
                         </Card.Text>
                     </Card.Body>
                 </Card>
             </Container>
-            <div className=" creatingOrder-instructions">
-                <div className="creatingOrder-tile">
-
-                    <p>
-                    </p>
-                </div>
-                <button onClick={generateWillPdf}>Generate Will PDF</button>
-            </div>
         </>
     );
 }
