@@ -60,7 +60,9 @@ const Kids = () => {
                 title: kidFormData.title || '',
                 fullLegalName: kidFormData.fullLegalName || '',
                 fullAddress: kidFormData.fullAddress || '',
-                dob: kidFormData.dob || '',
+                // dob: kidFormData.dob || '',
+                dob: kidFormData.dob ? new Date(kidFormData.dob).toISOString().split('T')[0] : '',
+
                 email: kidFormData.email || '',
                 tel: kidFormData.tel || ''
             })
@@ -212,7 +214,9 @@ const Kids = () => {
             title: kidToEdit.title || '',
             fullLegalName: kidToEdit.fullLegalName || '',
             fullAddress: kidToEdit.fullAddress || '',
-            dob: kidToEdit.dob ? new Date(kidToEdit.dob).toLocaleDateString() : '',
+            // dob: kidToEdit.dob ? new Date(kidToEdit.dob).toLocaleDateString() : '',
+            dob: kidToEdit.dob ? new Date(kidToEdit.dob).toISOString().split('T')[0] : '',
+
             // dob: kidToEdit.dob || '',
             email: kidToEdit.email || '',
             tel: kidToEdit.tel || ''
@@ -234,7 +238,7 @@ const Kids = () => {
         <>
             <Container className="mt-5 mb-4">
                 <Row className="mt-3 mb-4 justify-content-center">
-                    <Col xs={12} md={4} className="mx-auto">
+                    <Col xs={12} className="mx-auto">
                         <h1 className="auth-header">Your children</h1>
                     </Col>
                 </Row>
@@ -322,6 +326,7 @@ const Kids = () => {
                                                             name="title"
                                                             value={kidFormData.title}
                                                             onChange={handleOnChange}
+                                                            className="custom-input"
                                                             required
                                                         >
                                                             {Object.values(constants.title).map((title, index) => (
@@ -339,6 +344,7 @@ const Kids = () => {
                                                             name="fullLegalName"
                                                             value={kidFormData.fullLegalName}
                                                             onChange={handleOnChange}
+                                                            className="custom-input"
                                                             required
                                                         />
                                                     </Form.Group>
@@ -349,26 +355,20 @@ const Kids = () => {
                                                             value={kidFormData.fullAddress}
                                                             onPlaceSelected={handlePlaceSelected}
                                                             handleInputChange={handleOnChange}
+                                                            required
+                                                            className="custom-input"
                                                         />
                                                     </Form.Group>
                                                     <Form.Group className="mb-3" controlId="formGroupDob">
                                                         <Form.Label className="bold-label">Date of birth</Form.Label>
-                                                        {/* <DateInput
+                                                        <Form.Control
+                                                            type="date"
                                                             id="dob"
                                                             name="dob"
                                                             value={kidFormData.dob}
                                                             onChange={handleOnChange}
                                                             required
-                                                            className="form-control"
-                                                        /> */}
-                                                        <Form.Control
-                                                            type="date"
-                                                            id="dob"
-                                                            name="dob"
-                                                            // value={kidFormData.dob}
-                                                            value={new Date(kidFormData.dob).toLocaleDateString()}
-                                                            onChange={handleOnChange}
-                                                            required
+                                                            className="custom-input"
                                                         />
                                                     </Form.Group>
                                                     <Form.Group className="mb-3" controlId="formGroupEmail">
@@ -379,6 +379,7 @@ const Kids = () => {
                                                             name="email"
                                                             value={kidFormData.email}
                                                             onChange={handleOnChange}
+                                                            className="custom-input"
                                                         />
                                                     </Form.Group>
                                                     <Form.Group className="mb-3" controlId="formGroupPhone">
@@ -389,6 +390,7 @@ const Kids = () => {
                                                             name="tel"
                                                             value={kidFormData.tel}
                                                             onChange={handleOnChange}
+                                                            className="custom-input"
                                                         />
                                                     </Form.Group>
                                                     <Row>

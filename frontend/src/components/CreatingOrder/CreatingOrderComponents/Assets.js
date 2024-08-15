@@ -201,9 +201,9 @@ const Assets = () => {
 
     return (
         <>
-            <Container>
+            <Container className="mt-5 mb-4">
                 <Row className="mt-3 mb-4 justify-content-center">
-                    <Col xs={12} md={4} className="mx-auto">
+                    <Col xs={12} className="mx-auto">
                         <h1 className="auth-header">Your Assets</h1>
                     </Col>
                 </Row>
@@ -256,6 +256,7 @@ const Assets = () => {
                                                 value={assetFormData.assetType}
                                                 onChange={handleAssetTypeChange}
                                                 required
+                                                className="custom-input"
                                             >
                                                 <option value="" disabled>Select asset type</option>
                                                 {Object.values(constants.assetType).map((assetType, index) => (
@@ -274,6 +275,7 @@ const Assets = () => {
                                                     value={assetFormData.propertyAddress}
                                                     onPlaceSelected={handlePlaceSelected}
                                                     handleInputChange={handleOnChange}
+                                                    className="custom-input"
                                                 />
                                             </Form.Group>
                                         )}
@@ -286,6 +288,7 @@ const Assets = () => {
                                                     name="bankName"
                                                     value={assetFormData.bankName}
                                                     onChange={handleOnChange}
+                                                    className="custom-input"
                                                 />
                                             </Form.Group>
                                         )}
@@ -298,6 +301,7 @@ const Assets = () => {
                                                     name="companyName"
                                                     value={assetFormData.companyName}
                                                     onChange={handleOnChange}
+                                                    className="custom-input"
                                                 />
                                             </Form.Group>
                                         )}
@@ -311,6 +315,7 @@ const Assets = () => {
                                                     name="provider"
                                                     value={assetFormData.provider}
                                                     onChange={handleOnChange}
+                                                    className="custom-input"
                                                 />
                                             </Form.Group>
                                         )}
@@ -323,6 +328,7 @@ const Assets = () => {
                                                     name="otherAssetDetails"
                                                     value={assetFormData.otherAssetDetails}
                                                     onChange={handleOnChange}
+                                                    className="custom-input"
                                                 />
                                             </Form.Group>
                                         )}

@@ -52,6 +52,7 @@ const AddressAutocomplete = ({ name, value, onPlaceSelected, handleInputChange }
       value={value}
       onChange={handleInputChange}
       placeholder="Enter a UK address"
+      className="custom-input"
     />
   );
 };

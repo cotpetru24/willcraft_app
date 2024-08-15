@@ -104,7 +104,7 @@
 
 .auth-header {
     padding-bottom: 10px;
-    border-bottom: 1px solid grey;
+    border-bottom: 1px solid #a7a7a7;
 }
 
 .bold-label {
@@ -149,4 +149,8 @@
 
 .order-item-btn {
     width: 100px;
+}
+
+.custom-input {
+    border-color: #a7a7a7;
 }

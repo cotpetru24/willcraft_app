@@ -6,7 +6,7 @@ import { faCheckSquare, faCheckCircle } from "@fortawesome/free-solid-svg-icons"
 
 
 
-const AssetsDistribution = () => {
+const AssetsDistributionCard = () => {
     const navigate = useNavigate();
 
     const [testatorInitialData, setTestatorInitialData] = useState({
@@ -89,4 +89,4 @@ const AssetsDistribution = () => {
     );
 }
 
-export default AssetsDistribution;
+export default AssetsDistributionCard;

@@ -269,9 +269,9 @@ const Executors = () => {
 
     return (
         <>
-            <Container>
+            <Container className="mt-5 mb-4">
                 <Row className="mt-3 mb-4 justify-content-center">
-                    <Col xs={12} md={4} className="mx-auto">
+                    <Col xs={12} className="mx-auto">
                         <h1 className="auth-header">Executors</h1>
                     </Col>
                 </Row>
@@ -338,6 +338,7 @@ const Executors = () => {
                                                 value={additionalExecutorFormData.title}
                                                 onChange={handleOnChange}
                                                 required
+                                                className="custom-input"
                                             >
                                                 {Object.values(constants.title).map((title, index) => (
                                                     <option key={index} value={title}>
@@ -355,6 +356,7 @@ const Executors = () => {
                                                 value={additionalExecutorFormData.fullLegalName}
                                                 onChange={handleOnChange}
                                                 required
+                                                className="custom-input"
                                             />
                                         </Form.Group>
                                         <Form.Group className="mb-3" controlId="formGroupFullAddress">
@@ -369,12 +371,14 @@ const Executors = () => {
                                         </Form.Group>
                                         <Form.Group className="mb-3" controlId="formGroupDob">
                                             <Form.Label className="bold-label">Date of birth</Form.Label>
-                                            <DateInput
+                                            <Form.Control
+                                                type="date"
                                                 id="dob"
                                                 name="dob"
                                                 value={additionalExecutorFormData.dob}
                                                 onChange={handleOnChange}
                                                 required
+                                                className="custom-input"
                                             />
                                         </Form.Group>
                                         <Form.Group className="mb-3" controlId="formGroupEmail">
@@ -385,6 +389,7 @@ const Executors = () => {
                                                 name="email"
                                                 value={additionalExecutorFormData.email}
                                                 onChange={handleOnChange}
+                                                className="custom-input"
                                             />
                                         </Form.Group>
                                         <Form.Group className="mb-3" controlId="formGroupPhone">
@@ -395,6 +400,7 @@ const Executors = () => {
                                                 name="tel"
                                                 value={additionalExecutorFormData.tel}
                                                 onChange={handleOnChange}
+                                                className="custom-input"
                                             />
                                         </Form.Group>
                                         <Row>

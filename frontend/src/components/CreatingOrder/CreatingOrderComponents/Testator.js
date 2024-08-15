@@ -42,7 +42,8 @@ const Testator = () => {
         title: testator.title || '',
         fullLegalName: testator.fullLegalName || '',
         fullAddress: testator.fullAddress || '',
-        dob: testator.dob || '',
+        // dob: testator.dob || '',
+        dob: testator.dob ? new Date(testator.dob).toISOString().split('T')[0] : '',
         email: testator.email || '',
         tel: testator.tel || '',
         maritalStatus: testator.maritalStatus || '',
@@ -104,11 +105,11 @@ const Testator = () => {
     <>
       <Container className="mt-5 mb-4">
         <Row className="mt-3 mb-4 justify-content-center">
-          <Col xs={12} md={4} className="mx-auto">
+          <Col xs={12} className="mx-auto">
             <h1 className="auth-header">Your details</h1>
           </Col>
         </Row>
-        <Row className="justify-content-center">
+        <Row className="mt-3 mb-4 justify-content-center">
           <Col xs={12} md={4} className="mx-auto">
             <Form>
               <Form.Group className="mb-3" controlId="formGroupTitle">
@@ -120,6 +121,7 @@ const Testator = () => {
                   value={testatorFormData.title}
                   onChange={handleOnChange}
                   required
+                  className="custom-input"
                 >
                   {Object.values(constants.title).map((title, index) => (
                     <option key={index} value={title}>
@@ -137,6 +139,7 @@ const Testator = () => {
                   value={testatorFormData.fullLegalName}
                   onChange={handleOnChange}
                   required
+                  className="custom-input"
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formGroupFullAddress">
@@ -146,18 +149,20 @@ const Testator = () => {
                   value={testatorFormData.fullAddress}
                   onPlaceSelected={handlePlaceSelected}
                   handleInputChange={handleOnChange}
+                  className="custom-input"
+                  required
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formGroupDob">
                 <Form.Label className="bold-label">Date of birth</Form.Label>
                 <Form.Control
-                  required
-                />
-                <DateInput
+                  type="date"
                   id="dob"
                   name="dob"
                   value={testatorFormData.dob}
                   onChange={handleOnChange}
+                  required
+                  className="custom-input"
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formGroupEmail">
@@ -168,6 +173,7 @@ const Testator = () => {
                   name="email"
                   value={testatorFormData.email}
                   onChange={handleOnChange}
+                  className="custom-input"
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formGroupPhone">
@@ -178,6 +184,7 @@ const Testator = () => {
                   name="tel"
                   value={testatorFormData.tel}
                   onChange={handleOnChange}
+                  className="custom-input"
                 />
               </Form.Group>
             </Form>

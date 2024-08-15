@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import KidsCard from "./CreatingOrderCards/KidsCard";
 import AssetsCard from "./CreatingOrderCards/AssetsCard";
-import AssetsDistributionTile from "./CreatingOrderCards/AssetsDistributionTile";
+import AssetsDistributionCard from "./CreatingOrderCards/AssetsDistributionCard";
 import ExecutorsCard from "./CreatingOrderCards/ExecutorsCard";
 import TestatorCard from "./CreatingOrderCards/TestatorCard";
 import SpouseOrPartnerCard from "./CreatingOrderCards/SpouseOrPartnerCard";
@@ -38,7 +38,7 @@ const CreatingOrder = () => {
                         <SpouseOrPartnerCard />
                         <KidsCard />
                         <AssetsCard />
-                        <AssetsDistributionTile />
+                        <AssetsDistributionCard />
                         <ExecutorsCard />
                     </Col>
                     <Col xs={{ order: 1 }} md={{order:2}}>
