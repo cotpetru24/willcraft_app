@@ -11,6 +11,9 @@ import { updateCurrentOrderSlice, updateOrderThunk } from "../../../features/cur
 import { updateAssetsSlice, createAssetThunk, updateAssetThunk } from "../../../features/orderAssets/orderAssetsSlice";
 import { updateAdditionalBeneficiariesSlice } from "../../../features/people/additionalBeneficiaries/additionalBeneficiariesSlice";
 import additionalBeneficiaryThunks from "../../../features/people/additionalBeneficiaries/additionalBeneficiariesThunks";
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import CreatingOrderNavigation from "../CreatigOrderNavigation";
+
 
 const AssetsDistribution = () => {
     const navigate = useNavigate();
@@ -67,7 +70,9 @@ const AssetsDistribution = () => {
                 title: additionalBeneficiaryFormData.title || '',
                 fullLegalName: additionalBeneficiaryFormData.fullLegalName || '',
                 fullAddress: additionalBeneficiaryFormData.fullAddress || '',
-                dob: additionalBeneficiaryFormData.dob || '',
+                // dob: additionalBeneficiaryFormData.dob || '',
+                dob: additionalBeneficiaryFormData.dob ? new Date(additionalBeneficiaryFormData.dob).toISOString().split('T')[0] : '',
+
                 email: additionalBeneficiaryFormData.email || '',
                 tel: additionalBeneficiaryFormData.tel || '',
                 assetId: additionalBeneficiaryFormData.assetId || '' // Include assetId in the form data
@@ -398,7 +403,7 @@ const AssetsDistribution = () => {
         const updatedAdditionalBeneficiaries = additionalBeneficiaries.filter((_, i) => i !== index);
         const beneficiaryToDelete = additionalBeneficiaries.find((_, i) => i == index);
         console.log(`benId to delete = ${JSON.stringify(beneficiaryToDelete)}`)
-        console.log(`ben id =${ JSON.stringify(beneficiaryToDelete.personId._id)}`)
+        console.log(`ben id =${JSON.stringify(beneficiaryToDelete.personId._id)}`)
         await dispatch(updateAdditionalBeneficiariesSlice(updatedAdditionalBeneficiaries));
 
 
@@ -412,7 +417,8 @@ const AssetsDistribution = () => {
             title: beneficiaryToEdit.personId.title || '',
             fullLegalName: beneficiaryToEdit.personId.fullLegalName || '',
             fullAddress: beneficiaryToEdit.personId.fullAddress || '',
-            dob: beneficiaryToEdit.personId.dob || '',
+            // dob: beneficiaryToEdit.personId.dob || '',
+            dob: beneficiaryToEdit.personId.dob ? new Date(beneficiaryToEdit.personId.dob).toISOString().split('T')[0] : '',
             email: beneficiaryToEdit.personId.email || '',
             tel: beneficiaryToEdit.personId.tel || '',
             // assetId: beneficiaryToEdit.assetId || ''
@@ -497,7 +503,7 @@ const AssetsDistribution = () => {
 
 
 
-    
+
     const handleBack = () => {
         if (savedAdditionalBeneficiariesData.current) {
             dispatch(updateAdditionalBeneficiariesSlice(savedAdditionalBeneficiariesData.current));
@@ -651,23 +657,129 @@ const AssetsDistribution = () => {
 
     return (
         <>
+            <Container className="mt-5 mb-4">
+                <Row className="mt-3 mb-4 justify-content-center">
+                    <Col xs={12} className="mx-auto">
+                        <h1 className="auth-header">Assets distribution</h1>
+                    </Col>
+                </Row>
+                <Row className="mt-3 mb-4 justify-content-center">
+                    <Col xs={12} className="mx-auto d-flex justify-content-center">
+                        <h5>Please select or/and add the people you want to receive the assets and their share.</h5>
+                    </Col>
+                </Row>
+                {showAdditionalBeneficiaryForm && (
+                    <Row>
+                        <Col >
+                            <Form onSubmit={handleAdditionalBeneficiaryFormAdd}>
+                                <Form.Group className="mb-3" controlId="formGroupTitle">
+                                    <Form.Label className="bold-label">Title</Form.Label>
+                                    <Form.Control
+                                        as="select"
+                                        id="title"
+                                        name="title"
+                                        value={additionalBeneficiaryFormData.title}
+                                        onChange={handleOnBenFormChange}
+                                        required
+                                        className="custom-input"
+                                    >
+                                        {Object.values(constants.title).map((title, index) => (
+                                            <option key={index} value={title}>
+                                                {title}
+                                            </option>
+                                        ))}
+                                    </Form.Control>
+                                </Form.Group>
+                                <Form.Group className="mb-3" controlId="formGroupFullLegalName">
+                                    <Form.Label className="bold-label">Full legal name</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        id="fullLegalName"
+                                        name="fullLegalName"
+                                        value={additionalBeneficiaryFormData.fullLegalName}
+                                        onChange={handleOnBenFormChange}
+                                        required
+                                        className="custom-input"
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-3" controlId="formGroupFullAddress">
+                                    <Form.Label className="bold-label">Full address</Form.Label>
+                                    <AddressAutocomplete
+                                        name="fullAddress"
+                                        value={additionalBeneficiaryFormData.fullAddress}
+                                        onPlaceSelected={handlePlaceSelected}
+                                        handleInputChange={handleOnBenFormChange}
+                                        required
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-3" controlId="formGroupDob">
+                                    <Form.Label className="bold-label">Date of birth</Form.Label>
+                                    <Form.Control
+                                        type="date"
+                                        id="dob"
+                                        name="dob"
+                                        value={additionalBeneficiaryFormData.dob}
+                                        onChange={handleOnBenFormChange}
+                                        required
+                                        className="custom-input"
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-3" controlId="formGroupEmail">
+                                    <Form.Label className="bold-label">Email (optional)</Form.Label>
+                                    <Form.Control
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        value={additionalBeneficiaryFormData.email}
+                                        onChange={handleOnBenFormChange}
+                                        className="custom-input"
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-3" controlId="formGroupPhone">
+                                    <Form.Label className="bold-label">Phone Number (optional)</Form.Label>
+                                    <Form.Control
+                                        type="tel"
+                                        id="tel"
+                                        name="tel"
+                                        value={additionalBeneficiaryFormData.tel}
+                                        onChange={handleOnBenFormChange}
+                                        className="custom-input"
+                                    />
+                                </Form.Group>
+                                <Row>
+                                    <Col>
+                                        <Button
+                                            variant="primary"
+                                            className="m-1 add-edit-form-btn"
+                                            type="button"
+                                            onClick={() => {
+                                                handleShowAdditionalBeneficiaryForm();
+                                                resetAdditionalBeneficiaryForm();
+                                            }}
+                                        >
+                                            Cancel
+                                        </Button>
+                                    </Col>
+                                    <Col className="d-flex justify-content-end">
+                                        <Button
+                                            variant="primary"
+                                            className="m-1 add-edit-form-btn"
+                                            type="submit"
+                                        >
+                                            {editAdditionalBeneficiaryIndex !== null ? "Update" : "Add"}
+                                        </Button>
+                                    </Col>
+                                </Row>
+                            </Form>
+                        </Col>
+                    </Row>
+                )}
+            </Container>
             <section className="section-container">
-                <div>
-                    <div className="creatingOrder-section-heading-container">
-                        <h1>Assets distribution</h1>
-                    </div>
-                    <div className="has-children-container">
-                        <div>
-                            <h4>Please select or/and add the people to receive the assets and their share.</h4>
-                        </div>
-                    </div>
-                </div>
                 <>
                     <div className="section-content-container">
                         <div className="section-controll-container">
                             <div className="section-list-container">
-
-
                                 {additionalBeneficiaries.length > 0 && (
                                     <>
                                         <h4> Additional beneficiaries</h4>
@@ -683,14 +795,22 @@ const AssetsDistribution = () => {
                                         ))}
                                     </>
                                 )}
-                                <button
-                                    className="section-add-btn"
-                                    onClick={() => handleShowAdditionalBeneficiaryForm()}
-                                    style={showAdditionalBeneficiaryForm ? styles.disabledButton : {}}
-                                    disabled={showAdditionalBeneficiaryForm}
-                                >
-                                    +Add Beneficiary
-                                </button>
+                                <Row>
+                                        <Col>
+                                            <Button
+                                                variant="success"
+                                                className="m-3"
+                                                onClick={() => handleShowAdditionalBeneficiaryForm()}
+                                                style={showAdditionalBeneficiaryForm ? styles.disabledButton : {}}
+                                                disabled={showAdditionalBeneficiaryForm}
+            
+                                            >
+                                                +Add Beneficiary
+                                            </Button>
+                                        </Col>
+                                    </Row>
+
+
 
 
 
@@ -724,96 +844,6 @@ const AssetsDistribution = () => {
                             <div className="sectio-add-btn-container">
                             </div>
                         </div>
-                        {showAdditionalBeneficiaryForm && (
-                            <div className="section-form-container">
-                                <form onSubmit={handleAdditionalBeneficiaryFormAdd}>
-                                    <div className="form-main-container">
-                                        <div className="form-title-and-fullName-container">
-                                            <div className="name-group">
-                                                <label htmlFor="title">Title</label>
-                                                <select
-                                                    id="title"
-                                                    name="title"
-                                                    value={additionalBeneficiaryFormData.title}
-                                                    onChange={handleOnBenFormChange}
-                                                    required
-                                                >
-                                                    {Object.values(constants.title).map((title, index) => (
-                                                        <option key={index} value={title}>
-                                                            {title}
-                                                        </option>
-                                                    ))}
-                                                </select>
-                                            </div>
-                                            <div className="name-group">
-                                                <label htmlFor="fullLegalName">Full legal name</label>
-                                                <input
-                                                    type="text"
-                                                    className="fullLegalName"
-                                                    id="fullLegalName"
-                                                    name="fullLegalName"
-                                                    value={additionalBeneficiaryFormData.fullLegalName}
-                                                    onChange={handleOnBenFormChange}
-                                                    required
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="form-group">
-                                            <label htmlFor="fullAddress">Full address</label>
-                                            <AddressAutocomplete
-                                                name="fullAddress"
-                                                value={additionalBeneficiaryFormData.fullAddress}
-                                                onPlaceSelected={handlePlaceSelected}
-                                                handleInputChange={handleOnBenFormChange}
-                                            />
-                                        </div>
-                                        <div className="form-group">
-                                            <label htmlFor="dob">Date of Birth</label>
-                                            <DateInput
-                                                id="dob"
-                                                name="dob"
-                                                value={additionalBeneficiaryFormData.dob}
-                                                onChange={handleOnBenFormChange}
-                                            />
-                                        </div>
-                                        <div className="form-group">
-                                            <label htmlFor="email">Email (optional)</label>
-                                            <input
-                                                type="email"
-                                                id="email"
-                                                name="email"
-                                                value={additionalBeneficiaryFormData.email}
-                                                onChange={handleOnBenFormChange}
-                                            />
-                                        </div>
-                                        <div className="form-group">
-                                            <label htmlFor="tel">Phone Number (optional)</label>
-                                            <input
-                                                type="tel"
-                                                id="tel"
-                                                name="tel"
-                                                value={additionalBeneficiaryFormData.tel}
-                                                onChange={handleOnBenFormChange}
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="form-btns-container">
-                                        <button
-                                            className="form-btn"
-                                            type="button"
-                                            onClick={() => {
-                                                handleShowAdditionalBeneficiaryForm();
-                                                resetAdditionalBeneficiaryForm();
-                                            }}
-                                        >Cancel</button>
-                                        <button
-                                            className="form-btn"
-                                            type="submit"
-                                        >{editAdditionalBeneficiaryIndex !== null ? "Update" : "Add"}</button>
-                                    </div>
-                                </form>
-                            </div>
-                        )}
                     </div>
                 </>
                 <>

@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckSquare, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
 
 
 
@@ -36,56 +37,51 @@ const AssetsDistributionCard = () => {
     }, [testatorData]);
 
     return (
-        <>
-            <section >
+        <Container className="mb-5">
+            <Card className='shadow' bg="light" text="dark" >
+                <Card.Body>
+                    <Card.Title >
+                        <Row>
+                            <Col xs={10}>
+                                <h2>Assets Distribution</h2>
+                            </Col>
+                            <Col className="d-flex justify-content-end align-items-center">
+                                {allNecessaryFieldsSpecified ? (
+                                    <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />
+                                ) : (
+                                    <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'grey' }} />
+                                )}
+                            </Col>
+                        </Row>
+                    </Card.Title>
+                    <Card.Text>
+                        <Row>
+                            <Col>
+                                <p className="order-item-p"><span className="order-item-p-span">Name: </span>{testatorInitialData.testatorTitle} {testatorInitialData.testatorFullLegalName}</p>
+                                <p className="order-item-p"><span className="order-item-p-span">Date of birth: </span>{new Date(testatorInitialData.testatorDob).toLocaleDateString()}</p>
+                                <p className="order-item-p"><span className="order-item-p-span">Address: </span>{testatorInitialData.testatorFullAddress}</p>
+                            </Col>
+                        </Row>
+                        <Row className=" d-flex justify-content-end">
+                            <Col xs="auto">
+                                {allNecessaryFieldsSpecified ? (
+                                    <Button variant="primary"
+                                        onClick={() => navigate('/assetsDistribution')}
+                                        className="creating-order-tile-btns"
+                                    >Edit</Button>
+                                ) : (
 
-                <div className="creatingOrder-tile">
-                    <div className="creatingOrder-tile-heading">
-                        <h2>Assets distribution</h2>
-
-                        {allNecessaryFieldsSpecified ? (
-                            <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />
-                        ) : (
-                            <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'grey' }} />
-                        )}
-
-                    </div>
-
-                    {allNecessaryFieldsSpecified ? (
-                        <>
-                            <div className="creatingOrder-tile-group">
-                                <div className="creatingOrder-tile-line-heading">
-                                    <h4 >Name:</h4>
-                                </div>
-                                <p>{testatorInitialData.testatorTitle} {testatorInitialData.testatorFullLegalName}</p>
-                            </div>
-                            <div className="creatingOrder-tile-group">
-                                <div className="creatingOrder-tile-line-heading">
-                                    <h4>Date of birth:</h4>
-                                </div>
-                                <p>{testatorInitialData.testatorDob}</p>
-                            </div>
-                            <div className="creatingOrder-tile-group">
-                                <div className="creatingOrder-tile-line-heading">
-                                    <h4>Address:</h4>
-                                </div>
-                                <p>{testatorInitialData.testatorFullAddress}</p>
-                            </div>
-                            <div className="creatingOrder-tile-btn-container">
-                                <button className="creatingOrder-tile-btn" onClick={() => navigate('/assetsDistribution')}>Edit</button>
-                            </div>
-                        </>
-                    ) : (
-                        <>
-                            <p>Tell us a little bit about yourself…</p>
-                            <div className="creatingOrder-tile-btn-container">
-                                <button className="creatingOrder-tile-btn" onClick={() => navigate('/assetsDistribution')}>Get Started</button>
-                            </div>
-                        </>
-                    )}
-                </div>
-            </section>
-        </>
+                                    <Button variant="primary"
+                                        onClick={() => navigate('/assetsDistribution')}
+                                        className="creating-order-tile-btns"
+                                    >Get Started</Button>
+                                )}
+                            </Col>
+                        </Row>
+                    </Card.Text>
+                </Card.Body>
+            </Card>
+        </Container >
     );
 }
 
