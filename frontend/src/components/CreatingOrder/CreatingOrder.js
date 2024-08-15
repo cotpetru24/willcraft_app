@@ -33,7 +33,7 @@ const CreatingOrder = () => {
                     </Col>
                 </Row>
                 <Row>
-                    <Col xs={{ order: 2 }}>
+                    <Col xs={{ order: 2 }} md={{order: 1}}>
                         <TestatorCard />
                         <SpouseOrPartnerCard />
                         <KidsCard />
@@ -41,7 +41,7 @@ const CreatingOrder = () => {
                         <AssetsDistributionTile />
                         <ExecutorsCard />
                     </Col>
-                    <Col xs={{ order: 1 }}>
+                    <Col xs={{ order: 1 }} md={{order:2}}>
                         <ProgressAndInstructionsCard />
                     </Col>
                 </Row>

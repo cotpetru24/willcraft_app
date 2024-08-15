@@ -17,6 +17,7 @@ import Row from "react-bootstrap/esm/Row";
 import Form from 'react-bootstrap/Form';
 import Col from "react-bootstrap/esm/Col";
 import Button from "react-bootstrap/Button";
+import { FormControl } from "react-bootstrap";
 
 
 
@@ -211,7 +212,8 @@ const Kids = () => {
             title: kidToEdit.title || '',
             fullLegalName: kidToEdit.fullLegalName || '',
             fullAddress: kidToEdit.fullAddress || '',
-            dob: kidToEdit.dob || '',
+            dob: kidToEdit.dob ? new Date(kidToEdit.dob).toLocaleDateString() : '',
+            // dob: kidToEdit.dob || '',
             email: kidToEdit.email || '',
             tel: kidToEdit.tel || ''
         });
@@ -351,10 +353,20 @@ const Kids = () => {
                                                     </Form.Group>
                                                     <Form.Group className="mb-3" controlId="formGroupDob">
                                                         <Form.Label className="bold-label">Date of birth</Form.Label>
-                                                        <DateInput
+                                                        {/* <DateInput
                                                             id="dob"
                                                             name="dob"
                                                             value={kidFormData.dob}
+                                                            onChange={handleOnChange}
+                                                            required
+                                                            className="form-control"
+                                                        /> */}
+                                                        <Form.Control
+                                                            type="date"
+                                                            id="dob"
+                                                            name="dob"
+                                                            // value={kidFormData.dob}
+                                                            value={new Date(kidFormData.dob).toLocaleDateString()}
                                                             onChange={handleOnChange}
                                                             required
                                                         />
