@@ -673,43 +673,6 @@ const AssetsDistribution = () => {
             <Container>
                 <Row className="justify-content-between">
                     <Col md={5} className="mt-4">
-                        <Accordion defaultActiveKey="0">
-                            <Accordion.Item eventKey="0">
-                                <Accordion.Header>
-                                    Bank Account: HSBC
-                                </Accordion.Header>
-                                <Accordion.Body>
-                                    <Card className="mb-3">
-                                        <Card.Body>
-                                            Spouse here
-                                        </Card.Body>
-                                    </Card>
-                                    <Card className="mb-3">
-                                        <Card.Body>
-                                            Kid 1 here
-                                        </Card.Body>
-                                    </Card>
-                                    <Card>
-                                        <Card.Header>Card #3</Card.Header>
-                                        <Card.Body>
-                                            This is the content for the third card. You can place any content here.
-                                        </Card.Body>
-                                    </Card>
-                                </Accordion.Body>
-                            </Accordion.Item>
-                        </Accordion>
-
-
-
-
-
-
-
-
-
-
-
-
                         <section className="section-container">
                             <>
                                 <div className="section-content-container">
@@ -738,43 +701,65 @@ const AssetsDistribution = () => {
                                                         onClick={() => handleShowAdditionalBeneficiaryForm()}
                                                         style={showAdditionalBeneficiaryForm ? styles.disabledButton : {}}
                                                         disabled={showAdditionalBeneficiaryForm}
-
                                                     >
                                                         +Add Beneficiary
                                                     </Button>
                                                 </Col>
                                             </Row>
-
-
-
-
-
                                             {assets.map((asset, assetIndex) => (
                                                 <div className="asset-distribution-container" key={`asset-${assetIndex}`}>
-                                                    <SectionListItem
-                                                        buttonsDisabled={showAdditionalBeneficiaryForm}
-                                                        data={asset}
-                                                        onRemove={() => handleRemoveAdditionalBeneficiary(assetIndex)}
-                                                        onEdit={() => handleEditAdditionalBeneficiary(assetIndex)}
-                                                        section="assetsDistribution-asset"
-                                                    />
-                                                    {family.map((person, personIndex) => (
-                                                        <SectionListItem
-                                                            key={`asset-${assetIndex}-person-${personIndex}`}
-                                                            buttonsDisabled={showAdditionalBeneficiaryForm}
-                                                            data={person.personId}
-                                                            onRemove={() => handleRemoveAdditionalBeneficiary(personIndex)}
-                                                            onEdit={() => handleEditAdditionalBeneficiary(personIndex)}
-                                                            onChecked={(isChecked) => handleBeneficiaryChecked(personIndex, assetIndex, isChecked)}
-                                                            section="assetDistribution-beneficiary"
-                                                            asset={asset}
-                                                            onChange={handleOnChange} // Pass the handleOnChange function
-                                                            assetIndex={assetIndex} // Pass the asset index
-                                                        />
-                                                    ))}
-
+                                                    <Accordion className="mt-4" defaultActiveKey="0">
+                                                        <Accordion.Item eventKey="0">
+                                                            <Accordion.Header>
+                                                                <Container>
+                                                                    <Row>
+                                                                        <Col>
+                                                                            <p className="order-item-p"><span className="order-item-p-span">
+                                                                                Asset:  </span>{asset.assetType}</p>
+                                                                        </Col>
+                                                                    </Row>
+                                                                    <Row>
+                                                                        <Col>
+                                                                            {asset.assetType === 'Property' &&
+                                                                                <p className="order-item-p"><span className="order-item-p-span">
+                                                                                    Address:  </span>{asset.propertyAddress}</p>}
+                                                                            {asset.assetType === 'Bank Account' &&
+                                                                                <p className="order-item-p"><span className="order-item-p-span">
+                                                                                    Bank Name:  </span>{asset.bankName}</p>}
+                                                                            {asset.assetType === 'Stocks and shares' &&
+                                                                                <p className="order-item-p"><span className="order-item-p-span">
+                                                                                    Company Name:  </span>{asset.companyName}</p>}
+                                                                            {(asset.assetType === 'Pension' || asset.assetType === 'Life insurance') &&
+                                                                                <p className="order-item-p"><span className="order-item-p-span">
+                                                                                    Provider:  </span>{asset.provider}</p>}
+                                                                            {asset.assetType === 'Other' &&
+                                                                                <p className="order-item-p"><span className="order-item-p-span">
+                                                                                    Details:  </span>{asset.otherAssetDetails}</p>}
+                                                                        </Col>
+                                                                    </Row>
+                                                                </Container>
+                                                            </Accordion.Header>
+                                                            <Accordion.Body>
+                                                                {family.map((person, personIndex) => (
+                                                                    <SectionListItem
+                                                                        key={`asset-${assetIndex}-person-${personIndex}`}
+                                                                        buttonsDisabled={showAdditionalBeneficiaryForm}
+                                                                        data={person.personId}
+                                                                        onRemove={() => handleRemoveAdditionalBeneficiary(personIndex)}
+                                                                        onEdit={() => handleEditAdditionalBeneficiary(personIndex)}
+                                                                        onChecked={(isChecked) => handleBeneficiaryChecked(personIndex, assetIndex, isChecked)}
+                                                                        section="assetDistribution-beneficiary"
+                                                                        asset={asset}
+                                                                        onChange={handleOnChange}
+                                                                        assetIndex={assetIndex}
+                                                                    />
+                                                                ))}
+                                                            </Accordion.Body>
+                                                        </Accordion.Item>
+                                                    </Accordion>
                                                 </div>
                                             ))}
+
                                         </div>
                                         <div className="sectio-add-btn-container">
                                         </div>
