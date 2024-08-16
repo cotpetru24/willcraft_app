@@ -136,7 +136,7 @@
 }
 
 .creating-order-tile-btns {
-    width: 150px;
+    width: 120px;
 }
 
 .add-edit-form-btn {
@@ -158,4 +158,9 @@
 
 .beneficiary-border {
     border-bottom: 1px solid #a7a7a7;
+}
+
+.accordion-custom-border .accordion-item,
+.accordion-custom-border .accordion-header {
+    border-color: #a7a7a7 !important;
 }

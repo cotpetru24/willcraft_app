@@ -81,7 +81,9 @@ const ExecutorsCard = () => {
                                 </Row>
                                 <Row className="d-flex justify-content-end">
                                     <Col xs="auto">
-                                        <Button variant="primary" className="m-1"
+                                        <Button 
+                                        variant="primary" 
+                                        className="m-1 creating-order-tile-btns"
                                             onClick={() => navigate('/executors')}
                                         >Get Started</Button>
                                     </Col>

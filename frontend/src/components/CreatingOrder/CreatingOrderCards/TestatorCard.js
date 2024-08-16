@@ -58,32 +58,44 @@ const TestatorCard = () => {
                             </Col>
                         </Row>
                     </Card.Title>
-                    <Card.Text>
-                        <Row>
-                            <Col>
-                                <p className="order-item-p"><span className="order-item-p-span">Name: </span>{testatorInitialData.testatorTitle} {testatorInitialData.testatorFullLegalName}</p>
-                                <p className="order-item-p"><span className="order-item-p-span">Date of birth: </span>{new Date(testatorInitialData.testatorDob).toLocaleDateString()}</p>
-                                <p className="order-item-p"><span className="order-item-p-span">Address: </span>{testatorInitialData.testatorFullAddress}</p>
-                            </Col>
-                        </Row>
-                        <Row className=" d-flex justify-content-end">
-                            <Col xs="auto">
-                                {allNecessaryFieldsSpecified ? (
-                                    <Button variant="primary"
-                                        onClick={() => navigate('/testator')}
-                                        className="creating-order-tile-btns"
-                                    >Edit</Button>
-                                ) : (
-
-                                    <Button variant="primary"
-                                        onClick={() => navigate('/testator')}
-                                        className="creating-order-tile-btns"
-                                    >Get Started</Button>
+                    {allNecessaryFieldsSpecified ? (
+                        <>
+                            <Card.Text>
+                                <Row>
+                                    <Col>
+                                        <p className="order-item-p"><span className="order-item-p-span">Name: </span>{testatorInitialData.testatorTitle} {testatorInitialData.testatorFullLegalName}</p>
+                                        <p className="order-item-p"><span className="order-item-p-span">Date of birth: </span>{new Date(testatorInitialData.testatorDob).toLocaleDateString()}</p>
+                                        <p className="order-item-p"><span className="order-item-p-span">Address: </span>{testatorInitialData.testatorFullAddress}</p>
+                                    </Col>
+                                </Row>
+                                <Row className="d-flex justify-content-end">
+                                    <Col xs="auto">
+                                        <Button variant="primary"
+                                            onClick={() => navigate('/testator')}
+                                            className="creating-order-tile-btns"
+                                        >Edit</Button>
+                                    </Col>
+                                </Row>
+                                </Card.Text>
+                            </>
+                            ) : (
+                            <>
+                                <Row>
+                                    <Col>
+                                        <p>Tell us about you</p>
+                                    </Col>
+                                </Row>
+                                <Row className="d-flex justify-content-end">
+                                    <Col xs="auto">
+                                        <Button variant="primary"
+                                            onClick={() => navigate('/testator')}
+                                            className="creating-order-tile-btns"
+                                        >Get Started</Button>
+                                    </Col>
+                                </Row>
+                            </>
                                 )}
-                            </Col>
-                        </Row>
-                    </Card.Text>
-                </Card.Body>
+                        </Card.Body>
             </Card>
         </Container >
     );

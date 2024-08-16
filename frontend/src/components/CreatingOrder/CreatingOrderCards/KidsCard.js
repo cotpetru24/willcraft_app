@@ -62,7 +62,9 @@ const KidsCard = () => {
                                 ))}
                                 <Row className="d-flex justify-content-end">
                                     <Col xs="auto">
-                                        <Button variant="primary" className="creating-order-tile-btns"
+                                        <Button 
+                                        variant="primary" 
+                                        className="creating-order-tile-btns"
                                             onClick={() => navigate('/kids')}
                                         >Edit</Button>
                                     </Col>
@@ -79,7 +81,9 @@ const KidsCard = () => {
                                         </Row>
                                         <Row className="d-flex justify-content-end">
                                             <Col xs="auto">
-                                                <Button variant="primary" className="m-1"
+                                                <Button 
+                                                variant="primary" 
+                                                className="m-1"
                                                     onClick={() => navigate('/kids')}
                                                 >Edit</Button>
                                             </Col>
@@ -94,7 +98,7 @@ const KidsCard = () => {
                                         </Row>
                                         <Row className="d-flex justify-content-end">
                                             <Col xs="auto">
-                                                <Button variant="primary" className="m-1"
+                                                <Button variant="primary" className="m-1 creating-order-tile-btns"
                                                     onClick={() => navigate('/kids')}
                                                 >Get Started</Button>
                                             </Col>

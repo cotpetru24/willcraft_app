@@ -99,7 +99,9 @@ const AssetsCard = () => {
                                 ))}
                                 <Row className="d-flex justify-content-end">
                                     <Col xs="auto">
-                                        <Button variant="primary" className="creating-order-tile-btns"
+                                        <Button 
+                                        variant="primary" 
+                                        className="creating-order-tile-btns"
                                             onClick={() => navigate('/assets')}
                                         >Edit</Button>
                                     </Col>
@@ -114,7 +116,9 @@ const AssetsCard = () => {
                                 </Row>
                                 <Row className="d-flex justify-content-end">
                                     <Col xs="auto">
-                                        <Button variant="primary" className="m-1"
+                                        <Button 
+                                        variant="primary" 
+                                        className="m-1 creating-order-tile-btns"
                                             onClick={() => navigate('/assets')}
                                         >Get Started</Button>
                                     </Col>

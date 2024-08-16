@@ -22,7 +22,7 @@ const CreatingOrder = () => {
     return (
         <>
             <Container>
-                <Row className="mt-4 mb-4">
+                <Row className="mt-4 mb-4 ps-3 pe-3">
                     <Col>
                         <h1 className="auth-header">My Will</h1>
                     </Col>

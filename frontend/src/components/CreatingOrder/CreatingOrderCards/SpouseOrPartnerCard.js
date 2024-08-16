@@ -120,7 +120,7 @@ const SpouseOrPartnerCard = () => {
                                     <>
                                         <Row>
                                             <Col>
-                                                <p>Tell us about your spouse or partner…</p>
+                                                <p>Tell us about your spouse or partner</p>
                                             </Col>
                                         </Row>
                                         <Row className=" d-flex justify-content-end">

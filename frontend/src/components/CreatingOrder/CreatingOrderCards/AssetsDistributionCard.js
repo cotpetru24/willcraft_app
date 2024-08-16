@@ -65,15 +65,17 @@ const AssetsDistributionCard = () => {
                         <Row className=" d-flex justify-content-end">
                             <Col xs="auto">
                                 {allNecessaryFieldsSpecified ? (
-                                    <Button variant="primary"
+                                    <Button 
+                                    variant="primary"
                                         onClick={() => navigate('/assetsDistribution')}
                                         className="creating-order-tile-btns"
                                     >Edit</Button>
                                 ) : (
 
-                                    <Button variant="primary"
+                                    <Button 
+                                    variant="primary"
+                                    className="creating-order-tile-btns"
                                         onClick={() => navigate('/assetsDistribution')}
-                                        className="creating-order-tile-btns"
                                     >Get Started</Button>
                                 )}
                             </Col>
