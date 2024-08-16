@@ -432,6 +432,8 @@ const Kids = () => {
                     <CreatingOrderNavigation
                         onBack={handleBack}
                         onSaveAndContinue={handleSaveAndContinue}
+                        buttonsDisabled={showKidsForm}
+
                     />
                 </Container>
             </>

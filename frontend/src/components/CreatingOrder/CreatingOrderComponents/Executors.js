@@ -439,6 +439,7 @@ const Executors = () => {
                     <CreatingOrderNavigation
                         onBack={handleBack}
                         onSaveAndContinue={handleSaveAndContinue}
+                        buttonsDisabled={showExecutorForm}
                     />
                 </Container>
             </>

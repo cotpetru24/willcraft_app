@@ -11,7 +11,7 @@ import { updateCurrentOrderSlice, updateOrderThunk } from "../../../features/cur
 import { updateAssetsSlice, createAssetThunk, updateAssetThunk } from "../../../features/orderAssets/orderAssetsSlice";
 import { updateAdditionalBeneficiariesSlice } from "../../../features/people/additionalBeneficiaries/additionalBeneficiariesSlice";
 import additionalBeneficiaryThunks from "../../../features/people/additionalBeneficiaries/additionalBeneficiariesThunks";
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Accordion, Card } from 'react-bootstrap';
 import CreatingOrderNavigation from "../CreatigOrderNavigation";
 
 
@@ -668,194 +668,239 @@ const AssetsDistribution = () => {
                         <h5>Please select or/and add the people you want to receive the assets and their share.</h5>
                     </Col>
                 </Row>
-                {showAdditionalBeneficiaryForm && (
-                    <Row>
-                        <Col >
-                            <Form onSubmit={handleAdditionalBeneficiaryFormAdd}>
-                                <Form.Group className="mb-3" controlId="formGroupTitle">
-                                    <Form.Label className="bold-label">Title</Form.Label>
-                                    <Form.Control
-                                        as="select"
-                                        id="title"
-                                        name="title"
-                                        value={additionalBeneficiaryFormData.title}
-                                        onChange={handleOnBenFormChange}
-                                        required
-                                        className="custom-input"
-                                    >
-                                        {Object.values(constants.title).map((title, index) => (
-                                            <option key={index} value={title}>
-                                                {title}
-                                            </option>
-                                        ))}
-                                    </Form.Control>
-                                </Form.Group>
-                                <Form.Group className="mb-3" controlId="formGroupFullLegalName">
-                                    <Form.Label className="bold-label">Full legal name</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        id="fullLegalName"
-                                        name="fullLegalName"
-                                        value={additionalBeneficiaryFormData.fullLegalName}
-                                        onChange={handleOnBenFormChange}
-                                        required
-                                        className="custom-input"
-                                    />
-                                </Form.Group>
-                                <Form.Group className="mb-3" controlId="formGroupFullAddress">
-                                    <Form.Label className="bold-label">Full address</Form.Label>
-                                    <AddressAutocomplete
-                                        name="fullAddress"
-                                        value={additionalBeneficiaryFormData.fullAddress}
-                                        onPlaceSelected={handlePlaceSelected}
-                                        handleInputChange={handleOnBenFormChange}
-                                        required
-                                    />
-                                </Form.Group>
-                                <Form.Group className="mb-3" controlId="formGroupDob">
-                                    <Form.Label className="bold-label">Date of birth</Form.Label>
-                                    <Form.Control
-                                        type="date"
-                                        id="dob"
-                                        name="dob"
-                                        value={additionalBeneficiaryFormData.dob}
-                                        onChange={handleOnBenFormChange}
-                                        required
-                                        className="custom-input"
-                                    />
-                                </Form.Group>
-                                <Form.Group className="mb-3" controlId="formGroupEmail">
-                                    <Form.Label className="bold-label">Email (optional)</Form.Label>
-                                    <Form.Control
-                                        type="email"
-                                        id="email"
-                                        name="email"
-                                        value={additionalBeneficiaryFormData.email}
-                                        onChange={handleOnBenFormChange}
-                                        className="custom-input"
-                                    />
-                                </Form.Group>
-                                <Form.Group className="mb-3" controlId="formGroupPhone">
-                                    <Form.Label className="bold-label">Phone Number (optional)</Form.Label>
-                                    <Form.Control
-                                        type="tel"
-                                        id="tel"
-                                        name="tel"
-                                        value={additionalBeneficiaryFormData.tel}
-                                        onChange={handleOnBenFormChange}
-                                        className="custom-input"
-                                    />
-                                </Form.Group>
-                                <Row>
-                                    <Col>
-                                        <Button
-                                            variant="primary"
-                                            className="m-1 add-edit-form-btn"
-                                            type="button"
-                                            onClick={() => {
-                                                handleShowAdditionalBeneficiaryForm();
-                                                resetAdditionalBeneficiaryForm();
-                                            }}
-                                        >
-                                            Cancel
-                                        </Button>
-                                    </Col>
-                                    <Col className="d-flex justify-content-end">
-                                        <Button
-                                            variant="primary"
-                                            className="m-1 add-edit-form-btn"
-                                            type="submit"
-                                        >
-                                            {editAdditionalBeneficiaryIndex !== null ? "Update" : "Add"}
-                                        </Button>
-                                    </Col>
-                                </Row>
-                            </Form>
-                        </Col>
-                    </Row>
-                )}
             </Container>
-            <section className="section-container">
-                <>
-                    <div className="section-content-container">
-                        <div className="section-controll-container">
-                            <div className="section-list-container">
-                                {additionalBeneficiaries.length > 0 && (
-                                    <>
-                                        <h4> Additional beneficiaries</h4>
-                                        {additionalBeneficiaries.map((person, personIndex) => (
-                                            <SectionListItem
-                                                key={`person-${personIndex}`}
-                                                buttonsDisabled={showAdditionalBeneficiaryForm}
-                                                data={{ ...person.personId, role: 'additional beneficiary' }}
-                                                onRemove={() => handleRemoveAdditionalBeneficiary(personIndex)}
-                                                onEdit={() => handleEditAdditionalBeneficiary(personIndex)}
-                                                section="assetDistribution-additionalBeneficiary"
-                                            />
-                                        ))}
-                                    </>
-                                )}
-                                <Row>
-                                        <Col>
-                                            <Button
-                                                variant="success"
-                                                className="m-3"
-                                                onClick={() => handleShowAdditionalBeneficiaryForm()}
-                                                style={showAdditionalBeneficiaryForm ? styles.disabledButton : {}}
-                                                disabled={showAdditionalBeneficiaryForm}
-            
-                                            >
-                                                +Add Beneficiary
-                                            </Button>
-                                        </Col>
-                                    </Row>
+
+            <Container>
+                <Row className="justify-content-between">
+                    <Col md={5} className="mt-4">
+                        <Accordion defaultActiveKey="0">
+                            <Accordion.Item eventKey="0">
+                                <Accordion.Header>
+                                    Bank Account: HSBC
+                                </Accordion.Header>
+                                <Accordion.Body>
+                                    <Card className="mb-3">
+                                        <Card.Body>
+                                            Spouse here
+                                        </Card.Body>
+                                    </Card>
+                                    <Card className="mb-3">
+                                        <Card.Body>
+                                            Kid 1 here
+                                        </Card.Body>
+                                    </Card>
+                                    <Card>
+                                        <Card.Header>Card #3</Card.Header>
+                                        <Card.Body>
+                                            This is the content for the third card. You can place any content here.
+                                        </Card.Body>
+                                    </Card>
+                                </Accordion.Body>
+                            </Accordion.Item>
+                        </Accordion>
 
 
 
 
 
-                                {assets.map((asset, assetIndex) => (
-                                    <div className="asset-distribution-container" key={`asset-${assetIndex}`}>
-                                        <SectionListItem
-                                            buttonsDisabled={showAdditionalBeneficiaryForm}
-                                            data={asset}
-                                            onRemove={() => handleRemoveAdditionalBeneficiary(assetIndex)}
-                                            onEdit={() => handleEditAdditionalBeneficiary(assetIndex)}
-                                            section="assetsDistribution-asset"
-                                        />
-                                        {family.map((person, personIndex) => (
-                                            <SectionListItem
-                                                key={`asset-${assetIndex}-person-${personIndex}`}
-                                                buttonsDisabled={showAdditionalBeneficiaryForm}
-                                                data={person.personId}
-                                                onRemove={() => handleRemoveAdditionalBeneficiary(personIndex)}
-                                                onEdit={() => handleEditAdditionalBeneficiary(personIndex)}
-                                                onChecked={(isChecked) => handleBeneficiaryChecked(personIndex, assetIndex, isChecked)}
-                                                section="assetDistribution-beneficiary"
-                                                asset={asset}
-                                                onChange={handleOnChange} // Pass the handleOnChange function
-                                                assetIndex={assetIndex} // Pass the asset index
-                                            />
-                                        ))}
 
+
+
+
+
+
+
+                        <section className="section-container">
+                            <>
+                                <div className="section-content-container">
+                                    <div className="section-controll-container">
+                                        <div className="section-list-container">
+                                            {additionalBeneficiaries.length > 0 && (
+                                                <>
+                                                    <h4> Additional beneficiaries</h4>
+                                                    {additionalBeneficiaries.map((person, personIndex) => (
+                                                        <SectionListItem
+                                                            key={`person-${personIndex}`}
+                                                            buttonsDisabled={showAdditionalBeneficiaryForm}
+                                                            data={{ ...person.personId, role: 'additional beneficiary' }}
+                                                            onRemove={() => handleRemoveAdditionalBeneficiary(personIndex)}
+                                                            onEdit={() => handleEditAdditionalBeneficiary(personIndex)}
+                                                            section="assetDistribution-additionalBeneficiary"
+                                                        />
+                                                    ))}
+                                                </>
+                                            )}
+                                            <Row>
+                                                <Col>
+                                                    <Button
+                                                        variant="success"
+                                                        className="m-3"
+                                                        onClick={() => handleShowAdditionalBeneficiaryForm()}
+                                                        style={showAdditionalBeneficiaryForm ? styles.disabledButton : {}}
+                                                        disabled={showAdditionalBeneficiaryForm}
+
+                                                    >
+                                                        +Add Beneficiary
+                                                    </Button>
+                                                </Col>
+                                            </Row>
+
+
+
+
+
+                                            {assets.map((asset, assetIndex) => (
+                                                <div className="asset-distribution-container" key={`asset-${assetIndex}`}>
+                                                    <SectionListItem
+                                                        buttonsDisabled={showAdditionalBeneficiaryForm}
+                                                        data={asset}
+                                                        onRemove={() => handleRemoveAdditionalBeneficiary(assetIndex)}
+                                                        onEdit={() => handleEditAdditionalBeneficiary(assetIndex)}
+                                                        section="assetsDistribution-asset"
+                                                    />
+                                                    {family.map((person, personIndex) => (
+                                                        <SectionListItem
+                                                            key={`asset-${assetIndex}-person-${personIndex}`}
+                                                            buttonsDisabled={showAdditionalBeneficiaryForm}
+                                                            data={person.personId}
+                                                            onRemove={() => handleRemoveAdditionalBeneficiary(personIndex)}
+                                                            onEdit={() => handleEditAdditionalBeneficiary(personIndex)}
+                                                            onChecked={(isChecked) => handleBeneficiaryChecked(personIndex, assetIndex, isChecked)}
+                                                            section="assetDistribution-beneficiary"
+                                                            asset={asset}
+                                                            onChange={handleOnChange} // Pass the handleOnChange function
+                                                            assetIndex={assetIndex} // Pass the asset index
+                                                        />
+                                                    ))}
+
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <div className="sectio-add-btn-container">
+                                        </div>
                                     </div>
-                                ))}
-                            </div>
-                            <div className="sectio-add-btn-container">
-                            </div>
-                        </div>
-                    </div>
-                </>
+                                </div>
+                            </>
+                        </section>
+                    </Col>
+                    <Col md={4} className="pt-4">
+                        {showAdditionalBeneficiaryForm && (
+
+                            <Row>
+                                <Col >
+                                    <Form onSubmit={handleAdditionalBeneficiaryFormAdd}>
+                                        <Form.Group className="mb-3" controlId="formGroupTitle">
+                                            <Form.Label className="bold-label">Title</Form.Label>
+                                            <Form.Control
+                                                as="select"
+                                                id="title"
+                                                name="title"
+                                                value={additionalBeneficiaryFormData.title}
+                                                onChange={handleOnBenFormChange}
+                                                required
+                                                className="custom-input"
+                                            >
+                                                {Object.values(constants.title).map((title, index) => (
+                                                    <option key={index} value={title}>
+                                                        {title}
+                                                    </option>
+                                                ))}
+                                            </Form.Control>
+                                        </Form.Group>
+                                        <Form.Group className="mb-3" controlId="formGroupFullLegalName">
+                                            <Form.Label className="bold-label">Full legal name</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                id="fullLegalName"
+                                                name="fullLegalName"
+                                                value={additionalBeneficiaryFormData.fullLegalName}
+                                                onChange={handleOnBenFormChange}
+                                                required
+                                                className="custom-input"
+                                            />
+                                        </Form.Group>
+                                        <Form.Group className="mb-3" controlId="formGroupFullAddress">
+                                            <Form.Label className="bold-label">Full address</Form.Label>
+                                            <AddressAutocomplete
+                                                name="fullAddress"
+                                                value={additionalBeneficiaryFormData.fullAddress}
+                                                onPlaceSelected={handlePlaceSelected}
+                                                handleInputChange={handleOnBenFormChange}
+                                                required
+                                            />
+                                        </Form.Group>
+                                        <Form.Group className="mb-3" controlId="formGroupDob">
+                                            <Form.Label className="bold-label">Date of birth</Form.Label>
+                                            <Form.Control
+                                                type="date"
+                                                id="dob"
+                                                name="dob"
+                                                value={additionalBeneficiaryFormData.dob}
+                                                onChange={handleOnBenFormChange}
+                                                required
+                                                className="custom-input"
+                                            />
+                                        </Form.Group>
+                                        <Form.Group className="mb-3" controlId="formGroupEmail">
+                                            <Form.Label className="bold-label">Email (optional)</Form.Label>
+                                            <Form.Control
+                                                type="email"
+                                                id="email"
+                                                name="email"
+                                                value={additionalBeneficiaryFormData.email}
+                                                onChange={handleOnBenFormChange}
+                                                className="custom-input"
+                                            />
+                                        </Form.Group>
+                                        <Form.Group className="mb-3" controlId="formGroupPhone">
+                                            <Form.Label className="bold-label">Phone Number (optional)</Form.Label>
+                                            <Form.Control
+                                                type="tel"
+                                                id="tel"
+                                                name="tel"
+                                                value={additionalBeneficiaryFormData.tel}
+                                                onChange={handleOnBenFormChange}
+                                                className="custom-input"
+                                            />
+                                        </Form.Group>
+                                        <Row>
+                                            <Col>
+                                                <Button
+                                                    variant="primary"
+                                                    className="m-1 add-edit-form-btn"
+                                                    type="button"
+                                                    onClick={() => {
+                                                        handleShowAdditionalBeneficiaryForm();
+                                                        resetAdditionalBeneficiaryForm();
+                                                    }}
+                                                >
+                                                    Cancel
+                                                </Button>
+                                            </Col>
+                                            <Col className="d-flex justify-content-end">
+                                                <Button
+                                                    variant="primary"
+                                                    className="m-1 add-edit-form-btn"
+                                                    type="submit"
+                                                >
+                                                    {editAdditionalBeneficiaryIndex !== null ? "Update" : "Add"}
+                                                </Button>
+                                            </Col>
+                                        </Row>
+                                    </Form>
+                                </Col>
+                            </Row>
+                        )}
+                    </Col>
+                </Row>
                 <>
-                    <div className="section-navigation-container">
-                        <OrderNavigation
-                            onBack={handleBack}
-                            onSaveAndContinue={handleSaveAndContinue}
-                            buttonsDisabled={showAdditionalBeneficiaryForm}
-                        />
-                    </div>
+                    <CreatingOrderNavigation
+                        onBack={handleBack}
+                        onSaveAndContinue={handleSaveAndContinue}
+                        buttonsDisabled={showAdditionalBeneficiaryForm}
+                    />
                 </>
-            </section>
+            </Container >
         </>
     );
 }

@@ -199,17 +199,16 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
                                 )}
                                 {section === 'assetDistribution-additionalBeneficiary' && (
                                     <>
-                                        {/* {console.log(`family person assets distribution = ${JSON.stringify(data)}`)} */}
-
-                                        <div className="section-list-item-group">
-                                            <h5>Name: {data.title} {data.fullLegalName}</h5>
-                                        </div>
-                                        <div className="section-list-item-group">
-                                            <h5>Address: {data.fullAddress}</h5>
-                                        </div>
-                                        <div className="section-list-item-group">
-                                            <h5>Date of birth: {new Date(data.dob).toLocaleDateString()}</h5>
-                                        </div>
+                                        <Row>
+                                            <Col>
+                                                <p className="order-item-p"><span className="order-item-p-span">
+                                                    Name:  </span>{data.title} {data.fullLegalName}</p>
+                                                <p className="order-item-p"><span className="order-item-p-span">
+                                                    Date of birth:  </span>{new Date(data.dob).toLocaleDateString()}</p>
+                                                <p className="order-item-p"><span className="order-item-p-span">
+                                                    Address:  </span>{data.fullAddress}</p>
+                                            </Col>
+                                        </Row>
                                     </>
                                 )}
                                 {section === 'executors' && (
