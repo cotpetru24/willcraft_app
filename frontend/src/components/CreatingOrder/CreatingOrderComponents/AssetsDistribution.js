@@ -11,9 +11,13 @@ import { updateCurrentOrderSlice, updateOrderThunk } from "../../../features/cur
 import { updateAssetsSlice, createAssetThunk, updateAssetThunk } from "../../../features/orderAssets/orderAssetsSlice";
 import { updateAdditionalBeneficiariesSlice } from "../../../features/people/additionalBeneficiaries/additionalBeneficiariesSlice";
 import additionalBeneficiaryThunks from "../../../features/people/additionalBeneficiaries/additionalBeneficiariesThunks";
-import { Container, Row, Col, Form, Button, Accordion, Card } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Accordion, Card, InputGroup } from 'react-bootstrap';
 import CreatingOrderNavigation from "../CreatigOrderNavigation";
 import { useMediaQuery } from 'react-responsive';
+
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 const AssetsDistribution = () => {
@@ -27,9 +31,12 @@ const AssetsDistribution = () => {
 
     const spouseOrPartner = useSelector(state => state.spouseOrPartner);
     const kids = useSelector(state => state.kids);
-    // const family = [].concat(spouseOrPartner, kids);
 
     const [receivingAmount, setReceivingAmount] = useState('');
+
+    // Inside AssetsDistribution.js
+    const [totalPercentage, setTotalPercentage] = useState({});
+
 
     const [family, setFamily] = useState([]);
 
@@ -243,15 +250,63 @@ const AssetsDistribution = () => {
 
     //     dispatch(updateCurrentOrderSlice(updatedOrder));
     // };
+
+
+
+
+
+
+    // const handleOnChange = (value, assetIndex, personId) => {
+    //     console.log(`handleOnChange called with value: ${value}, assetIndex: ${assetIndex}, personId: ${personId}`);
+
+    //     const updatedAssets = assets.map((asset, index) => {
+    //         if (index === assetIndex) {
+    //             const updatedDistribution = asset.distribution.map(dist => {
+    //                 if (dist.personId === personId) {
+    //                     console.log(`Updating receivingAmount for personId: ${personId} to value: ${value}`);
+    //                     return { ...dist, receivingAmount: value };
+    //                 }
+    //                 return dist;
+    //             });
+    //             return { ...asset, distribution: updatedDistribution };
+    //         }
+    //         return asset;
+    //     });
+
+    //     console.log('Updated assets:', updatedAssets);
+    //     dispatch(updateAssetsSlice(updatedAssets));
+
+    //     // Update current order
+    //     const updatedAssetsAndDistribution = updatedAssets.map(asset => ({
+    //         assetId: asset._id || asset.assetId,
+    //         distribution: asset.distribution.map(dist => ({
+    //             personId: dist.personId._id ? dist.personId._id : dist.personId,
+    //             receivingAmount: dist.receivingAmount || 'percentage here'
+    //         }))
+    //     }));
+
+    //     const updatedOrder = {
+    //         ...currentOrder,
+    //         assetsAndDistribution: updatedAssetsAndDistribution
+    //     };
+
+    //     console.log('Updated order:', updatedOrder);
+    //     dispatch(updateCurrentOrderSlice(updatedOrder));
+    // };
+
+
+
+
+    // Inside AssetsDistribution.js
     const handleOnChange = (value, assetIndex, personId) => {
-        console.log(`handleOnChange called with value: ${value}, assetIndex: ${assetIndex}, personId: ${personId}`);
+        // Parse the value as a float to ensure it's treated as a number
+        const parsedValue = parseFloat(value) || 0;
 
         const updatedAssets = assets.map((asset, index) => {
             if (index === assetIndex) {
                 const updatedDistribution = asset.distribution.map(dist => {
                     if (dist.personId === personId) {
-                        console.log(`Updating receivingAmount for personId: ${personId} to value: ${value}`);
-                        return { ...dist, receivingAmount: value };
+                        return { ...dist, receivingAmount: parsedValue };
                     }
                     return dist;
                 });
@@ -260,28 +315,18 @@ const AssetsDistribution = () => {
             return asset;
         });
 
-        console.log('Updated assets:', updatedAssets);
+        // Calculate the total percentage
+        const total = updatedAssets[assetIndex].distribution.reduce((sum, dist) => sum + (parseFloat(dist.receivingAmount) || 0), 0);
+
+        setTotalPercentage(prev => ({ ...prev, [assetIndex]: total }));
+
+        // Show a warning toast if the total percentage is not 100%
+        if (total !== 100) {
+            toast.warn(`Total percentage for asset ${assetIndex + 1} is not 100%! It is currently ${total}%`);
+        }
+
         dispatch(updateAssetsSlice(updatedAssets));
-
-        // Update current order
-        const updatedAssetsAndDistribution = updatedAssets.map(asset => ({
-            assetId: asset._id || asset.assetId,
-            distribution: asset.distribution.map(dist => ({
-                personId: dist.personId._id ? dist.personId._id : dist.personId,
-                receivingAmount: dist.receivingAmount || 'percentage here'
-            }))
-        }));
-
-        const updatedOrder = {
-            ...currentOrder,
-            assetsAndDistribution: updatedAssetsAndDistribution
-        };
-
-        console.log('Updated order:', updatedOrder);
-        dispatch(updateCurrentOrderSlice(updatedOrder));
     };
-
-
 
 
 
@@ -419,7 +464,6 @@ const AssetsDistribution = () => {
             title: beneficiaryToEdit.personId.title || '',
             fullLegalName: beneficiaryToEdit.personId.fullLegalName || '',
             fullAddress: beneficiaryToEdit.personId.fullAddress || '',
-            // dob: beneficiaryToEdit.personId.dob || '',
             dob: beneficiaryToEdit.personId.dob ? new Date(beneficiaryToEdit.personId.dob).toISOString().split('T')[0] : '',
             email: beneficiaryToEdit.personId.email || '',
             tel: beneficiaryToEdit.personId.tel || '',
@@ -428,19 +472,6 @@ const AssetsDistribution = () => {
         setEditAdditionalBeneficiaryIndex(index);
         setShowAdditionalBeneficiaryForm(true);
     };
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     const handleSaveAndContinue = async (e) => {
         e.preventDefault();
@@ -718,31 +749,66 @@ const AssetsDistribution = () => {
                                                     <Container>
                                                         <Row>
                                                             <Col>
-                                                                <p className="order-item-p"><span className="order-item-p-span">
-                                                                    Asset:  </span>{asset.assetType}</p>
+                                                                <Row>
+                                                                    <Col>
+                                                                        <p className="order-item-p"><span className="order-item-p-span">
+                                                                            Asset:  </span>{asset.assetType}</p>
+                                                                    </Col>
+                                                                </Row>
+                                                                <Row>
+                                                                    <Col>
+                                                                        {asset.assetType === 'Property' &&
+                                                                            <p className="order-item-p"><span className="order-item-p-span">
+                                                                                Address:  </span>{asset.propertyAddress}</p>}
+                                                                        {asset.assetType === 'Bank Account' &&
+                                                                            <p className="order-item-p"><span className="order-item-p-span">
+                                                                                Bank Name:  </span>{asset.bankName}</p>}
+                                                                        {asset.assetType === 'Stocks and shares' &&
+                                                                            <p className="order-item-p"><span className="order-item-p-span">
+                                                                                Company Name:  </span>{asset.companyName}</p>}
+                                                                        {(asset.assetType === 'Pension' || asset.assetType === 'Life insurance') &&
+                                                                            <p className="order-item-p"><span className="order-item-p-span">
+                                                                                Provider:  </span>{asset.provider}</p>}
+                                                                        {asset.assetType === 'Other' &&
+                                                                            <p className="order-item-p"><span className="order-item-p-span">
+                                                                                Details:  </span>{asset.otherAssetDetails}</p>}
+                                                                    </Col>
+                                                                </Row>
                                                             </Col>
-                                                        </Row>
-                                                        <Row>
-                                                            <Col>
-                                                                {asset.assetType === 'Property' &&
-                                                                    <p className="order-item-p"><span className="order-item-p-span">
-                                                                        Address:  </span>{asset.propertyAddress}</p>}
-                                                                {asset.assetType === 'Bank Account' &&
-                                                                    <p className="order-item-p"><span className="order-item-p-span">
-                                                                        Bank Name:  </span>{asset.bankName}</p>}
-                                                                {asset.assetType === 'Stocks and shares' &&
-                                                                    <p className="order-item-p"><span className="order-item-p-span">
-                                                                        Company Name:  </span>{asset.companyName}</p>}
-                                                                {(asset.assetType === 'Pension' || asset.assetType === 'Life insurance') &&
-                                                                    <p className="order-item-p"><span className="order-item-p-span">
-                                                                        Provider:  </span>{asset.provider}</p>}
-                                                                {asset.assetType === 'Other' &&
-                                                                    <p className="order-item-p"><span className="order-item-p-span">
-                                                                        Details:  </span>{asset.otherAssetDetails}</p>}
+                                                            <Col className="d-flex justify-content-end">
+                                                                <InputGroup className="total-amount-form-control">
+                                                                    <Form.Control
+                                                                        type="text"
+                                                                        value={totalPercentage[assetIndex] || 0}  // Display the correct total percentage here
+                                                                        disabled
+                                                                    />
+                                                                    <InputGroup.Text>%</InputGroup.Text>
+                                                                </InputGroup>
                                                             </Col>
+
+
                                                         </Row>
                                                     </Container>
                                                 </Accordion.Header>
+                                                {/* <Accordion.Body>
+                                                    {family.map((person, personIndex) => (
+                                                        <SectionListItem
+                                                            key={`asset-${assetIndex}-person-${personIndex}`}
+                                                            buttonsDisabled={showAdditionalBeneficiaryForm}
+                                                            data={person.personId}
+                                                            onRemove={() => handleRemoveAdditionalBeneficiary(personIndex)}
+                                                            onEdit={() => handleEditAdditionalBeneficiary(personIndex)}
+                                                            onChecked={(isChecked) => handleBeneficiaryChecked(personIndex, assetIndex, isChecked)}
+                                                            section="assetDistribution-beneficiary"
+                                                            asset={asset}
+                                                            onChange={handleOnChange}
+                                                            assetIndex={assetIndex}
+                                                        />
+                                                    ))}
+                                                </Accordion.Body> */}
+
+
+
                                                 <Accordion.Body>
                                                     {family.map((person, personIndex) => (
                                                         <SectionListItem
@@ -759,6 +825,8 @@ const AssetsDistribution = () => {
                                                         />
                                                     ))}
                                                 </Accordion.Body>
+
+
                                             </Accordion.Item>
                                         </Accordion>
                                     ))}
@@ -1093,6 +1161,8 @@ const AssetsDistribution = () => {
                     </>
                 </Container >
             )}
+
+            <ToastContainer position="top-right" autoClose={5000} />
         </>
     );
 }
