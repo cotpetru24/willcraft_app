@@ -164,3 +164,7 @@
 .accordion-custom-border .accordion-header {
     border-color: #a7a7a7 !important;
 }
+
+.receiving-amount-form-control{
+    width:150px;
+}

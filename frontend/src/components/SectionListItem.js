@@ -546,7 +546,7 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
                             </Col>
                         </Row>
                         <Row>
-                            <Col>
+                            <Col className="d-flex align-items-end">
                                 <Form.Check
                                     type="checkbox"
                                     label="Beneficiary"
@@ -558,13 +558,14 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
                             {isChecked && (
                                 <Col>
                                     <Form.Group as={Row} controlId="formShareAmount" className="align-items-center">
-                                        <Form.Label column sm="auto" className="mb-0">Share</Form.Label>
                                         <Col>
-                                            <InputGroup>
+                                            <InputGroup className="receiving-amount-form-control">
+                                                <InputGroup.Text>Share</InputGroup.Text>
                                                 <Form.Control
                                                     type="text"
                                                     value={receivingAmount}
                                                     onChange={handleAmountChange}
+                                                    disabled={buttonsDisabled}
                                                 />
                                                 <InputGroup.Text>%</InputGroup.Text>
                                             </InputGroup>
