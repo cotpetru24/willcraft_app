@@ -534,46 +534,52 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
             )}
             {section === 'assetDistribution-beneficiary' && (
                 <>
-                    <Container className=" beneficiary-border mb-1 pb-1">
-                        <Row className="mt-3">
-                            <Col>
-                                <p className="order-item-p"><span className="order-item-p-span">
-                                    Name:  </span>{data.title} {data.fullLegalName}</p>
-                                <p className="order-item-p"><span className="order-item-p-span">
-                                    Date of birth:  </span>{new Date(data.dob).toLocaleDateString()}</p>
-                                <p className="order-item-p"><span className="order-item-p-span">
-                                    Address:  </span>{data.fullAddress}</p>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col className="d-flex align-items-end">
-                                <Form.Check
-                                    type="checkbox"
-                                    label="Beneficiary"
-                                    checked={isChecked}
-                                    onChange={handleCheckboxChange}
-                                    disabled={buttonsDisabled}
-                                />
-                            </Col>
-                            {isChecked && (
-                                <Col>
-                                    <Form.Group as={Row} controlId="formShareAmount" className="align-items-center">
+                    <Container className="p-0">
+                        <Card 
+                        className="mb-3 bg-warning text-dark">
+                            <Card.Body>
+
+                                <Row>
+                                    <Col>
+                                        <p className="order-item-p"><span className="order-item-p-span">
+                                            Name:  </span>{data.title} {data.fullLegalName}</p>
+                                        <p className="order-item-p"><span className="order-item-p-span">
+                                            Date of birth:  </span>{new Date(data.dob).toLocaleDateString()}</p>
+                                        <p className="order-item-p"><span className="order-item-p-span">
+                                            Address:  </span>{data.fullAddress}</p>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col className="d-flex align-items-end">
+                                        <Form.Check
+                                            type="checkbox"
+                                            label="Beneficiary"
+                                            checked={isChecked}
+                                            onChange={handleCheckboxChange}
+                                            disabled={buttonsDisabled}
+                                        />
+                                    </Col>
+                                    {isChecked && (
                                         <Col>
-                                            <InputGroup className="receiving-amount-form-control">
-                                                <InputGroup.Text>Share</InputGroup.Text>
-                                                <Form.Control
-                                                    type="text"
-                                                    value={receivingAmount}
-                                                    onChange={handleAmountChange}
-                                                    disabled={buttonsDisabled}
-                                                />
-                                                <InputGroup.Text>%</InputGroup.Text>
-                                            </InputGroup>
+                                            <Form.Group as={Row} controlId="formShareAmount" className="align-items-center">
+                                                <Col>
+                                                    <InputGroup className="receiving-amount-form-control">
+                                                        <InputGroup.Text>Share</InputGroup.Text>
+                                                        <Form.Control
+                                                            type="text"
+                                                            value={receivingAmount}
+                                                            onChange={handleAmountChange}
+                                                            disabled={buttonsDisabled}
+                                                        />
+                                                        <InputGroup.Text>%</InputGroup.Text>
+                                                    </InputGroup>
+                                                </Col>
+                                            </Form.Group>
                                         </Col>
-                                    </Form.Group>
-                                </Col>
-                            )}
-                        </Row>
+                                    )}
+                                </Row>
+                            </Card.Body>
+                        </Card>
                     </Container>
                 </>
             )}
