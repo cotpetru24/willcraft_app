@@ -50,16 +50,16 @@ const ExecutorsCard = () => {
                                     <React.Fragment key={index}>
                                         <Row className="mb-4">
                                             <Col>
-                                                <p className="order-item-p">
+                                                <div className="order-item-p">
                                                     <span className="order-item-p-span">Name: </span>
                                                     {executor.personId.title} {executor.personId.fullLegalName}
-                                                </p>
-                                                <p className="order-item-p">
+                                                </div>
+                                                <div className="order-item-p">
                                                     <span className="order-item-p-span">Date of birth: </span>{new Date(executor.personId.dob).toLocaleDateString()}
-                                                </p>
-                                                <p className="order-item-p">
+                                                </div>
+                                                <div className="order-item-p">
                                                     <span className="order-item-p-span">Address: </span>{executor.personId.fullAddress}
-                                                </p>
+                                                </div>
                                             </Col>
                                         </Row>
                                     </React.Fragment>
@@ -76,7 +76,7 @@ const ExecutorsCard = () => {
                             <>
                                 <Row>
                                     <Col>
-                                        <p>Tell us about executors </p>
+                                        <div>Tell us about executors </div>
                                     </Col>
                                 </Row>
                                 <Row className="d-flex justify-content-end">

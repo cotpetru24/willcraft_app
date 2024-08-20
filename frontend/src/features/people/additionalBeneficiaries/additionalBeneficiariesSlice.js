@@ -14,7 +14,7 @@ const additionalBeneficiariesSlice = createSlice({
                 state.push(action.payload);
             }
         },
-        resetAdditionalBeneficiariesSlice: (state) => initialState,
+        resetAdditionalBeneficiariesSlice: () => initialState,
     }
 });
 

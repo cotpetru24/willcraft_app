@@ -19,35 +19,89 @@ export const OrderProgressBar = () => {
 const OrderItem = ({ order }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    // return (
+    //     <Container className="mb-5">
+    //         <Card className='shadow' bg="light" text="dark" >
+    //             <Card.Body>
+    //                 <OrderProgressBar/>
+    //                 <Card.Title as="h5">{order.testator}</Card.Title>
+    //                 <Card.Text>
+    //                     <Row>
+    //                         <Col>
+    //                             <p className="order-item-p"><span className="order-item-p-span">Date of birth: </span>{new Date(order.dob).toLocaleDateString('en-GB')}</p>
+    //                             <p className="order-item-p"><span className="order-item-p-span">Address: </span>{order.fullAddress}</p>
+    //                             <p className="order-item-p"><span className="order-item-p-span">Last updated: </span>{new Date(order.updatedAt).toLocaleString('en-GB')}</p>
+    //                         </Col>
+    //                     </Row>
+    //                     <Row className=" d-flex justify-content-end">
+    //                         <Col xs="auto">
+    //                             <Button variant="warning m-1 order-item-btn"
+    //                                 onClick={() => dispatch(deleteOrder(order._id))}
+    //                                 className="order-item-btns"
+    //                             >Delete</Button>
+
+    //                             {order.status === "Completed" && (
+    //                                 <Button variant="primary m-2">Edit</Button>
+    //                             )}
+
+    //                             {order.status === "CreatingOrder" && (
+    //                                 <Button variant="success m-1 order-item-btn"
+    //                                     onClick={async () => {
+    //                                         await resetOrderState(dispatch)
+    //                                         await dispatch(getOrderThunk(order._id));
+    //                                         navigate('/creatingOrder');
+    //                                     }}
+    //                                     className="order-item-btns"
+    //                                     id="continue-order-btn"
+    //                                 >
+    //                                     Continue
+    //                                 </Button>
+    //                             )}
+    //                         </Col>
+    //                     </Row>
+    //                 </Card.Text>
+    //             </Card.Body>
+    //         </Card>
+    //     </Container>
+    // )
+
     return (
         <Container className="mb-5">
             <Card className='shadow' bg="light" text="dark" >
                 <Card.Body>
-                    <OrderProgressBar/>
+                    <OrderProgressBar />
                     <Card.Title as="h5">{order.testator}</Card.Title>
-                    <Card.Text>
+                    <div> {/* Replace Card.Text with div */}
                         <Row>
                             <Col>
-                                <p className="order-item-p"><span className="order-item-p-span">Date of birth: </span>{new Date(order.dob).toLocaleDateString('en-GB')}</p>
-                                <p className="order-item-p"><span className="order-item-p-span">Address: </span>{order.fullAddress}</p>
-                                <p className="order-item-p"><span className="order-item-p-span">Last updated: </span>{new Date(order.updatedAt).toLocaleString('en-GB')}</p>
+                                <div className="order-item-p">
+                                    <span className="order-item-p-span">Date of birth: </span>{new Date(order.dob).toLocaleDateString('en-GB')}
+                                </div>
+                                <div className="order-item-p">
+                                    <span className="order-item-p-span">Address: </span>{order.fullAddress}
+                                </div>
+                                <div className="order-item-p">
+                                    <span className="order-item-p-span">Last updated: </span>{new Date(order.updatedAt).toLocaleString('en-GB')}
+                                </div>
                             </Col>
                         </Row>
                         <Row className=" d-flex justify-content-end">
                             <Col xs="auto">
-                                <Button variant="warning m-1 order-item-btn"
+                                <Button
+                                    variant="warning m-1 order-item-btn"
                                     onClick={() => dispatch(deleteOrder(order._id))}
                                     className="order-item-btns"
-                                >Delete</Button>
-
+                                >
+                                    Delete
+                                </Button>
                                 {order.status === "Completed" && (
                                     <Button variant="primary m-2">Edit</Button>
                                 )}
-
                                 {order.status === "CreatingOrder" && (
-                                    <Button variant="success m-1 order-item-btn"
+                                    <Button
+                                        variant="success m-1 order-item-btn"
                                         onClick={async () => {
-                                            await resetOrderState(dispatch)
+                                            await resetOrderState(dispatch);
                                             await dispatch(getOrderThunk(order._id));
                                             navigate('/creatingOrder');
                                         }}
@@ -59,11 +113,13 @@ const OrderItem = ({ order }) => {
                                 )}
                             </Col>
                         </Row>
-                    </Card.Text>
+                    </div>
                 </Card.Body>
             </Card>
         </Container>
     )
+
+
 }
 
 export default OrderItem

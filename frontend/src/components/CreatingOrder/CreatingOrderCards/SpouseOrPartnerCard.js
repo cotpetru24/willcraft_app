@@ -41,44 +41,156 @@ const SpouseOrPartnerCard = () => {
     }, [spouseOrPartnerData]);
 
 
+    // return (
+    //     <>
+    //         <Container className="mb-5">
+    //             <Card className='shadow' bg="light" text="dark" >
+    //                 <Card.Body>
+    //                     <Card.Title >
+    //                         <Row>
+    //                             <Col xs={10}>
+    //                                 <h2>Your spouse or partner</h2>
+    //                             </Col>
+    //                             <Col className="d-flex justify-content-end align-items-center">
+    //                                 {allNecessaryFieldsSpecified
+    //                                     || testatorData.maritalStatus === constants.maritalStatus.SINGLE
+    //                                     || testatorData.maritalStatus === constants.maritalStatus.WIDOWED
+    //                                     ? (
+    //                                         <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />
+    //                                     ) : (
+    //                                         <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'grey' }} />
+    //                                     )}
+    //                             </Col>
+    //                         </Row>
+    //                     </Card.Title>
+    //                     {allNecessaryFieldsSpecified ? (
+    //                         <Card.Text>
+    //                             <Row>
+    //                                 <Col>
+    //                                     <p className="order-item-p"><span className="order-item-p-span">Name: </span>
+    //                                         {spouseOrPartnerInitialData.spouseOrPartnerTitle} {spouseOrPartnerInitialData.spouseOrPartnerLegalName}</p>
+    //                                     <p className="order-item-p"><span className="order-item-p-span">Date of birth: </span>{new Date(spouseOrPartnerInitialData.spouseOrPartnerDob).toLocaleDateString()}</p>
+    //                                     <p className="order-item-p"><span className="order-item-p-span">Address: </span>{spouseOrPartnerInitialData.spouseOrPartnerFullAddress}</p>
+    //                                 </Col>
+    //                             </Row>
+    //                             <Row className=" d-flex justify-content-end">
+    //                                 <Col xs="auto">
+    //                                     <Button variant="primary"
+    //                                         onClick={() => navigate('/spouseOrPartner')}
+    //                                         className="creating-order-tile-btns"
+    //                                     >Edit</Button>
+    //                                 </Col>
+    //                             </Row>
+    //                         </Card.Text>
+    //                     ) : (
+    //                         <>
+    //                             {testatorData.maritalStatus === constants.maritalStatus.SINGLE ? (
+    //                                 <>
+    //                                     <Row>
+    //                                         <Col>
+    //                                             <p>Your marital status is single.</p>
+    //                                         </Col>
+    //                                     </Row>
+    //                                     <Row className=" d-flex justify-content-end">
+    //                                         <Col xs="auto">
+    //                                             <Button variant="primary"
+    //                                                 onClick={() => navigate('/spouseOrPartner')}
+    //                                                 className="creating-order-tile-btns"
+    //                                             >Edit</Button>
+    //                                         </Col>
+    //                                     </Row>
+    //                                 </>
+    //                             ) : testatorData.maritalStatus === constants.maritalStatus.WIDOWED ? (
+    //                                 <>
+    //                                     <Row>
+    //                                         <Col>
+    //                                             <p>Your marital status is widowed.</p>
+    //                                         </Col>
+    //                                     </Row>
+    //                                     <Row className=" d-flex justify-content-end">
+    //                                         <Col xs="auto">
+    //                                             <Button variant="primary"
+    //                                                 onClick={() => navigate('/spouseOrPartner')}
+    //                                                 className="creating-order-tile-btns"
+    //                                             >Edit</Button>
+    //                                         </Col>
+    //                                     </Row>
+    //                                 </>
+    //                             ) : (
+    //                                 <>
+    //                                     <Row>
+    //                                         <Col>
+    //                                             <p>Tell us about your spouse or partner</p>
+    //                                         </Col>
+    //                                     </Row>
+    //                                     <Row className=" d-flex justify-content-end">
+    //                                         <Col xs="auto">
+    //                                             <Button variant="primary"
+    //                                                 onClick={() => navigate('/spouseOrPartner')}
+    //                                                 className="creating-order-tile-btns"
+    //                                             >Get Started</Button>
+    //                                         </Col>
+    //                                     </Row>
+    //                                 </>
+    //                             )}
+    //                         </>
+    //                     )}
+    //                 </Card.Body>
+    //             </Card>
+    //         </Container >
+    //     </>
+    // );
+
+
+
     return (
         <>
             <Container className="mb-5">
-                <Card className='shadow' bg="light" text="dark" >
+                <Card className="shadow" bg="light" text="dark">
                     <Card.Body>
-                        <Card.Title >
+                        <Card.Title>
                             <Row>
                                 <Col xs={10}>
                                     <h2>Your spouse or partner</h2>
                                 </Col>
                                 <Col className="d-flex justify-content-end align-items-center">
-                                    {allNecessaryFieldsSpecified
-                                        || testatorData.maritalStatus === constants.maritalStatus.SINGLE
-                                        || testatorData.maritalStatus === constants.maritalStatus.WIDOWED
-                                        ? (
-                                            <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />
-                                        ) : (
-                                            <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'grey' }} />
-                                        )}
+                                    {(allNecessaryFieldsSpecified ||
+                                        testatorData.maritalStatus === constants.maritalStatus.SINGLE ||
+                                        testatorData.maritalStatus === constants.maritalStatus.WIDOWED) ? (
+                                        <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />
+                                    ) : (
+                                        <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'grey' }} />
+                                    )}
                                 </Col>
                             </Row>
                         </Card.Title>
                         {allNecessaryFieldsSpecified ? (
-                            <Card.Text>
+                            <Card.Text as="div">
                                 <Row>
                                     <Col>
-                                        <p className="order-item-p"><span className="order-item-p-span">Name: </span>
-                                            {spouseOrPartnerInitialData.spouseOrPartnerTitle} {spouseOrPartnerInitialData.spouseOrPartnerLegalName}</p>
-                                        <p className="order-item-p"><span className="order-item-p-span">Date of birth: </span>{new Date(spouseOrPartnerInitialData.spouseOrPartnerDob).toLocaleDateString()}</p>
-                                        <p className="order-item-p"><span className="order-item-p-span">Address: </span>{spouseOrPartnerInitialData.spouseOrPartnerFullAddress}</p>
+                                        <div className="order-item-p">
+                                            <strong>Name: </strong>
+                                            {spouseOrPartnerInitialData.spouseOrPartnerTitle} {spouseOrPartnerInitialData.spouseOrPartnerLegalName}
+                                        </div>
+                                        <div className="order-item-p">
+                                            <strong>Date of birth: </strong>
+                                            {new Date(spouseOrPartnerInitialData.spouseOrPartnerDob).toLocaleDateString()}
+                                        </div>
+                                        <div className="order-item-p">
+                                            <strong>Address: </strong>
+                                            {spouseOrPartnerInitialData.spouseOrPartnerFullAddress}
+                                        </div>
                                     </Col>
                                 </Row>
-                                <Row className=" d-flex justify-content-end">
+                                <Row className="d-flex justify-content-end">
                                     <Col xs="auto">
-                                        <Button variant="primary"
+                                        <Button
+                                            variant="primary"
                                             onClick={() => navigate('/spouseOrPartner')}
                                             className="creating-order-tile-btns"
-                                        >Edit</Button>
+                                        >
+                                            Edit
+                                        </Button>
                                     </Col>
                                 </Row>
                             </Card.Text>
@@ -88,15 +200,18 @@ const SpouseOrPartnerCard = () => {
                                     <>
                                         <Row>
                                             <Col>
-                                                <p>Your marital status is single.</p>
+                                                <div>Your marital status is single.</div>
                                             </Col>
                                         </Row>
-                                        <Row className=" d-flex justify-content-end">
+                                        <Row className="d-flex justify-content-end">
                                             <Col xs="auto">
-                                                <Button variant="primary"
+                                                <Button
+                                                    variant="primary"
                                                     onClick={() => navigate('/spouseOrPartner')}
                                                     className="creating-order-tile-btns"
-                                                >Edit</Button>
+                                                >
+                                                    Edit
+                                                </Button>
                                             </Col>
                                         </Row>
                                     </>
@@ -104,15 +219,18 @@ const SpouseOrPartnerCard = () => {
                                     <>
                                         <Row>
                                             <Col>
-                                                <p>Your marital status is widowed.</p>
+                                                <div>Your marital status is widowed.</div>
                                             </Col>
                                         </Row>
-                                        <Row className=" d-flex justify-content-end">
+                                        <Row className="d-flex justify-content-end">
                                             <Col xs="auto">
-                                                <Button variant="primary"
+                                                <Button
+                                                    variant="primary"
                                                     onClick={() => navigate('/spouseOrPartner')}
                                                     className="creating-order-tile-btns"
-                                                >Edit</Button>
+                                                >
+                                                    Edit
+                                                </Button>
                                             </Col>
                                         </Row>
                                     </>
@@ -120,15 +238,18 @@ const SpouseOrPartnerCard = () => {
                                     <>
                                         <Row>
                                             <Col>
-                                                <p>Tell us about your spouse or partner</p>
+                                                <div>Tell us about your spouse or partner</div>
                                             </Col>
                                         </Row>
-                                        <Row className=" d-flex justify-content-end">
+                                        <Row className="d-flex justify-content-end">
                                             <Col xs="auto">
-                                                <Button variant="primary"
+                                                <Button
+                                                    variant="primary"
                                                     onClick={() => navigate('/spouseOrPartner')}
                                                     className="creating-order-tile-btns"
-                                                >Get Started</Button>
+                                                >
+                                                    Get Started
+                                                </Button>
                                             </Col>
                                         </Row>
                                     </>
@@ -137,9 +258,11 @@ const SpouseOrPartnerCard = () => {
                         )}
                     </Card.Body>
                 </Card>
-            </Container >
+            </Container>
         </>
     );
+    
+
 }
 
 export default SpouseOrPartnerCard;

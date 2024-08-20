@@ -23,9 +23,8 @@ const AssetsCard = () => {
 
     return (
         <>
-
             <Container className="mb-5">
-                <Card className='shadow' bg="light" text="dark">
+                <Card className="shadow" bg="light" text="dark">
                     <Card.Body>
                         <Card.Title>
                             <Row>
@@ -33,65 +32,55 @@ const AssetsCard = () => {
                                     <h2>Your Assets</h2>
                                 </Col>
                                 <Col className="d-flex justify-content-end align-items-center">
-                                    {(Array.isArray(assetsData) && (assetsData.length > 0)) ? (
-                                        <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />
+                                    {(Array.isArray(assetsData) && assetsData.length > 0) ? (
+                                        <FontAwesomeIcon
+                                            icon={faCheckCircle}
+                                            className="custom-icon"
+                                            style={{ color: 'green' }}
+                                        />
                                     ) : (
-                                        <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'grey' }} />
+                                        <FontAwesomeIcon
+                                            icon={faCheckCircle}
+                                            className="custom-icon"
+                                            style={{ color: 'grey' }}
+                                        />
                                     )}
                                 </Col>
                             </Row>
                         </Card.Title>
-                        {(Array.isArray(assetsData) && (assetsData.length > 0)) ? (
-                            <Card.Text>
+                        {(Array.isArray(assetsData) && assetsData.length > 0) ? (
+                            <Card.Text as="div"> {/* Ensure Card.Text uses a div */}
                                 {assetsData.map((asset, index) => (
                                     <React.Fragment key={index}>
                                         <Row className="mb-4">
                                             <Col>
-                                                <p className="order-item-p">
-                                                    <span className="order-item-p-span">Asset: </span>
-                                                    {asset.assetType}
-                                                </p>
-
-
+                                                <div className="order-item-p">
+                                                    <strong>Asset: </strong>{asset.assetType}
+                                                </div>
                                                 {asset.assetType === 'Property' && (
-                                                    <>
-                                                        <p className="order-item-p">
-                                                            <span className="order-item-p-span">Address: </span>
-                                                            {asset.propertyAddress}
-                                                        </p>
-                                                    </>
+                                                    <div className="order-item-p">
+                                                        <strong>Address: </strong>{asset.propertyAddress}
+                                                    </div>
                                                 )}
                                                 {asset.assetType === 'Bank Account' && (
-                                                    <>
-                                                        <p className="order-item-p">
-                                                            <span className="order-item-p-span">Bank Name: </span>
-                                                            {asset.bankName}
-                                                        </p>
-                                                    </>
+                                                    <div className="order-item-p">
+                                                        <strong>Bank Name: </strong>{asset.bankName}
+                                                    </div>
                                                 )}
                                                 {asset.assetType === 'Stocks and shares' && (
-                                                    <>
-                                                        <p className="order-item-p">
-                                                            <span className="order-item-p-span">Company Name: </span>
-                                                            {asset.companyName}
-                                                        </p>
-                                                    </>
+                                                    <div className="order-item-p">
+                                                        <strong>Company Name: </strong>{asset.companyName}
+                                                    </div>
                                                 )}
                                                 {(asset.assetType === 'Pension' || asset.assetType === 'Life insurance') && (
-                                                    <>
-                                                        <p className="order-item-p">
-                                                            <span className="order-item-p-span">Provider: </span>
-                                                            {asset.provider}
-                                                        </p>
-                                                    </>
+                                                    <div className="order-item-p">
+                                                        <strong>Provider: </strong>{asset.provider}
+                                                    </div>
                                                 )}
                                                 {asset.assetType === 'Other' && (
-                                                    <>
-                                                        <p className="order-item-p">
-                                                            <span className="order-item-p-span">Details: </span>
-                                                            {asset.otherAssetDetails}
-                                                        </p>
-                                                    </>
+                                                    <div className="order-item-p">
+                                                        <strong>Details: </strong>{asset.otherAssetDetails}
+                                                    </div>
                                                 )}
                                             </Col>
                                         </Row>
@@ -99,11 +88,13 @@ const AssetsCard = () => {
                                 ))}
                                 <Row className="d-flex justify-content-end">
                                     <Col xs="auto">
-                                        <Button 
-                                        variant="primary" 
-                                        className="creating-order-tile-btns"
+                                        <Button
+                                            variant="primary"
+                                            className="creating-order-tile-btns"
                                             onClick={() => navigate('/assets')}
-                                        >Edit</Button>
+                                        >
+                                            Edit
+                                        </Button>
                                     </Col>
                                 </Row>
                             </Card.Text>
@@ -111,25 +102,28 @@ const AssetsCard = () => {
                             <>
                                 <Row>
                                     <Col>
-                                        <p>Tell us about your assets</p>
+                                        <div>Tell us about your assets</div>
                                     </Col>
                                 </Row>
                                 <Row className="d-flex justify-content-end">
                                     <Col xs="auto">
-                                        <Button 
-                                        variant="primary" 
-                                        className="m-1 creating-order-tile-btns"
+                                        <Button
+                                            variant="primary"
+                                            className="m-1 creating-order-tile-btns"
                                             onClick={() => navigate('/assets')}
-                                        >Get Started</Button>
+                                        >
+                                            Get Started
+                                        </Button>
                                     </Col>
                                 </Row>
                             </>
                         )}
                     </Card.Body>
                 </Card>
-            </Container >
+            </Container>
         </>
     );
+    
 }
 
 export default AssetsCard;

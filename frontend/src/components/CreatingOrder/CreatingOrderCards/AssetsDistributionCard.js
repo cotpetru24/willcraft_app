@@ -38,9 +38,9 @@ const AssetsDistributionCard = () => {
 
     return (
         <Container className="mb-5">
-            <Card className='shadow' bg="light" text="dark" >
+            <Card className="shadow" bg="light" text="dark">
                 <Card.Body>
-                    <Card.Title >
+                    <Card.Title>
                         <Row>
                             <Col xs={10}>
                                 <h2>Assets Distribution</h2>
@@ -54,37 +54,47 @@ const AssetsDistributionCard = () => {
                             </Col>
                         </Row>
                     </Card.Title>
-                    <Card.Text>
+                    <Card.Text as="div"> {/* Changed Card.Text to render as a div */}
                         <Row>
                             <Col>
-                                <p className="order-item-p"><span className="order-item-p-span">Name: </span>{testatorInitialData.testatorTitle} {testatorInitialData.testatorFullLegalName}</p>
-                                <p className="order-item-p"><span className="order-item-p-span">Date of birth: </span>{new Date(testatorInitialData.testatorDob).toLocaleDateString()}</p>
-                                <p className="order-item-p"><span className="order-item-p-span">Address: </span>{testatorInitialData.testatorFullAddress}</p>
+                                <div className="order-item-p">
+                                    <strong>Name: </strong>{testatorInitialData.testatorTitle} {testatorInitialData.testatorFullLegalName}
+                                </div>
+                                <div className="order-item-p">
+                                    <strong>Date of birth: </strong>{new Date(testatorInitialData.testatorDob).toLocaleDateString()}
+                                </div>
+                                <div className="order-item-p">
+                                    <strong>Address: </strong>{testatorInitialData.testatorFullAddress}
+                                </div>
                             </Col>
                         </Row>
-                        <Row className=" d-flex justify-content-end">
+                        <Row className="d-flex justify-content-end">
                             <Col xs="auto">
                                 {allNecessaryFieldsSpecified ? (
-                                    <Button 
-                                    variant="primary"
+                                    <Button
+                                        variant="primary"
                                         onClick={() => navigate('/assetsDistribution')}
                                         className="creating-order-tile-btns"
-                                    >Edit</Button>
+                                    >
+                                        Edit
+                                    </Button>
                                 ) : (
-
-                                    <Button 
-                                    variant="primary"
-                                    className="creating-order-tile-btns"
+                                    <Button
+                                        variant="primary"
+                                        className="creating-order-tile-btns"
                                         onClick={() => navigate('/assetsDistribution')}
-                                    >Get Started</Button>
+                                    >
+                                        Get Started
+                                    </Button>
                                 )}
                             </Col>
                         </Row>
                     </Card.Text>
                 </Card.Body>
             </Card>
-        </Container >
+        </Container>
     );
+    
 }
 
 export default AssetsDistributionCard;

@@ -16,6 +16,7 @@ const role = Object.freeze({
     PARTNER: 'partner',
     KID: 'kid',
     BENEFIARY: 'beneficiary',
+    ADDITIONAL_BENEFICIARY: 'additional beneficiary',
     EXECUTOR: 'executor',
     ADDITIONAL_EXECUTOR:'additional executor'
 })

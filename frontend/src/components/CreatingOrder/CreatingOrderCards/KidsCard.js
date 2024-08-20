@@ -24,7 +24,7 @@ const KidsCard = () => {
     return (
         <>
             <Container className="mb-5">
-                <Card className='shadow' bg="light" text="dark">
+                <Card className="shadow" bg="light" text="dark">
                     <Card.Body>
                         <Card.Title>
                             <Row>
@@ -41,21 +41,20 @@ const KidsCard = () => {
                             </Row>
                         </Card.Title>
                         {allNecessaryFieldsSpecified ? (
-                            <Card.Text>
+                            <Card.Text as="div"> {/* Ensure it's using a div */}
                                 {kidsData.map((kid, index) => (
                                     <React.Fragment key={index}>
                                         <Row className="mb-4">
                                             <Col>
-                                                <p className="order-item-p">
-                                                    <span className="order-item-p-span">Name: </span>
-                                                    {kid.title} {kid.fullLegalName}
-                                                </p>
-                                                <p className="order-item-p">
-                                                    <span className="order-item-p-span">Date of birth: </span>{new Date(kid.dob).toLocaleDateString()}
-                                                </p>
-                                                <p className="order-item-p">
-                                                    <span className="order-item-p-span">Address: </span>{kid.fullAddress}
-                                                </p>
+                                                <div className="order-item-p">
+                                                    <strong>Name: </strong>{kid.title} {kid.fullLegalName}
+                                                </div>
+                                                <div className="order-item-p">
+                                                    <strong>Date of birth: </strong>{new Date(kid.dob).toLocaleDateString()}
+                                                </div>
+                                                <div className="order-item-p">
+                                                    <strong>Address: </strong>{kid.fullAddress}
+                                                </div>
                                             </Col>
                                         </Row>
                                     </React.Fragment>
@@ -63,10 +62,12 @@ const KidsCard = () => {
                                 <Row className="d-flex justify-content-end">
                                     <Col xs="auto">
                                         <Button 
-                                        variant="primary" 
-                                        className="creating-order-tile-btns"
+                                            variant="primary" 
+                                            className="creating-order-tile-btns"
                                             onClick={() => navigate('/kids')}
-                                        >Edit</Button>
+                                        >
+                                            Edit
+                                        </Button>
                                     </Col>
                                 </Row>
                             </Card.Text>
@@ -76,16 +77,18 @@ const KidsCard = () => {
                                     <>
                                         <Row>
                                             <Col>
-                                                <p>You said you don't have children</p>
+                                                <div>You said you don't have children</div>
                                             </Col>
                                         </Row>
                                         <Row className="d-flex justify-content-end">
                                             <Col xs="auto">
                                                 <Button 
-                                                variant="primary" 
-                                                className="m-1"
+                                                    variant="primary" 
+                                                    className="m-1"
                                                     onClick={() => navigate('/kids')}
-                                                >Edit</Button>
+                                                >
+                                                    Edit
+                                                </Button>
                                             </Col>
                                         </Row>
                                     </>
@@ -93,14 +96,18 @@ const KidsCard = () => {
                                     <>
                                         <Row>
                                             <Col>
-                                                <p>Tell us about your children</p>
+                                                <div>Tell us about your children</div>
                                             </Col>
                                         </Row>
                                         <Row className="d-flex justify-content-end">
                                             <Col xs="auto">
-                                                <Button variant="primary" className="m-1 creating-order-tile-btns"
+                                                <Button 
+                                                    variant="primary" 
+                                                    className="m-1 creating-order-tile-btns"
                                                     onClick={() => navigate('/kids')}
-                                                >Get Started</Button>
+                                                >
+                                                    Get Started
+                                                </Button>
                                             </Col>
                                         </Row>
                                     </>
