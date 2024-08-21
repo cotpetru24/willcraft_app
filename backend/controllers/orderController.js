@@ -22,6 +22,7 @@ export const createOrder = asyncHandler(async (req, res) => {
 });
 
 export const updateOrder = asyncHandler(async (req, res) => {
+    console.log(JSON.stringify(req.body))
     const { id: orderId } = req.params;
 
     const order = await Order.findById(orderId);

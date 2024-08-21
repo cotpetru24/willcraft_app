@@ -6,7 +6,6 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
     const [isChecked, setIsChecked] = useState(false);
     const [receivingAmount, setReceivingAmount] = useState('');
 
-console.log(`section list ite called with : ${JSON.stringify(data)}`)
     // useEffect(() => {
     //     if (data.role && data.role.includes("executor")) {
     //         setIsChecked(true);
