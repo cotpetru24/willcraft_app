@@ -47,21 +47,9 @@ export const getOrderThunk = createAsyncThunk(
             const token = thunkAPI.getState().auth.user.token;
             const response = await getOrder(id, token);
 
-
-            // const allPeople = response.peopleAndRoles.map(p => ({
-            //     ...p.personId,
-            //     role: p.role,
-            //     // _id: p._id
-            //     _id: p.personId._id
-            // }));
-
             const testator = response.peopleAndRoles.find(p => p.role.includes(constants.role.TESTATOR));
-            // const spouseOrPartner = response.peopleAndRoles.find(p => p.role.includes(constants.role.SPOUSE || constants.role.PARTNER));
             const spouseOrPartner = response.peopleAndRoles.find(p => p.role.includes(constants.role.SPOUSE) || p.role.includes(constants.role.PARTNER));
-            // const kids = response.peopleAndRoles.find(p=>p.role.includes(constants.role.KID))
-            // const kids = response.peopleAndRoles.filter(p => p.role.includes(constants.role.KID));
 
-            // Filter all entries with the role 'KID'
             const kids = response.peopleAndRoles.filter(p => p.role.includes(constants.role.KID)).map(p => ({
                 ...p.personId,
                 role: p.role,
@@ -80,7 +68,8 @@ export const getOrderThunk = createAsyncThunk(
                 p => p.role.includes('additional beneficiary')).map(p => ({
                 ...p,
                 role: p.role,
-                _id: p.personId._id
+                _id: p.personId._id || p._id,
+                // personId:p.personId //this was added ++++++++++++++++++++++
             }))
 
             // const executors = response.peopleAndRoles
@@ -103,18 +92,12 @@ export const getOrderThunk = createAsyncThunk(
 
 
 
-            // const assets = response.assetsAndDistribution
 
             const assets = response.assetsAndDistribution.map(a => ({
                 ...a.assetId,
                 distribution: a.distribution
             }))
 
-            // const spouseOrPartner = response.peopleAndRoles.find(p => p.role.includes("spouse" || "partner"));
-            // console.log(`spouseorpartner payload = ${JSON.stringify(spouseOrPartner)}`)
-
-
-            // Ensure response contains the testator data
             if (!testator) {
                 throw new Error('Testator data is missing in the response');
             }
@@ -138,19 +121,6 @@ export const getOrderThunk = createAsyncThunk(
 
             if (additionalBeneficiaries) thunkAPI.dispatch(updateAdditionalBeneficiariesSlice(additionalBeneficiaries))
 
-
-
-            // if (executors) {
-            //     console.log(`update executors slice called, executors: ${executors}`)
-            //     thunkAPI.dispatch(updateExecutorsSlice(executors))
-            //     // thunkAPI.dispatch(updateExecutorsSlice(allPeople))
-
-            // }
-
-
-            // if (allPeople) {
-            //     thunkAPI.dispatch(updateAllPeopleSlice(allPeople))
-            // }
 
             return response;
         } catch (error) {

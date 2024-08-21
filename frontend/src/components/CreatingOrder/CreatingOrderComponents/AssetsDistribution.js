@@ -475,21 +475,6 @@ const AssetsDistribution = () => {
                             return addBen;
                         });
                         await dispatch(updateAdditionalBeneficiariesSlice(updatedAdditionalBeneficiariesSlice));
-                        // const updatedAssetsSlice = assets.map((asset) => {
-                        //     const updatedDistribution = asset.distribution.map((dist) => {
-                        //         // Check if dist.personId is an object or a string and compare accordingly
-                        //         const distPersonId = typeof dist.personId === 'object' ? dist.personId._id : dist.personId;
-
-                        //         if (distPersonId === benToStore.personId._id) {
-                        //             return { ...dist, personId: correctId };
-                        //         }
-                        //         return dist;
-                        //     });
-                        //     return { ...asset, distribution: updatedDistribution };
-                        // });
-
-                        // await dispatch(updateAssetsSlice(updatedAssetsSlice));
-
                         const updatedAssetsSlice = assets.map((asset) => {
                             const updatedDistribution = asset.distribution.map((dist) => {
                                 // Check if dist.personId is an object or a string and compare accordingly
@@ -524,142 +509,6 @@ const AssetsDistribution = () => {
                             }
                         ];
 
-                        // const updatedOrder = {
-                        //     ...currentOrder,
-                        //     peopleAndRoles: updatedPeopleAndRoles,
-                        //     assetsAndDistribution: updatedAssetsSlice,
-                        // };
-
-                        // await dispatch(updateCurrentOrderSlice(updatedOrder));
-
-                        // await dispatch(updateCurrentOrderSlice({
-                        //     ...currentOrder,
-                        //     peopleAndRoles: updatedPeopleAndRoles,
-                        //     assetsAndDistribution: assets.map(asset => ({
-                        //         assetId: asset._id || asset.assetId,  // Map _id to assetId
-                        //         assetType: asset.assetType || asset.assetType,
-                        //         bankName: asset.bankName || asset.bankName,
-                        //         provider: asset.provider || asset.provider,
-                        //         otherAssetDetails: asset.otherAssetDetails || asset.otherAssetDetails,
-                        //         distribution: asset.distribution.map(dist => ({
-                        //             personId: dist.personId._id || dist.personId,  // Ensure personId is correctly formatted
-                        //             receivingAmount: dist.receivingAmount,
-                        //         })),
-                        //     }))
-                        // }));
-
-
-
-                        // try {
-                        //     // const response = await dispatch(updateOrderThunk(updatedOrder));
-                        //     const response = await dispatch(updateOrderThunk({
-                        //         ...currentOrder,
-                        //         peopleAndRoles: updatedPeopleAndRoles,
-                        //         assetsAndDistribution: assets.map(asset => ({
-                        //             assetId: asset._id || asset.assetId,  // Map _id to assetId
-                        //             assetType: asset.assetType || asset.assetType,
-                        //             bankName: asset.bankName || asset.bankName,
-                        //             provider: asset.provider || asset.provider,
-                        //             otherAssetDetails: asset.otherAssetDetails || asset.otherAssetDetails,
-                        //             distribution: asset.distribution.map(dist => ({
-                        //                 personId: dist.personId._id || dist.personId,  // Ensure personId is correctly formatted
-                        //                 receivingAmount: dist.receivingAmount,
-                        //             })),
-                        //         }))
-                        //     }));
-                        //     if (response && response.payload) {
-                        //         dispatch(updateCurrentOrderSlice(response.payload));
-                        //     } else {
-                        //         throw new Error('Failed to update order');
-                        //     }
-                        // } catch (error) {
-                        //     console.error('Failed to update order:', error);
-                        // }
-
-
-                        // Update the distribution with correctId and include all relevant details
-                        // Iterate over each asset and update the distribution
-                        // const updatedAssets = assets.map(asset => {
-                        //     const updatedDistribution = asset.distribution.map((dist) => {
-                        //         // Check if dist.personId is an object or a string and compare accordingly
-                        //         const distPersonId = typeof dist.personId === 'object' ? dist.personId._id : dist.personId;
-
-                        //         if (distPersonId === benToStore.personId._id) {
-                        //             // Replace with the correctId and include all relevant details from benToStore
-                        //             return {
-                        //                 ...dist,
-                        //                 personId: {
-                        //                     ...benToStore.personId,  // Include all the details of person
-                        //                     _id: correctId,  // Update the _id with the correctId
-                        //                 },
-                        //                 // Ensure other details like receivingAmount and others are retained
-                        //                 receivingAmount: dist.receivingAmount,
-                        //             };
-                        //         }
-                        //         return dist;
-                        //     });
-
-                        //     return {
-                        //         ...asset,
-                        //         distribution: updatedDistribution
-                        //     };
-                        // });
-
-                        // // Amend the updateCurrentOrderSlice to handle the correct ID replacement
-                        // await dispatch(updateCurrentOrderSlice({
-                        //     ...currentOrder,
-                        //     peopleAndRoles: updatedPeopleAndRoles.map(personRole => ({
-                        //         ...personRole,
-                        //         personId: personRole.personId._id === benToStore.personId._id ? {
-                        //             ...personRole.personId,
-                        //             _id: correctId,  // Replace temp ID with correct ID
-                        //         } : personRole.personId,
-                        //     })),
-                        //     assetsAndDistribution: updatedAssets.map(asset => ({
-                        //         assetId: asset._id || asset.assetId,  // Map _id to assetId
-                        //         assetType: asset.assetType || asset.assetType,
-                        //         bankName: asset.bankName || asset.bankName,
-                        //         provider: asset.provider || asset.provider,
-                        //         otherAssetDetails: asset.otherAssetDetails || asset.otherAssetDetails,
-                        //         distribution: asset.distribution.map(dist => ({
-                        //             personId: dist.personId._id === benToStore.personId._id ? {
-                        //                 ...dist.personId,
-                        //                 _id: correctId,  // Replace temp ID with correct ID
-                        //             } : dist.personId,  // Ensure personId is correctly formatted
-                        //             receivingAmount: dist.receivingAmount,
-                        //         })),
-                        //     })),
-                        // }));
-
-                        // try {
-                        //     const response = await dispatch(updateOrderThunk({
-                        //         ...currentOrder,
-                        //         assetsAndDistribution: updatedAssets.map(asset => ({
-                        //             assetId: asset._id || asset.assetId,  // Map _id to assetId
-                        //             assetType: asset.assetType || asset.assetType,
-                        //             bankName: asset.bankName || asset.bankName,
-                        //             provider: asset.provider || asset.provider,
-                        //             otherAssetDetails: asset.otherAssetDetails || asset.otherAssetDetails,
-                        //             distribution: asset.distribution.map(dist => ({
-                        //                 personId: dist.personId._id === benToStore.personId._id ? {
-                        //                     ...dist.personId,
-                        //                     _id: correctId,  // Replace temp ID with correct ID
-                        //                 } : dist.personId,  // Ensure personId is correctly formatted
-                        //                 receivingAmount: dist.receivingAmount,
-                        //             })),
-                        //         })),
-                        //     }));
-
-
-
-
-
-                        // await dispatch(updateCurrentOrderSlice({
-                        //     ...currentOrder,
-                        //     peopleAndRoles: updatedPeopleAndRoles,
-                        //     assetsAndDistribution: updateAssetsSlice
-                        // }));
-
                         await dispatch(updateCurrentOrderSlice({
                             ...currentOrder,
                             peopleAndRoles: updatedPeopleAndRoles,
@@ -676,14 +525,7 @@ const AssetsDistribution = () => {
                                 },
                                 distribution: asset.distribution
                             }))
-                        }));
-                        
-                        
-
-
-
-
-
+                        }));                                         
                         try {
                             const response = await dispatch(updateOrderThunk({
                                 ...currentOrder,
@@ -702,11 +544,6 @@ const AssetsDistribution = () => {
                                     distribution: asset.distribution
                                 }))
                             }));
-
-
-
-
-
                             if (response && response.payload) {
                                 dispatch(updateCurrentOrderSlice(response.payload));
                             } else {
@@ -721,33 +558,6 @@ const AssetsDistribution = () => {
                 }
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         else {
             await dispatch(updateAssetsSlice(assets));
@@ -812,81 +622,6 @@ const AssetsDistribution = () => {
                 console.error('Failed to update order:', error);
             }
         }
-
-
-        //     else {
-        // await dispatch(updateAssetsSlice(assets));
-        // await dispatch(updateAdditionalBeneficiariesSlice(additionalBeneficiaries));
-        // // await dispatch(updateCurrentOrderSlice(currentOrder));
-        // // await dispatch(updateCurrentOrderSlice({
-        // //     ...currentOrder,
-        // //     assetsAndDistribution: assets
-        // // }));
-
-        // await dispatch(updateCurrentOrderSlice({
-        //     ...currentOrder,
-        //     assetsAndDistribution: assets.map(asset => ({
-        //         assetId: asset._id || asset.assetId,  // Map _id to assetId
-        //         assetType: asset.assetType || asset.assetType,
-        //         bankName: asset.bankName || asset.bankName,
-        //         provider: asset.provider || asset.provider,
-        //         otherAssetDetails: asset.otherAssetDetails || asset.otherAssetDetails,
-        //         distribution: asset.distribution.map(dist => ({
-        //             personId: dist.personId._id || dist.personId,  // Ensure personId is correctly formatted
-        //             receivingAmount: dist.receivingAmount,
-        //         })),
-        //     }))
-        // }));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // try {
-        //     const response = await dispatch(updateOrderThunk({
-        //         // ...currentOrder,
-        //         // assetsAndDistribution: assets
-        //         ...currentOrder,
-        //         assetsAndDistribution: assets.map(asset => ({
-        //             assetId: asset._id || asset.assetId,  // Ensure the assetId is correctly mapped
-        //             assetType: asset.assetType,           // Map all necessary fields
-        //             bankName: asset.bankName,
-        //             provider: asset.provider,
-        //             otherAssetDetails: asset.otherAssetDetails,
-        //             distribution: asset.distribution.map(dist => ({
-        //                 personId: dist.personId._id || dist.personId,  // Ensure personId is correctly formatted
-        //                 receivingAmount: dist.receivingAmount,
-        //                 title: dist.personId.title,                    // Include additional details
-        //                 fullLegalName: dist.personId.fullLegalName,    // Ensure full details are passed
-        //                 fullAddress: dist.personId.fullAddress,
-        //                 dob: dist.personId.dob,
-        //                 email: dist.personId.email,
-        //                 tel: dist.personId.tel,
-        //             })),
-        //         }))
-        //     }));
-
-        //     if (response && response.payload) {
-        //         dispatch(updateCurrentOrderSlice(response.payload));
-        //     } else {
-        //         throw new Error('Failed to update order');
-        //     }
-        // } catch (error) {
-        //     console.error('Failed to update order:', error);
-        // }
 
         navigate('/creatingOrder');
     };
