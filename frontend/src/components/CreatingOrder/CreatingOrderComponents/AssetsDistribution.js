@@ -460,6 +460,10 @@ const AssetsDistribution = () => {
         }
 
         if (additionalBeneficiaries.length > 0) {
+            let updatedPeopleAndRoles = [...currentOrder.peopleAndRoles];  // Initialize with current values
+            let updatedAssetsSlice = [...assets];  // Initialize with current assets
+            let updatedAdditionalBeneficiariesSlice = [...additionalBeneficiaries]
+
             for (const benToStore of additionalBeneficiaries) {
                 if (benToStore.personId._id.includes("temp")) {
                     const updatedBenToStoreData = { ...benToStore, role: "additional beneficiary" };
@@ -468,14 +472,14 @@ const AssetsDistribution = () => {
                     if (createAddBenResponse.payload && createAddBenResponse.payload._id) {
                         const correctId = createAddBenResponse.payload._id;
 
-                        const updatedAdditionalBeneficiariesSlice = additionalBeneficiaries.map((addBen) => {
+                        updatedAdditionalBeneficiariesSlice = updatedAdditionalBeneficiariesSlice.map((addBen) => {
                             if (addBen.personId._id === benToStore.personId._id) {
                                 return { ...addBen, personId: { ...addBen.personId, _id: correctId } };
                             }
                             return addBen;
                         });
                         await dispatch(updateAdditionalBeneficiariesSlice(updatedAdditionalBeneficiariesSlice));
-                        const updatedAssetsSlice = assets.map((asset) => {
+                        updatedAssetsSlice = updatedAssetsSlice.map((asset) => {
                             const updatedDistribution = asset.distribution.map((dist) => {
                                 // Check if dist.personId is an object or a string and compare accordingly
                                 const distPersonId = typeof dist.personId === 'object' ? dist.personId._id : dist.personId;
@@ -498,8 +502,9 @@ const AssetsDistribution = () => {
                         await dispatch(updateAssetsSlice(updatedAssetsSlice));
 
 
-                        const updatedPeopleAndRoles = [
-                            ...currentOrder.peopleAndRoles,
+
+                        updatedPeopleAndRoles = [
+                            ...updatedPeopleAndRoles,
                             {
                                 personId: {
                                     ...benToStore.personId,
@@ -508,6 +513,7 @@ const AssetsDistribution = () => {
                                 role: ['additional beneficiary']
                             }
                         ];
+
 
                         await dispatch(updateCurrentOrderSlice({
                             ...currentOrder,
@@ -525,37 +531,41 @@ const AssetsDistribution = () => {
                                 },
                                 distribution: asset.distribution
                             }))
-                        }));                                         
-                        try {
-                            const response = await dispatch(updateOrderThunk({
-                                ...currentOrder,
-                                peopleAndRoles: updatedPeopleAndRoles,
-                                assetsAndDistribution: updatedAssetsSlice.map(asset => ({
-                                    assetId: {
-                                        _id: asset._id,
-                                        assetType: asset.assetType,
-                                        bankName: asset.bankName,
-                                        provider: asset.provider,
-                                        userId: asset.userId,
-                                        createdAt: asset.createdAt,
-                                        updatedAt: asset.updatedAt,
-                                        __v: asset.__v
-                                    },
-                                    distribution: asset.distribution
-                                }))
-                            }));
-                            if (response && response.payload) {
-                                dispatch(updateCurrentOrderSlice(response.payload));
-                            } else {
-                                throw new Error('Failed to update order');
-                            }
-                        } catch (error) {
-                            console.error('Failed to update order:', error);
-                        }
+                        }));
+
 
 
                     }
                 }
+            }
+            try {
+                const response = await dispatch(updateOrderThunk({
+                    ...currentOrder,
+                    peopleAndRoles: updatedPeopleAndRoles,
+                    assetsAndDistribution: updatedAssetsSlice.map(asset => ({
+                        assetId: {
+                            _id: asset._id,
+                            assetType: asset.assetType,
+                            bankName: asset.bankName,
+                            provider: asset.provider,
+                            userId: asset.userId,
+                            createdAt: asset.createdAt,
+                            updatedAt: asset.updatedAt,
+                            __v: asset.__v
+                        },
+                        distribution: asset.distribution
+                    }))
+                }));
+                if (response && response.payload) {
+                    dispatch(updateCurrentOrderSlice({
+                        ...response.payload,
+                        orderId: response.payload._id,  // Map _id to orderId here
+                    }));
+                } else {
+                    throw new Error('Failed to update order');
+                }
+            } catch (error) {
+                console.error('Failed to update order:', error);
             }
         }
 
@@ -652,170 +662,6 @@ const AssetsDistribution = () => {
 
 
 
-    // const AssetsDistribution = () => {
-    //     const isXs = useMediaQuery({ maxWidth: 767 });
-    //     const navigate = useNavigate();
-    //     const dispatch = useDispatch();
-
-    //     const currentOrder = useSelector(state => state.currentOrder);
-    //     const assets = useSelector(state => state.assets);
-    //     const additionalBeneficiaries = useSelector(state => state.additionalBeneficiaries);
-
-
-    //     const [receivingAmount, setReceivingAmount] = useState('');
-    //     const [totalPercentage, setTotalPercentage] = useState({});
-    //     const [potentialBeneficiaries, setPotentialBeneficiaries] = useState([]);
-    //     const [additionalBeneficiariesToRemove, setAdditionalBeneficiariesToRemove] = useState([]);
-
-    //     useEffect(() => {
-
-
-
-    //         const updatedPotentialBeneficiaries = [
-    //             ...currentOrder.peopleAndRoles.filter(p =>
-    //                 p.role.includes('partner')
-    //                 || p.role.includes('kid')
-    //                 || p.role.includes('spouse')
-    //             ),
-    //             ...additionalBeneficiaries.map(beneficiary => ({
-    //                 ...beneficiary,
-    //                 role: 'additional beneficiary'
-    //             }))
-    //         ];
-
-
-    //         setPotentialBeneficiaries(updatedPotentialBeneficiaries);
-    //     }, [currentOrder.peopleAndRoles, currentOrder, additionalBeneficiaries]);
-
-
-
-
-    //     const [showAdditionalBeneficiaryForm, setShowAdditionalBeneficiaryForm] = useState(false);
-    //     const [editAdditionalBeneficiaryIndex, setEditAdditionalBeneficiaryIndex] = useState(null);
-
-    //     const savedAdditionalBeneficiariesData = useRef(null);
-    //     const savedCurrentOrderData = useRef(null);
-    //     const savedAssetsData = useRef(null);
-
-    //     let additionalBeneficiary;
-
-    //     const [additionalBeneficiaryFormData, setAdditionalBeneficiaryFormData] = useState({
-    //         _id: '',
-    //         title: '',
-    //         fullLegalName: '',
-    //         fullAddress: '',
-    //         dob: '',
-    //         email: '',
-    //         tel: '',
-    //         assetId: '',
-    //         role: 'additional beneficiary',
-    //     });
-
-    //     useEffect(() => {
-    //         if (additionalBeneficiary) {
-    //             setAdditionalBeneficiaryFormData({
-    //                 _id: additionalBeneficiaryFormData._id || '',
-    //                 title: additionalBeneficiaryFormData.title || '',
-    //                 fullLegalName: additionalBeneficiaryFormData.fullLegalName || '',
-    //                 fullAddress: additionalBeneficiaryFormData.fullAddress || '',
-    //                 dob: additionalBeneficiaryFormData.dob ? new Date(additionalBeneficiaryFormData.dob).toISOString().split('T')[0] : '',
-    //                 email: additionalBeneficiaryFormData.email || '',
-    //                 tel: additionalBeneficiaryFormData.tel || '',
-    //                 assetId: additionalBeneficiaryFormData.assetId || ''
-    //             });
-    //         }
-
-    //         if (!savedAdditionalBeneficiariesData.current) {
-    //             savedAdditionalBeneficiariesData.current = JSON.parse(JSON.stringify(additionalBeneficiaries));
-    //         }
-    //         if (!savedCurrentOrderData.current) {
-    //             savedCurrentOrderData.current = JSON.parse(JSON.stringify(currentOrder))
-    //         }
-    //         if (!savedAssetsData.current) {
-    //             savedAssetsData.current = JSON.parse(JSON.stringify(assets))
-    //         }
-
-    //     // Compute receiving amounts and total percentages, but only if assets have changed
-    //     const updatedAssets = assets.map((asset, assetIndex) => {
-    //         let total = 0;
-
-    //         const updatedDistribution = asset.distribution.map(dist => {
-    //             const receivingAmount = parseFloat(dist.receivingAmount) || 0;
-    //             total += receivingAmount;
-
-    //             return {
-    //                 ...dist,
-    //                 receivingAmount
-    //             };
-    //         });
-
-    //         // Avoid setting state if the value hasn't changed
-    //         if (total !== totalPercentage[assetIndex]) {
-    //             setTotalPercentage(prev => ({ ...prev, [assetIndex]: total }));
-    //         }
-
-    //         return {
-    //             ...asset,
-    //             distribution: updatedDistribution
-    //         };
-    //     });
-
-    //     // Avoid dispatching if the assets have not changed
-    //     if (JSON.stringify(updatedAssets) !== JSON.stringify(assets)) {
-    //         dispatch(updateAssetsSlice(updatedAssets));
-    //     }
-
-    // }, [additionalBeneficiaryFormData, assets, additionalBeneficiaries, currentOrder, totalPercentage]);
-
-
-
-
-
-
-    // const handleOnChange = (value, assetIndex, personId) => {
-    //     // Safeguard: Ensure assets array exists
-    //     if (!Array.isArray(assets) || !assets[assetIndex]) {
-    //         console.error("Assets array is not defined or assetIndex is out of bounds.");
-    //         return;
-    //     }
-
-    //     const parsedValue = parseFloat(value) || 0;
-
-    //     const updatedAssets = assets.map((asset, index) => {
-    //         // Safeguard: Ensure asset.distribution exists
-    //         if (index === assetIndex && Array.isArray(asset.distribution)) {
-    //             const updatedDistribution = asset.distribution.map(dist => {
-    //                 // Match based on either personId or tempId
-    //                 const isMatch = (dist.personId && dist.personId === personId) || (!dist.personId && dist.tempId === personId);
-
-    //                 if (isMatch) {
-    //                     return { ...dist, receivingAmount: parsedValue };
-    //                 }
-    //                 return dist;
-    //             });
-    //             return { ...asset, distribution: updatedDistribution };
-    //         }
-    //         return asset;
-    //     });
-
-    //     // Safeguard: Ensure updatedAssets[assetIndex] and its distribution exist
-    //     if (!updatedAssets[assetIndex] || !Array.isArray(updatedAssets[assetIndex].distribution)) {
-    //         console.error("Updated assets or its distribution is not defined correctly.");
-    //         return;
-    //     }
-
-    //     const total = updatedAssets[assetIndex].distribution.reduce((sum, dist) => sum + (parseFloat(dist.receivingAmount) || 0), 0);
-
-    //     setTotalPercentage(prev => ({ ...prev, [assetIndex]: total }));
-
-    //     if (total !== 100) {
-    //         toast.warn(`Total percentage for asset ${assetIndex + 1} is not 100%! It is currently ${total}%`);
-    //     }
-
-    //     dispatch(updateAssetsSlice(updatedAssets));
-    // };
-
-
     const handleBack = () => {
         if (savedAdditionalBeneficiariesData.current) {
             dispatch(updateAdditionalBeneficiariesSlice(savedAdditionalBeneficiariesData.current));
@@ -830,137 +676,6 @@ const AssetsDistribution = () => {
     };
 
 
-    // const handleAdditionalBeneficiaryFormAdd = async (e) => {
-    //     e.preventDefault();
-
-    //     if (editAdditionalBeneficiaryIndex !== null) {
-    //         const updatedAdditionalBeneficiaries = additionalBeneficiaries.map((beneficiary, index) =>
-    //             index === editAdditionalBeneficiaryIndex ? { personId: additionalBeneficiaryFormData } : { personId: beneficiary.personId }
-    //         );
-
-    //         dispatch(updateAdditionalBeneficiariesSlice(updatedAdditionalBeneficiaries));
-
-    //         // Reset the form and state
-    //         setEditAdditionalBeneficiaryIndex(null);
-    //         resetAdditionalBeneficiaryForm();
-    //         setShowAdditionalBeneficiaryForm(false);
-    //     } else {
-    //         // Generate a tempId if _id doesn't exist
-    //         const newBeneficiary = {
-    //             ...additionalBeneficiaryFormData,
-    //             _id: additionalBeneficiaryFormData._id || `temp-${Date.now()}-${Math.random().toString(36).substring(2, 15)}`
-    //         };
-
-    //         const updatedAdditionalBeneficiaries = [...additionalBeneficiaries, { personId: newBeneficiary }];
-    //         await dispatch(updateAdditionalBeneficiariesSlice(updatedAdditionalBeneficiaries));
-    //     }
-
-    //     resetAdditionalBeneficiaryForm();
-    //     setShowAdditionalBeneficiaryForm(false);
-    // };
-
-
-
-    // const handleBeneficiaryChecked = (personIndex, assetIndex, isChecked) => {
-    //     const familyBeneficiary = potentialBeneficiaries[personIndex];
-    //     const assetToUpdate = assets[assetIndex];
-
-    //     // Safeguard: Ensure currentOrder and assetsAndDistribution exist
-    //     if (!currentOrder || !currentOrder.assetsAndDistribution) {
-    //         console.error("currentOrder or assetsAndDistribution is not defined");
-    //         return;
-    //     }
-
-    //     // Update the peopleAndRoles array in currentOrder
-    //     let updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(personRole => {
-    //         if (personRole.personId._id === familyBeneficiary.personId._id) {
-    //             if (isChecked) {
-    //                 return {
-    //                     ...personRole,
-    //                     role: personRole.role.includes('beneficiary') ? personRole.role : [...personRole.role, 'beneficiary']
-    //                 };
-    //             } else {
-    //                 // Check if the person is a beneficiary for any other asset
-    //                 const isBeneficiaryForOtherAssets = currentOrder.assetsAndDistribution.some(asset =>
-    //                     asset.distribution && asset.distribution.some(dist => {
-    //                         const distPersonId = typeof dist.personId === 'object' ? dist.personId._id : dist.personId;
-    //                         return distPersonId === familyBeneficiary.personId._id && asset.assetId._id !== assetToUpdate._id;
-    //                     })
-    //                 );
-
-    //                 if (!isBeneficiaryForOtherAssets) {
-    //                     return {
-    //                         ...personRole,
-    //                         role: personRole.role.filter(role => role !== 'beneficiary')
-    //                     };
-    //                 }
-    //             }
-    //         }
-    //         return personRole;
-    //     });
-
-    //     // Safeguard: Ensure assetToUpdate and its distribution exist
-    //     if (!assetToUpdate || !assetToUpdate.distribution) {
-    //         console.error("assetToUpdate or its distribution is not defined");
-    //         return;
-    //     }
-
-    //     // Update the distribution array for the asset
-    //     let updatedDistribution;
-    //     if (isChecked) {
-    //         console.log(`is checked in assets distribution`);
-    //         // Add person to distribution if not already present
-    //         if (!assetToUpdate.distribution.some(d => d.personId._id === familyBeneficiary.personId._id)) {
-    //             console.log(`person is not in the asset distribution, person will be now added`);
-    //             updatedDistribution = [...assetToUpdate.distribution, {
-    //                 personId: familyBeneficiary.personId._id,
-    //                 title: familyBeneficiary.personId.title,
-    //                 fullLegalName: familyBeneficiary.personId.fullLegalName,
-    //                 fullAddress: familyBeneficiary.personId.fullAddress,
-    //                 dob: familyBeneficiary.personId.dob,
-    //                 email: familyBeneficiary.personId.email || '',
-    //                 tel: familyBeneficiary.personId.tel || '',
-    //                 receivingAmount: ''
-    //             }];
-    //         } else {
-    //             updatedDistribution = assetToUpdate.distribution;
-    //         }
-    //     } else {
-    //         updatedDistribution = assetToUpdate.distribution.filter(d => {
-    //             const distPersonId = typeof d.personId === 'object' ? d.personId._id : d.personId;
-    //             return distPersonId !== familyBeneficiary.personId._id;
-    //         });
-    //     }
-
-    //     // Create the updated asset object
-    //     const updatedAsset = { ...assetToUpdate, distribution: updatedDistribution };
-
-    //     // Update the assets array
-    //     const updatedAssets = assets.map((asset, index) => index === assetIndex ? updatedAsset : asset);
-
-    //     // Update the assetsAndDistribution in currentOrder
-    //     const updatedCurrentOrderAssetDistribution = currentOrder.assetsAndDistribution.map(asset => {
-    //         console.log(`asset distribution should have been updated`);
-    //         if (asset.assetId._id === assetToUpdate._id) {
-    //             return {
-    //                 ...asset,
-    //                 distribution: updatedDistribution
-    //             };
-    //         }
-    //         return asset;
-    //     });
-
-    //     // Update currentOrder with updated assetsAndDistribution
-    //     const updatedCurrentOrder = {
-    //         ...currentOrder,
-    //         assetsAndDistribution: updatedCurrentOrderAssetDistribution,
-    //         peopleAndRoles: updatedPeopleAndRoles
-    //     };
-
-    //     // Dispatch the updated slices
-    //     dispatch(updateAssetsSlice(updatedAssets));
-    //     dispatch(updateCurrentOrderSlice(updatedCurrentOrder));
-    // };
 
 
     const handleOnBenFormChange = (event) => {
@@ -1020,120 +735,51 @@ const AssetsDistribution = () => {
 
     const handleRemoveAdditionalBeneficiary = async (index) => {
         const beneficiaryToDelete = additionalBeneficiaries.find((_, i) => i === index);
-        setAdditionalBeneficiariesToRemove(prev => [...prev, beneficiaryToDelete.personId._id])
-
+        // setAdditionalBeneficiariesToRemove(prev => [...prev, beneficiaryToDelete.personId._id])
+        if (!beneficiaryToDelete.personId._id.includes("temp")) {
+            setAdditionalBeneficiariesToRemove(prev => [...prev, beneficiaryToDelete.personId._id]);
+        }
         const updatedAdditionalBeneficiaries = additionalBeneficiaries.filter((_, i) => i !== index);
         await dispatch(updateAdditionalBeneficiariesSlice(updatedAdditionalBeneficiaries));
+
+        // Remove the beneficiary from peopleAndRoles in currentOrder
+        const updatedPeopleAndRoles = currentOrder.peopleAndRoles.filter(role => role.personId._id !== beneficiaryToDelete.personId._id);
+
+        // Remove the beneficiary from distribution in each asset
+        const updatedAssets = assets.map(asset => {
+            const updatedDistribution = asset.distribution.filter(dist => dist.personId._id !== beneficiaryToDelete.personId._id);
+            return { ...asset, distribution: updatedDistribution };
+        });
+
+
+        // Update the currentOrder slice
+        const updatedCurrentOrder = {
+            ...currentOrder,
+            peopleAndRoles: updatedPeopleAndRoles,
+            assetsAndDistribution: updatedAssets.map(asset => ({
+                assetId: {
+                    _id: asset._id,
+                    assetType: asset.assetType,
+                    bankName: asset.bankName,
+                    provider: asset.provider,
+                    userId: asset.userId,
+                    createdAt: asset.createdAt,
+                    updatedAt: asset.updatedAt,
+                    __v: asset.__v
+                },
+                distribution: asset.distribution
+            }))
+        };
+        await dispatch(updateCurrentOrderSlice(updatedCurrentOrder));
+
+        // Update the assets slice
+        await dispatch(updateAssetsSlice(updatedAssets));
+
+
+
+
+
     };
-
-
-    // const handleSaveAndContinue = async (e) => {
-    //     e.preventDefault();
-
-    //     if (additionalBeneficiariesToRemove.length > 0) {
-    //         additionalBeneficiariesToRemove.forEach((benToRemove) => {
-    //             if (benToRemove && !benToRemove.includes("temp")) {
-    //                 dispatch(deleteAdditionalBeficiaryThunk(benToRemove));
-    //             }
-    //         });
-
-
-
-    //         // updaet the slices after removing-assets slice and current order slice ----------------------------------
-
-
-
-    //     }
-
-    //     if (additionalBeneficiaries.length > 0) {
-    //         for (const benToStore of additionalBeneficiaries) {
-    //             if (benToStore.personId._id.includes("temp")) {
-    //                 const updatedBenToStoreData = { ...benToStore, role: "additional beneficiary" };
-    //                 const createAddBenResponse = await dispatch(createAdditionalBeficiaryThunk(updatedBenToStoreData.personId));
-
-    //                 if (createAddBenResponse.payload && createAddBenResponse.payload._id) {
-    //                     const correctId = createAddBenResponse.payload._id;
-
-    //                     // Update the additionalBeneficiaries slice
-    //                     const updatedAdditionalBeneficiariesSlice = additionalBeneficiaries.map((addBen) => {
-    //                         if (addBen.personId._id === benToStore.personId._id) {
-    //                             return { ...addBen, personId: { ...addBen.personId, _id: correctId } };
-    //                         }
-    //                         return addBen;
-    //                     });
-    //                     await dispatch(updateAdditionalBeneficiariesSlice(updatedAdditionalBeneficiariesSlice));
-
-    //                     // Update the assets slice
-    //                     const updatedAssetsSlice = assets.map((asset) => {
-    //                         const updatedDistribution = asset.distribution.map((dist) => {
-    //                             if (dist.personId === benToStore.personId._id) {
-    //                                 return { ...dist, personId: correctId };
-    //                             }
-    //                             return dist;
-    //                         });
-    //                         return { ...asset, distribution: updatedDistribution };
-    //                     });
-    //                     await dispatch(updateAssetsSlice(updatedAssetsSlice));
-
-    //                     // Update the current order's peopleAndRoles
-    //                     const updatedPeopleAndRoles = [
-    //                         ...currentOrder.peopleAndRoles,
-    //                         {
-    //                             personId: {
-    //                                 ...benToStore.personId,
-    //                                 _id: correctId
-    //                             },
-    //                             role: 'additional beneficiary'
-    //                         }
-    //                     ];
-
-    //                     // Update the current order object with the correct ID
-    //                     const updatedOrder = {
-    //                         ...currentOrder,
-    //                         peopleAndRoles: updatedPeopleAndRoles,
-    //                         assetsAndDistribution: updatedAssetsSlice, // Use the updated assets slice
-    //                     };
-
-    //                     await dispatch(updateCurrentOrderSlice(updatedOrder));
-    //                     try {
-    //                         const response = await dispatch(updateOrderThunk(updatedOrder));
-
-    //                         // If the API call is successful, then update the Redux slice
-    //                         if (response && response.payload) {
-    //                             dispatch(updateCurrentOrderSlice(response.payload));
-    //                         } else {
-    //                             throw new Error('Failed to update order');
-    //                         }
-    //                     } catch (error) {
-    //                         console.error('Failed to update order:', error);
-    //                     }
-    //                 }
-
-    //             }
-    //         }
-    //     }
-
-    //     else {
-    //         await dispatch(updateAssetsSlice(assets));
-    //         await dispatch(updateAdditionalBeneficiariesSlice(additionalBeneficiaries))
-    //         await dispatch(updateCurrentOrderSlice(currentOrder));
-    //         try {
-    //             const response = await dispatch(updateOrderThunk(currentOrder));
-
-    //             // If the API call is successful, then update the Redux slice
-    //             if (response && response.payload) {
-    //                 dispatch(updateCurrentOrderSlice(response.payload));
-    //             } else {
-    //                 throw new Error('Failed to update order');
-    //             }
-    //         } catch (error) {
-    //             console.error('Failed to update order:', error);
-    //         }
-
-    //     }
-    //     navigate('/creatingOrder');
-    // };
-
 
     return (
         <>
@@ -1167,6 +813,10 @@ const AssetsDistribution = () => {
                                                         buttonsDisabled={showAdditionalBeneficiaryForm}
                                                         data={{ ...person, role: 'additional beneficiary' }}
                                                         onRemove={() => handleRemoveAdditionalBeneficiary(personIndex)}
+
+                                                        // onRemove={() => handleRemoveAdditionalBeneficiary(person._id ? person._id : personIndex)}
+
+
                                                         onEdit={() => handleEditAdditionalBeneficiary(personIndex)}
                                                         section="assetDistribution-additionalBeneficiary"
                                                     />
