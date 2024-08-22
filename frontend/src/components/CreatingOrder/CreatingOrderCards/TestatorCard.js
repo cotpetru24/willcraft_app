@@ -40,66 +40,6 @@ const TestatorCard = () => {
         }
     }, [testatorData]);
 
-    // return (
-    //     <Container className="mb-5">
-    //         <Card className='shadow' bg="light" text="dark" >
-    //             <Card.Body>
-    //                 <Card.Title >
-    //                     <Row>
-    //                         <Col xs={10}>
-    //                             <h2>About you</h2>
-    //                         </Col>
-    //                         <Col className="d-flex justify-content-end align-items-center">
-    //                             {allNecessaryFieldsSpecified ? (
-    //                                 <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />
-    //                             ) : (
-    //                                 <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'grey' }} />
-    //                             )}
-    //                         </Col>
-    //                     </Row>
-    //                 </Card.Title>
-    //                 {allNecessaryFieldsSpecified ? (
-    //                     <>
-    //                         <Card.Text>
-    //                             <Row>
-    //                                 <Col>
-    //                                     <p className="order-item-p"><span className="order-item-p-span">Name: </span>{testatorInitialData.testatorTitle} {testatorInitialData.testatorFullLegalName}</p>
-    //                                     <p className="order-item-p"><span className="order-item-p-span">Date of birth: </span>{new Date(testatorInitialData.testatorDob).toLocaleDateString()}</p>
-    //                                     <p className="order-item-p"><span className="order-item-p-span">Address: </span>{testatorInitialData.testatorFullAddress}</p>
-    //                                 </Col>
-    //                             </Row>
-    //                             <Row className="d-flex justify-content-end">
-    //                                 <Col xs="auto">
-    //                                     <Button variant="primary"
-    //                                         onClick={() => navigate('/testator')}
-    //                                         className="creating-order-tile-btns"
-    //                                     >Edit</Button>
-    //                                 </Col>
-    //                             </Row>
-    //                             </Card.Text>
-    //                         </>
-    //                         ) : (
-    //                         <>
-    //                             <Row>
-    //                                 <Col>
-    //                                     <p>Tell us about you</p>
-    //                                 </Col>
-    //                             </Row>
-    //                             <Row className="d-flex justify-content-end">
-    //                                 <Col xs="auto">
-    //                                     <Button variant="primary"
-    //                                         onClick={() => navigate('/testator')}
-    //                                         className="creating-order-tile-btns"
-    //                                     >Get Started</Button>
-    //                                 </Col>
-    //                             </Row>
-    //                         </>
-    //                             )}
-    //                     </Card.Body>
-    //         </Card>
-    //     </Container >
-    // );
-
 
     return (
         <Container className="mb-5">

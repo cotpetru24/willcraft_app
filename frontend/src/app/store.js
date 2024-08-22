@@ -8,19 +8,19 @@ import currentOrderReducer from '../features/currentOrder/currentOrderSlice';
 import ordersReducer from '../features/orders/ordersSlice';
 import testatorReducer from '../features/people/testator/testatorSlice';
 import spouseOrPartnerReducer from '../features/people/spouseOrPartner/spouseOrPartnerSlice';
-import stepReducer from '../features/orderSteps/orderStepSlice';
 import kidsReducer from '../features/people/kids/kidsSlice';
 import assetsReducer from '../features/orderAssets/orderAssetsSlice';
 import additionalBeneficiariesReducer from '../features/people/additionalBeneficiaries/additionalBeneficiariesSlice';
 import additionalExecutorsReducer from '../features/additionalExecutors/additionalExecutorsSlice';
+import orderCurrentStepReducer from '../features/orderSteps/orderCurrentStepSlice';
 
 const rootReducer = combineReducers({
   auth: authReducer,
   orders: ordersReducer,
   currentOrder: currentOrderReducer,
+  currentOrderStep: orderCurrentStepReducer,
   testator: testatorReducer,
   spouseOrPartner: spouseOrPartnerReducer,
-  step: stepReducer,
   kids: kidsReducer,
   assets: assetsReducer,
   additionalBeneficiaries: additionalBeneficiariesReducer,
@@ -32,6 +32,7 @@ const preloadedState = {
   auth: loadState('auth'),
   orders: loadState('orders'),
   currentOrder: loadState('currentOrder'),
+  currentOrderStep:loadState('currentOrderStep'),
   testator: loadState('testator'),
   spouseOrPartner: loadState('spouseOrPartner'),
   kids: loadState('kids'),
@@ -51,6 +52,7 @@ store.subscribe(() => {
   saveState('auth', store.getState().auth);
   saveState('orders', store.getState().orders);
   saveState('currentOrder', store.getState().currentOrder);
+  saveState('currentOrderStep', store.getState.currentOrderStep);
   saveState('testator', store.getState().testator);
   saveState('spouseOrPartner', store.getState().spouseOrPartner);
   saveState('kids', store.getState().kids);
