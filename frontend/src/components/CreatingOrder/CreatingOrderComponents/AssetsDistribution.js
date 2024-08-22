@@ -29,7 +29,7 @@ import styles from "../../../common/styles";
 import { updateCurrentOrderSlice, updateOrderThunk } from "../../../features/currentOrder/currentOrderSlice";
 import { updateAssetsSlice } from "../../../features/orderAssets/orderAssetsSlice";
 import { updateAdditionalBeneficiariesSlice } from "../../../features/people/additionalBeneficiaries/additionalBeneficiariesSlice";
-import additionalBeneficiaryThunks, { createAdditionalBeficiaryThunk, deleteAdditionalBeficiaryThunk } from "../../../features/people/additionalBeneficiaries/additionalBeneficiariesThunks";
+import additionalBeneficiaryThunks, { createAdditionalBeficiaryThunk, deleteAdditionalBeficiaryThunk, updateAdditionalBeficiaryThunk } from "../../../features/people/additionalBeneficiaries/additionalBeneficiariesThunks";
 import { Container, Row, Col, Form, Button, Accordion, InputGroup } from 'react-bootstrap';
 import CreatingOrderNavigation from "../CreatigOrderNavigation";
 import { useMediaQuery } from 'react-responsive';
@@ -49,6 +49,7 @@ const AssetsDistribution = () => {
     const [totalPercentage, setTotalPercentage] = useState({});
     const [potentialBeneficiaries, setPotentialBeneficiaries] = useState([]);
     const [additionalBeneficiariesToRemove, setAdditionalBeneficiariesToRemove] = useState([]);
+    const [additionalBeneficiariesToUpdate, setAdditionalBeneficiariesToUpdate] = useState([]);
 
     const [showAdditionalBeneficiaryForm, setShowAdditionalBeneficiaryForm] = useState(false);
     const [editAdditionalBeneficiaryIndex, setEditAdditionalBeneficiaryIndex] = useState(null);
@@ -415,16 +416,129 @@ const AssetsDistribution = () => {
         e.preventDefault();
 
         if (editAdditionalBeneficiaryIndex !== null) {
-            const updatedAdditionalBeneficiaries = additionalBeneficiaries.map((beneficiary, index) =>
-                index === editAdditionalBeneficiaryIndex ? { personId: additionalBeneficiaryFormData } : { personId: beneficiary.personId }
-            );
+            // Update additional beneficiaries
+
+
+
+
+
+
+
+
+
+            // const updatedAdditionalBeneficiaries = additionalBeneficiaries.map((beneficiary, index) =>
+            //     index === editAdditionalBeneficiaryIndex ? { personId: additionalBeneficiaryFormData } : beneficiary
+            // );
+            const updatedBeneficiaryDetails = additionalBeneficiaryFormData;
+            let tempAdditionalBeneficiariesToUpdate = [...additionalBeneficiariesToUpdate];
+
+            const updatedAdditionalBeneficiaries = additionalBeneficiaries.map((beneficiary, index) => {
+                if (index === editAdditionalBeneficiaryIndex) {
+                    // If the _id does not include "temp", add to setAdditionalBeneficiariesToUpdate
+
+
+                    // If the _id does not include "temp", store the update information
+                    if (!beneficiary.personId._id.includes("temp")) {
+                        tempAdditionalBeneficiariesToUpdate.push({
+                            personId: beneficiary.personId._id,
+                            updatedDetails: updatedBeneficiaryDetails
+                        });
+                    }
+                    // Return the updated beneficiary
+                    return { personId: additionalBeneficiaryFormData };
+                }
+                return beneficiary;
+            });
+
+            // Set the updated beneficiaries to the state after the loop
+            setAdditionalBeneficiariesToUpdate(tempAdditionalBeneficiariesToUpdate);
+            console.log(`ben to updated= ${JSON.stringify(tempAdditionalBeneficiariesToUpdate)}`)
+
+
+
 
             dispatch(updateAdditionalBeneficiariesSlice(updatedAdditionalBeneficiaries));
 
+            const beneficiaryToUpdate = additionalBeneficiaries[editAdditionalBeneficiaryIndex];
+            // const updatedBeneficiaryDetails = additionalBeneficiaryFormData;
+
+            // Update the beneficiary details in peopleAndRoles in currentOrder
+            const updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(role => {
+                if (role.personId._id === beneficiaryToUpdate.personId._id) {
+                    return {
+                        ...role,
+                        personId: {
+                            ...role.personId,
+                            ...updatedBeneficiaryDetails // This contains the new details for the beneficiary
+                        }
+                    };
+                }
+                return role;
+            });
+
+            // Update the beneficiary details in distribution for each asset
+            const updatedAssets = assets.map(asset => {
+                const updatedDistribution = asset.distribution.map(dist => {
+                    if (dist.personId._id === beneficiaryToUpdate.personId._id) {
+                        return {
+                            ...dist,
+                            personId: {
+                                ...dist.personId,
+                                ...updatedBeneficiaryDetails // This contains the new details for the beneficiary
+                            }
+                        };
+                    }
+                    return dist;
+                });
+                return { ...asset, distribution: updatedDistribution };
+            });
+
+            // Update the currentOrder slice
+            const updatedCurrentOrder = {
+                ...currentOrder,
+                peopleAndRoles: updatedPeopleAndRoles,
+                assetsAndDistribution: updatedAssets.map(asset => ({
+                    assetId: {
+                        _id: asset._id,
+                        assetType: asset.assetType,
+                        bankName: asset.bankName,
+                        provider: asset.provider,
+                        userId: asset.userId,
+                        createdAt: asset.createdAt,
+                        updatedAt: asset.updatedAt,
+                        __v: asset.__v
+                    },
+                    distribution: asset.distribution
+                }))
+            };
+
+            await dispatch(updateCurrentOrderSlice(updatedCurrentOrder));
+            await dispatch(updateAssetsSlice(updatedAssets));
+
+            // Reset form and state
             setEditAdditionalBeneficiaryIndex(null);
             resetAdditionalBeneficiaryForm();
             setShowAdditionalBeneficiaryForm(false);
-        } else {
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        else {
             const newBeneficiary = {
                 ...additionalBeneficiaryFormData,
                 _id: additionalBeneficiaryFormData._id || `temp-${Date.now()}-${Math.random().toString(36).substring(2, 15)}`
@@ -456,6 +570,12 @@ const AssetsDistribution = () => {
                 if (benToRemove && !benToRemove.includes("temp")) {
                     dispatch(deleteAdditionalBeficiaryThunk(benToRemove));
                 }
+            });
+        }
+
+        if (additionalBeneficiariesToUpdate.length > 0) {
+            additionalBeneficiariesToUpdate.forEach((benToUpdate) => {
+                dispatch(updateAdditionalBeficiaryThunk(benToUpdate.updatedDetails));
             });
         }
 
