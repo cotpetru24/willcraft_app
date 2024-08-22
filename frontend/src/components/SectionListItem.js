@@ -1,6 +1,7 @@
 import styles from "../common/styles";
 import { useState, useEffect } from "react";
 import { Accordion, Card, Button, Col, Row, Form, Container, InputGroup } from "react-bootstrap";
+import { toast, ToastContainer } from 'react-toastify';
 
 const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onChecked, asset, onChange, assetIndex }) => {
     const [isChecked, setIsChecked] = useState(false);
@@ -41,6 +42,7 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
         const newCheckedState = !isChecked;
         console.log(`section item => Checkbox state changing to: ${newCheckedState} for person: ${data.fullLegalName}`);
         setIsChecked(newCheckedState);
+        setReceivingAmount('');
         onChecked(newCheckedState);  // Pass the new checked state to the callback
     };
 
@@ -48,7 +50,17 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
 
     const handleAmountChange = (event) => {
         const value = event.target.value;
-        setReceivingAmount(value);
+        // setReceivingAmount(value);
+
+        if (/^\d*$/.test(value)) {
+            setReceivingAmount(value);
+        }
+        else{
+            toast.warn(`Only numbers allowed`);
+
+        }
+
+
         onChange(value, assetIndex, data._id); // Pass the value, assetIndex, and data._id to the parent
     };
 
@@ -374,6 +386,7 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
                                                             value={receivingAmount}
                                                             onChange={handleAmountChange}
                                                             disabled={buttonsDisabled}
+                                                            required
                                                         />
                                                         <InputGroup.Text>%</InputGroup.Text>
                                                     </InputGroup>

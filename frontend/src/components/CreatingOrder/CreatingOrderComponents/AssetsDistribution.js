@@ -356,8 +356,18 @@ const AssetsDistribution = () => {
         } else {
             updatedDistribution = assetToUpdate.distribution.filter(d => {
                 const distPersonId = typeof d.personId === 'object' ? d.personId._id : d.personId;
+
+
+
+
+
+
+
                 return distPersonId !== familyBeneficiary.personId._id;
             });
+
+
+            // setReceivingAmount('');
         }
 
         // Create the updated asset object
