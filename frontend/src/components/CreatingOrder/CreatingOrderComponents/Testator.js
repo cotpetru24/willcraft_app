@@ -116,7 +116,6 @@ const Testator = () => {
                 <Form.Label className="bold-label">Title</Form.Label>
                 <Form.Control
                   as="select"
-                  id="title"
                   name="title"
                   value={testatorFormData.title}
                   onChange={handleOnChange}
@@ -134,7 +133,6 @@ const Testator = () => {
                 <Form.Label className="bold-label">Full legal name</Form.Label>
                 <Form.Control
                   type="text"
-                  id="fullLegalName"
                   name="fullLegalName"
                   value={testatorFormData.fullLegalName}
                   onChange={handleOnChange}
@@ -157,7 +155,6 @@ const Testator = () => {
                 <Form.Label className="bold-label">Date of birth</Form.Label>
                 <Form.Control
                   type="date"
-                  id="dob"
                   name="dob"
                   value={testatorFormData.dob}
                   onChange={handleOnChange}
@@ -169,7 +166,6 @@ const Testator = () => {
                 <Form.Label className="bold-label">Email (optional)</Form.Label>
                 <Form.Control
                   type="email"
-                  id="email"
                   name="email"
                   value={testatorFormData.email}
                   onChange={handleOnChange}
@@ -180,7 +176,6 @@ const Testator = () => {
                 <Form.Label className="bold-label">Phone Number (optional)</Form.Label>
                 <Form.Control
                   type="tel"
-                  id="tel"
                   name="tel"
                   value={testatorFormData.tel}
                   onChange={handleOnChange}

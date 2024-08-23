@@ -252,7 +252,6 @@ const Assets = () => {
                                             <Form.Label className="bold-label">Asset type</Form.Label>
                                             <Form.Control
                                                 as="select"
-                                                id="assetType"
                                                 name="assetType"
                                                 value={assetFormData.assetType}
                                                 onChange={handleAssetTypeChange}
@@ -271,7 +270,6 @@ const Assets = () => {
                                             <Form.Group className="mb-3" controlId="formGroupPropertyAddress">
                                                 <Form.Label className="bold-label">Property Address</Form.Label>
                                                 <AddressAutocomplete
-                                                    id="propertyAddress"
                                                     name="propertyAddress"
                                                     value={assetFormData.propertyAddress}
                                                     onPlaceSelected={handlePlaceSelected}
@@ -285,7 +283,6 @@ const Assets = () => {
                                                 <Form.Label className="bold-label">Bank name</Form.Label>
                                                 <Form.Control
                                                     type="text"
-                                                    id="bankName"
                                                     name="bankName"
                                                     value={assetFormData.bankName}
                                                     onChange={handleOnChange}
@@ -298,7 +295,6 @@ const Assets = () => {
                                                 <Form.Label className="bold-label">Company name</Form.Label>
                                                 <Form.Control
                                                     type="text"
-                                                    id="companyName"
                                                     name="companyName"
                                                     value={assetFormData.companyName}
                                                     onChange={handleOnChange}
@@ -312,7 +308,6 @@ const Assets = () => {
                                                 <Form.Label className="bold-label">Provider</Form.Label>
                                                 <Form.Control
                                                     type="text"
-                                                    id="provider"
                                                     name="provider"
                                                     value={assetFormData.provider}
                                                     onChange={handleOnChange}
@@ -325,7 +320,6 @@ const Assets = () => {
                                                 <Form.Label className="bold-label">Details</Form.Label>
                                                 <Form.Control
                                                     type="text"
-                                                    id="otherAssetDetails"
                                                     name="otherAssetDetails"
                                                     value={assetFormData.otherAssetDetails}
                                                     onChange={handleOnChange}
