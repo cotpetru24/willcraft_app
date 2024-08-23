@@ -57,6 +57,8 @@ const AssetsDistribution = () => {
     const savedAdditionalBeneficiariesData = useRef(null);
     const savedCurrentOrderData = useRef(null);
     const savedAssetsData = useRef(null);
+    const toastId = useRef(null);
+
 
     let additionalBeneficiary;
 
@@ -228,16 +230,29 @@ const AssetsDistribution = () => {
         );
 
 
+        // if (total !== 100) {
+        //     // toast.warn(`Total percentage for asset ${assetIndex + 1} is not 100%! It is currently ${total}%`);
+        //     // toast.warn(`Total percentage for ${assetTypeAndDescription} is not 100% ! <br/>It is currently ${total}%`);
+        //     toast.warn(<CustomToast assetTypeAndDescription={assetTypeAndDescription} total={total} />, {
+        //         position: "top-center",
+        //         autoClose: 4000,
+        //         toastClassName: "custom-toast",
+        //     });
+        // }
         if (total !== 100) {
-            // toast.warn(`Total percentage for asset ${assetIndex + 1} is not 100%! It is currently ${total}%`);
-            // toast.warn(`Total percentage for ${assetTypeAndDescription} is not 100% ! <br/>It is currently ${total}%`);
-            toast.warn(<CustomToast assetTypeAndDescription={assetTypeAndDescription} total={total} />, {
-                position: "top-center",
-                autoClose: 4000,
-                toastClassName: "custom-toast",
-            });
+            if (toastId.current) {
+                clearTimeout(toastId.current);
+            }
+            toastId.current = setTimeout(() => {
+                toast.warn(
+                    <CustomToast assetTypeAndDescription={assetTypeAndDescription} total={total} />,
+                    {
+                        position: "top-center",
+                        autoClose: 3000,
+                    }
+                );
+            }, 1000); // Delay in milliseconds
         }
-
         // Dispatch the updated assets to the Redux store
         dispatch(updateAssetsSlice(updatedAssets));
     };
