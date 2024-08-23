@@ -176,3 +176,7 @@
     min-height: 600px;
 }
 
+.custom-toast {
+    width: auto !important;
+    /* min-width: 400px !important;  Adjust the width as needed */
+}

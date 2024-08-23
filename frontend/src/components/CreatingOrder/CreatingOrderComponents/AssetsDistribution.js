@@ -174,6 +174,8 @@ const AssetsDistribution = () => {
     }, [assets]);
 
     const handleOnChange = (value, assetIndex, personId) => {
+
+        let assetTypeAndDescription;
         // Safeguard: Ensure assets array exists
         if (!Array.isArray(assets) || !assets[assetIndex]) {
             console.error("Assets array is not defined or assetIndex is out of bounds.");
@@ -193,6 +195,16 @@ const AssetsDistribution = () => {
                     return dist;
                 });
 
+
+                // Construct the asset description
+                assetTypeAndDescription = `${asset.assetType}`;
+                if (asset.bankName) assetTypeAndDescription += ` - ${asset.bankName}`;
+                if (asset.provider) assetTypeAndDescription += ` - ${asset.provider}`;
+                if (asset.companyName) assetTypeAndDescription += ` - ${asset.companyName}`;
+                if (asset.propertyAddress) assetTypeAndDescription += ` - ${asset.propertyAddress}`;
+                if (asset.otherAssetDetails) assetTypeAndDescription += ` - ${asset.otherAssetDetails}`;
+
+
                 return { ...asset, distribution: updatedDistribution };
             }
             return asset;
@@ -204,8 +216,26 @@ const AssetsDistribution = () => {
         // Update the total percentage for this asset in the state
         setTotalPercentage(prev => ({ ...prev, [assetIndex]: total }));
 
+
+
+
+
+        const CustomToast = ({ assetTypeAndDescription, total }) => (
+            <div className="d-flex justify-content-center">
+                Total percentage for {assetTypeAndDescription} is not 100% ! <br />
+                It is currently {total}%
+            </div>
+        );
+
+
         if (total !== 100) {
-            toast.warn(`Total percentage for asset ${assetIndex + 1} is not 100%! It is currently ${total}%`);
+            // toast.warn(`Total percentage for asset ${assetIndex + 1} is not 100%! It is currently ${total}%`);
+            // toast.warn(`Total percentage for ${assetTypeAndDescription} is not 100% ! <br/>It is currently ${total}%`);
+            toast.warn(<CustomToast assetTypeAndDescription={assetTypeAndDescription} total={total} />, {
+                position: "top-center",
+                autoClose: 4000,
+                toastClassName: "custom-toast",
+            });
         }
 
         // Dispatch the updated assets to the Redux store
@@ -1372,7 +1402,10 @@ const AssetsDistribution = () => {
                 </Container >
             )}
 
-            <ToastContainer position="top-center" autoClose={5000} />
+            <ToastContainer
+                className="custom-toast"
+                position="top-center"
+                autoClose={4000} />
         </>
     );
 }
