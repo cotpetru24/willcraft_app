@@ -146,7 +146,8 @@ const Assets = () => {
             }
             updatedAssets.push({
                 ...asset,
-                _id: response._id
+                _id: response._id,
+                distribution: []
             });
         }
 
@@ -201,7 +202,7 @@ const Assets = () => {
 
     return (
         <>
-            <Container className="mt-5 mb-4">
+            <Container className="mt-5 mb-4 min-height-container">
                 <Row className="mt-3 mb-4 justify-content-center">
                     <Col xs={12} className="mx-auto">
                         <h1 className="auth-header">Your Assets</h1>

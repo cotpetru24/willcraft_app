@@ -20,19 +20,41 @@ import generateWillPdf from '../../../features/docGen/generateWillPdf';
 // };
 
 
+// export const OrderProgressBar = () => {
+//     const currentOrderStep = useSelector(state => state.currentOrderStep.currentStep || 0);
+//     const now = Math.floor((currentOrderStep / 6) * 100 / 10) * 10;
+
+//     return (
+//         <div style={{ position: 'relative' }}>
+//             <ProgressBar className="mb-3" now={now} />
+//             <div style={{ position: 'absolute', width: '100%', textAlign: 'center', fontSize: '12px', bottom: -1 }}>
+//                 {`${now}%`}
+//             </div>
+//         </div>
+//     );
+//     // color:'rgba(255, 255, 255, 0.87)',
+// };
 export const OrderProgressBar = () => {
     const currentOrderStep = useSelector(state => state.currentOrderStep.currentStep || 0);
     const now = Math.floor((currentOrderStep / 6) * 100 / 10) * 10;
 
+    const textColor = now > 50 ? 'rgba(255, 255, 255, 0.87)' : 'black';
+
     return (
         <div style={{ position: 'relative' }}>
             <ProgressBar className="mb-3" now={now} />
-            <div style={{ position: 'absolute', width: '100%', textAlign: 'center', fontSize: '12px', bottom: -1 }}>
+            <div style={{ 
+                position: 'absolute', 
+                width: '100%', 
+                textAlign: 'center', 
+                fontSize: '12px', 
+                bottom: -1, 
+                color: textColor 
+            }}>
                 {`${now}%`}
             </div>
         </div>
     );
-    // color:'rgba(255, 255, 255, 0.87)',
 };
 
 
@@ -112,13 +134,13 @@ const ProgressAndInstructionsCard = () => {
                                 {currentOrderStep.currentStep === 5 && (
                                     <>
                                         <h5>Step 6 - Designate Your Executors</h5>
-                                        <p>Finally, designate your executors. Ensure that you have provided the full legal name of at least one executor to complete the order.</p>
+                                        <p>Designate your executors and ensure that you have provided the full legal name of at least one executor who will execute your will.</p>
                                     </>
                                 )}
 
                                 {currentOrderStep.currentStep === 6 && (
                                     <>
-                                        <h5>Final Step - Review and Complete Your Order</h5>
+                                        <h5>Review and Complete Your Order</h5>
                                         <p>Your order is almost complete! Review all the details and proceed to checkout section to finalize your order.</p>
                                     </>
                                 )}

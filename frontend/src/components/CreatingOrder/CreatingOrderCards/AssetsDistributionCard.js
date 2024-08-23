@@ -46,7 +46,9 @@ const AssetsDistributionCard = () => {
                                 </Col>
                             </Row>
                         </Card.Title>
-                        {(allNecessaryFieldsSpecified || (Array.isArray(assetsData) && assetsData.length > 0)) ? (
+                        {/* {(allNecessaryFieldsSpecified || (Array.isArray(assetsData) && assetsData.length > 0)) ? ( */}
+                        {allNecessaryFieldsSpecified ? (
+
                             <Card.Text as="div">
                                 {assetsData.map((asset, assetIndex) => (
                                     <React.Fragment key={assetIndex}>
@@ -115,7 +117,7 @@ const AssetsDistributionCard = () => {
                             <>
                                 <Row>
                                     <Col>
-                                        <div>Tell us about your assets</div>
+                                        <div>Tell us how you want to distribute your assets</div>
                                     </Col>
                                 </Row>
                                 <Row className="d-flex justify-content-end">

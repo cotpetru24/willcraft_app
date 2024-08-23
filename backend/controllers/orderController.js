@@ -75,7 +75,15 @@ export const getOrder = asyncHandler(async (req, res) => {
 export const getAllUserOrders = asyncHandler(async (req, res) => {
     console.log(`gett all user orders calle din order controller. user id - ${req.user.id}`)
     // Fetch orders by user ID
-    const orders = await Order.find({ userId: req.user.id }).populate('peopleAndRoles.personId');
+    // const orders = await Order.find({ userId: req.user.id }).populate('peopleAndRoles.personId');
+
+    
+    // Fetch orders by user ID and sort by updatedAt in descending order
+    const orders = await Order.find({ userId: req.user.id })
+        .sort({ updatedAt: -1 })  // Sort by updatedAt in descending order
+        .populate('peopleAndRoles.personId');
+
+
 
     if (orders) {
         // Map through orders to get the desired response structure
