@@ -7,18 +7,24 @@ import { Col, Row } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import React from "react";
+import styles from "../../../common/styles";
 
-const KidsCard = () => {
+
+
+const AssetsDistributionCard = () => {
     const navigate = useNavigate();
 
     const testator = useSelector(state => state.testator)
     const assetsData = useSelector(state => state.assets);
+    const currentOrderStep = useSelector(state => state.currentOrderStep);
 
-    const isKidsComplete = (data) => {
-        return testator.hasChildrenStatus === 'no' || (Array.isArray(data) && (data.length > 0))
-    };
 
-    const allNecessaryFieldsSpecified = isKidsComplete(assetsData);
+    // const isKidsComplete = (data) => {
+    //     return testator.hasChildrenStatus === 'no' || (Array.isArray(data) && (data.length > 0))
+    // };
+
+    // const allNecessaryFieldsSpecified = isKidsComplete(assetsData);
+    const allNecessaryFieldsSpecified = currentOrderStep.currentStep >= 5;
 
 
     return (
@@ -40,8 +46,8 @@ const KidsCard = () => {
                                 </Col>
                             </Row>
                         </Card.Title>
-                        {allNecessaryFieldsSpecified ? (
-                            <Card.Text as="div"> {/* Ensure it's using a div */}
+                        {(allNecessaryFieldsSpecified || (Array.isArray(assetsData) && assetsData.length > 0)) ? (
+                            <Card.Text as="div">
                                 {assetsData.map((asset, assetIndex) => (
                                     <React.Fragment key={assetIndex}>
                                         <Row className="mb-4">
@@ -76,12 +82,15 @@ const KidsCard = () => {
                                                     </div>
                                                 )}
 
-                                                {asset.distribution.map((beneficiary, beneficiaryIndex) => (
-                                                    <div key={beneficiaryIndex} className="order-item-p">
-                                                        {beneficiary.personId.fullLegalName} - <strong>{beneficiary.receivingAmount}%</strong>
-                                                    </div>
-                                                ))}
-
+                                                {/* {asset.distribution.map((beneficiary, beneficiaryIndex) => ( */}
+                                                {Array.isArray(asset.distribution) && asset.distribution.length > 0 && (
+                                                    asset.distribution.map((beneficiary, beneficiaryIndex) => (
+                                                        <div key={beneficiaryIndex} className="order-item-p">
+                                                            {beneficiary.personId.fullLegalName} - <strong>{beneficiary.receivingAmount}%</strong>
+                                                        </div>
+                                                        // ))}
+                                                    ))
+                                                )}
                                             </Col>
                                         </Row>
                                     </React.Fragment>
@@ -93,6 +102,9 @@ const KidsCard = () => {
                                             variant="primary"
                                             className="creating-order-tile-btns"
                                             onClick={() => navigate('/assetsDistribution')}
+                                            style={currentOrderStep.currentStep < 4 ?
+                                                styles.disabledButton : {}}
+                                            disabled={currentOrderStep.currentStep < 4}
                                         >
                                             Edit
                                         </Button>
@@ -101,46 +113,27 @@ const KidsCard = () => {
                             </Card.Text>
                         ) : (
                             <>
-                                {testator.hasChildrenStatus === "no" ? (
-                                    <>
-                                        <Row>
-                                            <Col>
-                                                <div>You said you don't have children</div>
-                                            </Col>
-                                        </Row>
-                                        <Row className="d-flex justify-content-end">
-                                            <Col xs="auto">
-                                                <Button
-                                                    variant="primary"
-                                                    className="m-1"
-                                                    onClick={() => navigate('/assetsDistribution')}
-                                                >
-                                                    Edit
-                                                </Button>
-                                            </Col>
-                                        </Row>
-                                    </>
-                                ) : (
-                                    <>
-                                        <Row>
-                                            <Col>
-                                                <div>Tell us about your children</div>
-                                            </Col>
-                                        </Row>
-                                        <Row className="d-flex justify-content-end">
-                                            <Col xs="auto">
-                                                <Button
-                                                    variant="primary"
-                                                    className="m-1 creating-order-tile-btns"
-                                                    onClick={() => navigate('/kids')}
-                                                >
-                                                    Get Started
-                                                </Button>
-                                            </Col>
-                                        </Row>
-                                    </>
-                                )}
+                                <Row>
+                                    <Col>
+                                        <div>Tell us about your assets</div>
+                                    </Col>
+                                </Row>
+                                <Row className="d-flex justify-content-end">
+                                    <Col xs="auto">
+                                        <Button
+                                            variant="primary"
+                                            className="m-1 creating-order-tile-btns"
+                                            onClick={() => navigate('/assetsDistribution')}
+                                            style={currentOrderStep.currentStep !== 4 ?
+                                                styles.disabledButton : {}}
+                                            disabled={currentOrderStep.currentStep !== 4}
+                                        >
+                                            Get Started
+                                        </Button>
+                                    </Col>
+                                </Row>
                             </>
+
                         )}
                     </Card.Body>
                 </Card>
@@ -149,4 +142,4 @@ const KidsCard = () => {
     );
 }
 
-export default KidsCard;
+export default AssetsDistributionCard;

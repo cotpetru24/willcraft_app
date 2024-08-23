@@ -7,19 +7,22 @@ import { Col, Row } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import React from "react";
+import styles from "../../../common/styles";
 
 const KidsCard = () => {
     const navigate = useNavigate();
 
     const testator = useSelector(state => state.testator)
     const kidsData = useSelector(state => state.kids);
+    const currentOrderStep = useSelector(state => state.currentOrderStep);
 
-    const isKidsComplete = (data) => {
-        return testator.hasChildrenStatus === 'no' || (Array.isArray(data) && (data.length > 0))
-    };
 
-    const allNecessaryFieldsSpecified = isKidsComplete(kidsData);
+    // const isKidsComplete = (data) => {
+    //     return testator.hasChildrenStatus === 'no' || (Array.isArray(data) && (data.length > 0))
+    // };
 
+    // const allNecessaryFieldsSpecified = isKidsComplete(kidsData);
+    const allNecessaryFieldsSpecified = currentOrderStep.currentStep >= 3;
 
     return (
         <>
@@ -40,7 +43,7 @@ const KidsCard = () => {
                                 </Col>
                             </Row>
                         </Card.Title>
-                        {allNecessaryFieldsSpecified ? (
+                        {allNecessaryFieldsSpecified && testator.hasChildrenStatus !== 'no' ? (
                             <Card.Text as="div"> {/* Ensure it's using a div */}
                                 {kidsData.map((kid, index) => (
                                     <React.Fragment key={index}>
@@ -65,6 +68,9 @@ const KidsCard = () => {
                                             variant="primary" 
                                             className="creating-order-tile-btns"
                                             onClick={() => navigate('/kids')}
+                                            style={currentOrderStep.currentStep < 2 ?
+                                                styles.disabledButton : {}}
+                                              disabled={currentOrderStep.currentStep < 2}
                                         >
                                             Edit
                                         </Button>
@@ -84,8 +90,11 @@ const KidsCard = () => {
                                             <Col xs="auto">
                                                 <Button 
                                                     variant="primary" 
-                                                    className="m-1"
+                                                    className="creating-order-tile-btns"
                                                     onClick={() => navigate('/kids')}
+                                                    style={currentOrderStep.currentStep < 2 ?
+                                                        styles.disabledButton : {}}
+                                                      disabled={currentOrderStep.currentStep < 2}
                                                 >
                                                     Edit
                                                 </Button>
@@ -105,6 +114,9 @@ const KidsCard = () => {
                                                     variant="primary" 
                                                     className="m-1 creating-order-tile-btns"
                                                     onClick={() => navigate('/kids')}
+                                                    style={currentOrderStep.currentStep !== 2 ?
+                                                        styles.disabledButton : {}}
+                                                      disabled={currentOrderStep.currentStep !== 2}
                                                 >
                                                     Get Started
                                                 </Button>

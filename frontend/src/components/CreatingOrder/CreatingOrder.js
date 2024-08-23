@@ -26,7 +26,7 @@ const CreatingOrder = () => {
 
     useEffect(() => {
         let currentStep = 0;
-    
+
         // Check if testator details are complete
         if (
             testator &&
@@ -43,7 +43,7 @@ const CreatingOrder = () => {
             dispatch(updateOrderCurrentStep(0));
             return;
         }
-    
+
         // Check if spouse details are complete (or if marital status allows skipping this step)
         if (
             currentStep === 1 &&
@@ -65,7 +65,7 @@ const CreatingOrder = () => {
             dispatch(updateOrderCurrentStep(1));
             return;
         }
-    
+
         // Check if kids details are complete (or if testator has no children)
         if (
             currentStep === 2 &&
@@ -88,7 +88,7 @@ const CreatingOrder = () => {
             dispatch(updateOrderCurrentStep(2));
             return;
         }
-    
+
         // Check if assets details are complete
         if (
             currentStep === 3 &&
@@ -100,18 +100,43 @@ const CreatingOrder = () => {
             dispatch(updateOrderCurrentStep(3));
             return;
         }
-    
+
+        // // Check if assets distribution is 100% for each asset
+        // if (
+        //     currentStep === 4 && (assets && assets.length > 0)
+        // ) {
+        //     const allAssetsValid = assets.every(asset => {
+        //         const totalDistribution = asset.distribution.reduce((sum, dist) => {
+        //             return sum + Number(dist.receivingAmount);
+        //         }, 0);
+        //         return totalDistribution === 100;
+        //     });
+
+        //     if (allAssetsValid) {
+        //         currentStep = 5;
+        //     } else {
+        //         // If assets distribution is not valid, set currentStep to 4 and exit early
+        //         dispatch(updateOrderCurrentStep(4));
+        //         return;
+        //     }
+        // }
         // Check if assets distribution is 100% for each asset
         if (
             currentStep === 4 && (assets && assets.length > 0)
         ) {
             const allAssetsValid = assets.every(asset => {
-                const totalDistribution = asset.distribution.reduce((sum, dist) => {
-                    return sum + Number(dist.receivingAmount);
-                }, 0);
-                return totalDistribution === 100;
+                // Check if distribution is an array and exists
+                if (Array.isArray(asset.distribution)) {
+                    const totalDistribution = asset.distribution.reduce((sum, dist) => {
+                        return sum + Number(dist.receivingAmount);
+                    }, 0);
+                    return totalDistribution === 100;
+                } else {
+                    // If distribution doesn't exist or isn't an array, consider the asset invalid
+                    return false;
+                }
             });
-    
+
             if (allAssetsValid) {
                 currentStep = 5;
             } else {
@@ -120,7 +145,8 @@ const CreatingOrder = () => {
                 return;
             }
         }
-    
+
+
         // Check if executors are present
         if (
             currentStep === 5 && currentOrder.peopleAndRoles
@@ -128,7 +154,7 @@ const CreatingOrder = () => {
             const executors = currentOrder.peopleAndRoles.filter(person =>
                 person.role.includes('executor') || person.role.includes('additional executor')
             );
-    
+
             if (executors.length > 0) {
                 currentStep = 6;
             } else {
@@ -137,47 +163,47 @@ const CreatingOrder = () => {
                 return;
             }
         }
-    
+
         // Dispatch the current step to the Redux store
         dispatch(updateOrderCurrentStep(currentStep));
     }, [testator, spouseOrPartner, kids, assets, currentOrder, dispatch]);
-    
-
-// Use the correct slice name here
-const currentStep = useSelector(state => state.currentOrderStep.currentStep);
 
 
+    // Use the correct slice name here
+    const currentStep = useSelector(state => state.currentOrderStep.currentStep);
 
 
-return (
-    <>
-        <Container>
-            <Row className="mt-4 mb-4 ps-3 pe-3">
-                <Col>
-                    <h1 className="auth-header">My Will</h1>
-                </Col>
-            </Row>
-            <Row>
-                <Col>
 
-                </Col>
-            </Row>
-            <Row>
-                <Col xs={{ order: 2 }} md={{ order: 1 }}>
-                    <TestatorCard />
-                    <SpouseOrPartnerCard />
-                    <KidsCard />
-                    <AssetsCard />
-                    <AssetsDistributionCard />
-                    <ExecutorsCard />
-                </Col>
-                <Col xs={{ order: 1 }} md={{ order: 2 }}>
-                    <ProgressAndInstructionsCard />
-                </Col>
-            </Row>
-        </Container>
-    </>
-)
+
+    return (
+        <>
+            <Container>
+                <Row className="mt-4 mb-4 ps-3 pe-3">
+                    <Col>
+                        <h1 className="auth-header">My Will</h1>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={{ order: 2 }} md={{ order: 1 }}>
+                        <TestatorCard />
+                        <SpouseOrPartnerCard />
+                        <KidsCard />
+                        <AssetsCard />
+                        <AssetsDistributionCard />
+                        <ExecutorsCard />
+                    </Col>
+                    <Col xs={{ order: 1 }} md={{ order: 2 }}>
+                        <ProgressAndInstructionsCard />
+                    </Col>
+                </Row>
+            </Container>
+        </>
+    )
 
 }
 

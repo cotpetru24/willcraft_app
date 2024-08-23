@@ -1,108 +1,3 @@
-// import { useNavigate } from "react-router-dom";
-// import { useSelector } from "react-redux";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
-// import { Container } from "react-bootstrap";
-// import { Col, Row } from "react-bootstrap";
-// import Button from 'react-bootstrap/Button';
-// import Card from 'react-bootstrap/Card';
-// import React from "react";
-// import generateWillPdf from '../../../features/docGen/generateWillPdf';
-// import ProgressBar from 'react-bootstrap/ProgressBar';
-
-
-
-
-
-
-
-// export const OrderProgressBar = () => {
-//     const now = 60;
-//     return (
-//         <div>
-//             <ProgressBar className="mb-3" now={now} label={`${now}%`} />;
-//         </div>
-//     )
-// };
-
-
-
-// const ProgressAndInstructionsCard = () => {
-//     const navigate = useNavigate();
-
-//     const currentOrder = useSelector(state => state.currentOrder)
-//     const { user } = useSelector(state => state.auth)
-
-
-
-
-//     return (
-//         <>
-//             <Container className="mb-5">
-//                 <Card className='shadow' bg="light" text="dark">
-//                     <Card.Body>
-//                         <Card.Title>
-//                             <Row>
-//                                 <Col xs={10}>
-//                                     <h2>Order Progress</h2>
-//                                 </Col>
-//                                 <Col className="d-flex justify-content-end align-items-center">
-//                                     {20 == 20 ? (
-//                                         <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />
-//                                     ) : (
-//                                         <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'grey' }} />
-//                                     )}
-//                                 </Col>
-//                             </Row>
-//                         </Card.Title>
-//                         <Card.Text>
-//                             <Row>
-//                                 <Col>
-//                                     <div>0 of 5 steps Completed</div>
-//                                     <OrderProgressBar />
-//                                 </Col>
-//                             </Row>
-//                             <Row className="mb-4">
-//                                 <Col>
-//                                     <div className="order-item-p">
-//                                         <span className="order-item-p-span">Welcome {user ? user.firstName : ''} to your online will writing service</span>
-//                                     </div>
-//                                     <div className="order-item-p">
-//                                         <span className="order-item-p-span">Please fill out the will checklist to complete your will.</span>
-//                                     </div>
-//                                     <div className="order-item-p">
-//                                         <span className="order-item-p-span">If you have any questions, message, email, or call us on 024 1234 5678.</span>
-//                                     </div>
-//                                 </Col>
-//                             </Row>
-//                             <Row className="d-flex justify-content-end">
-//                                 <Col xs="auto">
-//                                     <Button variant="primary" className="creating-order-tile-btns"
-//                                         onClick={() => navigate('/ChechOutForm')}
-//                                     >Stripe</Button>
-//                                 </Col>
-//                                 <Col xs="auto">
-//                                     <Button variant="primary" className="creating-order-tile-btns"
-//                                         onClick={generateWillPdf}
-//                                     >Generate the Will</Button>
-//                                 </Col>
-//                             </Row>
-//                         </Card.Text>
-
-
-//                     </Card.Body>
-//                 </Card>
-//             </Container>
-//         </>
-//     );
-// }
-
-// export default ProgressAndInstructionsCard;
-
-
-
-
-
 
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -112,16 +7,42 @@ import { Container, Col, Row, Button, Card, ProgressBar } from "react-bootstrap"
 import React from "react";
 import generateWillPdf from '../../../features/docGen/generateWillPdf';
 
+
+// export const OrderProgressBar = () => {
+//     const currentOrderStep = useSelector(state => state.currentOrderStep.currentStep || 0);  // Access the correct property
+
+//     // Calculate progress percentage, rounding down to the nearest 10
+//     const now = currentOrderStep === 0 ? 0 : Math.floor((currentOrderStep / 6) * 100 / 10) * 10;
+
+//     return (
+//         <ProgressBar className="mb-3" now={now} label={`${now}%`} />  // No need to round again since it's already rounded
+//     );
+// };
+
+
 export const OrderProgressBar = () => {
-    const now = 60;
+    const currentOrderStep = useSelector(state => state.currentOrderStep.currentStep || 0);
+    const now = Math.floor((currentOrderStep / 6) * 100 / 10) * 10;
+
     return (
-        <ProgressBar className="mb-3" now={now} label={`${now}%`} />
+        <div style={{ position: 'relative' }}>
+            <ProgressBar className="mb-3" now={now} />
+            <div style={{ position: 'absolute', width: '100%', textAlign: 'center', fontSize: '12px', bottom: -1 }}>
+                {`${now}%`}
+            </div>
+        </div>
     );
+    // color:'rgba(255, 255, 255, 0.87)',
 };
+
+
+
 
 const ProgressAndInstructionsCard = () => {
     const navigate = useNavigate();
     const { user } = useSelector(state => state.auth);
+    const currentOrderStep = useSelector(state => state.currentOrderStep);
+
 
     return (
         <Container className="mb-5">
@@ -132,30 +53,76 @@ const ProgressAndInstructionsCard = () => {
                             <Col xs={10}>
                                 <h2>Order Progress</h2>
                             </Col>
-                            <Col className="d-flex justify-content-end align-items-center">
+                            {/* <Col className="d-flex justify-content-end align-items-center">
                                 {20 === 20 ? (
                                     <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />
                                 ) : (
                                     <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'grey' }} />
                                 )}
-                            </Col>
+                            </Col> */}
                         </Row>
                     </Card.Title>
                     <Card.Text as="div">
                         <Row>
                             <Col>
-                                <p>0 of 5 steps Completed</p>
+                                <p>{currentOrderStep.currentStep} of 6 steps Completed</p>
                                 <OrderProgressBar />
                             </Col>
                         </Row>
                         <Row className="mb-4">
                             <Col>
-                                <p className="order-item-p">
-                                    <span className="order-item-p-span">Welcome {user ? user.firstName : ''} to your online will writing service</span>
-                                </p>
-                                <p className="order-item-p">
-                                    <span className="order-item-p-span">Please fill out the will checklist to complete your will.</span>
-                                </p>
+                                {currentOrderStep.currentStep === 0 && (
+                                    <>
+                                        <h5>Step 1 - Enter Your Personal Details</h5>
+                                        <p>Please start by entering your personal details. Make sure to fill in your title, full legal name, date of birth, and full address to complete this step.</p>
+                                    </>
+                                )}
+
+                                {currentOrderStep.currentStep === 1 && (
+                                    <>
+                                        <h5>Step 2 - Enter Marital Status and Spouse or Partner Details</h5>
+                                        <p>
+                                            Tell us about your marital status. If applicable, please provide your spouse or partner's details.
+                                            Enter their title, full legal name, date of birth, and full address to proceed to the next step.
+                                        </p>
+                                    </>
+                                )}
+
+                                {currentOrderStep.currentStep === 2 && (
+                                    <>
+                                        <h5>Step 3 - Enter Children Details</h5>
+                                        <p>Next, enter the details of your children. Ensure that all fields such as title, full legal name, date of birth, and full address are filled out.</p>
+                                    </>
+                                )}
+
+                                {currentOrderStep.currentStep === 3 && (
+                                    <>
+                                        <h5>Step 4 - Enter Your Assets</h5>
+                                        <p>Now, add details about your assets. This includes specifying the type of each asset and ensuring all relevant information is provided.</p>
+                                    </>
+                                )}
+
+                                {currentOrderStep.currentStep === 4 && (
+                                    <>
+                                        <h5>Step 5 - Distribute Your Assets</h5>
+                                        <p>Distribute your assets among the beneficiaries. Make sure the total distribution for each asset equals 100% to move forward.</p>
+                                    </>
+                                )}
+
+                                {currentOrderStep.currentStep === 5 && (
+                                    <>
+                                        <h5>Step 6 - Designate Your Executors</h5>
+                                        <p>Finally, designate your executors. Ensure that you have provided the full legal name of at least one executor to complete the order.</p>
+                                    </>
+                                )}
+
+                                {currentOrderStep.currentStep === 6 && (
+                                    <>
+                                        <h5>Final Step - Review and Complete Your Order</h5>
+                                        <p>Your order is almost complete! Review all the details and proceed to checkout section to finalize your order.</p>
+                                    </>
+                                )}
+
                                 <p className="order-item-p">
                                     <span className="order-item-p-span">If you have any questions, message, email, or call us on 024 1234 5678.</span>
                                 </p>
@@ -163,18 +130,23 @@ const ProgressAndInstructionsCard = () => {
                         </Row>
                         <Row className="d-flex justify-content-end">
                             <Col xs="auto">
-                                <Button variant="primary" className="creating-order-tile-btns"
-                                    onClick={() => navigate('/ChechOutForm')}
-                                >
-                                    Stripe
-                                </Button>
+                                {currentOrderStep.currentStep === 6 && (
+                                    <Button variant="primary" className="creating-order-tile-btns"
+                                        onClick={() => navigate('/ChechOutForm')}
+                                    >
+                                        Checkout
+                                    </Button>
+                                )}
                             </Col>
                             <Col xs="auto">
-                                <Button variant="primary" className="creating-order-tile-btns"
-                                    onClick={generateWillPdf}
-                                >
-                                    Generate the Will
-                                </Button>
+                                {currentOrderStep.currentStep === 7 && (
+
+                                    <Button variant="primary" className="creating-order-tile-btns"
+                                        onClick={generateWillPdf}
+                                    >
+                                        Generate the Will
+                                    </Button>
+                                )}
                             </Col>
                         </Row>
                     </Card.Text>

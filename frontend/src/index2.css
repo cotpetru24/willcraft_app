@@ -171,3 +171,7 @@
 .total-amount-form-control{
     width:90px;
 }
+
+.min-height-container {
+    min-height: 600px;
+}

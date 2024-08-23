@@ -22,11 +22,13 @@ const TestatorCard = () => {
     });
 
     const testatorData = useSelector(state => state.testator);
+    const currentOrderStep = useSelector(state => state.currentOrderStep);
 
-    const isTestatorDataComplete = (data) => {
-        return data.title && data.fullLegalName && data.dob && data.fullAddress;
-    };
-    const allNecessaryFieldsSpecified = isTestatorDataComplete(testatorData);
+    // const isTestatorDataComplete = (data) => {
+    //     return data.title && data.fullLegalName && data.dob && data.fullAddress;
+    // };
+    // const allNecessaryFieldsSpecified = isTestatorDataComplete(testatorData);
+    const allNecessaryFieldsSpecified = currentOrderStep.currentStep >= 1;
 
 
     useEffect(() => {
@@ -106,7 +108,7 @@ const TestatorCard = () => {
             </Card>
         </Container>
     );
-    
+
 }
 
 

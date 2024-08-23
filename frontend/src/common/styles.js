@@ -15,6 +15,7 @@ const styles = {
     },
     disabledButton: {
         backgroundColor: 'gray',
+        borderColor:'gray',
         color: 'white',
         cursor: 'not-allowed',
         trasform:"scale(100%)"

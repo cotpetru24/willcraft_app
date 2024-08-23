@@ -7,6 +7,7 @@ import { Col, Row } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import React from "react";
+import styles from "../../../common/styles";
 
 
 const ExecutorsCard = () => {
@@ -14,16 +15,20 @@ const ExecutorsCard = () => {
 
     const executorsData = useSelector(state => state.additionalExecutors)
     const currentOrder = useSelector(state => state.currentOrder)
+    const currentOrderStep = useSelector(state => state.currentOrderStep);
+
 
 
     const allExecutors = currentOrder.peopleAndRoles
         .filter(p => p.role.includes('executor') || p.role.includes('additional executor'))
 
-    const isExecutorsComplete = (data) => {
-        return (Array.isArray(data) && (data.length > 0))
-    };
+    // const isExecutorsComplete = (data) => {
+    //     return (Array.isArray(data) && (data.length > 0))
+    // };
 
-    const allNecessaryFieldsSpecified = isExecutorsComplete(allExecutors);
+    // const allNecessaryFieldsSpecified = isExecutorsComplete(allExecutors);
+    const allNecessaryFieldsSpecified = currentOrderStep.currentStep >= 6;
+
 
     return (
         <>
@@ -68,6 +73,9 @@ const ExecutorsCard = () => {
                                     <Col xs="auto">
                                         <Button variant="primary" className="creating-order-tile-btns"
                                             onClick={() => navigate('/executors')}
+                                            style={currentOrderStep.currentStep < 5 ?
+                                                styles.disabledButton : {}}
+                                              disabled={currentOrderStep.currentStep < 5}
                                         >Edit</Button>
                                     </Col>
                                 </Row>
@@ -85,6 +93,9 @@ const ExecutorsCard = () => {
                                         variant="primary" 
                                         className="m-1 creating-order-tile-btns"
                                             onClick={() => navigate('/executors')}
+                                            style={currentOrderStep.currentStep !== 5 ?
+                                                styles.disabledButton : {}}
+                                              disabled={currentOrderStep.currentStep !== 5}
                                         >Get Started</Button>
                                     </Col>
                                 </Row>

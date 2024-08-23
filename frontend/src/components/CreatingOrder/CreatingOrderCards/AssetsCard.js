@@ -7,18 +7,22 @@ import { Col, Row } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import React from "react";
-
+import styles from "../../../common/styles";
 
 const AssetsCard = () => {
     const navigate = useNavigate();
 
     const assetsData = useSelector(state => state.assets);
+    const currentOrderStep = useSelector(state => state.currentOrderStep);
+
 
     // const isAssetsComplete = (data) => {
     //     Array.isArray(data) && (data.length > 0)
     // };
 
     // const allNecessaryFieldsSpecified = isAssetsComplete(assetsData);
+    const allNecessaryFieldsSpecified = currentOrderStep.currentStep >= 4;
+
 
 
     return (
@@ -32,7 +36,9 @@ const AssetsCard = () => {
                                     <h2>Your Assets</h2>
                                 </Col>
                                 <Col className="d-flex justify-content-end align-items-center">
-                                    {(Array.isArray(assetsData) && assetsData.length > 0) ? (
+                                    {/* {(Array.isArray(assetsData) && assetsData.length > 0) ? ( */}
+                                    {allNecessaryFieldsSpecified ? (
+
                                         <FontAwesomeIcon
                                             icon={faCheckCircle}
                                             className="custom-icon"
@@ -48,7 +54,10 @@ const AssetsCard = () => {
                                 </Col>
                             </Row>
                         </Card.Title>
-                        {(Array.isArray(assetsData) && assetsData.length > 0) ? (
+                        {/* {(Array.isArray(assetsData) && assetsData.length > 0) ? ( */}
+                        {/* {allNecessaryFieldsSpecified ? ( */}
+                        {allNecessaryFieldsSpecified && (Array.isArray(assetsData) && assetsData.length > 0) ? (
+
                             <Card.Text as="div"> {/* Ensure Card.Text uses a div */}
                                 {assetsData.map((asset, index) => (
                                     <React.Fragment key={index}>
@@ -92,6 +101,9 @@ const AssetsCard = () => {
                                             variant="primary"
                                             className="creating-order-tile-btns"
                                             onClick={() => navigate('/assets')}
+                                            style={currentOrderStep.currentStep < 3 ?
+                                                styles.disabledButton : {}}
+                                            disabled={currentOrderStep.currentStep < 3}
                                         >
                                             Edit
                                         </Button>
@@ -111,6 +123,9 @@ const AssetsCard = () => {
                                             variant="primary"
                                             className="m-1 creating-order-tile-btns"
                                             onClick={() => navigate('/assets')}
+                                            style={currentOrderStep.currentStep !== 3 ?
+                                                styles.disabledButton : {}}
+                                            disabled={currentOrderStep.currentStep !== 3}
                                         >
                                             Get Started
                                         </Button>
@@ -123,7 +138,7 @@ const AssetsCard = () => {
             </Container>
         </>
     );
-    
+
 }
 
 export default AssetsCard;

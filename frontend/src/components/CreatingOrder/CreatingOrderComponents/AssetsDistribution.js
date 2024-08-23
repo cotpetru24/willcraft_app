@@ -978,7 +978,7 @@ const AssetsDistribution = () => {
                                                 <Accordion.Header>
                                                     <Container>
                                                         <Row>
-                                                            <Col>
+                                                            <Col className="flex-grow-1">
                                                                 <Row>
                                                                     <Col>
                                                                         <p className="order-item-p"><span className="order-item-p-span">
@@ -1005,7 +1005,7 @@ const AssetsDistribution = () => {
                                                                     </Col>
                                                                 </Row>
                                                             </Col>
-                                                            <Col className="d-flex justify-content-end">
+                                                            <Col className="d-flex justify-content-end col-auto">
                                                                 <InputGroup className="total-amount-form-control">
                                                                     <Form.Control
                                                                         type="text"
@@ -1298,28 +1298,43 @@ const AssetsDistribution = () => {
                                             <Accordion.Header>
                                                 <Container>
                                                     <Row>
-                                                        <Col>
-                                                            <p className="order-item-p"><span className="order-item-p-span">
-                                                                Asset:  </span>{asset.assetType}</p>
+                                                        <Col className="flex-grow-1">
+                                                            <Row>
+                                                                <Col>
+                                                                    <p className="order-item-p"><span className="order-item-p-span">
+                                                                        Asset:  </span>{asset.assetType}</p>
+                                                                </Col>
+                                                            </Row>
+                                                            <Row>
+                                                                <Col>
+                                                                    {asset.assetType === 'Property' &&
+                                                                        <p className="order-item-p"><span className="order-item-p-span">
+                                                                            Address:  </span>{asset.propertyAddress}</p>}
+                                                                    {asset.assetType === 'Bank Account' &&
+                                                                        <p className="order-item-p"><span className="order-item-p-span">
+                                                                            Bank Name:  </span>{asset.bankName}</p>}
+                                                                    {asset.assetType === 'Stocks and shares' &&
+                                                                        <p className="order-item-p"><span className="order-item-p-span">
+                                                                            Company Name:  </span>{asset.companyName}</p>}
+                                                                    {(asset.assetType === 'Pension' || asset.assetType === 'Life insurance') &&
+                                                                        <p className="order-item-p"><span className="order-item-p-span">
+                                                                            Provider:  </span>{asset.provider}</p>}
+                                                                    {asset.assetType === 'Other' &&
+                                                                        <p className="order-item-p"><span className="order-item-p-span">
+                                                                            Details:  </span>{asset.otherAssetDetails}</p>}
+                                                                </Col>
+                                                            </Row>
+
                                                         </Col>
-                                                    </Row>
-                                                    <Row>
-                                                        <Col>
-                                                            {asset.assetType === 'Property' &&
-                                                                <p className="order-item-p"><span className="order-item-p-span">
-                                                                    Address:  </span>{asset.propertyAddress}</p>}
-                                                            {asset.assetType === 'Bank Account' &&
-                                                                <p className="order-item-p"><span className="order-item-p-span">
-                                                                    Bank Name:  </span>{asset.bankName}</p>}
-                                                            {asset.assetType === 'Stocks and shares' &&
-                                                                <p className="order-item-p"><span className="order-item-p-span">
-                                                                    Company Name:  </span>{asset.companyName}</p>}
-                                                            {(asset.assetType === 'Pension' || asset.assetType === 'Life insurance') &&
-                                                                <p className="order-item-p"><span className="order-item-p-span">
-                                                                    Provider:  </span>{asset.provider}</p>}
-                                                            {asset.assetType === 'Other' &&
-                                                                <p className="order-item-p"><span className="order-item-p-span">
-                                                                    Details:  </span>{asset.otherAssetDetails}</p>}
+                                                        <Col className="d-flex justify-content-end col-auto">
+                                                            <InputGroup className="total-amount-form-control">
+                                                                <Form.Control
+                                                                    type="text"
+                                                                    value={totalPercentage[assetIndex] || 0}
+                                                                    disabled
+                                                                />
+                                                                <InputGroup.Text>%</InputGroup.Text>
+                                                            </InputGroup>
                                                         </Col>
                                                     </Row>
                                                 </Container>
