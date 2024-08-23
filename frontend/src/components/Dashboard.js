@@ -29,24 +29,24 @@ const Dashboard = () => {
 
 
     return (
-        <Container style={{ minHeight: "45vh" }}>
+        <Container style={{ minHeight: "45vh" }} className="ps-4 pe-4">
 
-            <Row className="pt-5 mb-4 section-header">
-                <Col>
-                    <h2>My Wills</h2>
+            <Row className="pt-5 mb-4">
+                <Col >
+                    <h1 className="auth-header ">My Wills</h1>
                 </Col>
             </Row>
 
             <Row className="pb-4">
                 <Col>
-                    <Button variant="primary  m-3"
+                    <Button variant="primary mt-2 mb-3"
                         onClick={handleCreateWill}
                         className="order-item-btns"
                     >Create a new Will</Button>
                 </Col>
             </Row>
             <Row>
-                <Col>
+                <Col className="ps-0 pe-0">
                     <OrdersList />
                 </Col>
             </Row>

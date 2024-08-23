@@ -206,7 +206,7 @@ const SpouseOrPartner = () => {
   return (
     <>
       {/* <Container className="mt-5 mb-5"> */}
-      <Container className="min-height-container">
+      <Container className=" mb-4 min-height-container">
         <Container className="mt-5 mb-5 ">
           <Row>
             <Col className="d-flex justify-content-center pb-3">
@@ -355,13 +355,13 @@ const SpouseOrPartner = () => {
               </Row>
             </>)}
         </Container >
-        </Container>
-
-      <CreatingOrderNavigation
-        onBack={handleBack}
-        onSaveAndContinue={handleSaveAndContinue}
-      />
-
+      </Container>
+      <Container>
+        <CreatingOrderNavigation
+          onBack={handleBack}
+          onSaveAndContinue={handleSaveAndContinue}
+        />
+      </Container>
     </>
   );
 }

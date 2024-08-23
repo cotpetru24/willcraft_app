@@ -269,7 +269,7 @@ const Executors = () => {
 
     return (
         <>
-            <Container className="mt-5 mb-4">
+            <Container className="mt-5 mb-4 ps-4 pe-4">
                 <Row className="mt-3 mb-4 justify-content-center">
                     <Col xs={12} className="mx-auto">
                         <h1 className="auth-header">Executors</h1>
@@ -284,7 +284,7 @@ const Executors = () => {
                 <Row className="justify-content-between">
                     <Col md={5} className="mt-4">
                         <Row>
-                            <Col >
+                            <Col className="ps-0 pe-0">
                                 {family.map((person, personIndex) => (
                                     <SectionListItem
                                         key={`person-${personIndex}`}
@@ -311,7 +311,7 @@ const Executors = () => {
                             </Col>
                         </Row>
                         <Row>
-                            <Col>
+                            <Col className="ps-0 pe-0">
                                 <Button
                                     variant="success"
                                     className="m-3"
@@ -435,7 +435,7 @@ const Executors = () => {
                 </Row>
             </Container>
             <>
-                <Container className="mt-5">
+                <Container>
                     <CreatingOrderNavigation
                         onBack={handleBack}
                         onSaveAndContinue={handleSaveAndContinue}

@@ -202,7 +202,7 @@ const Assets = () => {
 
     return (
         <>
-            <Container className="mt-5 mb-4 min-height-container">
+            <Container className="mt-5 mb-4 min-height-container ps-4 pe-4">
                 <Row className="mt-3 mb-4 justify-content-center">
                     <Col xs={12} className="mx-auto">
                         <h1 className="auth-header">Your Assets</h1>
@@ -216,7 +216,7 @@ const Assets = () => {
                 <Row className="justify-content-between">
                     <Col md={5} className="mt-4">
                         <Row>
-                            <Col >
+                            <Col className="ps-0 pe-0">
                                 {assets.map((asset, index) => (
                                     <SectionListItem
                                         key={index}
@@ -230,7 +230,7 @@ const Assets = () => {
                             </Col>
                         </Row>
                         <Row>
-                            <Col>
+                            <Col className="ps-0 pe-0">
                                 <Button
                                     variant="success"
                                     className="m-3"
@@ -365,11 +365,13 @@ const Assets = () => {
                 </Row>
             </Container>
             <>
+            <Container>
                 <OrderNavigation
                     onBack={handleBack}
                     onSaveAndContinue={handleSaveAndContinue}
                     buttonsDisabled={showAssetForm}
                 />
+                </Container>
             </>
         </>
     )

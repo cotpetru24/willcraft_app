@@ -913,7 +913,7 @@ const AssetsDistribution = () => {
 
     return (
         <>
-            <Container className="mt-5 mb-4">
+            <Container className="mt-5 mb-4 ps-4 pe-4">
                 <Row className="mt-3 mb-4 justify-content-center">
                     <Col xs={12} className="mx-auto">
                         <h1 className="auth-header">Assets distribution</h1>
