@@ -51,32 +51,46 @@ import express from 'express';
 import { v4 as uuidv4 } from 'uuid';
 import Stripe from 'stripe';
 import dotenv from 'dotenv';
+import { createPayment, paymentIntent,getPayment } from '../controllers/paymentController.js';
+import { protect } from '../middleware/authMiddleware.js';
 
-dotenv.config();  // Make sure to load env variables before using them
 
-const stripe = new Stripe(process.env.STRIPE_API_SECRET);
+
+
+
 
 const router = express.Router();
 
-router.post('/create-payment-intent', async (req, res) => {
-    const { product } = req.body;
 
-    try {
-        const paymentIntent = await stripe.paymentIntents.create({
-            amount: product.price * 100, // Stripe works with the smallest currency unit
-            currency: 'gbp',
-            description: product.name,
-            automatic_payment_methods: { enabled: true },
-        });
+router.get('/', protect, getPayment);
 
-        res.status(200).send({
-            clientSecret: paymentIntent.client_secret,
-        });
-    } catch (error) {
-        console.log('Error creating payment intent:', error);
-        res.status(500).send({ error: 'Failed to create payment intent' });
-    }
-});
+router.post('/create-payment-intent', protect, paymentIntent);
+
+router.post('/', protect, createPayment);
+
+
+
+
+
+// router.post('/create-payment-intent', async (req, res) => {
+//     const { product } = req.body;
+
+//     try {
+//         const paymentIntent = await stripe.paymentIntents.create({
+//             amount: product.price * 100, // Stripe works with the smallest currency unit
+//             currency: 'gbp',
+//             description: product.name,
+//             automatic_payment_methods: { enabled: true },
+//         });
+
+//         res.status(200).send({
+//             clientSecret: paymentIntent.client_secret,
+//         });
+//     } catch (error) {
+//         console.log('Error creating payment intent:', error);
+//         res.status(500).send({ error: 'Failed to create payment intent' });
+//     }
+// });
 
 export { router as paymentRoutes };
 

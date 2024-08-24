@@ -23,7 +23,24 @@ const paymentSchema = new mongoose.Schema(
             required: [true, 'Status is required'],
             default: 'pending'
         },
-
+        paymentDate: {
+            type: Date,
+            required: true,
+            default: Date.now
+        },
+        products: [
+            {
+                name: { type: String, required: true },
+                price: { type: Number, required: true },
+                quantity: { type: Number, required: true },
+                vat: { type: Number, required: true }
+            }
+        ],
+        paymentMethod: {
+            type: String,
+            required: [true, 'Payment method is required'],
+            enum: ['card', 'bank_transfer', 'paypal', 'stripe'] // You can adjust the payment methods as needed
+        }
     },
     { timestamps: true }
 );

@@ -4,7 +4,10 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import axios from "axios";
 import { toast, ToastContainer } from 'react-toastify';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_API_FRONTEND_SECRET);
 
@@ -29,12 +32,25 @@ const CheckOutCard = ({ setShowCheckout }) => {
     const totalAmount = baseProduct.price + (addStorage ? storageProduct.price : 0) + (addPrinting ? printingProduct.price : 0);
     const totalVAT = baseProduct.vat + (addStorage ? storageProduct.vat : 0) + (addPrinting ? printingProduct.vat : 0);
 
+
+    const token = useSelector((state) => state.auth.user.token);
+
+
     useEffect(() => {
         const fetchClientSecret = async () => {
+           
+            const config ={
+                headers : {
+                    Authorization: `Bearer ${token}`,
+            // "Content-Type": "application/json" // Adding Content-Type header
+                }
+            }
             try {
-                const response = await axios.post('/api/payments/create-payment-intent', {
-                    product: { ...baseProduct, price: totalAmount }
-                });
+                const response = await axios.post('/api/payments/create-payment-intent', 
+                    {product: { ...baseProduct, price: totalAmount }},
+                                config
+            );
+                console.log(`config:${config}`)
                 setClientSecret(response.data.clientSecret);
             } catch (error) {
                 console.error("Error fetching client secret:", error);

@@ -2,6 +2,7 @@ import asyncHandler from 'express-async-handler';
 import Person from '../models/personModel.js';
 import User from '../models/userModel.js';
 
+
 // @desc    Create a person
 // @route   POST /api/people/create
 // @access  Public
