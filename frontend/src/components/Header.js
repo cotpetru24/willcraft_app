@@ -9,12 +9,16 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Navbar, Nav, Offcanvas, Button } from 'react-bootstrap';
 import React, { useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
+
 
 const Header = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { user } = useSelector(state => state.auth)
+    const isXs = useMediaQuery({ maxWidth: 767 });
+
 
 
     const logoutfn = () => {
@@ -36,179 +40,552 @@ const Header = () => {
     const handleShow = () => setShow(true);
 
     return (
-        <Container fluid className='main-header'>
-            <Row className='text-start'>
-                <Col xs={4} className="d-flex align-items-center align-items-xs-end">
-                    <Navbar.Brand className='me-auto'>
-                        <Link to='/'>
-                            <img id="header-logo" src='/logo-latest.png' alt='WillCraft Logo' />
-                        </Link>
-                    </Navbar.Brand>
-                </Col>
-                <Col>
-                    {user ? (
-                        <Row className='pt-3 text-end'>
-                            <h5>Welcome back {user ? user.firstName : ''}!</h5>
-                        </Row>
-                    ) : null}
-                    <Row>
+        <>
+            <Container fluid className='main-header'>
+                <Row className='text-start'>
+                    <Col xs={4} className="d-flex align-items-center align-items-xs-end">
+                        <Navbar.Brand className='me-auto'>
+                            <Link to='/'>
+                                <img id="header-logo" src='/logo-latest.png' alt='WillCraft Logo' />
+                            </Link>
+                        </Navbar.Brand>
+                    </Col>
+                    <Col>
                         {user ? (
-                            <>
-                                <Navbar expand="lg" className="pb-2">
-                                    <Container fluid className="justify-content-end">
+                            <Row className='pt-3 text-end'>
+                                <h5>Welcome back {user ? user.firstName : ''}!</h5>
+                            </Row>
+                        ) : null}
+                        <Row>
+                            {user ? (
+                                <>
+                                    <Navbar expand="lg" className="pb-2">
+                                        <Container fluid className="justify-content-end">
 
-                                        <Button variant="outline-primary"
-                                            style={{ borderColor: 'rgba(255, 255, 255, 0.87)' }}
-                                            onClick={handleShow} className="d-lg-none ">
-                                            <span className="navbar-toggler-icon" style={{ backgroundColor: 'rgba(255, 255, 255, 0.87)' }}></span>
-                                        </Button>
+                                            <Button variant="outline-primary"
+                                                style={{ borderColor: 'rgba(255, 255, 255, 0.87)' }}
+                                                onClick={handleShow} className="d-lg-none ">
+                                                <span className="navbar-toggler-icon" style={{ backgroundColor: 'rgba(255, 255, 255, 0.87)' }}></span>
+                                            </Button>
 
-                                        <Navbar.Collapse className="d-none d-lg-flex justify-content-end">
-                                            <Nav variant='underline' className="ms-auto">
-                                                <Nav.Item>
-                                                    <LinkContainer to="/">
-                                                        <Nav.Link className='header-nav-link'>Home</Nav.Link>
-                                                    </LinkContainer>
-                                                </Nav.Item>
-                                                <Nav.Item>
-                                                    <LinkContainer to="/aboutus">
-                                                        <Nav.Link className='header-nav-link'>About us</Nav.Link>
-                                                    </LinkContainer>
-                                                </Nav.Item>
-                                                <Nav.Item>
-                                                    <LinkContainer to="/prices">
-                                                        <Nav.Link className='header-nav-link'>Prices</Nav.Link>
-                                                    </LinkContainer>
-                                                </Nav.Item>
-                                                <Nav.Item>
-                                                    <LinkContainer to="/dashboard">
-                                                        <Nav.Link className='header-nav-link'>My Wills</Nav.Link>
-                                                    </LinkContainer>
-                                                </Nav.Item>
-                                                <Nav.Item>
-                                                    <LinkContainer to="/progressBar">
-                                                        <Nav.Link className='header-nav-link'>My Account</Nav.Link>
-                                                    </LinkContainer>
-                                                </Nav.Item>
-                                                <Nav.Item>
-                                                    <Nav.Link className='header-nav-link' onClick={logoutfn}>Logout</Nav.Link>
-                                                </Nav.Item>
-                                            </Nav>
-                                        </Navbar.Collapse>
-
-                                        <Offcanvas show={show} onHide={handleClose} placement="end" className="d-lg-none">
-                                            <Offcanvas.Header closeButton>
-                                                <Offcanvas.Title>WillCraft</Offcanvas.Title>
-                                            </Offcanvas.Header>
-                                            <Offcanvas.Body>
-                                                <Nav className="flex-column">
+                                            <Navbar.Collapse className="d-none d-lg-flex justify-content-end">
+                                                <Nav variant='underline' className="ms-auto">
                                                     <Nav.Item>
-                                                        <LinkContainer to="/" onClick={handleClose}>
-                                                            <Nav.Link>Home</Nav.Link>
+                                                        <LinkContainer to="/">
+                                                            <Nav.Link className='header-nav-link'>Home</Nav.Link>
                                                         </LinkContainer>
                                                     </Nav.Item>
                                                     <Nav.Item>
-                                                        <LinkContainer to="/aboutus" onClick={handleClose}>
-                                                            <Nav.Link>About us</Nav.Link>
+                                                        <LinkContainer to="/aboutus">
+                                                            <Nav.Link className='header-nav-link'>About us</Nav.Link>
                                                         </LinkContainer>
                                                     </Nav.Item>
                                                     <Nav.Item>
-                                                        <LinkContainer to="/prices" onClick={handleClose}>
-                                                            <Nav.Link>Prices</Nav.Link>
+                                                        <LinkContainer to="/prices">
+                                                            <Nav.Link className='header-nav-link'>Prices</Nav.Link>
                                                         </LinkContainer>
                                                     </Nav.Item>
                                                     <Nav.Item>
-                                                        <LinkContainer to="/dashboard" onClick={handleClose}>
-                                                            <Nav.Link>My Wills</Nav.Link>
+                                                        <LinkContainer to="/dashboard">
+                                                            <Nav.Link className='header-nav-link'>My Wills</Nav.Link>
                                                         </LinkContainer>
                                                     </Nav.Item>
                                                     <Nav.Item>
-                                                        <LinkContainer to="/progressBar" onClick={handleClose}>
-                                                            <Nav.Link>My Account</Nav.Link>
+                                                        <LinkContainer to="/progressBar">
+                                                            <Nav.Link className='header-nav-link'>My Account</Nav.Link>
                                                         </LinkContainer>
                                                     </Nav.Item>
                                                     <Nav.Item>
-                                                        <Nav.Link onClick={() => { logoutfn(); handleClose(); }}>Logout</Nav.Link>
+                                                        <Nav.Link className='header-nav-link' onClick={logoutfn}>Logout</Nav.Link>
                                                     </Nav.Item>
                                                 </Nav>
-                                            </Offcanvas.Body>
-                                        </Offcanvas>
-                                    </Container>
-                                </Navbar>
+                                            </Navbar.Collapse>
+
+                                            <Offcanvas show={show} onHide={handleClose} placement="end" className="d-lg-none">
+                                                <Offcanvas.Header closeButton>
+                                                    <Offcanvas.Title>WillCraft</Offcanvas.Title>
+                                                </Offcanvas.Header>
+                                                <Offcanvas.Body>
+                                                    <Nav className="flex-column">
+                                                        <Nav.Item>
+                                                            <LinkContainer to="/" onClick={handleClose}>
+                                                                <Nav.Link>Home</Nav.Link>
+                                                            </LinkContainer>
+                                                        </Nav.Item>
+                                                        <Nav.Item>
+                                                            <LinkContainer to="/aboutus" onClick={handleClose}>
+                                                                <Nav.Link>About us</Nav.Link>
+                                                            </LinkContainer>
+                                                        </Nav.Item>
+                                                        <Nav.Item>
+                                                            <LinkContainer to="/prices" onClick={handleClose}>
+                                                                <Nav.Link>Prices</Nav.Link>
+                                                            </LinkContainer>
+                                                        </Nav.Item>
+                                                        <Nav.Item>
+                                                            <LinkContainer to="/dashboard" onClick={handleClose}>
+                                                                <Nav.Link>My Wills</Nav.Link>
+                                                            </LinkContainer>
+                                                        </Nav.Item>
+                                                        <Nav.Item>
+                                                            <LinkContainer to="/progressBar" onClick={handleClose}>
+                                                                <Nav.Link>My Account</Nav.Link>
+                                                            </LinkContainer>
+                                                        </Nav.Item>
+                                                        <Nav.Item>
+                                                            <Nav.Link onClick={() => { logoutfn(); handleClose(); }}>Logout</Nav.Link>
+                                                        </Nav.Item>
+                                                    </Nav>
+                                                </Offcanvas.Body>
+                                            </Offcanvas>
+                                        </Container>
+                                    </Navbar>
+                                </>
+                            ) : (
+                                <>
+                                    <Navbar expand="lg" className="pb-2">
+                                        <Container fluid className="justify-content-end">
+
+                                            <Button variant="outline-primary"
+                                                style={{ borderColor: 'rgba(255, 255, 255, 0.87)' }}
+                                                onClick={handleShow} className="d-lg-none ">
+                                                <span className="navbar-toggler-icon" style={{ backgroundColor: 'rgba(255, 255, 255, 0.87)' }}></span>
+                                            </Button>
+
+                                            <Navbar.Collapse className="d-none d-lg-flex justify-content-end">
+                                                <Nav variant='underline' className="ms-auto">
+                                                    <Nav.Item>
+                                                        <LinkContainer to="/">
+                                                            <Nav.Link className='header-nav-link'>Home</Nav.Link>
+                                                        </LinkContainer>
+                                                    </Nav.Item>
+                                                    <Nav.Item>
+                                                        <LinkContainer to="/aboutus">
+                                                            <Nav.Link className='header-nav-link'>About us</Nav.Link>
+                                                        </LinkContainer>
+                                                    </Nav.Item>
+                                                    <Nav.Item>
+                                                        <LinkContainer to="/prices">
+                                                            <Nav.Link className='header-nav-link'>Prices</Nav.Link>
+                                                        </LinkContainer>
+                                                    </Nav.Item>
+                                                    <Nav.Item>
+                                                        <LinkContainer to="/login">
+                                                            <Nav.Link className='header-nav-link'>Login</Nav.Link>
+                                                        </LinkContainer>
+                                                    </Nav.Item>
+                                                </Nav>
+                                            </Navbar.Collapse>
+
+                                            <Offcanvas show={show} onHide={handleClose} placement="end" className="d-lg-none">
+                                                <Offcanvas.Header closeButton>
+                                                    <Offcanvas.Title>WillCraft</Offcanvas.Title>
+                                                </Offcanvas.Header>
+                                                <Offcanvas.Body >
+                                                    <Nav className="flex-column">
+                                                        <Nav.Item>
+                                                            <LinkContainer to="/" onClick={handleClose}>
+                                                                <Nav.Link >Home</Nav.Link>
+                                                            </LinkContainer>
+                                                        </Nav.Item>
+                                                        <Nav.Item>
+                                                            <LinkContainer to="/aboutus" onClick={handleClose}>
+                                                                <Nav.Link >About us</Nav.Link>
+                                                            </LinkContainer>
+                                                        </Nav.Item>
+                                                        <Nav.Item>
+                                                            <LinkContainer to="/prices" onClick={handleClose}>
+                                                                <Nav.Link >Prices</Nav.Link>
+                                                            </LinkContainer>
+                                                        </Nav.Item>
+                                                        <Nav.Item>
+                                                            <LinkContainer to="/login" onClick={handleClose}>
+                                                                <Nav.Link >Login</Nav.Link>
+                                                            </LinkContainer>
+                                                        </Nav.Item>
+                                                    </Nav>
+                                                </Offcanvas.Body>
+                                            </Offcanvas>
+                                        </Container>
+                                    </Navbar>
+                                </>
+                            )}
+                        </Row>
+                    </Col>
+                </Row>
+            </Container >
+
+
+
+
+
+
+
+
+
+{/* 
+            <Container fluid className='main-header'>
+                <Row>
+
+                    <Col xs={4} className="d-flex align-items-center">
+                        <Navbar.Brand className='me-auto'>
+                            <Link to='/'>
+                                <img id="header-logo" src='/logo-latest.png' alt='WillCraft Logo' />
+                            </Link>
+                        </Navbar.Brand>
+                    </Col>
+
+                    <Col>
+                        {user ? (
+                            <Row className='pt-3 text-end'>
+                                <Col>
+                                    <h5>Welcome back {user ? user.firstName : ''}!</h5>
+                                </Col>
+                            </Row>
+                        ) : null}
+
+                        {user ? (
+                            <>
+                                <Row>
+                                    <Col>
+
+                                        <Navbar expand="lg" className="pb-2">
+                                            <Container fluid className="justify-content-end">
+
+                                                <Button variant="outline-primary"
+                                                    style={{ borderColor: 'rgba(255, 255, 255, 0.87)' }}
+                                                    onClick={handleShow} className="d-lg-none ">
+                                                    <span className="navbar-toggler-icon" style={{ backgroundColor: 'rgba(255, 255, 255, 0.87)' }}></span>
+                                                </Button>
+
+                                                <Navbar.Collapse className="d-none d-lg-flex justify-content-end">
+                                                    <Nav variant='underline' className="ms-auto">
+                                                        <Nav.Item>
+                                                            <LinkContainer to="/">
+                                                                <Nav.Link className='header-nav-link'>Home</Nav.Link>
+                                                            </LinkContainer>
+                                                        </Nav.Item>
+                                                        <Nav.Item>
+                                                            <LinkContainer to="/aboutus">
+                                                                <Nav.Link className='header-nav-link'>About us</Nav.Link>
+                                                            </LinkContainer>
+                                                        </Nav.Item>
+                                                        <Nav.Item>
+                                                            <LinkContainer to="/prices">
+                                                                <Nav.Link className='header-nav-link'>Prices</Nav.Link>
+                                                            </LinkContainer>
+                                                        </Nav.Item>
+                                                        <Nav.Item>
+                                                            <LinkContainer to="/dashboard">
+                                                                <Nav.Link className='header-nav-link'>My Wills</Nav.Link>
+                                                            </LinkContainer>
+                                                        </Nav.Item>
+                                                        <Nav.Item>
+                                                            <LinkContainer to="/progressBar">
+                                                                <Nav.Link className='header-nav-link'>My Account</Nav.Link>
+                                                            </LinkContainer>
+                                                        </Nav.Item>
+                                                        <Nav.Item>
+                                                            <Nav.Link className='header-nav-link' onClick={logoutfn}>Logout</Nav.Link>
+                                                        </Nav.Item>
+                                                    </Nav>
+                                                </Navbar.Collapse>
+
+                                                <Offcanvas show={show} onHide={handleClose} placement="end" className="d-lg-none">
+                                                    <Offcanvas.Header closeButton>
+                                                        <Offcanvas.Title>WillCraft</Offcanvas.Title>
+                                                    </Offcanvas.Header>
+                                                    <Offcanvas.Body>
+                                                        <Nav className="flex-column">
+                                                            <Nav.Item>
+                                                                <LinkContainer to="/" onClick={handleClose}>
+                                                                    <Nav.Link>Home</Nav.Link>
+                                                                </LinkContainer>
+                                                            </Nav.Item>
+                                                            <Nav.Item>
+                                                                <LinkContainer to="/aboutus" onClick={handleClose}>
+                                                                    <Nav.Link>About us</Nav.Link>
+                                                                </LinkContainer>
+                                                            </Nav.Item>
+                                                            <Nav.Item>
+                                                                <LinkContainer to="/prices" onClick={handleClose}>
+                                                                    <Nav.Link>Prices</Nav.Link>
+                                                                </LinkContainer>
+                                                            </Nav.Item>
+                                                            <Nav.Item>
+                                                                <LinkContainer to="/dashboard" onClick={handleClose}>
+                                                                    <Nav.Link>My Wills</Nav.Link>
+                                                                </LinkContainer>
+                                                            </Nav.Item>
+                                                            <Nav.Item>
+                                                                <LinkContainer to="/progressBar" onClick={handleClose}>
+                                                                    <Nav.Link>My Account</Nav.Link>
+                                                                </LinkContainer>
+                                                            </Nav.Item>
+                                                            <Nav.Item>
+                                                                <Nav.Link onClick={() => { logoutfn(); handleClose(); }}>Logout</Nav.Link>
+                                                            </Nav.Item>
+                                                        </Nav>
+                                                    </Offcanvas.Body>
+                                                </Offcanvas>
+                                            </Container>
+                                        </Navbar>
+                                    </Col>
+                                </Row>
                             </>
                         ) : (
                             <>
-                                <Navbar expand="lg" className="pb-2">
-                                    <Container fluid className="justify-content-end">
+                                <Row>
+                                    <Col>
+                                        <Navbar expand="lg" className="pb-2">
+                                            <Container fluid className="justify-content-end">
 
-                                        <Button variant="outline-primary"
-                                            style={{ borderColor: 'rgba(255, 255, 255, 0.87)' }}
-                                            onClick={handleShow} className="d-lg-none ">
-                                            <span className="navbar-toggler-icon" style={{ backgroundColor: 'rgba(255, 255, 255, 0.87)' }}></span>
-                                        </Button>
+                                                <Button variant="outline-primary"
+                                                    style={{ borderColor: 'rgba(255, 255, 255, 0.87)' }}
+                                                    onClick={handleShow} className="d-lg-none ">
+                                                    <span className="navbar-toggler-icon" style={{ backgroundColor: 'rgba(255, 255, 255, 0.87)' }}></span>
+                                                </Button>
 
-                                        <Navbar.Collapse className="d-none d-lg-flex justify-content-end">
-                                            <Nav variant='underline' className="ms-auto">
-                                                <Nav.Item>
-                                                    <LinkContainer to="/">
-                                                        <Nav.Link className='header-nav-link'>Home</Nav.Link>
-                                                    </LinkContainer>
-                                                </Nav.Item>
-                                                <Nav.Item>
-                                                    <LinkContainer to="/aboutus">
-                                                        <Nav.Link className='header-nav-link'>About us</Nav.Link>
-                                                    </LinkContainer>
-                                                </Nav.Item>
-                                                <Nav.Item>
-                                                    <LinkContainer to="/prices">
-                                                        <Nav.Link className='header-nav-link'>Prices</Nav.Link>
-                                                    </LinkContainer>
-                                                </Nav.Item>
-                                                <Nav.Item>
-                                                    <LinkContainer to="/login">
-                                                        <Nav.Link className='header-nav-link'>Login</Nav.Link>
-                                                    </LinkContainer>
-                                                </Nav.Item>
-                                            </Nav>
-                                        </Navbar.Collapse>
+                                                <Navbar.Collapse className="d-none d-lg-flex justify-content-end">
+                                                    <Nav variant='underline' className="ms-auto">
+                                                        <Nav.Item>
+                                                            <LinkContainer to="/">
+                                                                <Nav.Link className='header-nav-link'>Home</Nav.Link>
+                                                            </LinkContainer>
+                                                        </Nav.Item>
+                                                        <Nav.Item>
+                                                            <LinkContainer to="/aboutus">
+                                                                <Nav.Link className='header-nav-link'>About us</Nav.Link>
+                                                            </LinkContainer>
+                                                        </Nav.Item>
+                                                        <Nav.Item>
+                                                            <LinkContainer to="/prices">
+                                                                <Nav.Link className='header-nav-link'>Prices</Nav.Link>
+                                                            </LinkContainer>
+                                                        </Nav.Item>
+                                                        <Nav.Item>
+                                                            <LinkContainer to="/login">
+                                                                <Nav.Link className='header-nav-link'>Login</Nav.Link>
+                                                            </LinkContainer>
+                                                        </Nav.Item>
+                                                    </Nav>
+                                                </Navbar.Collapse>
 
-                                        <Offcanvas show={show} onHide={handleClose} placement="end" className="d-lg-none">
-                                            <Offcanvas.Header closeButton>
-                                                <Offcanvas.Title>WillCraft</Offcanvas.Title>
-                                            </Offcanvas.Header>
-                                            <Offcanvas.Body >
-                                                <Nav className="flex-column">
+                                                <Offcanvas show={show} onHide={handleClose} placement="end" className="d-lg-none">
+                                                    <Offcanvas.Header closeButton>
+                                                        <Offcanvas.Title>WillCraft</Offcanvas.Title>
+                                                    </Offcanvas.Header>
+                                                    <Offcanvas.Body >
+                                                        <Nav className="flex-column">
+                                                            <Nav.Item>
+                                                                <LinkContainer to="/" onClick={handleClose}>
+                                                                    <Nav.Link >Home</Nav.Link>
+                                                                </LinkContainer>
+                                                            </Nav.Item>
+                                                            <Nav.Item>
+                                                                <LinkContainer to="/aboutus" onClick={handleClose}>
+                                                                    <Nav.Link >About us</Nav.Link>
+                                                                </LinkContainer>
+                                                            </Nav.Item>
+                                                            <Nav.Item>
+                                                                <LinkContainer to="/prices" onClick={handleClose}>
+                                                                    <Nav.Link >Prices</Nav.Link>
+                                                                </LinkContainer>
+                                                            </Nav.Item>
+                                                            <Nav.Item>
+                                                                <LinkContainer to="/login" onClick={handleClose}>
+                                                                    <Nav.Link >Login</Nav.Link>
+                                                                </LinkContainer>
+                                                            </Nav.Item>
+                                                        </Nav>
+                                                    </Offcanvas.Body>
+                                                </Offcanvas>
+                                            </Container>
+                                        </Navbar>
+                                    </Col>
+                                </Row>
+                            </>
+                        )}
+                    </Col>
+                </Row>
+            </Container>
+
+
+
+            <Container fluid className='main-header'>
+                <Row className='text-start'>
+                    <Col xs={4} className="d-flex align-items-center align-items-xs-end">
+                        <Navbar.Brand className='me-auto'>
+                            <Link to='/'>
+                                <img id="header-logo" src='/logo-latest.png' alt='WillCraft Logo' />
+                            </Link>
+                        </Navbar.Brand>
+                    </Col>
+                    <Col>
+                        {user ? (
+                            <Row className='pt-3 text-end'>
+                                <h5>Welcome back {user ? user.firstName : ''}!</h5>
+                            </Row>
+                        ) : null}
+                        <Row>
+                            {user ? (
+                                <>
+                                    <Navbar expand="lg" className="pb-2">
+                                        <Container fluid className="justify-content-end">
+
+                                            <Button variant="outline-primary"
+                                                style={{ borderColor: 'rgba(255, 255, 255, 0.87)' }}
+                                                onClick={handleShow} className="d-lg-none ">
+                                                <span className="navbar-toggler-icon" style={{ backgroundColor: 'rgba(255, 255, 255, 0.87)' }}></span>
+                                            </Button>
+
+                                            <Navbar.Collapse className="d-none d-lg-flex justify-content-end">
+                                                <Nav variant='underline' className="ms-auto">
                                                     <Nav.Item>
-                                                        <LinkContainer to="/" onClick={handleClose}>
-                                                            <Nav.Link >Home</Nav.Link>
+                                                        <LinkContainer to="/">
+                                                            <Nav.Link className='header-nav-link'>Home</Nav.Link>
                                                         </LinkContainer>
                                                     </Nav.Item>
                                                     <Nav.Item>
-                                                        <LinkContainer to="/aboutus" onClick={handleClose}>
-                                                            <Nav.Link >About us</Nav.Link>
+                                                        <LinkContainer to="/aboutus">
+                                                            <Nav.Link className='header-nav-link'>About us</Nav.Link>
                                                         </LinkContainer>
                                                     </Nav.Item>
                                                     <Nav.Item>
-                                                        <LinkContainer to="/prices" onClick={handleClose}>
-                                                            <Nav.Link >Prices</Nav.Link>
+                                                        <LinkContainer to="/prices">
+                                                            <Nav.Link className='header-nav-link'>Prices</Nav.Link>
                                                         </LinkContainer>
                                                     </Nav.Item>
                                                     <Nav.Item>
-                                                        <LinkContainer to="/login" onClick={handleClose}>
-                                                            <Nav.Link >Login</Nav.Link>
+                                                        <LinkContainer to="/dashboard">
+                                                            <Nav.Link className='header-nav-link'>My Wills</Nav.Link>
+                                                        </LinkContainer>
+                                                    </Nav.Item>
+                                                    <Nav.Item>
+                                                        <LinkContainer to="/progressBar">
+                                                            <Nav.Link className='header-nav-link'>My Account</Nav.Link>
+                                                        </LinkContainer>
+                                                    </Nav.Item>
+                                                    <Nav.Item>
+                                                        <Nav.Link className='header-nav-link' onClick={logoutfn}>Logout</Nav.Link>
+                                                    </Nav.Item>
+                                                </Nav>
+                                            </Navbar.Collapse>
+
+                                            <Offcanvas show={show} onHide={handleClose} placement="end" className="d-lg-none">
+                                                <Offcanvas.Header closeButton>
+                                                    <Offcanvas.Title>WillCraft</Offcanvas.Title>
+                                                </Offcanvas.Header>
+                                                <Offcanvas.Body>
+                                                    <Nav className="flex-column">
+                                                        <Nav.Item>
+                                                            <LinkContainer to="/" onClick={handleClose}>
+                                                                <Nav.Link>Home</Nav.Link>
+                                                            </LinkContainer>
+                                                        </Nav.Item>
+                                                        <Nav.Item>
+                                                            <LinkContainer to="/aboutus" onClick={handleClose}>
+                                                                <Nav.Link>About us</Nav.Link>
+                                                            </LinkContainer>
+                                                        </Nav.Item>
+                                                        <Nav.Item>
+                                                            <LinkContainer to="/prices" onClick={handleClose}>
+                                                                <Nav.Link>Prices</Nav.Link>
+                                                            </LinkContainer>
+                                                        </Nav.Item>
+                                                        <Nav.Item>
+                                                            <LinkContainer to="/dashboard" onClick={handleClose}>
+                                                                <Nav.Link>My Wills</Nav.Link>
+                                                            </LinkContainer>
+                                                        </Nav.Item>
+                                                        <Nav.Item>
+                                                            <LinkContainer to="/progressBar" onClick={handleClose}>
+                                                                <Nav.Link>My Account</Nav.Link>
+                                                            </LinkContainer>
+                                                        </Nav.Item>
+                                                        <Nav.Item>
+                                                            <Nav.Link onClick={() => { logoutfn(); handleClose(); }}>Logout</Nav.Link>
+                                                        </Nav.Item>
+                                                    </Nav>
+                                                </Offcanvas.Body>
+                                            </Offcanvas>
+                                        </Container>
+                                    </Navbar>
+                                </>
+                            ) : (
+                                <>
+                                    <Navbar expand="lg" className="pb-2">
+                                        <Container fluid className="justify-content-end">
+
+                                            <Button variant="outline-primary"
+                                                style={{ borderColor: 'rgba(255, 255, 255, 0.87)' }}
+                                                onClick={handleShow} className="d-lg-none ">
+                                                <span className="navbar-toggler-icon" style={{ backgroundColor: 'rgba(255, 255, 255, 0.87)' }}></span>
+                                            </Button>
+
+                                            <Navbar.Collapse className="d-none d-lg-flex justify-content-end">
+                                                <Nav variant='underline' className="ms-auto">
+                                                    <Nav.Item>
+                                                        <LinkContainer to="/">
+                                                            <Nav.Link className='header-nav-link'>Home</Nav.Link>
+                                                        </LinkContainer>
+                                                    </Nav.Item>
+                                                    <Nav.Item>
+                                                        <LinkContainer to="/aboutus">
+                                                            <Nav.Link className='header-nav-link'>About us</Nav.Link>
+                                                        </LinkContainer>
+                                                    </Nav.Item>
+                                                    <Nav.Item>
+                                                        <LinkContainer to="/prices">
+                                                            <Nav.Link className='header-nav-link'>Prices</Nav.Link>
+                                                        </LinkContainer>
+                                                    </Nav.Item>
+                                                    <Nav.Item>
+                                                        <LinkContainer to="/login">
+                                                            <Nav.Link className='header-nav-link'>Login</Nav.Link>
                                                         </LinkContainer>
                                                     </Nav.Item>
                                                 </Nav>
-                                            </Offcanvas.Body>
-                                        </Offcanvas>
-                                    </Container>
-                                </Navbar>
-                            </>
-                        )}
-                    </Row>
-                </Col>
-            </Row>
-        </Container >
+                                            </Navbar.Collapse>
+
+                                            <Offcanvas show={show} onHide={handleClose} placement="end" className="d-lg-none">
+                                                <Offcanvas.Header closeButton>
+                                                    <Offcanvas.Title>WillCraft</Offcanvas.Title>
+                                                </Offcanvas.Header>
+                                                <Offcanvas.Body >
+                                                    <Nav className="flex-column">
+                                                        <Nav.Item>
+                                                            <LinkContainer to="/" onClick={handleClose}>
+                                                                <Nav.Link >Home</Nav.Link>
+                                                            </LinkContainer>
+                                                        </Nav.Item>
+                                                        <Nav.Item>
+                                                            <LinkContainer to="/aboutus" onClick={handleClose}>
+                                                                <Nav.Link >About us</Nav.Link>
+                                                            </LinkContainer>
+                                                        </Nav.Item>
+                                                        <Nav.Item>
+                                                            <LinkContainer to="/prices" onClick={handleClose}>
+                                                                <Nav.Link >Prices</Nav.Link>
+                                                            </LinkContainer>
+                                                        </Nav.Item>
+                                                        <Nav.Item>
+                                                            <LinkContainer to="/login" onClick={handleClose}>
+                                                                <Nav.Link >Login</Nav.Link>
+                                                            </LinkContainer>
+                                                        </Nav.Item>
+                                                    </Nav>
+                                                </Offcanvas.Body>
+                                            </Offcanvas>
+                                        </Container>
+                                    </Navbar>
+                                </>
+                            )}
+                        </Row>
+                    </Col>
+                </Row>
+            </Container > */}
+        </>
     )
 }
 
