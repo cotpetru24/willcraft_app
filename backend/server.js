@@ -9,16 +9,25 @@ import { orderRoutes } from './routes/orderRoutes.js';
 import { reviewRoutes } from './routes/reviewRoutes.js';
 import { messageRoutes } from './routes/messageRoutes.js';
 import { assetRoutes } from './routes/assetRoutes.js';
+import { paymentRoutes } from './routes/paymentRoutes.js';
+import Stripe from 'stripe';
+import cors from 'cors';
+import { v4 as uuidv4 } from 'uuid';
 
 dotenv.config();
 
 const port = process.env.PORT || 5000;
+
+const stripe = new Stripe(process.env.STRIPE_API_SECRET);
+
+
 
 connectDb();
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors())
 
 // Session Setup
 app.use(
@@ -49,6 +58,7 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/messages', messageRoutes);
 app.use('/api/assets', assetRoutes);
+app.use('/api/payments', paymentRoutes)
 
 
 

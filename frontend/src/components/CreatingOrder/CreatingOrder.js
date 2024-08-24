@@ -204,7 +204,6 @@ const CreatingOrder = () => {
                         <ExecutorsCard />
                     </Col>
                     <Col xs={{ order: 1 }} md={{ order: 2 }}>
-                    // In CreatingOrder component
                         <ProgressAndInstructionsCard setShowCheckout={setShowCheckout} showCheckout={showCheckout} />
                         {/* <CheckOutCard setShowCheckout={setShowCheckout}/> */}
                         {/* {showCheckout && <CheckOutCard clientSecret={clientSecret} />} */}
