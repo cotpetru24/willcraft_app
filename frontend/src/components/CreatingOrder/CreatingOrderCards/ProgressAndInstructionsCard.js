@@ -60,7 +60,7 @@ export const OrderProgressBar = () => {
 
 
 
-const ProgressAndInstructionsCard = () => {
+const ProgressAndInstructionsCard = ({ setShowCheckout, showCheckout }) => {
     const navigate = useNavigate();
     const { user } = useSelector(state => state.auth);
     const currentOrderStep = useSelector(state => state.currentOrderStep);
@@ -152,9 +152,10 @@ const ProgressAndInstructionsCard = () => {
                         </Row>
                         <Row className="d-flex justify-content-end">
                             <Col xs="auto">
-                                {currentOrderStep.currentStep === 6 && (
+                                {currentOrderStep.currentStep === 6 && !showCheckout && (
                                     <Button variant="primary" className="creating-order-tile-btns"
-                                        onClick={() => navigate('/ChechOutForm')}
+                                        // onClick={() => navigate('/ChechOutForm')}
+                                        onClick={() => setShowCheckout(true)} // Add this line
                                     >
                                         Checkout
                                     </Button>

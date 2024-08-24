@@ -11,6 +11,8 @@ import ProgressAndInstructionsCard from "./CreatingOrderCards/ProgressAndInstruc
 import { Container, Row, Col } from "react-bootstrap";
 import { updateOrderCurrentStep } from "../../features/orderSteps/orderCurrentStepSlice";
 import constants from "../../common/constants";
+import PaymentPage from "./CreatingOrderCards/CheckOutCard";
+import { useState } from "react";
 
 
 
@@ -23,6 +25,10 @@ const CreatingOrder = () => {
     const spouseOrPartner = useSelector(state => state.spouseOrPartner);
     const kids = useSelector(state => state.kids);
     const assets = useSelector(state => state.assets);
+    const clientSecret = "your-client-secret-here"; // Replace with your actual client secret
+
+
+    const [showCheckout, setShowCheckout] = useState(false);
 
     useEffect(() => {
         let currentStep = 0;
@@ -198,7 +204,15 @@ const CreatingOrder = () => {
                         <ExecutorsCard />
                     </Col>
                     <Col xs={{ order: 1 }} md={{ order: 2 }}>
-                        <ProgressAndInstructionsCard />
+                    // In CreatingOrder component
+                        <ProgressAndInstructionsCard setShowCheckout={setShowCheckout} showCheckout={showCheckout} />
+                        {/* <CheckOutCard setShowCheckout={setShowCheckout}/> */}
+                        {/* {showCheckout && <CheckOutCard clientSecret={clientSecret} />} */}
+                        {/* {showCheckout && <CheckOutCard setShowCheckout={setShowCheckout} />} */}
+                        {showCheckout && (
+                            <PaymentPage clientSecret={clientSecret} setShowCheckout={setShowCheckout} />
+                        )}
+
                     </Col>
                 </Row>
             </Container>
