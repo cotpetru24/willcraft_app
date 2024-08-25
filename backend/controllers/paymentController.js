@@ -51,13 +51,15 @@ export const getPayment = asyncHandler(async (req, res) => {
 
 
 export const paymentIntent = asyncHandler(async (req, res) => {
-    const { product } = req.body;
+    const { products } = req.body;
 
     try {
+        console.log('Request body:', JSON.stringify(req.body, null, 2));
+        console.log(`products= ${products}`)
         const paymentIntent = await stripe.paymentIntents.create({
-            amount: product.price * 100, // Stripe works with the smallest currency unit
+            amount: products.price * 100, // Stripe works with the smallest currency unit
             currency: 'gbp',
-            description: product.name,
+            description: products.name,
             automatic_payment_methods: { enabled: true },
         });
 

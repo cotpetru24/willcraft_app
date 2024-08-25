@@ -115,8 +115,17 @@ const OrderItem = ({ order }) => {
                                 >
                                     Delete
                                 </Button>
-                                {order.status === "Completed" && (
-                                    <Button variant="primary m-2">Edit</Button>
+                                {order.status === "complete" && (
+                                    <Button variant="primary m-2 order-item-btn"
+                                    onClick={async () => {
+                                        await resetOrderState(dispatch);
+                                        await dispatch(getOrderThunk(order._id));
+                                        navigate('/creatingOrder');
+                                    }}
+                                    className="order-item-btns"
+                                    id="continue-order-btn"
+                                    
+                                    >Edit</Button>
                                 )}
                                 {order.status === "CreatingOrder" && (
                                     <Button

@@ -62,6 +62,13 @@ import { protect } from '../middleware/authMiddleware.js';
 const router = express.Router();
 
 
+
+
+
+
+
+
+
 router.get('/', protect, getPayment);
 
 router.post('/create-payment-intent', protect, paymentIntent);
