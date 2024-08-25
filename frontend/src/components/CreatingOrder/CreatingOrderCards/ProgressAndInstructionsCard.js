@@ -36,6 +36,8 @@ import generateWillPdf from '../../../features/docGen/generateWillPdf';
 // };
 export const OrderProgressBar = () => {
     const currentOrderStep = useSelector(state => state.currentOrderStep.currentStep || 0);
+
+
     const now = Math.floor((currentOrderStep / 6) * 100 / 10) * 10;
 
     const textColor = now > 50 ? 'rgba(255, 255, 255, 0.87)' : 'black';
@@ -64,6 +66,8 @@ const ProgressAndInstructionsCard = ({ setShowCheckout, showCheckout }) => {
     const navigate = useNavigate();
     const { user } = useSelector(state => state.auth);
     const currentOrderStep = useSelector(state => state.currentOrderStep);
+
+    const order = useSelector(state => state.currentOrder);
 
 
     return (
@@ -152,7 +156,7 @@ const ProgressAndInstructionsCard = ({ setShowCheckout, showCheckout }) => {
                         </Row>
                         <Row className="d-flex justify-content-end">
                             <Col xs="auto">
-                                {currentOrderStep.currentStep === 6 && !showCheckout && (
+                                {currentOrderStep.currentStep === 6 && !showCheckout && order.status !== "complete" && (
                                     <Button variant="primary" className="creating-order-tile-btns"
                                         // onClick={() => navigate('/ChechOutForm')}
                                         onClick={() => setShowCheckout(true)} // Add this line
@@ -162,7 +166,7 @@ const ProgressAndInstructionsCard = ({ setShowCheckout, showCheckout }) => {
                                 )}
                             </Col>
                             <Col xs="auto">
-                                {currentOrderStep.currentStep === 7 && (
+                                {order.status === "complete" && (
 
                                     <Button variant="primary" className="creating-order-tile-btns"
                                         onClick={generateWillPdf}
