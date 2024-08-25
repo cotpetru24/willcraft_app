@@ -14,6 +14,10 @@ const orderSchema = new mongoose.Schema(
             required: [true, 'Status is required'],
             default: 'CreatingOrder'
         },
+        completionDate: {
+            type: Date,
+            default: null,
+        },
         peopleAndRoles: [
             {
                 personId: {

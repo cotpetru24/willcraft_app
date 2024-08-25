@@ -23,9 +23,10 @@ const HowDoesItWork = () => {
               <Col xs={12} md={6} className="d-flex align-items-center ">
                 <div>
                   <h3 className="carousel-item-header">Enter your details</h3>
-                  <p>Start by entering your personal information, including your name,
-                    address, and details of your beneficiaries. Our intuitive platform guides you through each step, ensuring you
-                    do not miss any critical details. This process sets the foundation for a legally sound will that accurately reflects your wishes.
+                  <p>Start by entering your personal information, including your name, address, and details of your beneficiaries. 
+                    Our intuitive platform guides you through each step, ensuring you do not miss any critical details. 
+                    This process sets the foundation for a legally sound will that accurately reflects your wishes. 
+                    Once your will is completed and paid for, you have 30 days to edit the details if needed.
                   </p>
                 </div>
               </Col>

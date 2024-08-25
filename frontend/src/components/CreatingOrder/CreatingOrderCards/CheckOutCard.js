@@ -129,6 +129,7 @@ const CheckOutCard = ({ setShowCheckout }) => {
           updateOrderThunk({
             ...currentOrder,
             status: "complete",
+            completionDate: new Date()
           })
         );
 
@@ -146,6 +147,80 @@ const CheckOutCard = ({ setShowCheckout }) => {
       setError(`Payment failed: ${err.message}`);
       setIsProcessing(false);
     }
+  };
+
+
+  // const CARD_ELEMENT_OPTIONS = {
+  //   style: {
+  //     base: {
+  //       color: "#495057", // Standard input text color
+  //       fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+  //       fontSmoothing: "antialiased",
+  //       fontSize: "16px",
+  //       "::placeholder": {
+  //         color: "#6c757d" // Placeholder color similar to Bootstrap
+  //       },
+  //       backgroundColor: "#ffffff", // Input background color
+  //       border: "1px solid #ced4da", // Standard Bootstrap input border color
+  //       borderRadius: "0.25rem", // Standard Bootstrap border radius
+  //       padding: "0.375rem 0.75rem", // Standard Bootstrap padding
+  //       boxShadow: "none", // Removing any shadow
+  //     },
+  //     invalid: {
+  //       color: "#dc3545", // Bootstrap danger color for invalid inputs
+  //       iconColor: "#dc3545"
+  //     }
+  //   }
+  // };
+
+
+  const CARD_ELEMENT_OPTIONS = {
+    style: {
+      base: {
+        color: '#000000', // Text color
+        fontFamily: 'Avenir, Helvetica, sans-serif',
+        fontSmoothing: 'antialiased',
+        fontSize: '16px',
+        '::placeholder': {
+          color: '#73757B', // Placeholder text color
+        },
+        backgroundColor: '', // Background color
+        border: '1px solid #000000', // Border color
+        borderRadius: '12px', // Border radius
+      },
+      invalid: {
+        color: '#ff0000', // Error text color
+        iconColor: '#ff0000', // Error icon color
+      },
+    },
+    hidePostalCode: true, // Hide postal code field if needed
+  };
+
+  const appearance = {
+    theme: 'stripe'
+  };
+
+  const element ={
+    style: {
+      base: {
+        iconColor: '#c4f0ff',
+        color: '#fff',
+        fontWeight: '500',
+        fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
+        fontSize: '16px',
+        fontSmoothing: 'antialiased',
+        ':-webkit-autofill': {
+          color: '#fce883',
+        },
+        '::placeholder': {
+          color: '#87BBFD',
+        },
+      },
+      invalid: {
+        iconColor: '#FFC7EE',
+        color: '#FFC7EE',
+      },
+    },
   };
 
   return (
@@ -220,7 +295,8 @@ const CheckOutCard = ({ setShowCheckout }) => {
                       <Form.Label className="bold-label">
                         Card Details
                       </Form.Label>
-                      <CardElement />
+                      {/* <CardElement oprions={CARD_ELEMENT_OPTIONS}/> */}
+                      <CardElement id="card-element" options={CARD_ELEMENT_OPTIONS} className="form-control" />
                     </Form.Group>
                     <Button
                       variant="primary"

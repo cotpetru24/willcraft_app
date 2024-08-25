@@ -213,6 +213,7 @@ export const getAllUserOrders = asyncHandler(async (req, res) => {
                 createdAt: order.createdAt,
                 updatedAt: order.updatedAt,
                 status: order.status,
+                completionDate:order.completionDate || '',
                 testator: testatorRole ? testatorRole.personId.fullLegalName : 'No testator found',
                 dob: testatorRole ? testatorRole.personId.dob : '',
                 fullAddress: testatorRole ? testatorRole.personId.fullAddress : '',

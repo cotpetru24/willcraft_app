@@ -168,7 +168,7 @@ const ProgressAndInstructionsCard = ({ setShowCheckout, showCheckout }) => {
                             <Col xs="auto">
                                 {order.status === "complete" && (
 
-                                    <Button variant="primary" className="creating-order-tile-btns"
+                                    <Button variant="primary" 
                                         onClick={generateWillPdf}
                                     >
                                         Generate the Will

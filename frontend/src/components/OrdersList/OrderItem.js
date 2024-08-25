@@ -8,13 +8,16 @@ import { Col, Row } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import ProgressBar from 'react-bootstrap/ProgressBar';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheckSquare, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import generateWillPdf from '../../features/docGen/generateWillPdf.js';
 
 
 
 
 
 
-export const OrderProgressBar = ({step}) => {
+export const OrderProgressBar = ({ step }) => {
     const now = Math.floor((step / 6) * 100 / 10) * 10;
 
     const textColor = now > 50 ? 'rgba(255, 255, 255, 0.87)' : 'black';
@@ -22,13 +25,13 @@ export const OrderProgressBar = ({step}) => {
     return (
         <div style={{ position: 'relative' }}>
             <ProgressBar className="mb-3" now={now} />
-            <div style={{ 
-                position: 'absolute', 
-                width: '100%', 
-                textAlign: 'center', 
-                fontSize: '12px', 
-                bottom: -1, 
-                color: textColor 
+            <div style={{
+                position: 'absolute',
+                width: '100%',
+                textAlign: 'center',
+                fontSize: '12px',
+                bottom: -1,
+                color: textColor
             }}>
                 {`${now}%`}
             </div>
@@ -39,58 +42,25 @@ export const OrderProgressBar = ({step}) => {
 const OrderItem = ({ order }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    // return (
-    //     <Container className="mb-5">
-    //         <Card className='shadow' bg="light" text="dark" >
-    //             <Card.Body>
-    //                 <OrderProgressBar/>
-    //                 <Card.Title as="h5">{order.testator}</Card.Title>
-    //                 <Card.Text>
-    //                     <Row>
-    //                         <Col>
-    //                             <p className="order-item-p"><span className="order-item-p-span">Date of birth: </span>{new Date(order.dob).toLocaleDateString('en-GB')}</p>
-    //                             <p className="order-item-p"><span className="order-item-p-span">Address: </span>{order.fullAddress}</p>
-    //                             <p className="order-item-p"><span className="order-item-p-span">Last updated: </span>{new Date(order.updatedAt).toLocaleString('en-GB')}</p>
-    //                         </Col>
-    //                     </Row>
-    //                     <Row className=" d-flex justify-content-end">
-    //                         <Col xs="auto">
-    //                             <Button variant="warning m-1 order-item-btn"
-    //                                 onClick={() => dispatch(deleteOrder(order._id))}
-    //                                 className="order-item-btns"
-    //                             >Delete</Button>
-
-    //                             {order.status === "Completed" && (
-    //                                 <Button variant="primary m-2">Edit</Button>
-    //                             )}
-
-    //                             {order.status === "CreatingOrder" && (
-    //                                 <Button variant="success m-1 order-item-btn"
-    //                                     onClick={async () => {
-    //                                         await resetOrderState(dispatch)
-    //                                         await dispatch(getOrderThunk(order._id));
-    //                                         navigate('/creatingOrder');
-    //                                     }}
-    //                                     className="order-item-btns"
-    //                                     id="continue-order-btn"
-    //                                 >
-    //                                     Continue
-    //                                 </Button>
-    //                             )}
-    //                         </Col>
-    //                     </Row>
-    //                 </Card.Text>
-    //             </Card.Body>
-    //         </Card>
-    //     </Container>
-    // )
 
     return (
         <Container className="mb-5">
             <Card className='shadow' bg="light" text="dark" >
                 <Card.Body>
-                    <OrderProgressBar
-                    step={order.currentStep} />
+                    {order.status !== 'complete' && (
+                        <OrderProgressBar
+                            step={order.currentStep} />
+                    )}
+                    {order.status === 'complete' && (
+                        <>
+                            <Row>
+                                <Col className="d-flex justify-content-end align-items-center">
+                                    <h5 className="m-0 pe-1">Complete</h5>
+                                    <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />
+                                </Col>
+                            </Row>
+                        </>
+                    )}
                     <Card.Title as="h5">{order.testator}</Card.Title>
                     <div> {/* Replace Card.Text with div */}
                         <Row>
@@ -107,25 +77,74 @@ const OrderItem = ({ order }) => {
                             </Col>
                         </Row>
                         <Row className=" d-flex justify-content-end">
+
+                            {
+                                order.status === "complete" &&
+                                (
+                                    (() => {
+                                        const currentDate = new Date();
+                                        const completionDate = new Date(order.completionDate);
+                                        const timeDifference = completionDate.getTime() + 30 * 24 * 60 * 60 * 1000 - currentDate.getTime();
+                                        const daysLeft = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+
+                                        if (daysLeft > 0) {
+                                            return (
+                                                <>
+                                                    <Col xs="auto" 
+                                                    className="d-flex justify-content-start align-items-center flex-grow-1"
+                                                    >
+                                                        <p className="m-0" style={{ fontWeight: 500 }}>{daysLeft} days left to edit</p>
+                                                    </Col>
+                                                </>
+                                            );
+                                        }
+                                        return null;
+                                    })()
+                                )
+                            }
                             <Col xs="auto">
-                                <Button
-                                    variant="warning m-1 order-item-btn"
-                                    onClick={() => dispatch(deleteOrder(order._id))}
-                                    className="order-item-btns"
-                                >
-                                    Delete
-                                </Button>
+                                {order.status !== 'complete' && (
+                                    <Button
+                                        variant="warning m-1 order-item-btn"
+                                        onClick={() => dispatch(deleteOrder(order._id))}
+                                        className="order-item-btns"
+                                    >
+                                        Delete
+                                    </Button>
+                                )}
+
+                                {
+                                    order.status === "complete" &&
+                                    (
+                                        new Date() < new Date(order.completionDate).getTime() + 30 * 24 * 60 * 60 * 1000
+                                    ) &&
+                                    (
+                                        <Button variant="info m-2 order-item-btn"
+                                            onClick={async () => {
+                                                await resetOrderState(dispatch);
+                                                await dispatch(getOrderThunk(order._id));
+                                                navigate('/creatingOrder');
+                                            }}
+                                            className="order-item-btns"
+                                            id="continue-order-btn"
+                                        >
+                                            Edit
+                                        </Button>
+                                    )
+                                }
+
+
+
+
+
+
                                 {order.status === "complete" && (
-                                    <Button variant="primary m-2 order-item-btn"
-                                    onClick={async () => {
-                                        await resetOrderState(dispatch);
-                                        await dispatch(getOrderThunk(order._id));
-                                        navigate('/creatingOrder');
-                                    }}
-                                    className="order-item-btns"
-                                    id="continue-order-btn"
-                                    
-                                    >Edit</Button>
+
+                                    <Button variant="primary" className=""
+                                        onClick={generateWillPdf}
+                                    >
+                                        Generate the Will
+                                    </Button>
                                 )}
                                 {order.status === "CreatingOrder" && (
                                     <Button
