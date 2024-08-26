@@ -31,8 +31,7 @@ const paymentSchema = new mongoose.Schema(
         products: [
             {
                 name: { type: String, required: true },
-                price: { type: Number, required: true },
-                vat: { type: Number, required: true }
+                price: { type: Number, required: true }
             }
         ],
         paymentMethod: {
