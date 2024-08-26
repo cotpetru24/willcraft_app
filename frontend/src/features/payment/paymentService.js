@@ -7,7 +7,7 @@ const API_PAYMENT_URL = '/api/payments';
 export const createPaymentIntent = async (products, token) => {
   const config = {
     headers: {
-      Authorization: `Bearer ${token}`,
+      "Authorization": `Bearer ${token}`,
       "Content-Type": "application/json",
     }
   };
