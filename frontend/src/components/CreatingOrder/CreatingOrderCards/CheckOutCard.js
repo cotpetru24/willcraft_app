@@ -38,6 +38,7 @@ const CheckOutCard = ({ setShowCheckout, clientSecret, products, totalAmount, ad
         setError(`Payment failed: ${error.message}`);
         setIsProcessing(false);
       } else if (paymentIntent && paymentIntent.status === "succeeded") {
+        // Prepare the payment data to dispatch
         const paymentData = {
           orderId: currentOrder.orderId,
           userId: userId,
@@ -57,10 +58,13 @@ const CheckOutCard = ({ setShowCheckout, clientSecret, products, totalAmount, ad
           })
         );
 
+        // Handle successful payment
+        console.log("Payment successful!");
+        setError(null);
         setIsProcessing(false);
         setTimeout(() => {
           setShowCheckout(false);
-        }, 2000);
+        }, 2000); // 2-second delay
         toast.success("Payment successfully made!");
       }
     } catch (err) {
@@ -92,22 +96,23 @@ const CheckOutCard = ({ setShowCheckout, clientSecret, products, totalAmount, ad
 
             {/* Order Breakdown */}
             <Card.Text>
-  {products.map((product, index) => (
-    <Row key={index} className="d-flex justify-content-between">
-      <Col>
-        <p>1x {product.name}</p>
-      </Col>
-      <Col className="text-end">
-        <p>£{product.price.toFixed(2)}</p>
-      </Col>
-    </Row>
-  ))}
-  <Row className="d-flex justify-content-end">
-    <Col className="text-end">
-      <strong>Total: £{totalAmount.toFixed(2)}</strong>
-    </Col>
-  </Row>
-</Card.Text>
+              {products.map((product, index) => (
+                <Row key={index} className="d-flex justify-content-between">
+                  <Col>
+                    <p>1x {product.name}</p>
+                  </Col>
+                  <Col className="text-end">
+                    <p>£{product.price.toFixed(2)}</p>
+                  </Col>
+                </Row>
+              ))}
+              <Row className="d-flex justify-content-end">
+                <Col className="text-end">
+                  <strong>Total: £{totalAmount.toFixed(2)}</strong>
+                </Col>
+              </Row>
+            </Card.Text>
+
             <Card.Text as="div">
               <Row>
                 <Col>
@@ -139,7 +144,7 @@ const CheckOutCard = ({ setShowCheckout, clientSecret, products, totalAmount, ad
                       variant="primary"
                       className="m-1"
                       type="submit"
-                      disabled={isProcessing}
+                      disabled={!stripe || isProcessing}
                     >
                       {isProcessing ? "Processing..." : "Pay"}
                     </Button>
@@ -164,11 +169,13 @@ const CheckOutCard = ({ setShowCheckout, clientSecret, products, totalAmount, ad
 
 const PaymentPage = ({ setShowCheckout }) => {
   const [clientSecret, setClientSecret] = useState(null);
-  const [addStorage, setAddStorage] = useState(false);
-  const [addPrinting, setAddPrinting] = useState(false);
   const dispatch = useDispatch();
 
+  const [addStorage, setAddStorage] = useState(false);
+  const [addPrinting, setAddPrinting] = useState(false);
+
   const baseProduct = { name: "Standard will", price: 20 };
+
   const storageProduct = { name: "Storage", price: 25 };
   const printingProduct = { name: "Printing", price: 10 };
 
@@ -198,6 +205,7 @@ const PaymentPage = ({ setShowCheckout }) => {
 
   return (
     <>
+      {/* Render only if clientSecret is available */}
       {clientSecret && (
         <Elements key={clientSecret} stripe={stripePromise} options={{ clientSecret }}>
           <CheckOutCard
