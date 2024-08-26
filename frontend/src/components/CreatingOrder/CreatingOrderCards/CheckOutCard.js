@@ -39,26 +39,114 @@ const CheckOutCard = ({ setShowCheckout, clientSecret }) => {
     (addStorage ? storageProduct.vat : 0) +
     (addPrinting ? printingProduct.vat : 0);
 
+  const [products, setProducts] = useState(null);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   if (!stripe || !elements || !clientSecret) {
+  //     return;
+  //   }
+
+  //   setIsProcessing(true);
+
+  //   try {
+  //     const { error, paymentIntent } = await stripe.confirmPayment({
+  //       elements,
+  //       confirmParams: {
+  //       },
+  //       redirect: "if_required", 
+  //     });
+
+  //     if (error) {
+  //       setError(`Payment failed: ${error.message}`);
+  //       setIsProcessing(false);
+  //     } else if (paymentIntent && paymentIntent.status === "succeeded") {
+  //       // Prepare the payment data to dispatch
+  //       const paymentData = {
+  //         orderId: currentOrder.orderId,
+  //         userId: userId,
+  //         amount: paymentIntent.amount,
+  //         status: paymentIntent.status,
+  //         paymentDate: new Date(paymentIntent.created * 1000),
+  //         paymentMethod: paymentIntent.payment_method_types[0],
+  //         products:[products here]
+  //       };
+
+  //       await dispatch(createPaymentThunk(paymentData)).unwrap();
+  //       await dispatch(
+  //         updateOrderThunk({
+  //           ...currentOrder,
+  //           status: "complete",
+  //           completionDate: new Date(),
+  //         })
+  //       );
+
+  //       // Handle successful payment
+  //       console.log("Payment successful!");
+  //       setError(null);
+  //       setIsProcessing(false);
+  //       setTimeout(() => {
+  //         setShowCheckout(false);
+  //       }, 2000); // 2-second delay
+  //       toast.success("Payment successfully made!");
+  //     }
+  //   } catch (err) {
+  //     console.error("Payment error: ", err);
+  //     setError(`Payment failed: ${err.message}`);
+  //     setIsProcessing(false);
+  //   }
+  // };
+
+
+
+
+
+
+
+
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!stripe || !elements || !clientSecret) {
       return;
     }
-
+  
     setIsProcessing(true);
-
+  
     try {
       const { error, paymentIntent } = await stripe.confirmPayment({
         elements,
-        confirmParams: {
-        },
+        confirmParams: {},
         redirect: "if_required", 
       });
-
+  
       if (error) {
         setError(`Payment failed: ${error.message}`);
         setIsProcessing(false);
       } else if (paymentIntent && paymentIntent.status === "succeeded") {
+  
+        // Gather selected products
+        const selectedProducts = [
+          baseProduct,
+          ...(addStorage ? [storageProduct] : []),
+          ...(addPrinting ? [printingProduct] : []),
+        ];
+  
         // Prepare the payment data to dispatch
         const paymentData = {
           orderId: currentOrder.orderId,
@@ -67,9 +155,9 @@ const CheckOutCard = ({ setShowCheckout, clientSecret }) => {
           status: paymentIntent.status,
           paymentDate: new Date(paymentIntent.created * 1000),
           paymentMethod: paymentIntent.payment_method_types[0],
-          products:[]
+          products: selectedProducts, // Include selected products here
         };
-
+  
         await dispatch(createPaymentThunk(paymentData)).unwrap();
         await dispatch(
           updateOrderThunk({
@@ -78,7 +166,7 @@ const CheckOutCard = ({ setShowCheckout, clientSecret }) => {
             completionDate: new Date(),
           })
         );
-
+  
         // Handle successful payment
         console.log("Payment successful!");
         setError(null);
@@ -94,6 +182,20 @@ const CheckOutCard = ({ setShowCheckout, clientSecret }) => {
       setIsProcessing(false);
     }
   };
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   return (
     <>
