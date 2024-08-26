@@ -92,16 +92,22 @@ const CheckOutCard = ({ setShowCheckout, clientSecret, products, totalAmount, ad
 
             {/* Order Breakdown */}
             <Card.Text>
-              {products.map((product, index) => (
-                <p key={index}>
-                  1x {product.name} = £{product.price}
-                </p>
-              ))}
-              <p>
-                <strong>Total: £{totalAmount}</strong>
-              </p>
-            </Card.Text>
-
+  {products.map((product, index) => (
+    <Row key={index} className="d-flex justify-content-between">
+      <Col>
+        <p>1x {product.name}</p>
+      </Col>
+      <Col className="text-end">
+        <p>£{product.price.toFixed(2)}</p>
+      </Col>
+    </Row>
+  ))}
+  <Row className="d-flex justify-content-end">
+    <Col className="text-end">
+      <strong>Total: £{totalAmount.toFixed(2)}</strong>
+    </Col>
+  </Row>
+</Card.Text>
             <Card.Text as="div">
               <Row>
                 <Col>
