@@ -2,6 +2,8 @@ import Message from '../models/messageModel.js';
 import asyncHandler from 'express-async-handler';
 
 export const createMessage = asyncHandler(async (req, res) => {
+    console.log('create message controller called');
+
     const { senderName, senderEmail, messageText, userId } = req.body;
 
     if (!senderName || !senderEmail || !messageText) {

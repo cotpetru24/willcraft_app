@@ -1,3 +1,7 @@
+
+
+
+
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout, reset } from '../features/auth/authSlice';
@@ -8,7 +12,9 @@ import Row from 'react-bootstrap/esm/Row';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
-
+import { createMessageThunk} from '../features/messages/messagesThunks';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // Don't forget to import the CSS for styling
 
 
 const Footer = () => {
@@ -18,9 +24,9 @@ const Footer = () => {
     const { user } = useSelector(state => state.auth)
 
     const [messageForm, setMessageForm] = useState({
-        name: '',
-        email: '',
-        message: ''
+        senderName: '',
+        senderEmail: '',
+        messageText: ''
     });
 
     const logoutfn = () => {
@@ -29,16 +35,53 @@ const Footer = () => {
         navigate('/');
     }
 
-    const handleSendMessage = async () => {
-        const { name, email, message } = messageForm;
-        const messageData = { name, email, message };
-
-        const response = await createMessageThunk(messageData)
-        if (response) {
-            Toast("Message sent");
-            setMessageForm({ name: '', email: '', message: '' });
+    const handleSendMessage = async (e) => {
+        e.preventDefault(); // Prevent default form submission
+    
+        // Log the form submission event
+        console.log('Form submitted');
+    
+        const { senderName, senderEmail, messageText } = messageForm;
+    
+        // Log the values of the form fields
+        console.log('Form data:', { senderName, senderEmail, messageText });
+    
+        const messageData = { senderName, senderEmail, messageText };
+    
+        try {
+            // Log before sending the message
+            console.log('Sending message data:', messageData);
+    
+            const response = await dispatch(createMessageThunk(messageData));
+    
+            // Log the response from the createMessageThunk function
+            console.log('Response from createMessageThunk:', response);
+    
+            if (response) {
+                // Log successful response and toast trigger
+                console.log('Message sent successfully, triggering toast');
+    
+                toast.success(
+                    <div>
+                        Message sent!
+                    </div>,
+                    {
+                        position: "top-center",
+                        autoClose: 3000,
+                    }
+                );
+    
+                // Log the form reset action
+                console.log('Resetting form');
+    
+                setMessageForm({ senderName: '', senderEmail: '', messageText: '' });
+            }
+        } catch (error) {
+            // Log any errors that occur during the message sending process
+            console.error('Error in handleSendMessage:', error);
         }
     }
+    
 
     return (
         <footer>
@@ -56,8 +99,8 @@ const Footer = () => {
                                             required
                                             type="text"
                                             placeholder="Your name"
-                                            value={messageForm.name}
-                                            onChange={(e) => setMessageForm({ ...messageForm, name: e.target.value })}
+                                            value={messageForm.senderName}
+                                            onChange={(e) => setMessageForm({ ...messageForm, senderName: e.target.value })}
                                         />
                                     </Form.Group>
                                     <Form.Group className="mb-3" controlId="formGroupEmail">
@@ -65,8 +108,8 @@ const Footer = () => {
                                             required
                                             type="email"
                                             placeholder="Your email"
-                                            value={messageForm.email}
-                                            onChange={(e) => setMessageForm({ ...messageForm, email: e.target.value })}
+                                            value={messageForm.senderEmail}
+                                            onChange={(e) => setMessageForm({ ...messageForm, senderEmail: e.target.value })}
                                         />
                                     </Form.Group>
                                     <Form.Group controlId="formGroupTextarea">
@@ -75,8 +118,8 @@ const Footer = () => {
                                             className="mb-3"
                                             as="textarea"
                                             placeholder="Your message"
-                                            value={messageForm.message}
-                                            onChange={(e) => setMessageForm({ ...messageForm, message: e.target.value })}
+                                            value={messageForm.messageText}
+                                            onChange={(e) => setMessageForm({ ...messageForm, messageText: e.target.value })}
                                         />
                                     </Form.Group>
                                     <Button
@@ -164,8 +207,8 @@ const Footer = () => {
                     </Row>
                 </Container>
             </Container>
+            <ToastContainer />
         </footer >
-
     )
 }
 
