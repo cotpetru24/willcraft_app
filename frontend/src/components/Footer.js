@@ -12,9 +12,9 @@ import Row from 'react-bootstrap/esm/Row';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
-import { createMessageThunk} from '../features/messages/messagesThunks';
+import { createMessageThunk } from '../features/messages/messagesThunks';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; // Don't forget to import the CSS for styling
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Footer = () => {
@@ -29,63 +29,80 @@ const Footer = () => {
         messageText: ''
     });
 
+    const [showToast, setShowToast] = useState(false);
+
     const logoutfn = () => {
         dispatch(logout());
         dispatch(reset());
         navigate('/');
     }
 
+
+
+
     const handleSendMessage = async (e) => {
         e.preventDefault(); // Prevent default form submission
-    
+
         // Log the form submission event
         console.log('Form submitted');
-    
+
         const { senderName, senderEmail, messageText } = messageForm;
-    
+
         // Log the values of the form fields
         console.log('Form data:', { senderName, senderEmail, messageText });
-    
+
         const messageData = { senderName, senderEmail, messageText };
-    
+
         try {
             // Log before sending the message
             console.log('Sending message data:', messageData);
-    
+
             const response = await dispatch(createMessageThunk(messageData));
-    
+
             // Log the response from the createMessageThunk function
             console.log('Response from createMessageThunk:', response);
-    
+
             if (response) {
                 // Log successful response and toast trigger
                 console.log('Message sent successfully, triggering toast');
-    
-                toast.success(
-                    <div>
-                        Message sent!
-                    </div>,
-                    {
-                        position: "top-center",
-                        autoClose: 3000,
-                    }
-                );
-    
+
+                toast.success("Message sent!", {
+                    position: "top-center",
+                    autoClose: 2000,  // This ensures the toast will auto-close after 2 seconds
+                    hideProgressBar: true,  // Optional: hide the progress bar
+                    closeOnClick: true,  // Close the toast when clicked
+                    pauseOnHover: false,  // Keep auto-close behavior consistent when hovering
+                    draggable: false,  // Disable drag to dismiss
+                });
+
+                setShowToast(true);
+                setTimeout(() => setShowToast(false), 2000);  // Auto-hide after 2 seconds
+
                 // Log the form reset action
                 console.log('Resetting form');
-    
+
                 setMessageForm({ senderName: '', senderEmail: '', messageText: '' });
             }
         } catch (error) {
             // Log any errors that occur during the message sending process
             console.error('Error in handleSendMessage:', error);
         }
+
+
     }
-    
+
+
 
     return (
         <footer>
             <Container fluid className="main-footer pt-4">
+            {showToast && (
+            <div style={{ position: 'fixed', top: '20px', right: '20px', backgroundColor: 'green', color: 'white', padding: '10px' }}>
+                Message sent!
+            </div>
+        )}
+
+        <ToastContainer/>
                 <Container fluid="md">
                     <Row>
                         <Col xs={12} md={5} className="order-1 order-md-1">
@@ -207,7 +224,7 @@ const Footer = () => {
                     </Row>
                 </Container>
             </Container>
-            <ToastContainer />
+            {/* <ToastContainer/> */}
         </footer >
     )
 }
