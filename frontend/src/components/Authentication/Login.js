@@ -45,7 +45,7 @@ const Login = () => {
     return (
         isLoading ? <Spinner /> : (
             <>
-                <Container className="mt-5 mb-4">
+                <Container style={{ minHeight: '65vh' }} className="mt-5 mb-4">
                     <Row className="mt-3 mb-4 justify-content-center">
                         <Col xs={12} md={4} className="mx-auto">
                             <h1 className="auth-header">Login</h1>

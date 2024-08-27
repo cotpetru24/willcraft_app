@@ -29,7 +29,7 @@ const Dashboard = () => {
 
 
     return (
-        <Container style={{ minHeight: "45vh" }} className="ps-4 pe-4">
+        <Container style={{ minHeight: "65vh" }} className="ps-4 pe-4">
 
             <Row className="pt-5 mb-4">
                 <Col >

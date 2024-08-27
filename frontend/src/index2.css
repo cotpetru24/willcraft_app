@@ -178,5 +178,11 @@
 
 .custom-toast {
     width: auto !important;
-    /* min-width: 400px !important;  Adjust the width as needed */
 }
+
+
+.md-container {
+    max-width: 1000px; 
+    width: 100%;
+  }
+  

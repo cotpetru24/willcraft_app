@@ -105,7 +105,7 @@ const Home = () => {
                 </Row>
                 <Row className="p-4">
                     <Col className="d-flex justify-content-center">
-                        <h4>Rating 4.8/5 based on 123 reviews. <Link to="/">View all reviews</Link></h4>
+                        <h4>Rating 4.8/5 based on 123 reviews. <Link to="/reviews">View all reviews</Link></h4>
                     </Col>
                 </Row>
             </Container>
