@@ -80,7 +80,8 @@ const MyAccount = () => {
                                         variant="primary"
                                         onClick={() => {
                                             setShowChangePasswordForm(false)
-                                            setShowEditDetailsForm(true)}}
+                                            setShowEditDetailsForm(true)
+                                        }}
                                     >
                                         Edit
                                     </Button>
@@ -96,7 +97,8 @@ const MyAccount = () => {
                                         variant="primary"
                                         onClick={() => {
                                             setShowEditDetailsForm(false)
-                                            setShowChangePasswordForm(true)}}
+                                            setShowChangePasswordForm(true)
+                                        }}
 
                                     >
                                         Change password
@@ -107,7 +109,7 @@ const MyAccount = () => {
 
 
                         {showEditDetailsForm && (
-                            <Container>
+                            <Container className="mt-5">
                                 <Row className="mt-3 mb-4 justify-content-center">
                                     <Col xs={12} md={4} className="mx-auto">
                                         <Form>
@@ -176,75 +178,75 @@ const MyAccount = () => {
                         )}
 
                         {showChangePasswordForm && (
-                            <Container>
-                                <Container className="mt-5 mb-4">
-                                    <Row className="justify-content-center">
-                                        <Col xs={12} md={4} className="mx-auto">
-                                            <Form>
-                                                <Form.Group className="mb-3" controlId="formGroupCurrentPassword">
-                                                    <Form.Label className="bold-label">Current password</Form.Label>
-                                                    <Form.Control
-                                                        type="password"
-                                                        placeholder="Current password"
-                                                        name="currentPassword"
-                                                        // value={password}
-                                                        // onChange={onChange}
-                                                        required
-                                                    />
-                                                </Form.Group>
-                                                <Form.Group className="mb-3" controlId="formGroupPassword">
-                                                    <Form.Label className="bold-label">New password</Form.Label>
-                                                    <Form.Control
-                                                        type="password"
-                                                        placeholder="New password"
-                                                        name="password"
-                                                        // value={password}
-                                                        // onChange={onChange}
-                                                        required
-                                                    />
-                                                </Form.Group>
-                                                <Form.Group className="mb-3" controlId="formGroupPassword">
-                                                    <Form.Label className="bold-label">Confirm new password</Form.Label>
-                                                    <Form.Control
-                                                        type="password"
-                                                        placeholder="Confirm new password"
-                                                        name="password2"
-                                                        // value={password2}
-                                                        // onChange={onChange}
-                                                        required
-                                                    />
-                                                </Form.Group>
-                                                <Row>
-                                                    <Col>
-                                                        <Button
-                                                            variant="primary"
-                                                            className="m-1 add-edit-form-btn"
-                                                            type="button"
+                            <Container className="mt-5">
+                                <Row className="mt-3 mb-4 justify-content-center">
+                                    <Col xs={12} md={4} className="mx-auto">
+                                        <Form>
+                                            <Form.Group className="mb-3" controlId="formGroupCurrentPassword">
+                                                <Form.Label className="bold-label">Current password</Form.Label>
+                                                <Form.Control
+                                                    type="password"
+                                                    placeholder="Current password"
+                                                    name="currentPassword"
+                                                    // value={password}
+                                                    // onChange={onChange}
+                                                    className="custom-input"
+                                                    required
+                                                />
+                                            </Form.Group>
+                                            <Form.Group className="mb-3" controlId="formGroupPassword">
+                                                <Form.Label className="bold-label">New password</Form.Label>
+                                                <Form.Control
+                                                    type="password"
+                                                    placeholder="New password"
+                                                    name="password"
+                                                    // value={password}
+                                                    // onChange={onChange}
+                                                    className="custom-input"
+                                                    required
+                                                />
+                                            </Form.Group>
+                                            <Form.Group className="mb-3" controlId="formGroupPassword">
+                                                <Form.Label className="bold-label">Confirm new password</Form.Label>
+                                                <Form.Control
+                                                    type="password"
+                                                    placeholder="Confirm new password"
+                                                    name="password2"
+                                                    // value={password2}
+                                                    // onChange={onChange}
+                                                    className="custom-input"
+                                                    required
+                                                />
+                                            </Form.Group>
+                                            <Row>
+                                                <Col>
+                                                    <Button
+                                                        variant="primary"
+                                                        className="m-1 add-edit-form-btn"
+                                                        type="button"
                                                         // onClick={() => {
                                                         //     handleShowKidsForm();
                                                         //     resetKidForm();
                                                         // }}
                                                         onClick={() => setShowChangePasswordForm(false)}
-                                                        >
-                                                            Cancel
-                                                        </Button>
-                                                    </Col>
-                                                    <Col className="d-flex justify-content-end">
-                                                        <Button
-                                                            variant="primary"
-                                                            className="m-1 add-edit-form-btn"
-                                                            type="submit"
-                                                        >
-                                                            Save
-                                                        </Button>
-                                                    </Col>
-                                                </Row>
-                                            </Form>
-                                        </Col>
-                                    </Row>
-
-                                </Container >
-                            </Container>
+                                                    >
+                                                        Cancel
+                                                    </Button>
+                                                </Col>
+                                                <Col className="d-flex justify-content-end">
+                                                    <Button
+                                                        variant="primary"
+                                                        className="m-1 add-edit-form-btn"
+                                                        type="submit"
+                                                    >
+                                                        Save
+                                                    </Button>
+                                                </Col>
+                                            </Row>
+                                        </Form>
+                                    </Col>
+                                </Row>
+                            </Container >
                         )}
                     </Container>
                 </>
