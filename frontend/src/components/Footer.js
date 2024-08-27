@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/esm/Col';
 import Row from 'react-bootstrap/esm/Row';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { useState } from 'react';
 
 
 
@@ -16,10 +17,27 @@ const Footer = () => {
     const dispatch = useDispatch();
     const { user } = useSelector(state => state.auth)
 
+    const [messageForm, setMessageForm] = useState({
+        name: '',
+        email: '',
+        message: ''
+    });
+
     const logoutfn = () => {
         dispatch(logout());
         dispatch(reset());
         navigate('/');
+    }
+
+    const handleSendMessage = async () => {
+        const { name, email, message } = messageForm;
+        const messageData = { name, email, message };
+
+        const response = await createMessageThunk(messageData)
+        if (response) {
+            Toast("Message sent");
+            setMessageForm({ name: '', email: '', message: '' });
+        }
     }
 
     return (
@@ -32,26 +50,40 @@ const Footer = () => {
                                 <h5>MESSAGE US</h5>
                             </Row>
                             <Row>
-                                <Form>
+                                <Form onSubmit={handleSendMessage}>
                                     <Form.Group className="mb-3" controlId="formGroupName">
-                                        <Form.Control required type="text" placeholder="Your name" />
+                                        <Form.Control
+                                            required
+                                            type="text"
+                                            placeholder="Your name"
+                                            value={messageForm.name}
+                                            onChange={(e) => setMessageForm({ ...messageForm, name: e.target.value })}
+                                        />
                                     </Form.Group>
                                     <Form.Group className="mb-3" controlId="formGroupEmail">
-                                        <Form.Control required type="email" placeholder="Your email" />
-                                    </Form.Group>
-                                    <Form.Group>
                                         <Form.Control
-                                            id="message-form-textarea"
+                                            required
+                                            type="email"
+                                            placeholder="Your email"
+                                            value={messageForm.email}
+                                            onChange={(e) => setMessageForm({ ...messageForm, email: e.target.value })}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group controlId="formGroupTextarea">
+                                        <Form.Control
                                             required
                                             className="mb-3"
                                             as="textarea"
                                             placeholder="Your message"
+                                            value={messageForm.message}
+                                            onChange={(e) => setMessageForm({ ...messageForm, message: e.target.value })}
                                         />
                                     </Form.Group>
                                     <Button
                                         className='mb-5'
                                         id="send-message-btn"
-                                        type="submit">
+                                        type="submit"
+                                    >
                                         Send
                                     </Button>
                                 </Form>
