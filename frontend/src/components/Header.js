@@ -91,7 +91,7 @@ const Header = () => {
                                                         </LinkContainer>
                                                     </Nav.Item>
                                                     <Nav.Item>
-                                                        <LinkContainer to="/progressBar">
+                                                        <LinkContainer to="/myAccount">
                                                             <Nav.Link className='header-nav-link'>My Account</Nav.Link>
                                                         </LinkContainer>
                                                     </Nav.Item>

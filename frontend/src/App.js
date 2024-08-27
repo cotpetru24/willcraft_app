@@ -22,6 +22,7 @@ import AssetsDistribution from './components/CreatingOrder/CreatingOrderComponen
 import Executors from './components/CreatingOrder/CreatingOrderComponents/Executors';
 import PaymentPage from './components/ChechOutForm';
 import Reviews from './components/Reviews';
+import MyAccount from './components/MyAccount';
 
 function App() {
 
@@ -47,6 +48,7 @@ function App() {
             <Route path='/executors' element={<Executors />} />;
             <Route path='/checkOutForm' element={<PaymentPage />} />
             <Route path='/reviews' element={<Reviews/>}/>
+            <Route path='/myAccount' element={<MyAccount/>}/>
 
           </Routes>
           <Footer />
