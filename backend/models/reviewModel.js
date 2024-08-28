@@ -13,7 +13,11 @@ const reviewSchema = mongoose.Schema(
             type: String,
             required: [true, 'Review text is required']
         },
-        stars: {
+        firstName: {
+            type: String,
+            required: [true, 'Name is required']
+        },
+        rating: {
             type: Number,
             required: [true, 'Review rating is required']
         },

@@ -23,6 +23,7 @@ import Executors from './components/CreatingOrder/CreatingOrderComponents/Execut
 import PaymentPage from './components/ChechOutForm';
 import Reviews from './components/Reviews';
 import MyAccount from './components/MyAccount';
+import WriteAReview from './components/WriteAReview';
 
 function App() {
 
@@ -49,6 +50,7 @@ function App() {
             <Route path='/checkOutForm' element={<PaymentPage />} />
             <Route path='/reviews' element={<Reviews/>}/>
             <Route path='/myAccount' element={<MyAccount/>}/>
+            <Route path='/writeAReview' element={<WriteAReview/>}/>
 
           </Routes>
           <Footer />

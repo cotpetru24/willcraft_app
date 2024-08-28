@@ -50,6 +50,15 @@ const Dashboard = () => {
                     <OrdersList />
                 </Col>
             </Row>
+
+            <Row>
+                <Col>
+                    <Button onClick={() => navigate('/writeAReview')}>
+                        Write a Review
+                    </Button>
+                </Col>
+            </Row>
+
         </Container>
     )
 
