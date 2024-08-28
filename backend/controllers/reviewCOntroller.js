@@ -20,9 +20,10 @@ export const createReview = asyncHandler(async (req, res) => {
     }
 
     const review = await Review.create({
-        userId: req.user.id,
+        userId: req.body.userId,
+        userFirstName: req.body.userFirstName,
         reviewText: req.body.reviewText,
-        stars: req.body.stars
+        rating: req.body.rating
     });
     res.status(200).json(review);
 });

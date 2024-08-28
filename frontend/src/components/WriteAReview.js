@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Spinner from "./Spinner.js";
 import { useNavigate } from "react-router-dom";
-import { Container } from "react-bootstrap";
-import { Col, Row } from "react-bootstrap";
-import Button from 'react-bootstrap/Button';
-import { Form } from "react-bootstrap";
+import { Container, Col, Row, Button, Form } from "react-bootstrap";
 import { FaStar } from 'react-icons/fa';
+import { createReviewThunk } from "../features/reviews/reviewThunks.js";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Spinner from "./Spinner.js";
 
 const WriteAReview = () => {
     const navigate = useNavigate();
@@ -28,12 +28,27 @@ const WriteAReview = () => {
         reviewText: '',
     });
 
-    const handleSendReview = (e) => {
+    const handleSendReview = async (e) => {
         e.preventDefault();
         // Submit the review along with the rating
         const reviewData = { userId, userFirstName, rating, reviewText: reviewForm.reviewText };
-        // Replace sendReview with the actual function to send review data
         console.log("Review submitted:", reviewData);
+
+        await dispatch(createReviewThunk(reviewData));
+
+        // Show toast and navigate to dashboard
+        toast.success("Thank you for your feedback!", {
+            onClose: () => navigate('/dashboard'),
+            position: "top-center",
+            autoClose: 1000,  // This ensures the toast will auto-close after 2 seconds
+            hideProgressBar: true,  // Optional: hide the progress bar
+            closeOnClick: true,  // Close the toast when clicked
+            pauseOnHover: false,  // Keep auto-close behavior consistent when hovering
+            draggable: false,  // Disable drag to dismiss
+        });
+        
+
+        // Reset the form fields
         setReviewForm({ reviewText: '' });
         setRating(5); // Reset rating to default value (5 stars)
     }
