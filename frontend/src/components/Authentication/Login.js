@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import Spinner from '../Spinner';
+import Spinner from '../LoadingSpinner';
 import { login, reset } from '../../features/auth/authSlice'
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/esm/Row";

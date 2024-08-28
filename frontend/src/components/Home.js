@@ -87,7 +87,7 @@ const Home = () => {
                 <HowDoesItWork />
             </Container>
             <Container className="mb-5 mt-5">
-                <Row className="pt-5 mb-5 section-header">
+                <Row className="pt-5 mb-3 section-header">
                     <Col>
                         <h2>Testimonials</h2>
                     </Col>
@@ -95,17 +95,6 @@ const Home = () => {
                 <Row>
                     <Col className="d-flex justify-content-center">
                         <HomeReview />
-                    </Col>
-                    <Col className="d-flex justify-content-center">
-                        <HomeReview />
-                    </Col>
-                    <Col className="d-flex justify-content-center">
-                        <HomeReview />
-                    </Col>
-                </Row>
-                <Row className="p-4">
-                    <Col className="d-flex justify-content-center">
-                        <h4>Rating 4.8/5 based on 123 reviews. <Link to="/reviews">View all reviews</Link></h4>
                     </Col>
                 </Row>
             </Container>

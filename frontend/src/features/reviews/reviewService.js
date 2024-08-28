@@ -11,7 +11,7 @@ export const createReview = async (reviewData, token ) => {
             Authorization: `Bearer ${token}`
         }
     }
-    const response = await axios.post(API_URL, reviewData, config);
+    const response = await axios.post(API_URL_ALL, reviewData, config);
     return response.data;
 
 }

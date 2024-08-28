@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getOrders, reset } from "../../features/orders/ordersSlice";
-import Spinner from "../Spinner";
+import Spinner from "../LoadingSpinner";
 import { useNavigate } from "react-router-dom";
 import OrderItem from "./OrderItem";
 

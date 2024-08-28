@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Spinner from "../components/Spinner.js";
+import Spinner from "./LoadingSpinner.js";
 import { useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { Col, Row } from "react-bootstrap";

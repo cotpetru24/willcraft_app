@@ -25,27 +25,60 @@ export const getAllReviews = asyncHandler(async (req, res) => {
 });
 
 
-export const getLast3Reviews = asyncHandler(async (req, res) => {
-    const reviews = await Review.find({})
-        .sort({ createdAt: -1 }) // Sort by createdAt in descending order
-        .limit(3); // Limit the result to the latest 3 reviews
+// export const getLast3Reviews = asyncHandler(async (req, res) => {
+//     const reviews = await Review.find({})
+//         .sort({ createdAt: -1 }) // Sort by createdAt in descending order
+//         .limit(3); // Limit the result to the latest 3 reviews
 
 
 
 
-    //this should also return this data:
-    //Rating 4.8/5 based on 123 reviews.
+//     //this should also return this:
+//     //Rating 4.8/5 based on 123 reviews.
+//     //it is average rating and number of reviews
 
 
 
     
-    if (reviews) {
-        res.status(200).json(reviews);
+//     if (reviews) {
+//         res.status(200).json(reviews);
+//     } else {
+//         res.status(400);
+//         throw new Error('Error getting reviews');
+//     }
+// });
+
+
+export const getLast3Reviews = asyncHandler(async (req, res) => {
+    // Fetch all reviews and sort them by createdAt in descending order
+    const allReviews = await Review.find({}).sort({ createdAt: -1 });
+
+    if (allReviews) {
+        // Get the latest 3 reviews
+        const last3Reviews = allReviews.slice(0, 3);
+
+        // Calculate the average rating
+        const totalRating = allReviews.reduce((sum, review) => sum + review.rating, 0);
+        // const totalRating = allReviews.reduce((sum, review) => {
+        //     console.log('Processing review:', review);  // Log the review object
+        //     return sum + review.rating;
+        // }, 0);
+        const averageRating = (totalRating / allReviews.length).toFixed(1);
+        console.log(`average rating= ${averageRating}`)
+        console.log(`total rating= ${totalRating}`)
+
+        // Return the latest 3 reviews, average rating, and total number of reviews
+        res.status(200).json({
+            latestReviews: last3Reviews,
+            averageRating: averageRating,
+            totalReviews: allReviews.length
+        });
     } else {
         res.status(400);
         throw new Error('Error getting reviews');
     }
 });
+
 
 
 export const createReview = asyncHandler(async (req, res) => {

@@ -30,10 +30,10 @@
 // // //         const fetchAllReviews = async () => {
 // // //            const allReviews= await dispatch(getAllReviewsThunk());
 // // //         };
-    
+
 // // //         fetchAllReviews();
 // // //     }, [dispatch]);
-    
+
 
 // // //     return (
 // // //         isLoading ? <Spinner /> :
@@ -243,10 +243,11 @@
 
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import Spinner from "../components/Spinner.js";
+import LoadingSpinner from "./LoadingSpinner.js";
 import { Container, Col, Row, Card } from "react-bootstrap";
 import { formatReviewRating } from "./HomeReview.js";
 import { getAllReviewsThunk } from "../features/reviews/reviewThunks.js";
+import { FaStar } from 'react-icons/fa';
 
 const Reviews = () => {
     const dispatch = useDispatch();
@@ -270,8 +271,27 @@ const Reviews = () => {
         fetchAllReviews();
     }, [dispatch]);
 
+
+
+    const renderStars = (rating) => {
+        return (
+            <div>
+                {[...Array(5)].map((star, index) => {
+                    const ratingValue = index + 1;
+                    return (
+                        <FaStar
+                            key={index}
+                            size={20}
+                            color={ratingValue <= rating ? "#ffc107" : "#e4e5e9"}
+                        />
+                    );
+                })}
+            </div>
+        );
+    };
+
     return (
-        isLoading ? <Spinner /> :
+        isLoading ? <LoadingSpinner /> :
             (
                 <>
                     <Container style={{ minHeight: '65vh' }}>
@@ -296,11 +316,19 @@ const Reviews = () => {
                                                         </div>
                                                     </Col>
                                                 </Row>
-                                                <Row className="d-flex justify-content-end">
+                                                {/* <Row className="d-flex justify-content-end">
                                                     <Col>
                                                         <div className="review-stars-container" dangerouslySetInnerHTML={{ __html: formatReviewRating(review.rating) }}></div>
                                                     </Col>
                                                     <Col className="d-flex justify-content-end">
+                                                        <strong>{review.userFirstName}</strong> - {new Date(review.createdAt).toLocaleDateString()}
+                                                    </Col>
+                                                </Row> */}
+                                                <Row className="d-flex pt-3 justify-content-center">
+                                                    <Col xs="auto">
+                                                        {renderStars(review.rating)}
+                                                    </Col>
+                                                    <Col className="d-flex justify-content-end flex-grow-1">
                                                         <strong>{review.userFirstName}</strong> - {new Date(review.createdAt).toLocaleDateString()}
                                                     </Col>
                                                 </Row>

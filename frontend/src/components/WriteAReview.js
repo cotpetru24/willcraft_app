@@ -7,7 +7,7 @@ import { FaStar } from 'react-icons/fa';
 import { createReviewThunk } from "../features/reviews/reviewThunks.js";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Spinner from "./Spinner.js";
+import Spinner from "./LoadingSpinner.js";
 
 const WriteAReview = () => {
     const navigate = useNavigate();
@@ -22,14 +22,52 @@ const WriteAReview = () => {
         // Placeholder for any side effects or fetching needed
     }, []);
 
-    const [rating, setRating] = useState(5);
+    const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(null);
     const [reviewForm, setReviewForm] = useState({
         reviewText: '',
     });
 
+    // const handleSendReview = async (e) => {
+    //     e.preventDefault();
+    //     // Submit the review along with the rating
+    //     const reviewData = { userId, userFirstName, rating, reviewText: reviewForm.reviewText };
+    //     console.log("Review submitted:", reviewData);
+
+    //     await dispatch(createReviewThunk(reviewData));
+
+    //     // Show toast and navigate to dashboard
+    //     toast.success("Thank you for your feedback!", {
+    //         onClose: () => navigate('/dashboard'),
+    //         position: "top-center",
+    //         autoClose: 1000,
+    //         hideProgressBar: true,
+    //         closeOnClick: true,
+    //         pauseOnHover: false,
+    //         draggable: false,
+    //     });
+
+
+    //     // Reset the form fields
+    //     setReviewForm({ reviewText: '' });
+    //     setRating(0);
+    // }
+
     const handleSendReview = async (e) => {
         e.preventDefault();
+
+        if (rating === 0) {
+            toast.error("Please rate us before submitting your review.", {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false,
+            });
+            return; // Prevent form submission if no rating is selected
+        }
+
         // Submit the review along with the rating
         const reviewData = { userId, userFirstName, rating, reviewText: reviewForm.reviewText };
         console.log("Review submitted:", reviewData);
@@ -40,24 +78,27 @@ const WriteAReview = () => {
         toast.success("Thank you for your feedback!", {
             onClose: () => navigate('/dashboard'),
             position: "top-center",
-            autoClose: 1000,  // This ensures the toast will auto-close after 2 seconds
-            hideProgressBar: true,  // Optional: hide the progress bar
-            closeOnClick: true,  // Close the toast when clicked
-            pauseOnHover: false,  // Keep auto-close behavior consistent when hovering
-            draggable: false,  // Disable drag to dismiss
+            autoClose: 500,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
         });
-        
 
         // Reset the form fields
         setReviewForm({ reviewText: '' });
-        setRating(5); // Reset rating to default value (5 stars)
+        setRating(0);
     }
+
+
+
+
 
     return (
         isLoading ? <Spinner /> :
             (
                 <>
-                    <Container style={{ minHeight: '65vh' }} >
+                    <Container fluid="sm" style={{ minHeight: '65vh', maxWidth: '800px'  }} >
                         <Row className="mt-5 mb-5">
                             <Col>
                                 <Form onSubmit={handleSendReview}>
@@ -95,19 +136,31 @@ const WriteAReview = () => {
                                             placeholder="Your message"
                                             value={reviewForm.reviewText}
                                             onChange={(e) => setReviewForm({ ...reviewForm, reviewText: e.target.value })}
+                                            style={{ minHeight: '45vh' }}
                                         />
                                     </Form.Group>
-                                    <Button
-                                        variant="primary"
-                                        className='mb-5'
-                                        type="submit"
-                                    >
-                                        Send
-                                    </Button>
+                                    <Row>
+                                        <Col className="d-flex justify-content-between">
+                                            <Button
+                                                variant="primary"
+                                                className='mb-5'
+                                                onClick={() => navigate('/dashboard')}
+                                            >
+                                                Back
+                                            </Button>
+                                            <Button
+                                                variant="primary"
+                                                className='mb-5'
+                                                type="submit"
+                                            >
+                                                Send
+                                            </Button>
+                                        </Col>
+                                    </Row>
                                 </Form>
                             </Col>
                         </Row>
-                    </Container>
+                    </Container >
                 </>
             )
     );
