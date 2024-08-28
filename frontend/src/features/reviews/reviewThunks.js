@@ -1,12 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { createReview } from "./reviewService";
+import { createReview, getAllReviews } from "./reviewService";
 
 
 
 
 
 export const createReviewThunk = createAsyncThunk(
-    'messages/createMessage',
+    'reviews/createReview',
     async (reviewData, thunkApi) => {
         console.log('createReviewThunk called');
         
@@ -42,9 +42,42 @@ export const createReviewThunk = createAsyncThunk(
     }
 );
 
+export const getAllReviewsThunk = createAsyncThunk(
+'reviews/getAllReviews',
+async ( thunkApi) => {
+    console.log('getAllReviewsThunk called');
+    
+
+
+    try {
+        // Send the message data to the API
+        const getAllReviewsResponse = await getAllReviews();
+
+        // Log the response from the API
+        console.log('Response from getAllReviews API:', getAllReviewsResponse);
+
+        return getAllReviewsResponse;
+
+    } catch (error) {
+        // Log any error that occurs during the API call
+        console.error('Error in getAllReviewsThunk:', error);
+
+        const message =
+            (error.response && error.response.data && error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+        // Log the error message being returned
+        console.error('Returning error message:', message);
+
+        return thunkApi.rejectWithValue(message);
+    }
+}
+);
 
 const reviewThunks = {
-    createReviewThunk
+    createReviewThunk,
+    getAllReviewsThunk
 }
 
 export default reviewThunks;

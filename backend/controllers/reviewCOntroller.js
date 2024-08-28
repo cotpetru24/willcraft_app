@@ -2,7 +2,7 @@ import asyncHandler from 'express-async-handler';
 import Review from '../models/reviewModel.js';
 import User from '../models/userModel.js';
 
-export const getReviews = asyncHandler(async (req, res) => {
+export const getAllReviews = asyncHandler(async (req, res) => {
     const reviews = await Review.find({});
 
     if (reviews) {
