@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
-import Spinner from "../LoadingSpinner";
+import LoadingSpinner from "../LoadingSpinner";
 import { register, reset } from '../../features/auth/authSlice';
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/esm/Row";
@@ -52,7 +52,7 @@ const Register = () => {
 
 
     return (
-        isLoading ? <Spinner /> : (
+        isLoading ? <LoadingSpinner /> : (
             <>
                 <Container style={{ minHeight: '65vh' }} className="mt-5 mb-4">
                     <Row className="mt-3 mb-4 justify-content-center">

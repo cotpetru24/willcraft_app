@@ -13,6 +13,8 @@ import { faCheckSquare, faCheckCircle } from "@fortawesome/free-solid-svg-icons"
 import HomeReview from "./HomeReview.js";
 import { formatReviewRating } from "./HomeReview.js";
 import { Form } from "react-bootstrap";
+import { toast } from "react-toastify";
+import { updateUserDetailsThunk, updateUserPasswordThunk } from "../features/auth/authSlice.js";
 
 const MyAccount = () => {
     const navigate = useNavigate();
@@ -20,18 +22,137 @@ const MyAccount = () => {
     const { orders, isLoading, isError, message } = useSelector(state =>
         state.orders)
 
+
+
+
+
+    const [detailsFormData, setDetailsFormData] = useState({
+        firstName: '', lastName: '',
+        email: ''
+    });
+    const { firstName, lastName, email } = detailsFormData;
+
+
+
+    const [passwordFormData, setPasswordFormData] = useState({
+        currentPassword: '', password: '', password2: ''
+    });
+    const { currentPassword, password, password2 } = detailsFormData;
+
+
+
     const order = useSelector(state => state.order)
     const [showChangePasswordForm, setShowChangePasswordForm] = useState(false)
     const [showEditDetailsForm, setShowEditDetailsForm] = useState(false)
 
+
+    const onDetailsFormDataChange = e => {
+        setDetailsFormData(prevState => ({
+            ...prevState,
+            [e.target.name]: e.target.value
+        }))
+    }
+
+
+    const onPasswordFormDataChange = e => {
+        setPasswordFormData(prevState => ({
+            ...prevState,
+            [e.target.name]: e.target.value
+        }))
+    }
 
 
     useEffect(() => {
         if (isError) console.log(message)
         // dispatch(getOrders())
         // return () => dispatch(reset())
+
+        //on preload populate details form
     }, [navigate, isError, message, dispatch])
 
+    const handleChangeDetailsSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const userData = { firstName, lastName, email };
+            const resultAction = await dispatch(updateUserDetailsThunk(userData));
+
+            // Check if the action was fulfilled (i.e., successful)
+            if (updateUserDetailsThunk.fulfilled.match(resultAction)) {
+                toast.success("Details updated successfully!", {
+                    position: "top-center",
+                    autoClose: 1000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: false,
+                });
+
+                // Reset the form and close the edit form
+                setDetailsFormData({
+                    firstName: '',
+                    lastName: '',
+                    email: ''
+                });
+                setShowEditDetailsForm(false);
+            } else {
+                // Handle the case where the update was not successful
+                const errorMessage = resultAction.payload || 'Error updating details';
+                toast.error(errorMessage, {
+                    position: "top-center",
+                    autoClose: 2000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: false,
+                });
+            }
+        } catch {
+            toast.error("Error updating details!", {
+                // onClose: () => navigate('/dashboard'),
+                position: "top-center",
+                autoClose: 1000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false,
+            });
+        }
+    }
+
+    const handleChangePasswordSubmit = async (e) => {
+        e.preventDefault();
+
+        if (password !== password2) {
+            toast.error('Passwords don\'t match')
+        }
+        else {
+
+            try {
+                const userData = { currentPassword, password }
+                await dispatch(updateUserPasswordThunk(userData));
+                toast.success("Password updated successfully!", {
+                    onClose: () => navigate('/dashboard'),
+                    position: "top-center",
+                    autoClose: 500,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: false,
+                });
+            }
+            catch {
+                toast.error("Error updating password!", {
+                    onClose: () => navigate('/dashboard'),
+                    position: "top-center",
+                    autoClose: 500,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: false,
+                });
+            }
+        }
+    }
 
     return (
         isLoading ? <Spinner /> :
@@ -112,25 +233,25 @@ const MyAccount = () => {
                             <Container className="mt-5">
                                 <Row className="mt-3 mb-4 justify-content-center">
                                     <Col xs={12} md={4} className="mx-auto">
-                                        <Form>
+                                        <Form onSubmit={handleChangeDetailsSubmit}>
                                             <Form.Group className="mb-3" controlId="formGroupFirstName">
                                                 <Form.Label className="bold-label">First name</Form.Label>
                                                 <Form.Control
                                                     type="text"
                                                     name="firstName"
-                                                    //   value={testatorFormData.fullLegalName}
-                                                    //   onChange={handleOnChange}
+                                                    value={firstName}
+                                                    onChange={onDetailsFormDataChange}
                                                     required
                                                     className="custom-input"
                                                 />
                                             </Form.Group>
                                             <Form.Group className="mb-3" controlId="formGroupLastName">
-                                                <Form.Label className="bold-label">First name</Form.Label>
+                                                <Form.Label className="bold-label">Last name</Form.Label>
                                                 <Form.Control
                                                     type="text"
-                                                    name="LastName"
-                                                    //   value={testatorFormData.fullLegalName}
-                                                    //   onChange={handleOnChange}
+                                                    name="lastName"
+                                                    value={lastName}
+                                                    onChange={onDetailsFormDataChange}
                                                     required
                                                     className="custom-input"
                                                 />
@@ -140,8 +261,9 @@ const MyAccount = () => {
                                                 <Form.Control
                                                     type="email"
                                                     name="email"
-                                                    //   value={testatorFormData.email}
-                                                    //   onChange={handleOnChange}
+                                                    value={email}
+                                                    required
+                                                    onChange={onDetailsFormDataChange}
                                                     className="custom-input"
                                                 />
                                             </Form.Group>
@@ -181,15 +303,15 @@ const MyAccount = () => {
                             <Container className="mt-5">
                                 <Row className="mt-3 mb-4 justify-content-center">
                                     <Col xs={12} md={4} className="mx-auto">
-                                        <Form>
+                                        <Form onSubmit={handleChangePasswordSubmit}>
                                             <Form.Group className="mb-3" controlId="formGroupCurrentPassword">
                                                 <Form.Label className="bold-label">Current password</Form.Label>
                                                 <Form.Control
                                                     type="password"
                                                     placeholder="Current password"
                                                     name="currentPassword"
-                                                    // value={password}
-                                                    // onChange={onChange}
+                                                    value={currentPassword}
+                                                    onChange={onPasswordFormDataChange}
                                                     className="custom-input"
                                                     required
                                                 />
@@ -200,8 +322,8 @@ const MyAccount = () => {
                                                     type="password"
                                                     placeholder="New password"
                                                     name="password"
-                                                    // value={password}
-                                                    // onChange={onChange}
+                                                    value={password}
+                                                    onChange={onPasswordFormDataChange}
                                                     className="custom-input"
                                                     required
                                                 />
@@ -212,8 +334,8 @@ const MyAccount = () => {
                                                     type="password"
                                                     placeholder="Confirm new password"
                                                     name="password2"
-                                                    // value={password2}
-                                                    // onChange={onChange}
+                                                    value={password2}
+                                                    onChange={onPasswordFormDataChange}
                                                     className="custom-input"
                                                     required
                                                 />

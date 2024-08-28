@@ -52,6 +52,68 @@ export const login = createAsyncThunk(
 )
 
 
+export const updateUserDetailsThunk = createAsyncThunk(
+    'auth/updateUserDetails',
+    async (userData, thunkAPI) => {
+
+        // Get the userId from the state
+        const userId = thunkAPI.getState().auth.user._id;
+        console.log("User ID from state:", userId);  // Debugging: Log the user ID
+
+        // Add userId to userData
+        const updatedUserData = { ...userData, userId };
+        console.log("Updated user data:", updatedUserData);  // Debugging: Log the updated user data
+
+        try {
+            const token = thunkAPI.getState().auth.user.token;
+            console.log("Token from state:", token);  // Debugging: Log the token
+            const response = await authService.updateUserDetails(updatedUserData, token);
+            console.log("Response from updateUserDetails:", response);  // Debugging: Log the response
+            return response;
+        }
+        catch (error) {
+            const message = (error.response && error.response.data && error.response.data.message) ||
+                error.message ||
+                error.toString();
+            console.error("Error in updateUserDetailsThunk:", message);  // Debugging: Log the error
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
+
+
+
+export const updateUserPasswordThunk = createAsyncThunk(
+    'auth/updateUserPassword',
+    async (userData, thunkAPI) => {
+
+        // Get the userId from the state
+        const userId = thunkAPI.getState().auth.user._id;
+        console.log("User ID from state:", userId);  // Debugging: Log the user ID
+
+        // Add userId to userData
+        const updatedUserData = { ...userData, userId };
+        console.log("Updated user data:", updatedUserData);  // Debugging: Log the updated user data
+
+        try {
+            const token = thunkAPI.getState().auth.user.token;
+            console.log("Token from state:", token);  // Debugging: Log the token
+            const response = await authService.updateUserPassword(updatedUserData, token);
+            console.log("Response from updateUserPassword:", response);  // Debugging: Log the response
+            return response;
+        }
+        catch (error) {
+            const message = (error.response && error.response.data && error.response.data.message) ||
+                error.message ||
+                error.toString();
+            console.error("Error in updateUserPasswordThunk:", message);  // Debugging: Log the error
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
+
+
+
 export const authSlice = createSlice({
 
     name: 'auth',
@@ -98,6 +160,37 @@ export const authSlice = createSlice({
                 state.isError = true
                 state.message = action.payload
                 state.user = null
+            })
+
+
+
+
+            .addCase(updateUserDetailsThunk.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(updateUserDetailsThunk.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.user = action.payload
+            })
+            .addCase(updateUserDetailsThunk.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+
+            .addCase(updateUserPasswordThunk.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(updateUserPasswordThunk.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.user = action.payload
+            })
+            .addCase(updateUserPasswordThunk.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
             })
     }
 });
