@@ -37,7 +37,7 @@ const MyAccount = () => {
     const [passwordFormData, setPasswordFormData] = useState({
         currentPassword: '', password: '', password2: ''
     });
-    const { currentPassword, password, password2 } = detailsFormData;
+    const { currentPassword, password, password2 } = passwordFormData;
 
 
 
@@ -128,17 +128,39 @@ const MyAccount = () => {
         else {
 
             try {
-                const userData = { currentPassword, password }
-                await dispatch(updateUserPasswordThunk(userData));
-                toast.success("Password updated successfully!", {
-                    onClose: () => navigate('/dashboard'),
-                    position: "top-center",
-                    autoClose: 500,
-                    hideProgressBar: true,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: false,
-                });
+                const userData = { currentPassword, password };
+                const resultAction = await dispatch(updateUserPasswordThunk(userData));
+
+                // Check if the action was fulfilled (i.e., successful)
+                if (updateUserPasswordThunk.fulfilled.match(resultAction)) {
+                    toast.success("Password updated successfully!", {
+                        // onClose: () => navigate('/dashboard'),
+                        position: "top-center",
+                        autoClose: 1000,
+                        hideProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: false,
+                    });
+                    // Reset the form and close the edit form
+                    setPasswordFormData({
+                        currentPassword: '',
+                        password: '',
+                        password2: ''
+                    });
+                    setShowChangePasswordForm(false);
+                } else {
+                    // Handle the case where the update was not successful
+                    const errorMessage = resultAction.payload || 'Error updating password';
+                    toast.error(errorMessage, {
+                        position: "top-center",
+                        autoClose: 2000,
+                        hideProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: false,
+                    });
+                }
             }
             catch {
                 toast.error("Error updating password!", {
@@ -239,7 +261,7 @@ const MyAccount = () => {
                                                 <Form.Control
                                                     type="text"
                                                     name="firstName"
-                                                    value={firstName}
+                                                    value={detailsFormData.firstName}
                                                     onChange={onDetailsFormDataChange}
                                                     required
                                                     className="custom-input"
@@ -250,7 +272,7 @@ const MyAccount = () => {
                                                 <Form.Control
                                                     type="text"
                                                     name="lastName"
-                                                    value={lastName}
+                                                    value={detailsFormData.lastName}
                                                     onChange={onDetailsFormDataChange}
                                                     required
                                                     className="custom-input"
@@ -261,7 +283,7 @@ const MyAccount = () => {
                                                 <Form.Control
                                                     type="email"
                                                     name="email"
-                                                    value={email}
+                                                    value={detailsFormData.email}
                                                     required
                                                     onChange={onDetailsFormDataChange}
                                                     className="custom-input"
@@ -310,7 +332,7 @@ const MyAccount = () => {
                                                     type="password"
                                                     placeholder="Current password"
                                                     name="currentPassword"
-                                                    value={currentPassword}
+                                                    value={passwordFormData.currentPassword}
                                                     onChange={onPasswordFormDataChange}
                                                     className="custom-input"
                                                     required
@@ -322,19 +344,19 @@ const MyAccount = () => {
                                                     type="password"
                                                     placeholder="New password"
                                                     name="password"
-                                                    value={password}
+                                                    value={passwordFormData.password}
                                                     onChange={onPasswordFormDataChange}
                                                     className="custom-input"
                                                     required
                                                 />
                                             </Form.Group>
-                                            <Form.Group className="mb-3" controlId="formGroupPassword">
+                                            <Form.Group className="mb-3" controlId="formGroupPassword2">
                                                 <Form.Label className="bold-label">Confirm new password</Form.Label>
                                                 <Form.Control
                                                     type="password"
                                                     placeholder="Confirm new password"
                                                     name="password2"
-                                                    value={password2}
+                                                    value={passwordFormData.password2}
                                                     onChange={onPasswordFormDataChange}
                                                     className="custom-input"
                                                     required
@@ -370,7 +392,22 @@ const MyAccount = () => {
                                 </Row>
                             </Container >
                         )}
+
+
+
                     </Container>
+                    {/* <Container>
+                        <Row className="mt-3 mb-3">
+                            <Col>
+                                <Button
+                                    className="m-1 add-edit-form-btn"
+                                    onClick={() => navigate('/dashboard')}
+                                >
+                                    Close
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Container> */}
                 </>
             )
     );
