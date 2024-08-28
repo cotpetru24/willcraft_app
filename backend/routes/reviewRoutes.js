@@ -1,11 +1,13 @@
 import express from 'express';
-import {getAllReviews, updateReview, createReview, deleteReview} from '../controllers/reviewController.js';
+import {getAllReviews, getLast3Reviews, updateReview, createReview, deleteReview} from '../controllers/reviewController.js';
 import { protect } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
 
 router.get('/', getAllReviews);
+
+router.get('/latest', getLast3Reviews);
 
 router.post('/', protect, createReview);
 

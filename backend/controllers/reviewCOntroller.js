@@ -2,8 +2,19 @@ import asyncHandler from 'express-async-handler';
 import Review from '../models/reviewModel.js';
 import User from '../models/userModel.js';
 
+// export const getAllReviews = asyncHandler(async (req, res) => {
+//     const reviews = await Review.find({});
+
+//     if (reviews) {
+//         res.status(200).json(reviews);
+//     } else {
+//         res.status(400);
+//         throw new Error('Error getting reviews');
+//     }
+// });
+
 export const getAllReviews = asyncHandler(async (req, res) => {
-    const reviews = await Review.find({});
+    const reviews = await Review.find({}).sort({ createdAt: -1 }); // Sort by createdAt in descending order
 
     if (reviews) {
         res.status(200).json(reviews);
@@ -12,6 +23,30 @@ export const getAllReviews = asyncHandler(async (req, res) => {
         throw new Error('Error getting reviews');
     }
 });
+
+
+export const getLast3Reviews = asyncHandler(async (req, res) => {
+    const reviews = await Review.find({})
+        .sort({ createdAt: -1 }) // Sort by createdAt in descending order
+        .limit(3); // Limit the result to the latest 3 reviews
+
+
+
+
+    //this should also return this data:
+    //Rating 4.8/5 based on 123 reviews.
+
+
+
+    
+    if (reviews) {
+        res.status(200).json(reviews);
+    } else {
+        res.status(400);
+        throw new Error('Error getting reviews');
+    }
+});
+
 
 export const createReview = asyncHandler(async (req, res) => {
     if (!req.body.reviewText) {
@@ -57,7 +92,7 @@ export const updateReview = asyncHandler(async (req, res) => {
 });
 
 export const deleteReview = asyncHandler(async (req, res) => {
-////have to check if userid on the review matches the user that is trying delete
+    ////have to check if userid on the review matches the user that is trying delete
 
     const review = await Review.findById(req.params.id);
     if (!review) {

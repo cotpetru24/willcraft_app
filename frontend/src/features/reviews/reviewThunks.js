@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { createReview, getAllReviews } from "./reviewService";
+import { createReview, getAllReviews, getLast3Reviews } from "./reviewService";
 
 
 
@@ -9,8 +9,8 @@ export const createReviewThunk = createAsyncThunk(
     'reviews/createReview',
     async (reviewData, thunkApi) => {
         console.log('createReviewThunk called');
-        
- 
+
+
 
         // Log the final message data that will be sent to the API
         console.log('review data:', reviewData);
@@ -43,41 +43,78 @@ export const createReviewThunk = createAsyncThunk(
 );
 
 export const getAllReviewsThunk = createAsyncThunk(
-'reviews/getAllReviews',
-async ( thunkApi) => {
-    console.log('getAllReviewsThunk called');
-    
+    'reviews/getAllReviews',
+    async (thunkApi) => {
+        console.log('getAllReviewsThunk called');
 
 
-    try {
-        // Send the message data to the API
-        const getAllReviewsResponse = await getAllReviews();
 
-        // Log the response from the API
-        console.log('Response from getAllReviews API:', getAllReviewsResponse);
+        try {
+            // Send the message data to the API
+            const getAllReviewsResponse = await getAllReviews();
 
-        return getAllReviewsResponse;
+            // Log the response from the API
+            console.log('Response from getAllReviews API:', getAllReviewsResponse);
 
-    } catch (error) {
-        // Log any error that occurs during the API call
-        console.error('Error in getAllReviewsThunk:', error);
+            return getAllReviewsResponse;
 
-        const message =
-            (error.response && error.response.data && error.response.data.message) ||
-            error.message ||
-            error.toString();
+        } catch (error) {
+            // Log any error that occurs during the API call
+            console.error('Error in getAllReviewsThunk:', error);
 
-        // Log the error message being returned
-        console.error('Returning error message:', message);
+            const message =
+                (error.response && error.response.data && error.response.data.message) ||
+                error.message ||
+                error.toString();
 
-        return thunkApi.rejectWithValue(message);
+            // Log the error message being returned
+            console.error('Returning error message:', message);
+
+            return thunkApi.rejectWithValue(message);
+        }
     }
-}
 );
+
+
+
+export const getLast3ReviewsThunk = createAsyncThunk(
+    'reviews/getLast3Reviews',
+    async (thunkApi) => {
+        console.log('getLast3ReviewsThunk called');
+
+
+
+        try {
+            // Send the message data to the API
+            const getLast3ReviewsResponse = await getLast3Reviews();
+
+            // Log the response from the API
+            console.log('Response from getLast3ReviewsThunk API:', getLast3ReviewsResponse);
+
+            return getLast3ReviewsResponse;
+
+        } catch (error) {
+            // Log any error that occurs during the API call
+            console.error('Error in getLast3ReviewsThunk:', error);
+
+            const message =
+                (error.response && error.response.data && error.response.data.message) ||
+                error.message ||
+                error.toString();
+
+            // Log the error message being returned
+            console.error('Returning error message:', message);
+
+            return thunkApi.rejectWithValue(message);
+        }
+    }
+);
+
 
 const reviewThunks = {
     createReviewThunk,
-    getAllReviewsThunk
+    getAllReviewsThunk,
+    getLast3ReviewsThunk
 }
 
 export default reviewThunks;
