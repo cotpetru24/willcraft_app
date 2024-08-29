@@ -150,7 +150,7 @@ const OrderItem = ({ order }) => {
 
 
 
-                                {/*                                 
+                                                               
                                 {order.status === "complete" && (
 
                                     <Button variant="primary" className=""
@@ -159,16 +159,16 @@ const OrderItem = ({ order }) => {
                                     >
                                         Generate the Will
                                     </Button>
-                                )}  */}
+                                )}
 
 
-                                <Button
+                                {/* <Button
                                     variant="primary"
                                     className=""
                                     onClick={handleGenerateWill}
                                 >
                                     Generate the Will
-                                </Button>
+                                </Button> */}
 
 
 
