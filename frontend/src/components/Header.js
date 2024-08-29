@@ -128,7 +128,7 @@ const Header = () => {
                                                             </LinkContainer>
                                                         </Nav.Item>
                                                         <Nav.Item>
-                                                            <LinkContainer to="/progressBar" onClick={handleClose}>
+                                                            <LinkContainer to="/myAccount" onClick={handleClose}>
                                                                 <Nav.Link>My Account</Nav.Link>
                                                             </LinkContainer>
                                                         </Nav.Item>

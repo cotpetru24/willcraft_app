@@ -23,6 +23,7 @@ const MyAccount = () => {
         state.orders)
 
 
+    const user = useSelector(state => state.auth.user)
 
 
 
@@ -63,12 +64,35 @@ const MyAccount = () => {
 
 
     useEffect(() => {
+        setDetailsFormData({
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email
+        })
+
+
         if (isError) console.log(message)
         // dispatch(getOrders())
         // return () => dispatch(reset())
 
         //on preload populate details form
-    }, [navigate, isError, message, dispatch])
+    }, [navigate, isError, message, dispatch, showEditDetailsForm])
+
+    useEffect(() => {
+        if (!showChangePasswordForm) {
+            setPasswordFormData({
+                currentPassword: '',
+                password: '',
+                password2: ''
+            });
+        }
+    }, [showChangePasswordForm]);
+
+
+
+
+
+
 
     const handleChangeDetailsSubmit = async (e) => {
         e.preventDefault();
@@ -196,7 +220,7 @@ const MyAccount = () => {
                                             First name:
                                         </Col>
                                         <Col>
-                                            Petru
+                                            {user.firstName}
                                         </Col>
                                     </Row>
                                     <Row>
@@ -204,7 +228,7 @@ const MyAccount = () => {
                                             Last name:
                                         </Col>
                                         <Col>
-                                            Cotorobai
+                                            {user.lastName}
                                         </Col>
                                     </Row>
                                     <Row>
@@ -212,7 +236,7 @@ const MyAccount = () => {
                                             Email:
                                         </Col>
                                         <Col>
-                                            test@test.com
+                                            {user.email}
                                         </Col>
                                     </Row>
                                 </Col>
@@ -372,8 +396,7 @@ const MyAccount = () => {
                                                         //     handleShowKidsForm();
                                                         //     resetKidForm();
                                                         // }}
-                                                        onClick={() => setShowChangePasswordForm(false)}
-                                                    >
+                                                        onClick={() => { setShowChangePasswordForm(false); }}                                                    >
                                                         Cancel
                                                     </Button>
                                                 </Col>

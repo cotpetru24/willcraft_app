@@ -23,7 +23,7 @@ export const registerUser = asyncHandler(async (req, res) => {
     const user = await User.create({ firstName, lastName, email, password: hashedPassword });
 
     if (user) {
-        res.status(201).json({ _id: user.id, name: user.name, email: user.email, token: generateJWTtoken(user._id) });
+        res.status(201).json({ _id: user.id, firstName: user.firstName, lastName: user.lastName, email: user.email, token: generateJWTtoken(user._id) });
     } else {
         res.status(400);
         throw new Error('Invalid user data');
@@ -36,7 +36,7 @@ export const loginUser = asyncHandler(async (req, res) => {
     const user = await User.findOne({ email });
 
     if (user && (await bcrypt.compare(password, user.password))) {
-        res.json({ _id: user.id, firstName: user.firstName, email: user.email, token: generateJWTtoken(user._id) });
+        res.json({ _id: user.id, firstName: user.firstName, lastName: user.lastName, email: user.email, token: generateJWTtoken(user._id) });
     } else {
         res.status(400);
         throw new Error('Invalid data');
@@ -214,6 +214,7 @@ export const updateUserPassword = asyncHandler(async (req, res) => {
         res.json({
             _id: updatedUser._id,
             firstName: updatedUser.firstName,
+            lastName: updatedUser.lastName,
             email: updatedUser.email,
             token: generateJWTtoken(updatedUser._id),
         });
