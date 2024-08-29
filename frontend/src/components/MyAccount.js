@@ -279,7 +279,7 @@ const MyAccount = () => {
                             <Container className="mt-5">
                                 <Row className="mt-3 mb-4 justify-content-center">
                                     <Col xs={12} md={4} className="mx-auto">
-                                        <Form onSubmit={handleChangeDetailsSubmit}>
+                                        <Form onSubmit={handleChangeDetailsSubmit} style={{ minWidth: '300px' }}>
                                             <Form.Group className="mb-3" controlId="formGroupFirstName">
                                                 <Form.Label className="bold-label">First name</Form.Label>
                                                 <Form.Control
@@ -348,8 +348,8 @@ const MyAccount = () => {
                         {showChangePasswordForm && (
                             <Container className="mt-5">
                                 <Row className="mt-3 mb-4 justify-content-center">
-                                    <Col xs={12} md={4} className="mx-auto">
-                                        <Form onSubmit={handleChangePasswordSubmit}>
+                                    <Col xs={12} sm={12} md={4} className="mx-auto">
+                                        <Form onSubmit={handleChangePasswordSubmit} style={{ minWidth: '300px' }}>
                                             <Form.Group className="mb-3" controlId="formGroupCurrentPassword">
                                                 <Form.Label className="bold-label">Current password</Form.Label>
                                                 <Form.Control
