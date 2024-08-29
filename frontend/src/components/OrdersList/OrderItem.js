@@ -43,6 +43,19 @@ const OrderItem = ({ order }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    const handleGenerateWill = async () => {
+        try {
+            const response = await dispatch(getOrderThunk(order._id));
+            if (getOrderThunk.fulfilled.match(response)) {
+                generateWillPdf(response.payload); // Use response.payload for the data
+            } else {
+                console.error("Failed to generate the Will PDF:", response.error.message);
+            }
+        } catch (error) {
+            console.error("An error occurred while generating the Will PDF:", error);
+        }
+    };
+
     return (
         <Container className="mb-5">
             <Card className='shadow' bg="light" text="dark" >
@@ -90,8 +103,8 @@ const OrderItem = ({ order }) => {
                                         if (daysLeft > 0) {
                                             return (
                                                 <>
-                                                    <Col xs="auto" 
-                                                    className="d-flex justify-content-start align-items-center flex-grow-1"
+                                                    <Col xs="auto"
+                                                        className="d-flex justify-content-start align-items-center flex-grow-1"
                                                     >
                                                         <p className="m-0" style={{ fontWeight: 500 }}>{daysLeft} days left to edit</p>
                                                     </Col>
@@ -137,15 +150,31 @@ const OrderItem = ({ order }) => {
 
 
 
-
+                                {/* 
                                 {order.status === "complete" && (
 
                                     <Button variant="primary" className=""
-                                        onClick={generateWillPdf}
+                                        onClick={generateWillPdf(order)}
                                     >
                                         Generate the Will
                                     </Button>
-                                )}
+                                )} */}
+
+
+
+
+                                <Button
+                                    variant="primary"
+                                    className=""
+                                    onClick={handleGenerateWill}
+                                >
+                                    Generate the Will
+                                </Button>
+
+
+
+
+
                                 {order.status === "CreatingOrder" && (
                                     <Button
                                         variant="success m-1 order-item-btn"
