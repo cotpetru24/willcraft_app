@@ -1,12 +1,16 @@
+
+
 // // import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 
 // // const generateWillPdf = async (order) => {
 
-// //     console.log(`order to generate the will ${JSON.stringify(order)}`)
+// //     console.log(`Order to generate the will: ${JSON.stringify(order)}`);
+
 // //     const pdfDoc = await PDFDocument.create();
 // //     const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
 
 // //     const fontSize = 12;
+// //     const titleFontSize = 30; // Increase title font size
 // //     const margin = 50;
 // //     const lineHeight = fontSize * 1.2;
 
@@ -20,55 +24,19 @@
 // //             amount: d.receivingAmount
 // //         }))
 // //     ).flat();
-    
-// //     const guardians = order.peopleAndRoles.filter(p => p.role.includes('guardian')).map(p => p.personId);
-
-// //     // Create the instructions page
-// //     let instructionsPage = pdfDoc.addPage();
-// //     let { width, height } = instructionsPage.getSize();
-// //     let yPosition = height - margin;
-
-// //     const instructions = `
-// //     Instructions:
-// //     1. How to Sign the Document:
-// //     - The will must be signed by the testator in the presence of two witnesses.
-// //     - The witnesses must be present at the same time and see the testator sign the will.
-// //     - The witnesses must then sign the will in the presence of the testator.
-// //     2. How to Store the Document:
-// //     - Store the will in a safe place where it can be easily found after your death.
-// //     - Ensure that your executor knows where the will is stored.
-// //     - Avoid storing the will in a place that is difficult to access, such as a bank safe deposit box.
-// //     `;
-
-// //     // const addTextToPage = (page, text, fontSize) => {
-// //     //     const lines = text.split('\n');
-// //     //     lines.forEach(line => {
-// //     //         if (yPosition < margin) {
-// //     //             page = pdfDoc.addPage();
-// //     //             yPosition = height - margin;
-// //     //         }
-// //     //         page.drawText(line, {
-// //     //             x: margin,
-// //     //             y: yPosition,
-// //     //             size: fontSize,
-// //     //             font: timesRomanFont,
-// //     //             color: rgb(0, 0, 0),
-// //     //         });
-// //     //         yPosition -= lineHeight;
-// //     //     });
-// //     // };
-
 
 // //     const addTextToPage = (page, text, fontSize, maxWidth) => {
-// //         const paragraphs = text.split('\n');  // Split text by line breaks
+// //         let { height } = page.getSize();
+// //         let yPosition = height - margin; // Declare yPosition within this function
+
+// //         const paragraphs = text.split('\n');
 // //         paragraphs.forEach(paragraph => {
-// //             const words = paragraph.split(' '); // Split the paragraph into words
+// //             const words = paragraph.split(' ');
 // //             let line = '';
 // //             for (let n = 0; n < words.length; n++) {
 // //                 let testLine = line + words[n] + ' ';
 // //                 let testWidth = timesRomanFont.widthOfTextAtSize(testLine, fontSize);
 // //                 if (testWidth > maxWidth && line.length > 0) {
-// //                     // Draw the current line and start a new one
 // //                     page.drawText(line.trim(), {
 // //                         x: margin,
 // //                         y: yPosition,
@@ -86,7 +54,6 @@
 // //                     line = testLine;
 // //                 }
 // //             }
-// //             // Draw the last line of the paragraph
 // //             if (line.length > 0) {
 // //                 page.drawText(line.trim(), {
 // //                     x: margin,
@@ -101,15 +68,73 @@
 // //                     yPosition = height - margin;
 // //                 }
 // //             }
-// //             yPosition -= lineHeight; // Add extra space after each paragraph
+// //             yPosition -= lineHeight;
 // //         });
 // //     };
-    
-    
-    
 
+// //     // Create the instructions page first
+// //     let instructionsPage = pdfDoc.addPage();
+// //     let { width, height } = instructionsPage.getSize();
+// //     let yPosition = height - margin;
 
-// //     addTextToPage(instructionsPage, instructions, fontSize);
+// //     const instructions = `
+// //     Instructions:
+// //     1. How to Sign the Document:
+// //     - This Will must be signed by the Testator in the presence of two witnesses.
+// //     - The witnesses must be present at the same time and observe the Testator signing the Will.
+// //     - The witnesses must then sign the Will in the presence of the Testator.
+// //     2. How to Store the Document:
+// //     - Store the Will in a safe location where it can be easily found after your death.
+// //     - Ensure your executor is aware of the Will's location.
+// //     - Avoid storing the Will in locations that may be difficult to access, such as a bank safe deposit box.
+// //     `;
+// //     addTextToPage(instructionsPage, instructions, fontSize, width - 1.5 * margin);
+
+// //     // Create the title page after the instructions page
+// //     let titlePage = pdfDoc.addPage();
+// //     yPosition = height / 2; // Start vertically centered
+
+// //     const titleContent = `
+// //     The Last Will and Testament
+// //     of
+// //     ${testator.fullLegalName}
+// //     `;
+
+// //     // Center the title text horizontally
+// //     const textWidth = timesRomanFont.widthOfTextAtSize('The Last Will and Testament', titleFontSize);
+// //     const titleXPosition = (width - textWidth) / 2;
+
+// //     titlePage.drawText("The Last Will and Testament", {
+// //         x: titleXPosition,
+// //         y: yPosition,
+// //         size: titleFontSize,
+// //         font: timesRomanFont,
+// //         color: rgb(0, 0, 0),
+// //     });
+
+// //     // Move down for the name
+// //     yPosition -= titleFontSize * 1.5; // Adjust spacing
+
+// //     const nameWidth = timesRomanFont.widthOfTextAtSize(testator.fullLegalName, titleFontSize);
+// //     const nameXPosition = (width - nameWidth) / 2;
+
+// //     titlePage.drawText(`of`, {
+// //         x: (width - timesRomanFont.widthOfTextAtSize('of', titleFontSize)) / 2,
+// //         y: yPosition,
+// //         size: titleFontSize,
+// //         font: timesRomanFont,
+// //         color: rgb(0, 0, 0),
+// //     });
+
+// //     yPosition -= titleFontSize * 1.5; // Adjust spacing
+
+// //     titlePage.drawText(testator.fullLegalName, {
+// //         x: nameXPosition,
+// //         y: yPosition,
+// //         size: titleFontSize,
+// //         font: timesRomanFont,
+// //         color: rgb(0, 0, 0),
+// //     });
 
 // //     // Create the will content page
 // //     let willPage = pdfDoc.addPage();
@@ -118,52 +143,45 @@
 // //     const willContent = `
 // //     LAST WILL AND TESTAMENT
 
-// //     I, ${testator.fullLegalName}, of ${testator.fullAddress}, declare this to be my last will and testament.
+// //     I, ${testator.fullLegalName}, of ${testator.fullAddress}, hereby declare this document to be my Last Will and Testament.
 
 // //     ARTICLE 1
 // //     REVOCATION OF PREVIOUS WILLS
-// //     I hereby revoke any and all former Wills and Codicils heretofore made by me.
+// //     I revoke all previous Wills and Codicils made by me.
 
 // //     ARTICLE 2
 // //     APPOINTMENT OF EXECUTORS
-// //     I appoint the following persons to serve as the executors of this Will:
-// //     ${executors.map(executor => `- Executor: ${executor.fullLegalName}, ${executor.fullAddress}`).join('\n')}
+// //     I appoint the following individuals as Executors of this Will:
+// //     ${executors.map(executor => `- ${executor.fullLegalName} of ${executor.fullAddress}`).join('\n')}
 
 // //     ARTICLE 3
 // //     DISTRIBUTION OF ASSETS
-// //     I direct that all my just debts, funeral expenses, and expenses of my last illness be first paid out of my estate. 
+// //     I direct that all my just debts, funeral expenses, and the expenses of my last illness be paid out of my estate. 
 // //     I give, devise, and bequeath my assets as follows:
 // //     ${beneficiaries.map(beneficiary => 
-// //         `- To ${beneficiary.beneficiary.fullLegalName}, ${beneficiary.beneficiary.fullAddress}, I leave ${beneficiary.amount}% of ${beneficiary.assetType}.`
+// //         `- To ${beneficiary.beneficiary.fullLegalName} of ${beneficiary.beneficiary.fullAddress}, I leave ${beneficiary.amount}% of ${beneficiary.assetType}.`
 // //     ).join('\n')}
 
-// //     ${guardians.length ? `
 // //     ARTICLE 4
-// //     APPOINTMENT OF GUARDIANS
-// //     If applicable, I appoint ${guardians.map(guardian => guardian.fullLegalName).join(', ')} to be the guardian(s) of my minor children.
-// //     ` : ''}
-    
-// //     ARTICLE 5
 // //     MISCELLANEOUS PROVISIONS
-// //     Any person designated as a beneficiary, trustee, or executor who contests this Will shall forfeit any interest herein and shall be treated as having predeceased me.
+// //     Any person designated as a beneficiary, or executor who contests this Will shall forfeit any interest herein and be treated as having predeceased me.
 
-// //     IN WITNESS WHEREOF, I have hereunto set my hand and seal this [Date].
-// // `;
-
-// // addTextToPage(willPage, willContent, fontSize, width - 1.5 * margin);
+// //     IN WITNESS WHEREOF, I have set my hand and seal on this [Date].
+// //     `;
+// //     addTextToPage(willPage, willContent, fontSize, width - 1.5 * margin);
 
 // //     // Create the signature page
 // //     let signaturePage = pdfDoc.addPage();
 // //     yPosition = height - margin;
 
 // //     const signatureContent = `
-// //     IN WITNESS WHEREOF, I have hereunto set my hand and seal this [Date].
-
+// //     IN WITNESS WHEREOF, I have set my hand and seal on this ________________________.
+// //                                                                       Date
 // //     ________________________
 // //     ${testator.fullLegalName}
 
 // //     WITNESSES:
-// //     We, the undersigned, hereby certify that the above-named Testator has signed this Will in our presence, and we, in the Testator's presence and in the presence of each other, have hereunto subscribed our names as witnesses.
+// //     We, the undersigned, hereby certify that the above-named Testator has signed this Will in our presence, and we, in the Testator's presence and in the presence of each other, have subscribed our names as witnesses.
 
 // //     Witness 1:
 // //     ________________________
@@ -174,10 +192,9 @@
 // //     [Witness 2 Name], [Witness 2 Address]
 // //     ________________________
 // //     [Witness 2 Signature]
-// // `;
+// //     `;
 
 // //     addTextToPage(signaturePage, signatureContent, fontSize, width - 1.5 * margin);
-
 
 // //     const pdfBytes = await pdfDoc.save();
 
@@ -197,6 +214,8 @@
 
 // // export default generateWillPdf;
 
+
+
 // import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 
 // const generateWillPdf = async (order) => {
@@ -207,22 +226,20 @@
 //     const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
 
 //     const fontSize = 12;
-//     const titleFontSize = 24;
+//     const titleFontSize = 30; // Increase title font size
 //     const margin = 50;
 //     const lineHeight = fontSize * 1.2;
 
 //     // Extract data from the order payload
 //     const testator = order.peopleAndRoles.find(p => p.role.includes('testator')).personId;
 //     const executors = order.peopleAndRoles.filter(p => p.role.includes('executor')).map(p => p.personId);
-//     const beneficiaries = order.assetsAndDistribution.map(a => 
+//     const beneficiaries = order.assetsAndDistribution.map(a =>
 //         a.distribution.map(d => ({
 //             beneficiary: d.personId,
 //             assetType: a.assetId.assetType,
 //             amount: d.receivingAmount
 //         }))
 //     ).flat();
-
-//     const guardians = order.peopleAndRoles.filter(p => p.role.includes('guardian')).map(p => p.personId);
 
 //     const addTextToPage = (page, text, fontSize, maxWidth) => {
 //         let { height } = page.getSize();
@@ -271,34 +288,17 @@
 //         });
 //     };
 
-//     // Create the title page
-//     let titlePage = pdfDoc.addPage();
-//     let { width, height } = titlePage.getSize();
-//     let yPosition = height / 2; // Center vertically on the page
-
-//     const titleContent = `
-//     The Last Will and Testament
-//     of
-//     ${testator.fullLegalName}
-//     `;
-//     titlePage.drawText(titleContent.trim(), {
-//         x: margin,
-//         y: yPosition,
-//         size: titleFontSize,
-//         font: timesRomanFont,
-//         color: rgb(0, 0, 0),
-//     });
-
-//     // Create the instructions page
+//     // Create the instructions page first
 //     let instructionsPage = pdfDoc.addPage();
-//     yPosition = height - margin;
+//     let { width, height } = instructionsPage.getSize();
+//     let yPosition = height - margin;
 
 //     const instructions = `
 //     Instructions:
 //     1. How to Sign the Document:
-//     - This Will must be signed by the Testator in the presence of two witnesses.
-//     - The witnesses must be present at the same time and observe the Testator signing the Will.
-//     - The witnesses must then sign the Will in the presence of the Testator.
+//     - This Will must be signed by ${testator.title} ${testator.fullLegalName} in the presence of two witnesses.
+//     - The witnesses must be present at the same time and observe ${testator.title} ${testator.fullLegalName} signing the Will.
+//     - The witnesses must then sign the Will in the presence of ${testator.title} ${testator.fullLegalName}.
 //     2. How to Store the Document:
 //     - Store the Will in a safe location where it can be easily found after your death.
 //     - Ensure your executor is aware of the Will's location.
@@ -306,9 +306,63 @@
 //     `;
 //     addTextToPage(instructionsPage, instructions, fontSize, width - 1.5 * margin);
 
+//     // Add a blank page after the instructions
+//     pdfDoc.addPage();
+
+//     // Create the title page after the blank page
+//     let titlePage = pdfDoc.addPage();
+//     yPosition = height / 2; // Start vertically centered
+
+//     const titleContent = `
+//     The Last Will and Testament
+//     of
+//     ${testator.fullLegalName}
+//     `;
+
+//     // Center the title text horizontally
+//     const textWidth = timesRomanFont.widthOfTextAtSize('The Last Will and Testament', titleFontSize);
+//     const titleXPosition = (width - textWidth) / 2;
+
+//     titlePage.drawText("The Last Will and Testament", {
+//         x: titleXPosition,
+//         y: yPosition,
+//         size: titleFontSize,
+//         font: timesRomanFont,
+//         color: rgb(0, 0, 0),
+//     });
+
+//     // Move down for the name
+//     yPosition -= titleFontSize * 1.5; // Adjust spacing
+
+//     const nameWidth = timesRomanFont.widthOfTextAtSize(testator.fullLegalName, titleFontSize);
+//     const nameXPosition = (width - nameWidth) / 2;
+
+//     titlePage.drawText(`of`, {
+//         x: (width - timesRomanFont.widthOfTextAtSize('of', titleFontSize)) / 2,
+//         y: yPosition,
+//         size: titleFontSize,
+//         font: timesRomanFont,
+//         color: rgb(0, 0, 0),
+//     });
+
+//     yPosition -= titleFontSize * 1.5; // Adjust spacing
+
+//     titlePage.drawText(testator.fullLegalName, {
+//         x: nameXPosition,
+//         y: yPosition,
+//         size: titleFontSize,
+//         font: timesRomanFont,
+//         color: rgb(0, 0, 0),
+//     });
+
 //     // Create the will content page
 //     let willPage = pdfDoc.addPage();
 //     yPosition = height - margin;
+
+//     // Check if there are more than one executor or beneficiary and use plural/singular accordingly
+//     const executorText = executors.length > 1 ? 'Executors' : 'Executor';
+//     const assetText = executors.length > 1 ? 'individuals' : 'individual';
+//     const beneficiaryText = beneficiaries.length > 1 ? 'beneficiaries' : 'beneficiary';
 
 //     const willContent = `
 //     LAST WILL AND TESTAMENT
@@ -320,30 +374,23 @@
 //     I revoke all previous Wills and Codicils made by me.
 
 //     ARTICLE 2
-//     APPOINTMENT OF EXECUTORS
-//     I appoint the following individuals as Executors of this Will:
-//     ${executors.map(executor => `- ${executor.fullLegalName}, ${executor.fullAddress}`).join('\n')}
+//     APPOINTMENT OF ${executorText.toUpperCase()}
+//     I appoint the following ${assetText} as ${executorText} of this Will:
+//     ${executors.map(executor => `- ${executor.fullLegalName} of ${executor.fullAddress}`).join('\n')}
 
 //     ARTICLE 3
 //     DISTRIBUTION OF ASSETS
 //     I direct that all my just debts, funeral expenses, and the expenses of my last illness be paid out of my estate. 
 //     I give, devise, and bequeath my assets as follows:
-//     ${beneficiaries.map(beneficiary => 
-//         `- To ${beneficiary.beneficiary.fullLegalName}, ${beneficiary.beneficiary.fullAddress}, I leave ${beneficiary.amount}% of ${beneficiary.assetType}.`
+//     ${beneficiaries.map(beneficiary =>
+//         `- To ${beneficiary.beneficiary.fullLegalName} of ${beneficiary.beneficiary.fullAddress}, I leave ${beneficiary.amount}% of ${beneficiary.assetType}.`
 //     ).join('\n')}
 
-//     ${guardians.length ? `
 //     ARTICLE 4
-//     APPOINTMENT OF GUARDIANS
-//     If necessary, I appoint ${guardians.map(guardian => guardian.fullLegalName).join(', ')} as the guardian(s) of my minor children.
-//     ` : ''}
-
-//     ARTICLE 5
 //     MISCELLANEOUS PROVISIONS
-//     Any person designated as a beneficiary, trustee, or executor who contests this Will shall forfeit any interest herein and be treated as having predeceased me.
+//     Any person designated as a ${beneficiaryText}, or executor who contests this Will shall forfeit any interest herein and be treated as having predeceased me.
 
-//     IN WITNESS WHEREOF, I have set my hand and seal on this [Date].
-//     `;
+//         `;
 //     addTextToPage(willPage, willContent, fontSize, width - 1.5 * margin);
 
 //     // Create the signature page
@@ -351,7 +398,7 @@
 //     yPosition = height - margin;
 
 //     const signatureContent = `
-//     IN WITNESS WHEREOF, I have set my hand and seal on this [Date].
+//     IN WITNESS WHEREOF, I have set my hand and seal on this ________________________(date).
 
 //     ________________________
 //     ${testator.fullLegalName}
@@ -369,6 +416,7 @@
 //     ________________________
 //     [Witness 2 Signature]
 //     `;
+
 //     addTextToPage(signaturePage, signatureContent, fontSize, width - 1.5 * margin);
 
 //     const pdfBytes = await pdfDoc.save();
@@ -408,7 +456,7 @@ const generateWillPdf = async (order) => {
     // Extract data from the order payload
     const testator = order.peopleAndRoles.find(p => p.role.includes('testator')).personId;
     const executors = order.peopleAndRoles.filter(p => p.role.includes('executor')).map(p => p.personId);
-    const beneficiaries = order.assetsAndDistribution.map(a => 
+    const beneficiaries = order.assetsAndDistribution.map(a =>
         a.distribution.map(d => ({
             beneficiary: d.personId,
             assetType: a.assetId.assetType,
@@ -470,27 +518,37 @@ const generateWillPdf = async (order) => {
 
     const instructions = `
     Instructions:
+
     1. How to Sign the Document:
-    - This Will must be signed by the Testator in the presence of two witnesses.
-    - The witnesses must be present at the same time and observe the Testator signing the Will.
-    - The witnesses must then sign the Will in the presence of the Testator.
+    - This Will must be signed by ${testator.title} ${testator.fullLegalName} in the presence of two witnesses.
+    - The witnesses must be present at the same time and observe ${testator.title} ${testator.fullLegalName} signing the Will.
+    - The witnesses must then sign the Will in the presence of ${testator.title} ${testator.fullLegalName}.
+    
     2. How to Store the Document:
     - Store the Will in a safe location where it can be easily found after your death.
-    - Ensure your executor is aware of the Will's location.
+    - Ensure your ${executors.length > 1 ? 'executors are' : 'executor is'} aware of the Will's location.
     - Avoid storing the Will in locations that may be difficult to access, such as a bank safe deposit box.
+    
+    3. Witness Requirements:
+    - Witnesses must be over the age of 18.
+    - Witnesses must not be related to ${testator.title} ${testator.fullLegalName}.
+    - Witnesses cannot be named beneficiaries of the will.
     `;
     addTextToPage(instructionsPage, instructions, fontSize, width - 1.5 * margin);
 
-    // Create the title page after the instructions page
+    // Add a blank page after the instructions
+    pdfDoc.addPage();
+
+    // Create the title page after the blank page
     let titlePage = pdfDoc.addPage();
-    yPosition = height / 2; // Start vertically centered
+    yPosition = (height / 2) + 150; // Start 70px higher than vertically centered
 
     const titleContent = `
     The Last Will and Testament
     of
     ${testator.fullLegalName}
     `;
-    
+
     // Center the title text horizontally
     const textWidth = timesRomanFont.widthOfTextAtSize('The Last Will and Testament', titleFontSize);
     const titleXPosition = (width - textWidth) / 2;
@@ -531,6 +589,11 @@ const generateWillPdf = async (order) => {
     let willPage = pdfDoc.addPage();
     yPosition = height - margin;
 
+    // Check if there are more than one executor or beneficiary and use plural/singular accordingly
+    const executorText = executors.length > 1 ? 'Executors' : 'Executor';
+    const assetText = executors.length > 1 ? 'individuals' : 'individual';
+    const beneficiaryText = beneficiaries.length > 1 ? 'beneficiaries' : 'beneficiary';
+
     const willContent = `
     LAST WILL AND TESTAMENT
 
@@ -541,24 +604,23 @@ const generateWillPdf = async (order) => {
     I revoke all previous Wills and Codicils made by me.
 
     ARTICLE 2
-    APPOINTMENT OF EXECUTORS
-    I appoint the following individuals as Executors of this Will:
-    ${executors.map(executor => `- ${executor.fullLegalName}, ${executor.fullAddress}`).join('\n')}
+    APPOINTMENT OF ${executorText.toUpperCase()}
+    I appoint the following ${assetText} as ${executorText} of this Will:
+    ${executors.map(executor => `- ${executor.fullLegalName} of ${executor.fullAddress}`).join('\n')}
 
     ARTICLE 3
     DISTRIBUTION OF ASSETS
     I direct that all my just debts, funeral expenses, and the expenses of my last illness be paid out of my estate. 
     I give, devise, and bequeath my assets as follows:
-    ${beneficiaries.map(beneficiary => 
-        `- To ${beneficiary.beneficiary.fullLegalName}, ${beneficiary.beneficiary.fullAddress}, I leave ${beneficiary.amount}% of ${beneficiary.assetType}.`
+    ${beneficiaries.map(beneficiary =>
+        `- To ${beneficiary.beneficiary.fullLegalName} of ${beneficiary.beneficiary.fullAddress}, I leave ${beneficiary.amount}% of ${beneficiary.assetType}.`
     ).join('\n')}
 
     ARTICLE 4
     MISCELLANEOUS PROVISIONS
-    Any person designated as a beneficiary, trustee, or executor who contests this Will shall forfeit any interest herein and be treated as having predeceased me.
+    Any person appointed as a ${beneficiaryText}, or executor who contests this Will shall forfeit any interest herein and be treated as having predeceased me.
 
-    IN WITNESS WHEREOF, I have set my hand and seal on this [Date].
-    `;
+        `;
     addTextToPage(willPage, willContent, fontSize, width - 1.5 * margin);
 
     // Create the signature page
@@ -566,23 +628,27 @@ const generateWillPdf = async (order) => {
     yPosition = height - margin;
 
     const signatureContent = `
-    IN WITNESS WHEREOF, I have set my hand and seal on this [Date].
-
-    ________________________
+    IN WITNESS WHEREOF, I have set my hand and seal on this ________________________ (date).
+        
     ${testator.fullLegalName}
+    Signature ________________________
 
     WITNESSES:
     We, the undersigned, hereby certify that the above-named Testator has signed this Will in our presence, and we, in the Testator's presence and in the presence of each other, have subscribed our names as witnesses.
 
     Witness 1:
-    ________________________
-    [Witness 1 Name], [Witness 1 Address]
+
+    Full legal name : ________________________________________________
+    Address :             ________________________________________________
+    Signature :           ________________________________________________
+
+
 
     Witness 2:
-    ________________________
-    [Witness 2 Name], [Witness 2 Address]
-    ________________________
-    [Witness 2 Signature]
+
+    Full legal name : ________________________________________________
+    Address :             ________________________________________________
+    Signature :           ________________________________________________
     `;
 
     addTextToPage(signaturePage, signatureContent, fontSize, width - 1.5 * margin);
