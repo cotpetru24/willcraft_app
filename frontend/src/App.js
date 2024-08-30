@@ -20,7 +20,6 @@ import Kids from './components/CreatingOrder/CreatingOrderComponents/Kids';
 import Assets from './components/CreatingOrder/CreatingOrderComponents/Assets';
 import AssetsDistribution from './components/CreatingOrder/CreatingOrderComponents/AssetsDistribution';
 import Executors from './components/CreatingOrder/CreatingOrderComponents/Executors';
-import PaymentPage from './components/ChechOutForm';
 import Reviews from './components/Reviews';
 import MyAccount from './components/MyAccount';
 import WriteAReview from './components/WriteAReview';
@@ -48,7 +47,6 @@ function App() {
             <Route path='/assets' element={<Assets />} />;
             <Route path='/assetsDistribution' element={<AssetsDistribution />} />;
             <Route path='/executors' element={<Executors />} />;
-            {/* <Route path='/checkOutForm' element={<PaymentPage />} /> */}
             <Route path='/reviews' element={<Reviews/>}/>
             <Route path='/myAccount' element={<MyAccount/>}/>
             <Route path='/writeAReview' element={<WriteAReview/>}/>

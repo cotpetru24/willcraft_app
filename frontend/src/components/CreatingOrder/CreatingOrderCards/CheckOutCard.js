@@ -140,26 +140,30 @@ const CheckOutCard = ({ setShowCheckout, clientSecret, products, totalAmount, ad
                       <Form.Label className="bold-label">Card Details</Form.Label>
                       <PaymentElement />
                     </Form.Group>
+                    <Row>
+                      <Col className="d-flex justify-content-between">
+                    <Button
+                        variant="warning"
+                        className="creating-order-tile-btns"
+                        onClick={() => setShowCheckout(false)}
+                      >
+                        Cancel
+                    </Button>
                     <Button
                       variant="primary"
-                      className="m-1"
+                      className="creating-order-tile-btns"
                       type="submit"
                       disabled={!stripe || isProcessing}
                     >
                       {isProcessing ? "Processing..." : "Pay"}
                     </Button>
+                    </Col>
+                    </Row>
                     {error && <div>{error}</div>}
                   </Form>
                 </Col>
               </Row>
             </Card.Text>
-            <Button
-              variant="primary"
-              className="creating-order-tile-btns"
-              onClick={() => setShowCheckout(false)}
-            >
-              Cancel
-            </Button>
           </Card.Body>
         </Card>
       </Container>
