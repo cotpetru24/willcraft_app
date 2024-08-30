@@ -37,7 +37,7 @@ const paymentSchema = new mongoose.Schema(
         paymentMethod: {
             type: String,
             required: [true, 'Payment method is required'],
-            enum: ['card', 'bank_transfer', 'paypal', 'stripe'] // You can adjust the payment methods as needed
+            enum: ['card', 'bank_transfer', 'paypal', 'stripe']
         }
     },
     { timestamps: true }

@@ -3,9 +3,7 @@ import Person from '../models/personModel.js';
 import User from '../models/userModel.js';
 
 
-// @desc    Create a person
-// @route   POST /api/people/create
-// @access  Public
+
 export const createPerson = asyncHandler(async (req, res) => {
     if (!req.body.fullLegalName) {
         res.status(400);
@@ -25,26 +23,27 @@ export const createPerson = asyncHandler(async (req, res) => {
     res.status(200).json(person);
 });
 
+
 export const updatePerson = asyncHandler(async (req, res) => {
     const person = await Person.findById(req.params.id);
     if (!person) {
-        res.status(404); // Not found
+        res.status(404);
         throw new Error('Person not found');
     }
 
     if (!req.user) {
-        res.status(401); // Unauthorized
+        res.status(401);
         throw new Error('No user found');
     }
 
     const user = await User.findById(req.user.id);
     if (!user) {
-        res.status(401); // Unauthorized
+        res.status(401);
         throw new Error('No such user found');
     }
 
     if (person.userId.toString() !== user.id) {
-        res.status(403); // Forbidden
+        res.status(403);
         throw new Error('User is not authorized to update');
     }
 
@@ -53,16 +52,15 @@ export const updatePerson = asyncHandler(async (req, res) => {
             req.params.id, req.body, { new: true }
         );
         if (!updatedPerson) {
-            res.status(404); // Not found
+            res.status(404);
             throw new Error('Person not found after update');
         }
         res.status(200).json(updatedPerson);
     } catch (error) {
-        res.status(500); // Internal server error
+        res.status(500);
         throw new Error('Error updating person');
     }
 });
-
 
 
 export const getPersons = asyncHandler(async (req, res) => {
@@ -88,6 +86,7 @@ export const getPersons = asyncHandler(async (req, res) => {
     }
 });
 
+
 export const deletePerson = asyncHandler(async (req, res) => {
     const person = await Person.findById(req.params.id);
     if (!person) { // Changed from review to person
@@ -103,7 +102,7 @@ export const deletePerson = asyncHandler(async (req, res) => {
     }
 
     if (person.userId.toString() !== user.id) {
-        res.status(403); // Changed from 401 to 403
+        res.status(403);
         throw new Error('User is not authorised to delete');
     }
 

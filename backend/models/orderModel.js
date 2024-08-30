@@ -36,19 +36,15 @@ const orderSchema = new mongoose.Schema(
                 assetId: {
                     type: Schema.Types.ObjectId,
                     ref: 'Asset',
-                    // required: true
                 },
                 distribution: [
                     {
                         personId: {
                             type: Schema.Types.ObjectId,
                             ref: 'Person',
-                            // type: String,
-                            // required: true
                         },
                         receivingAmount: {
                             type: String,
-                            // required: true
                         }
                     }
                 ]

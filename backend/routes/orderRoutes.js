@@ -1,5 +1,4 @@
 import express from 'express';
-// import { createPerson} from '../controllers/peopleController.js';
 import { protect } from '../middleware/authMiddleware.js';
 import { createOrder, deleteOrder, getAllUserOrders, getOrder, updateOrder } from '../controllers/orderController.js';
 

@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import User from '../models/userModel.js';
 import asyncHandler from 'express-async-handler';
 
+
 export const registerUser = asyncHandler(async (req, res) => {
     const { firstName, lastName, email, password } = req.body;
 
@@ -30,6 +31,7 @@ export const registerUser = asyncHandler(async (req, res) => {
     }
 });
 
+
 export const loginUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
 
@@ -47,59 +49,6 @@ export const getCurrentUser = asyncHandler(async (req, res) => {
     const { _id, name, email } = await User.findById(req.user.id);
     res.status(200).json({ id: _id, name, email });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// export const updateUserDetails = asyncHandler(async (req, res) => {
-//     const { firstName, lastName, email, userId } = req.body;
-
-//     console.log("Received request to update user details:", { firstName, lastName, email, userId }); // Debugging
-
-//     try {
-//         // Fetch the user by ID
-//         const user = await User.findById(userId);
-//         console.log("User found:", user); // Debugging
-
-//         if (!user) {
-//             res.status(404); // Not Found
-//             throw new Error('User not found');
-//         }
-
-//         // Update user details if provided
-//         user.firstName = firstName || user.firstName;
-//         user.lastName = lastName || user.lastName;
-//         user.email = email || user.email;
-//         console.log("Updated user data:", { firstName: user.firstName, lastName: user.lastName, email: user.email }); // Debugging
-
-//         // Save the updated user
-//         const updatedUser = await user.save();
-//         console.log("User successfully updated:", updatedUser); // Debugging
-
-//         res.json({
-//             _id: updatedUser._id,
-//             firstName: updatedUser.firstName,
-//             lastName: updatedUser.lastName,
-//             email: updatedUser.email,
-//             token: generateJWTtoken(updatedUser._id),
-//         });
-//     } catch (error) {
-//         console.error("Error updating user details:", error); // Debugging
-//         res.status(500).json({ message: 'Error updating user details' }); // Internal Server Error
-//     }
-// });
 
 
 export const updateUserDetails = asyncHandler(async (req, res) => {
@@ -145,7 +94,7 @@ export const updateUserDetails = asyncHandler(async (req, res) => {
         });
     } catch (error) {
         console.error("Error updating user details:", error); // Debugging
-        res.status(500).json({ message: error.message || 'Error updating user details' }); // Internal Server Error
+        res.status(500).json({ message: error.message || 'Error updating user details' });
     }
 });
 

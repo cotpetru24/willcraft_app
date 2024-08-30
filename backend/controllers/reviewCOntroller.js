@@ -2,16 +2,6 @@ import asyncHandler from 'express-async-handler';
 import Review from '../models/reviewModel.js';
 import User from '../models/userModel.js';
 
-// export const getAllReviews = asyncHandler(async (req, res) => {
-//     const reviews = await Review.find({});
-
-//     if (reviews) {
-//         res.status(200).json(reviews);
-//     } else {
-//         res.status(400);
-//         throw new Error('Error getting reviews');
-//     }
-// });
 
 export const getAllReviews = asyncHandler(async (req, res) => {
     const reviews = await Review.find({}).sort({ createdAt: -1 }); // Sort by createdAt in descending order
@@ -25,30 +15,6 @@ export const getAllReviews = asyncHandler(async (req, res) => {
 });
 
 
-// export const getLast3Reviews = asyncHandler(async (req, res) => {
-//     const reviews = await Review.find({})
-//         .sort({ createdAt: -1 }) // Sort by createdAt in descending order
-//         .limit(3); // Limit the result to the latest 3 reviews
-
-
-
-
-//     //this should also return this:
-//     //Rating 4.8/5 based on 123 reviews.
-//     //it is average rating and number of reviews
-
-
-
-    
-//     if (reviews) {
-//         res.status(200).json(reviews);
-//     } else {
-//         res.status(400);
-//         throw new Error('Error getting reviews');
-//     }
-// });
-
-
 export const getLast3Reviews = asyncHandler(async (req, res) => {
     // Fetch all reviews and sort them by createdAt in descending order
     const allReviews = await Review.find({}).sort({ createdAt: -1 });
@@ -59,10 +25,7 @@ export const getLast3Reviews = asyncHandler(async (req, res) => {
 
         // Calculate the average rating
         const totalRating = allReviews.reduce((sum, review) => sum + review.rating, 0);
-        // const totalRating = allReviews.reduce((sum, review) => {
-        //     console.log('Processing review:', review);  // Log the review object
-        //     return sum + review.rating;
-        // }, 0);
+
         const averageRating = (totalRating / allReviews.length).toFixed(1);
         console.log(`average rating= ${averageRating}`)
         console.log(`total rating= ${totalRating}`)
@@ -97,8 +60,6 @@ export const createReview = asyncHandler(async (req, res) => {
 });
 
 export const updateReview = asyncHandler(async (req, res) => {
-    ////have to check if userid on the review matches
-    // the user that is trying update
 
     const review = await Review.findById(req.params.id);
     if (!review) {
@@ -124,8 +85,8 @@ export const updateReview = asyncHandler(async (req, res) => {
     res.status(200).json(updatedReview);
 });
 
+
 export const deleteReview = asyncHandler(async (req, res) => {
-    ////have to check if userid on the review matches the user that is trying delete
 
     const review = await Review.findById(req.params.id);
     if (!review) {

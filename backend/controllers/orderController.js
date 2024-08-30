@@ -4,9 +4,7 @@ import User from '../models/userModel.js'; // Ensure the User model is imported
 import Person from '../models/personModel.js';
 import Asset from '../models/assetModel.js';
 
-// @desc    Create an order
-// @route   POST /api/orders/create
-// @access  Public
+
 export const createOrder = asyncHandler(async (req, res) => {
     if (!req.body.peopleAndRoles || req.body.peopleAndRoles.length === 0) {
         res.status(400);
@@ -54,7 +52,7 @@ export const updateOrder = asyncHandler(async (req, res) => {
 export const getOrder = asyncHandler(async (req, res) => {
     const { id: orderId } = req.params;
 
-    // Fetch the order and populate related documents
+    // Fetch the order
     const order = await Order.findById(orderId)
         .populate('peopleAndRoles.personId')
         .populate('assetsAndDistribution.assetId')
@@ -72,59 +70,6 @@ export const getOrder = asyncHandler(async (req, res) => {
         res.status(404).json({ message: 'Order not found' });
     }
 });
-
-
-
-// //--------------------don't delete this until the below is fully tested---------------
-
-// export const getAllUserOrders = asyncHandler(async (req, res) => {
-//     console.log(`gett all user orders calle din order controller. user id - ${req.user.id}`)
-//     // Fetch orders by user ID
-//     // const orders = await Order.find({ userId: req.user.id }).populate('peopleAndRoles.personId');
-
-
-//     // Fetch orders by user ID and sort by updatedAt in descending order
-//     const orders = await Order.find({ userId: req.user.id })
-//         .sort({ updatedAt: -1 })  // Sort by updatedAt in descending order
-//         .populate('peopleAndRoles.personId');
-
-
-
-//     if (orders) {
-//         // Map through orders to get the desired response structure
-//         const response = await Promise.all(orders.map(async order => {
-//             // Find the person with the role 'testator'
-//             const testatorRole = order.peopleAndRoles.find(role => role.role.includes('testator'));
-
-//             let dob = '';
-//             let fullAddress = '';
-
-//             if (testatorRole) {
-//                 const testator = await Person.findById(testatorRole.personId);
-//                 if (testator) {
-//                     dob = testator.dob;
-//                     fullAddress = testator.fullAddress;
-//                 }
-//             }
-
-//             return {
-//                 _id: order._id,
-//                 createdAt: order.createdAt,
-//                 updatedAt: order.updatedAt,
-//                 status: order.status,
-//                 testator: testatorRole ? testatorRole.personId.fullLegalName : 'No testator found',
-//                 dob: dob,
-//                 fullAddress: fullAddress,
-//             };
-//         }));
-
-//         res.status(200).json(response);
-//     } else {
-//         res.status(400);
-//         throw new Error('Error getting orders');
-//     }
-// });
-
 
 export const getAllUserOrders = asyncHandler(async (req, res) => {
     console.log(`get all user orders called in order controller. user id - ${req.user.id}`);
@@ -217,7 +162,7 @@ export const getAllUserOrders = asyncHandler(async (req, res) => {
                 testator: testatorRole ? testatorRole.personId.fullLegalName : 'No testator found',
                 dob: testatorRole ? testatorRole.personId.dob : '',
                 fullAddress: testatorRole ? testatorRole.personId.fullAddress : '',
-                currentStep // Include the calculated step in the response
+                currentStep
             };
         }));
 
@@ -227,14 +172,6 @@ export const getAllUserOrders = asyncHandler(async (req, res) => {
         throw new Error('Error getting orders');
     }
 });
-
-
-
-
-
-
-
-
 
 
 // Delete an order

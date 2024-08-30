@@ -1,20 +1,14 @@
 import asyncHandler from 'express-async-handler';
-import Asset from '../models/assetModel.js'; // Added .js extension
-import User from '../models/userModel.js';  // Added .js extension
+import Asset from '../models/assetModel.js';
+import User from '../models/userModel.js';
 
 export const getAsset = asyncHandler(async (req, res) => {
     const { assetId } = req.body;
     let asset;
 
     if (assetId) {
-        asset = await Asset.find({ _id: assetId, userId: req.user.id }); // Corrected to userId
+        asset = await Asset.find({ _id: assetId, userId: req.user.id });
     }
-    // } else if (orderID) {
-    //     assets = await Asset.find({ orderID, userId: req.user.id }); // Corrected to userId
-    // } else {
-    //     assets = await Asset.find({ userId: req.user.id }); // Corrected to userId
-    // }
-
     if (asset.length > 0) {
         res.status(200).json(asset);
     } else {
@@ -56,7 +50,6 @@ export const createAsset = asyncHandler(async (req, res) => {
         assetData.otherAssetDetails = otherAssetDetails;
     }
     
-
     const asset = await Asset.create(assetData);
 
     res.status(200).json(asset);
@@ -73,17 +66,17 @@ export const updateAsset = asyncHandler(async (req, res) => {
         const user = await User.findById(req.user.id);
 
         if (!user) {
-            res.status(403); // Changed to 403
+            res.status(403);
             throw new Error('No such user found');
         }
 
-        if (asset.userId.toString() !== user.id) { // Corrected to userId
-            res.status(403); // Changed to 403
+        if (asset.userId.toString() !== user.id) {
+            res.status(403);
             throw new Error('User is not authorised to update');
         }
 
         Object.assign(asset, req.body);
-        await asset.validate(); // Ensure validation before saving
+        await asset.validate();
         await asset.save();
 
         res.status(200).json(asset);
@@ -102,15 +95,15 @@ export const deleteAsset = asyncHandler(async (req, res) => {
     const user = await User.findById(req.user.id);
 
     if (!user) {
-        res.status(403); // Changed to 403
+        res.status(403);
         throw new Error('No such user found');
     }
 
-    if (asset.userId.toString() !== user.id) { // Corrected to userId
-        res.status(403); // Changed to 403
+    if (asset.userId.toString() !== user.id) {
+        res.status(403);
         throw new Error('User is not authorised to delete');
     }
 
-    await Asset.findByIdAndDelete(req.params.id); // Removed the assignment to deleteAsset
+    await Asset.findByIdAndDelete(req.params.id);
     res.status(200).json({ id: req.params.id });
 });
