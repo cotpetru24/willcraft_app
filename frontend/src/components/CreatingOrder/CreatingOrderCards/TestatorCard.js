@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckSquare, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { Container } from "react-bootstrap";
 import { Col, Row } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
@@ -23,11 +23,6 @@ const TestatorCard = () => {
 
     const testatorData = useSelector(state => state.testator);
     const currentOrderStep = useSelector(state => state.currentOrderStep);
-
-    // const isTestatorDataComplete = (data) => {
-    //     return data.title && data.fullLegalName && data.dob && data.fullAddress;
-    // };
-    // const allNecessaryFieldsSpecified = isTestatorDataComplete(testatorData);
     const allNecessaryFieldsSpecified = currentOrderStep.currentStep >= 1;
 
 
@@ -108,9 +103,7 @@ const TestatorCard = () => {
             </Card>
         </Container>
     );
-
 }
-
 
 
 export default TestatorCard;

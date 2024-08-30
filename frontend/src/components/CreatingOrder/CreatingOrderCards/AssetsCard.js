@@ -14,16 +14,7 @@ const AssetsCard = () => {
 
     const assetsData = useSelector(state => state.assets);
     const currentOrderStep = useSelector(state => state.currentOrderStep);
-
-
-    // const isAssetsComplete = (data) => {
-    //     Array.isArray(data) && (data.length > 0)
-    // };
-
-    // const allNecessaryFieldsSpecified = isAssetsComplete(assetsData);
     const allNecessaryFieldsSpecified = currentOrderStep.currentStep >= 4;
-
-
 
     return (
         <>
@@ -36,9 +27,7 @@ const AssetsCard = () => {
                                     <h2>Your Assets</h2>
                                 </Col>
                                 <Col className="d-flex justify-content-end align-items-center">
-                                    {/* {(Array.isArray(assetsData) && assetsData.length > 0) ? ( */}
                                     {allNecessaryFieldsSpecified ? (
-
                                         <FontAwesomeIcon
                                             icon={faCheckCircle}
                                             className="custom-icon"
@@ -54,11 +43,8 @@ const AssetsCard = () => {
                                 </Col>
                             </Row>
                         </Card.Title>
-                        {/* {(Array.isArray(assetsData) && assetsData.length > 0) ? ( */}
-                        {/* {allNecessaryFieldsSpecified ? ( */}
                         {allNecessaryFieldsSpecified && (Array.isArray(assetsData) && assetsData.length > 0) ? (
-
-                            <Card.Text as="div"> {/* Ensure Card.Text uses a div */}
+                            <Card.Text as="div">
                                 {assetsData.map((asset, index) => (
                                     <React.Fragment key={index}>
                                         <Row className="mb-4">

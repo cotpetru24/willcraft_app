@@ -1,46 +1,15 @@
-
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { Container, Col, Row, Button, Card, ProgressBar } from "react-bootstrap";
 import React from "react";
 import generateWillPdf from '../../../features/docGen/generateWillPdf';
 import { getOrderThunk } from "../../../features/currentOrder/currentOrderSlice";
 import { useDispatch } from "react-redux";
 
-// export const OrderProgressBar = () => {
-//     const currentOrderStep = useSelector(state => state.currentOrderStep.currentStep || 0);  // Access the correct property
 
-//     // Calculate progress percentage, rounding down to the nearest 10
-//     const now = currentOrderStep === 0 ? 0 : Math.floor((currentOrderStep / 6) * 100 / 10) * 10;
-
-//     return (
-//         <ProgressBar className="mb-3" now={now} label={`${now}%`} />  // No need to round again since it's already rounded
-//     );
-// };
-
-
-// export const OrderProgressBar = () => {
-//     const currentOrderStep = useSelector(state => state.currentOrderStep.currentStep || 0);
-//     const now = Math.floor((currentOrderStep / 6) * 100 / 10) * 10;
-
-//     return (
-//         <div style={{ position: 'relative' }}>
-//             <ProgressBar className="mb-3" now={now} />
-//             <div style={{ position: 'absolute', width: '100%', textAlign: 'center', fontSize: '12px', bottom: -1 }}>
-//                 {`${now}%`}
-//             </div>
-//         </div>
-//     );
-//     // color:'rgba(255, 255, 255, 0.87)',
-// };
 export const OrderProgressBar = () => {
     const currentOrderStep = useSelector(state => state.currentOrderStep.currentStep || 0);
-
-
     const now = Math.floor((currentOrderStep / 6) * 100 / 10) * 10;
-
     const textColor = now > 50 ? 'rgba(255, 255, 255, 0.87)' : 'black';
 
     return (
@@ -61,8 +30,6 @@ export const OrderProgressBar = () => {
 };
 
 
-
-
 const ProgressAndInstructionsCard = ({ setShowCheckout, showCheckout }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -74,7 +41,7 @@ const ProgressAndInstructionsCard = ({ setShowCheckout, showCheckout }) => {
         try {
             const response = await dispatch(getOrderThunk(order.orderId));
             if (getOrderThunk.fulfilled.match(response)) {
-                generateWillPdf(response.payload); // Use response.payload for the data
+                generateWillPdf(response.payload);
             } else {
                 console.error("Failed to generate the Will PDF:", response.error.message);
             }
@@ -92,13 +59,6 @@ const ProgressAndInstructionsCard = ({ setShowCheckout, showCheckout }) => {
                             <Col xs={10}>
                                 <h2>Order Progress</h2>
                             </Col>
-                            {/* <Col className="d-flex justify-content-end align-items-center">
-                                {20 === 20 ? (
-                                    <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'green' }} />
-                                ) : (
-                                    <FontAwesomeIcon icon={faCheckCircle} className="custom-icon" style={{ color: 'grey' }} />
-                                )}
-                            </Col> */}
                         </Row>
                     </Card.Title>
                     <Card.Text as="div">
@@ -171,8 +131,7 @@ const ProgressAndInstructionsCard = ({ setShowCheckout, showCheckout }) => {
                             <Col xs="auto">
                                 {currentOrderStep.currentStep === 6 && !showCheckout && order.status !== "complete" && (
                                     <Button variant="primary" className="creating-order-tile-btns"
-                                        // onClick={() => navigate('/ChechOutForm')}
-                                        onClick={() => setShowCheckout(true)} // Add this line
+                                        onClick={() => setShowCheckout(true)}
                                     >
                                         Checkout
                                     </Button>
@@ -180,7 +139,6 @@ const ProgressAndInstructionsCard = ({ setShowCheckout, showCheckout }) => {
                             </Col>
                             <Col xs="auto">
                                 {order.status === "complete" && (
-
                                     <Button variant="primary"
                                     onClick={handleGenerateWill}
                                     >

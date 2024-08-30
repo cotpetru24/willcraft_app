@@ -15,13 +15,6 @@ const KidsCard = () => {
     const testator = useSelector(state => state.testator)
     const kidsData = useSelector(state => state.kids);
     const currentOrderStep = useSelector(state => state.currentOrderStep);
-
-
-    // const isKidsComplete = (data) => {
-    //     return testator.hasChildrenStatus === 'no' || (Array.isArray(data) && (data.length > 0))
-    // };
-
-    // const allNecessaryFieldsSpecified = isKidsComplete(kidsData);
     const allNecessaryFieldsSpecified = currentOrderStep.currentStep >= 3;
 
     return (
@@ -64,13 +57,13 @@ const KidsCard = () => {
                                 ))}
                                 <Row className="d-flex justify-content-end">
                                     <Col xs="auto">
-                                        <Button 
-                                            variant="primary" 
+                                        <Button
+                                            variant="primary"
                                             className="creating-order-tile-btns"
                                             onClick={() => navigate('/kids')}
                                             style={currentOrderStep.currentStep < 2 ?
                                                 styles.disabledButton : {}}
-                                              disabled={currentOrderStep.currentStep < 2}
+                                            disabled={currentOrderStep.currentStep < 2}
                                         >
                                             Edit
                                         </Button>
@@ -88,13 +81,13 @@ const KidsCard = () => {
                                         </Row>
                                         <Row className="d-flex justify-content-end">
                                             <Col xs="auto">
-                                                <Button 
-                                                    variant="primary" 
+                                                <Button
+                                                    variant="primary"
                                                     className="creating-order-tile-btns"
                                                     onClick={() => navigate('/kids')}
                                                     style={currentOrderStep.currentStep < 2 ?
                                                         styles.disabledButton : {}}
-                                                      disabled={currentOrderStep.currentStep < 2}
+                                                    disabled={currentOrderStep.currentStep < 2}
                                                 >
                                                     Edit
                                                 </Button>
@@ -110,13 +103,13 @@ const KidsCard = () => {
                                         </Row>
                                         <Row className="d-flex justify-content-end">
                                             <Col xs="auto">
-                                                <Button 
-                                                    variant="primary" 
+                                                <Button
+                                                    variant="primary"
                                                     className="m-1 creating-order-tile-btns"
                                                     onClick={() => navigate('/kids')}
                                                     style={currentOrderStep.currentStep !== 2 ?
                                                         styles.disabledButton : {}}
-                                                      disabled={currentOrderStep.currentStep !== 2}
+                                                    disabled={currentOrderStep.currentStep !== 2}
                                                 >
                                                     Get Started
                                                 </Button>

@@ -17,13 +17,6 @@ const AssetsDistributionCard = () => {
     const testator = useSelector(state => state.testator)
     const assetsData = useSelector(state => state.assets);
     const currentOrderStep = useSelector(state => state.currentOrderStep);
-
-
-    // const isKidsComplete = (data) => {
-    //     return testator.hasChildrenStatus === 'no' || (Array.isArray(data) && (data.length > 0))
-    // };
-
-    // const allNecessaryFieldsSpecified = isKidsComplete(assetsData);
     const allNecessaryFieldsSpecified = currentOrderStep.currentStep >= 5;
 
 
@@ -46,9 +39,7 @@ const AssetsDistributionCard = () => {
                                 </Col>
                             </Row>
                         </Card.Title>
-                        {/* {(allNecessaryFieldsSpecified || (Array.isArray(assetsData) && assetsData.length > 0)) ? ( */}
                         {allNecessaryFieldsSpecified ? (
-
                             <Card.Text as="div">
                                 {assetsData.map((asset, assetIndex) => (
                                     <React.Fragment key={assetIndex}>
@@ -84,7 +75,6 @@ const AssetsDistributionCard = () => {
                                                     </div>
                                                 )}
 
-                                                {/* {asset.distribution.map((beneficiary, beneficiaryIndex) => ( */}
                                                 {Array.isArray(asset.distribution) && asset.distribution.length > 0 && (
                                                     asset.distribution.map((beneficiary, beneficiaryIndex) => (
                                                         <div key={beneficiaryIndex} className="order-item-p">
@@ -97,7 +87,6 @@ const AssetsDistributionCard = () => {
                                         </Row>
                                     </React.Fragment>
                                 ))}
-
                                 <Row className="d-flex justify-content-end">
                                     <Col xs="auto">
                                         <Button
@@ -135,7 +124,6 @@ const AssetsDistributionCard = () => {
                                     </Col>
                                 </Row>
                             </>
-
                         )}
                     </Card.Body>
                 </Card>

@@ -22,11 +22,6 @@ const ExecutorsCard = () => {
     const allExecutors = currentOrder.peopleAndRoles
         .filter(p => p.role.includes('executor') || p.role.includes('additional executor'))
 
-    // const isExecutorsComplete = (data) => {
-    //     return (Array.isArray(data) && (data.length > 0))
-    // };
-
-    // const allNecessaryFieldsSpecified = isExecutorsComplete(allExecutors);
     const allNecessaryFieldsSpecified = currentOrderStep.currentStep >= 6;
 
 
@@ -75,7 +70,7 @@ const ExecutorsCard = () => {
                                             onClick={() => navigate('/executors')}
                                             style={currentOrderStep.currentStep < 5 ?
                                                 styles.disabledButton : {}}
-                                              disabled={currentOrderStep.currentStep < 5}
+                                            disabled={currentOrderStep.currentStep < 5}
                                         >Edit</Button>
                                     </Col>
                                 </Row>
@@ -89,18 +84,17 @@ const ExecutorsCard = () => {
                                 </Row>
                                 <Row className="d-flex justify-content-end">
                                     <Col xs="auto">
-                                        <Button 
-                                        variant="primary" 
-                                        className="m-1 creating-order-tile-btns"
+                                        <Button
+                                            variant="primary"
+                                            className="m-1 creating-order-tile-btns"
                                             onClick={() => navigate('/executors')}
                                             style={currentOrderStep.currentStep !== 5 ?
                                                 styles.disabledButton : {}}
-                                              disabled={currentOrderStep.currentStep !== 5}
+                                            disabled={currentOrderStep.currentStep !== 5}
                                         >Get Started</Button>
                                     </Col>
                                 </Row>
                             </>
-
                         )}
                     </Card.Body>
                 </Card>
