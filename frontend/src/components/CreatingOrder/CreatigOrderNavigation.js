@@ -1,6 +1,4 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import styles from '../../common/styles';
 import Container from 'react-bootstrap/esm/Container';
 import Row from 'react-bootstrap/esm/Row';
@@ -8,8 +6,6 @@ import Col from 'react-bootstrap/esm/Col';
 import Button from 'react-bootstrap/esm/Button';
 
 const CreatingOrderNavigation = ({ onBack, onSaveAndContinue, buttonsDisabled }) => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   return (
     <Container className='pt-4 pb-5'>

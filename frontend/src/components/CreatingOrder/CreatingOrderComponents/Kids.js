@@ -211,10 +211,7 @@ const Kids = () => {
             title: kidToEdit.title || '',
             fullLegalName: kidToEdit.fullLegalName || '',
             fullAddress: kidToEdit.fullAddress || '',
-            // dob: kidToEdit.dob ? new Date(kidToEdit.dob).toLocaleDateString() : '',
             dob: kidToEdit.dob ? new Date(kidToEdit.dob).toISOString().split('T')[0] : '',
-
-            // dob: kidToEdit.dob || '',
             email: kidToEdit.email || '',
             tel: kidToEdit.tel || ''
         });
@@ -256,7 +253,6 @@ const Kids = () => {
                                 checked={currentHasChildrenStatus === "yes"}
                                 onChange={handleHasChildrenStatusChange}
                                 disabled={showKidsForm}
-
                             >
                             </input>
                             <label htmlFor="has-children-yes">Yes</label>
@@ -427,7 +423,6 @@ const Kids = () => {
                         onBack={handleBack}
                         onSaveAndContinue={handleSaveAndContinue}
                         buttonsDisabled={showKidsForm}
-
                     />
                 </Container>
             </>

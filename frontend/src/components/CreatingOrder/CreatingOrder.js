@@ -16,7 +16,6 @@ import { useState } from "react";
 import { resetOrderState } from "../../utils/reduxUtils";
 
 
-
 const CreatingOrder = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -108,25 +107,6 @@ const CreatingOrder = () => {
             return;
         }
 
-        // // Check if assets distribution is 100% for each asset
-        // if (
-        //     currentStep === 4 && (assets && assets.length > 0)
-        // ) {
-        //     const allAssetsValid = assets.every(asset => {
-        //         const totalDistribution = asset.distribution.reduce((sum, dist) => {
-        //             return sum + Number(dist.receivingAmount);
-        //         }, 0);
-        //         return totalDistribution === 100;
-        //     });
-
-        //     if (allAssetsValid) {
-        //         currentStep = 5;
-        //     } else {
-        //         // If assets distribution is not valid, set currentStep to 4 and exit early
-        //         dispatch(updateOrderCurrentStep(4));
-        //         return;
-        //     }
-        // }
         // Check if assets distribution is 100% for each asset
         if (
             currentStep === 4 && (assets && assets.length > 0)
@@ -153,7 +133,6 @@ const CreatingOrder = () => {
             }
         }
 
-
         // Check if executors are present
         if (
             currentStep === 5 && currentOrder.peopleAndRoles
@@ -178,9 +157,6 @@ const CreatingOrder = () => {
 
     // Use the correct slice name here
     const currentStep = useSelector(state => state.currentOrderStep.currentStep);
-
-
-
 
     return (
         <>

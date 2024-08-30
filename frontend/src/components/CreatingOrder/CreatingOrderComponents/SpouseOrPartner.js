@@ -204,7 +204,6 @@ const SpouseOrPartner = () => {
 
   return (
     <>
-      {/* <Container className="mt-5 mb-5"> */}
       <Container className=" mb-4 min-height-container">
         <Container className="mt-5 mb-5 ">
           <Row>
@@ -259,7 +258,6 @@ const SpouseOrPartner = () => {
             </Col>
           </Row >
         </Container>
-
         <Container className="mt-5">
           {(currentMaritalStatus === constants.maritalStatus.MARRIED
             || currentMaritalStatus === constants.maritalStatus.PARTNER)

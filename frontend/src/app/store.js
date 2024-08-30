@@ -25,7 +25,7 @@ const rootReducer = combineReducers({
   additionalExecutors: additionalExecutorsReducer,
 });
 
-// Define the preloaded state using consistent keys
+// Load state from localStorage (will return undefined if nothing is found)
 const preloadedState = {
   auth: loadState('auth'),
   orders: loadState('orders'),
@@ -49,7 +49,7 @@ store.subscribe(() => {
   saveState('auth', store.getState().auth);
   saveState('orders', store.getState().orders);
   saveState('currentOrder', store.getState().currentOrder);
-  saveState('currentOrderStep', store.getState.currentOrderStep);
+  saveState('currentOrderStep', store.getState().currentOrderStep);
   saveState('testator', store.getState().testator);
   saveState('spouseOrPartner', store.getState().spouseOrPartner);
   saveState('kids', store.getState().kids);
@@ -59,4 +59,3 @@ store.subscribe(() => {
 });
 
 export default store;
-

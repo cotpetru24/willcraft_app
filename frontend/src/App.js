@@ -25,6 +25,7 @@ import Reviews from './components/Reviews';
 import MyAccount from './components/MyAccount';
 import WriteAReview from './components/WriteAReview';
 
+
 function App() {
 
 
@@ -47,7 +48,7 @@ function App() {
             <Route path='/assets' element={<Assets />} />;
             <Route path='/assetsDistribution' element={<AssetsDistribution />} />;
             <Route path='/executors' element={<Executors />} />;
-            <Route path='/checkOutForm' element={<PaymentPage />} />
+            {/* <Route path='/checkOutForm' element={<PaymentPage />} /> */}
             <Route path='/reviews' element={<Reviews/>}/>
             <Route path='/myAccount' element={<MyAccount/>}/>
             <Route path='/writeAReview' element={<WriteAReview/>}/>

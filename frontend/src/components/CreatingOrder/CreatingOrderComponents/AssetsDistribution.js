@@ -96,7 +96,6 @@ const AssetsDistribution = () => {
             if (total !== totalPercentage[assetIndex]) {
                 setTotalPercentage(prev => ({ ...prev, [assetIndex]: total }));
             }
-
             return {
                 ...asset,
                 distribution: updatedDistribution
@@ -125,7 +124,6 @@ const AssetsDistribution = () => {
 
         setPotentialBeneficiaries(updatedPotentialBeneficiaries);
     }, [currentOrder.peopleAndRoles, additionalBeneficiaries]);
-
 
 
     useEffect(() => {
@@ -176,7 +174,6 @@ const AssetsDistribution = () => {
                     return dist;
                 });
 
-
                 // Construct the asset description
                 assetTypeAndDescription = `${asset.assetType}`;
                 if (asset.bankName) assetTypeAndDescription += ` - ${asset.bankName}`;
@@ -184,7 +181,6 @@ const AssetsDistribution = () => {
                 if (asset.companyName) assetTypeAndDescription += ` - ${asset.companyName}`;
                 if (asset.propertyAddress) assetTypeAndDescription += ` - ${asset.propertyAddress}`;
                 if (asset.otherAssetDetails) assetTypeAndDescription += ` - ${asset.otherAssetDetails}`;
-
 
                 return { ...asset, distribution: updatedDistribution };
             }
@@ -196,10 +192,6 @@ const AssetsDistribution = () => {
 
         // Update the total percentage for this asset in the state
         setTotalPercentage(prev => ({ ...prev, [assetIndex]: total }));
-
-
-
-
 
         const CustomToast = ({ assetTypeAndDescription, total }) => (
             <div className="d-flex justify-content-center">
@@ -260,8 +252,6 @@ const AssetsDistribution = () => {
                 const distPersonId = typeof d.personId === 'object' ? d.personId._id : d.personId;
                 return distPersonId !== familyBeneficiary.personId._id;
             });
-
-
         }
 
         // Create the updated asset object
@@ -321,9 +311,6 @@ const AssetsDistribution = () => {
             // Set the updated beneficiaries to the state after the loop
             setAdditionalBeneficiariesToUpdate(tempAdditionalBeneficiariesToUpdate);
             console.log(`ben to updated= ${JSON.stringify(tempAdditionalBeneficiariesToUpdate)}`)
-
-
-
 
             dispatch(updateAdditionalBeneficiariesSlice(updatedAdditionalBeneficiaries));
 
@@ -460,8 +447,6 @@ const AssetsDistribution = () => {
 
                         await dispatch(updateAssetsSlice(updatedAssetsSlice));
 
-
-
                         updatedPeopleAndRoles = [
                             ...updatedPeopleAndRoles,
                             {
@@ -472,7 +457,6 @@ const AssetsDistribution = () => {
                                 role: ['additional beneficiary']
                             }
                         ];
-
 
                         await dispatch(updateCurrentOrderSlice({
                             ...currentOrder,
@@ -491,9 +475,6 @@ const AssetsDistribution = () => {
                                 distribution: asset.distribution
                             }))
                         }));
-
-
-
                     }
                 }
             }
@@ -531,8 +512,6 @@ const AssetsDistribution = () => {
         else {
             await dispatch(updateAssetsSlice(assets));
             await dispatch(updateAdditionalBeneficiariesSlice(additionalBeneficiaries));
-
-
 
             await dispatch(updateCurrentOrderSlice({
                 ...currentOrder,
@@ -1084,67 +1063,68 @@ const AssetsDistribution = () => {
                             <Row>
                                 <Col className="m-2">
                                     {assets.map((asset, assetIndex) => (
-                                        <Accordion className="mt-4 ml-3 accordion-custom-border" defaultActiveKey="0" key={`asset-${asset._id || assetIndex}`}>                                            <Accordion.Item eventKey="0">
-                                            <Accordion.Header>
-                                                <Container>
-                                                    <Row>
-                                                        <Col className="flex-grow-1">
-                                                            <Row>
-                                                                <Col>
-                                                                    <p className="order-item-p"><span className="order-item-p-span">
-                                                                        Asset:  </span>{asset.assetType}</p>
-                                                                </Col>
-                                                            </Row>
-                                                            <Row>
-                                                                <Col>
-                                                                    {asset.assetType === 'Property' &&
+                                        <Accordion className="mt-4 ml-3 accordion-custom-border" defaultActiveKey="0" key={`asset-${asset._id || assetIndex}`}>
+                                            <Accordion.Item eventKey="0">
+                                                <Accordion.Header>
+                                                    <Container>
+                                                        <Row>
+                                                            <Col className="flex-grow-1">
+                                                                <Row>
+                                                                    <Col>
                                                                         <p className="order-item-p"><span className="order-item-p-span">
-                                                                            Address:  </span>{asset.propertyAddress}</p>}
-                                                                    {asset.assetType === 'Bank Account' &&
-                                                                        <p className="order-item-p"><span className="order-item-p-span">
-                                                                            Bank Name:  </span>{asset.bankName}</p>}
-                                                                    {asset.assetType === 'Stocks and shares' &&
-                                                                        <p className="order-item-p"><span className="order-item-p-span">
-                                                                            Company Name:  </span>{asset.companyName}</p>}
-                                                                    {(asset.assetType === 'Pension' || asset.assetType === 'Life insurance') &&
-                                                                        <p className="order-item-p"><span className="order-item-p-span">
-                                                                            Provider:  </span>{asset.provider}</p>}
-                                                                    {asset.assetType === 'Other' &&
-                                                                        <p className="order-item-p"><span className="order-item-p-span">
-                                                                            Details:  </span>{asset.otherAssetDetails}</p>}
-                                                                </Col>
-                                                            </Row>
-                                                        </Col>
-                                                        <Col className="d-flex justify-content-end col-auto">
-                                                            <InputGroup className="total-amount-form-control">
-                                                                <Form.Control
-                                                                    type="text"
-                                                                    value={totalPercentage[assetIndex] || 0}
-                                                                    disabled
-                                                                />
-                                                                <InputGroup.Text>%</InputGroup.Text>
-                                                            </InputGroup>
-                                                        </Col>
-                                                    </Row>
-                                                </Container>
-                                            </Accordion.Header>
-                                            <Accordion.Body>
-                                                {potentialBeneficiaries.map((person, personIndex) => (
-                                                    <SectionListItem
-                                                        key={`asset-${assetIndex}-person-${personIndex}`}
-                                                        buttonsDisabled={showAdditionalBeneficiaryForm}
-                                                        data={person.personId}
-                                                        onRemove={() => handleRemoveAdditionalBeneficiary(personIndex)}
-                                                        onEdit={() => handleEditAdditionalBeneficiary(personIndex)}
-                                                        onChecked={(isChecked) => handleBeneficiaryChecked(personIndex, assetIndex, isChecked)}
-                                                        section="assetDistribution-beneficiary"
-                                                        asset={asset}
-                                                        onChange={handleOnChange}
-                                                        assetIndex={assetIndex}
-                                                    />
-                                                ))}
-                                            </Accordion.Body>
-                                        </Accordion.Item>
+                                                                            Asset:  </span>{asset.assetType}</p>
+                                                                    </Col>
+                                                                </Row>
+                                                                <Row>
+                                                                    <Col>
+                                                                        {asset.assetType === 'Property' &&
+                                                                            <p className="order-item-p"><span className="order-item-p-span">
+                                                                                Address:  </span>{asset.propertyAddress}</p>}
+                                                                        {asset.assetType === 'Bank Account' &&
+                                                                            <p className="order-item-p"><span className="order-item-p-span">
+                                                                                Bank Name:  </span>{asset.bankName}</p>}
+                                                                        {asset.assetType === 'Stocks and shares' &&
+                                                                            <p className="order-item-p"><span className="order-item-p-span">
+                                                                                Company Name:  </span>{asset.companyName}</p>}
+                                                                        {(asset.assetType === 'Pension' || asset.assetType === 'Life insurance') &&
+                                                                            <p className="order-item-p"><span className="order-item-p-span">
+                                                                                Provider:  </span>{asset.provider}</p>}
+                                                                        {asset.assetType === 'Other' &&
+                                                                            <p className="order-item-p"><span className="order-item-p-span">
+                                                                                Details:  </span>{asset.otherAssetDetails}</p>}
+                                                                    </Col>
+                                                                </Row>
+                                                            </Col>
+                                                            <Col className="d-flex justify-content-end col-auto">
+                                                                <InputGroup className="total-amount-form-control">
+                                                                    <Form.Control
+                                                                        type="text"
+                                                                        value={totalPercentage[assetIndex] || 0}
+                                                                        disabled
+                                                                    />
+                                                                    <InputGroup.Text>%</InputGroup.Text>
+                                                                </InputGroup>
+                                                            </Col>
+                                                        </Row>
+                                                    </Container>
+                                                </Accordion.Header>
+                                                <Accordion.Body>
+                                                    {potentialBeneficiaries.map((person, personIndex) => (
+                                                        <SectionListItem
+                                                            key={`asset-${assetIndex}-person-${personIndex}`}
+                                                            buttonsDisabled={showAdditionalBeneficiaryForm}
+                                                            data={person.personId}
+                                                            onRemove={() => handleRemoveAdditionalBeneficiary(personIndex)}
+                                                            onEdit={() => handleEditAdditionalBeneficiary(personIndex)}
+                                                            onChecked={(isChecked) => handleBeneficiaryChecked(personIndex, assetIndex, isChecked)}
+                                                            section="assetDistribution-beneficiary"
+                                                            asset={asset}
+                                                            onChange={handleOnChange}
+                                                            assetIndex={assetIndex}
+                                                        />
+                                                    ))}
+                                                </Accordion.Body>
+                                            </Accordion.Item>
                                         </Accordion>
                                     ))}
                                 </Col>

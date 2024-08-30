@@ -18,7 +18,6 @@ const Executors = () => {
 
     const currentOrder = useSelector(state => state.currentOrder);
 
-
     const spouseOrPartner = useSelector(state => state.spouseOrPartner);
     const kids = useSelector(state => state.kids);
     const additionalBeneficiaries = useSelector(state => state.additionalBeneficiaries)
@@ -55,8 +54,6 @@ const Executors = () => {
         email: '',
         tel: ''
     });
-
-
 
     useEffect(() => {
         if (executor) {
@@ -209,9 +206,7 @@ const Executors = () => {
         }));
     };
 
-
     const [familyExecutors, setFamilyExecutors] = useState([]);
-
 
     const handleExecutorChecked = (index, isChecked) => {
         const familyExecutor = family[index];
