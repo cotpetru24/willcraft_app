@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { deleteOrder } from "../../features/orders/ordersSlice";
 import { getOrderThunk } from "../../features/currentOrder/currentOrderSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { resetOrderState } from "../../utils/reduxUtils";
 import { Container } from "react-bootstrap";
 import { Col, Row } from "react-bootstrap";
@@ -150,26 +150,25 @@ const OrderItem = ({ order }) => {
 
 
 
-                                {/* 
+                                                               
                                 {order.status === "complete" && (
 
                                     <Button variant="primary" className=""
-                                        onClick={generateWillPdf(order)}
+                                        // onClick={generateWillPdf(order)}
+                                        onClick={handleGenerateWill}
                                     >
                                         Generate the Will
                                     </Button>
-                                )} */}
+                                )}
 
 
-
-
-                                <Button
+                                {/* <Button
                                     variant="primary"
                                     className=""
                                     onClick={handleGenerateWill}
                                 >
                                     Generate the Will
-                                </Button>
+                                </Button> */}
 
 
 
@@ -191,6 +190,25 @@ const OrderItem = ({ order }) => {
                                 )}
                             </Col>
                         </Row>
+
+
+
+
+                        {order.status === "complete" &&
+                            (
+                                <Row >
+                                    <Col className="d-flex justify-content-end">
+                                        <Link to="/writeAReview" style={{ textDecoration: 'none', fontSize:'12px' }} 
+                                          onClick={() => {
+                                            window.scrollTo(0, 0);
+                                          }}
+                                        >
+                                            Tell us how we did
+                                        </Link>
+                                    </Col>
+                                </Row>
+                            )
+                        }
                     </div>
                 </Card.Body>
             </Card>

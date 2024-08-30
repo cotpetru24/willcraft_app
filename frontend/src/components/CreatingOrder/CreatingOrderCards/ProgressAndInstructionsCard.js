@@ -6,7 +6,8 @@ import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { Container, Col, Row, Button, Card, ProgressBar } from "react-bootstrap";
 import React from "react";
 import generateWillPdf from '../../../features/docGen/generateWillPdf';
-
+import { getOrderThunk } from "../../../features/currentOrder/currentOrderSlice";
+import { useDispatch } from "react-redux";
 
 // export const OrderProgressBar = () => {
 //     const currentOrderStep = useSelector(state => state.currentOrderStep.currentStep || 0);  // Access the correct property
@@ -45,13 +46,13 @@ export const OrderProgressBar = () => {
     return (
         <div style={{ position: 'relative' }}>
             <ProgressBar className="mb-3" now={now} />
-            <div style={{ 
-                position: 'absolute', 
-                width: '100%', 
-                textAlign: 'center', 
-                fontSize: '12px', 
-                bottom: -1, 
-                color: textColor 
+            <div style={{
+                position: 'absolute',
+                width: '100%',
+                textAlign: 'center',
+                fontSize: '12px',
+                bottom: -1,
+                color: textColor
             }}>
                 {`${now}%`}
             </div>
@@ -63,12 +64,24 @@ export const OrderProgressBar = () => {
 
 
 const ProgressAndInstructionsCard = ({ setShowCheckout, showCheckout }) => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const { user } = useSelector(state => state.auth);
     const currentOrderStep = useSelector(state => state.currentOrderStep);
 
     const order = useSelector(state => state.currentOrder);
-
+    const handleGenerateWill = async () => {
+        try {
+            const response = await dispatch(getOrderThunk(order.orderId));
+            if (getOrderThunk.fulfilled.match(response)) {
+                generateWillPdf(response.payload); // Use response.payload for the data
+            } else {
+                console.error("Failed to generate the Will PDF:", response.error.message);
+            }
+        } catch (error) {
+            console.error("An error occurred while generating the Will PDF:", error);
+        }
+    };
 
     return (
         <Container className="mb-5">
@@ -168,8 +181,8 @@ const ProgressAndInstructionsCard = ({ setShowCheckout, showCheckout }) => {
                             <Col xs="auto">
                                 {order.status === "complete" && (
 
-                                    <Button variant="primary" 
-                                        onClick={generateWillPdf}
+                                    <Button variant="primary"
+                                    onClick={handleGenerateWill}
                                     >
                                         Generate the Will
                                     </Button>
