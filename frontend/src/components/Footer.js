@@ -1,7 +1,3 @@
-
-
-
-
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout, reset } from '../features/auth/authSlice';
@@ -31,17 +27,8 @@ const Footer = () => {
 
     const [showToast, setShowToast] = useState(false);
 
-    const logoutfn = () => {
-        dispatch(logout());
-        dispatch(reset());
-        navigate('/');
-    }
-
-
-
-
     const handleSendMessage = async (e) => {
-        e.preventDefault(); // Prevent default form submission
+        e.preventDefault();
 
         // Log the form submission event
         console.log('Form submitted');
@@ -68,15 +55,15 @@ const Footer = () => {
 
                 toast.success("Message sent!", {
                     position: "top-center",
-                    autoClose: 2000,  // This ensures the toast will auto-close after 2 seconds
-                    hideProgressBar: true,  // Optional: hide the progress bar
-                    closeOnClick: true,  // Close the toast when clicked
-                    pauseOnHover: false,  // Keep auto-close behavior consistent when hovering
-                    draggable: false,  // Disable drag to dismiss
+                    autoClose: 2000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: false,
                 });
 
                 setShowToast(true);
-                setTimeout(() => setShowToast(false), 2000);  // Auto-hide after 2 seconds
+                setTimeout(() => setShowToast(false), 2000);
 
                 // Log the form reset action
                 console.log('Resetting form');
@@ -87,22 +74,17 @@ const Footer = () => {
             // Log any errors that occur during the message sending process
             console.error('Error in handleSendMessage:', error);
         }
-
-
     }
-
-
 
     return (
         <footer>
             <Container fluid className="main-footer pt-4">
-            {showToast && (
-            <div style={{ position: 'fixed', top: '20px', right: '20px', backgroundColor: 'green', color: 'white', padding: '10px' }}>
-                Message sent!
-            </div>
-        )}
-
-        <ToastContainer/>
+                {showToast && (
+                    <div style={{ position: 'fixed', top: '20px', right: '20px', backgroundColor: 'green', color: 'white', padding: '10px' }}>
+                        Message sent!
+                    </div>
+                )}
+                <ToastContainer />
                 <Container fluid="md">
                     <Row>
                         <Col xs={12} md={5} className="order-1 order-md-1">
@@ -224,7 +206,6 @@ const Footer = () => {
                     </Row>
                 </Container>
             </Container>
-            {/* <ToastContainer/> */}
         </footer >
     )
 }

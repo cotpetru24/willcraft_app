@@ -68,7 +68,6 @@ const Register = () => {
                                     <Form.Control
                                         type="text"
                                         placeholder="Your first name"
-                                        id="firstName"
                                         name="firstName"
                                         value={firstName}
                                         onChange={onChange}
@@ -80,7 +79,6 @@ const Register = () => {
                                     <Form.Control
                                         type="text"
                                         placeholder="Your last name"
-                                        id="lastName"
                                         name="lastName"
                                         value={lastName}
                                         onChange={onChange}
@@ -92,7 +90,6 @@ const Register = () => {
                                     <Form.Control
                                         type="email"
                                         placeholder="Your email"
-                                        id="email"
                                         name="email"
                                         value={email}
                                         onChange={onChange}
@@ -104,19 +101,17 @@ const Register = () => {
                                     <Form.Control
                                         type="password"
                                         placeholder="Password"
-                                        id="password"
                                         name="password"
                                         value={password}
                                         onChange={onChange}
                                         required
                                     />
                                 </Form.Group>
-                                <Form.Group className="mb-3" controlId="formGroupPassword">
+                                <Form.Group className="mb-3" controlId="formGroupPassword2">
                                     <Form.Label className="bold-label">Confirm password</Form.Label>
                                     <Form.Control
                                         type="password"
                                         placeholder="Confirm password"
-                                        id="password2"
                                         name="password2"
                                         value={password2}
                                         onChange={onChange}

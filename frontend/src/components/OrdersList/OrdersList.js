@@ -2,9 +2,9 @@ import React from "react";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getOrders, reset } from "../../features/orders/ordersSlice";
-import Spinner from "../LoadingSpinner";
 import { useNavigate } from "react-router-dom";
 import OrderItem from "./OrderItem";
+import LoadingSpinner from "../LoadingSpinner";
 
 
 const OrdersList = () => {
@@ -27,10 +27,9 @@ const OrdersList = () => {
 
 
     return (
-        isLoading ? <Spinner /> :
+        isLoading ? <LoadingSpinner /> :
             (
                 <>
-
                     <section className="orders-list">
                         {orders.length > 0 ? (
                             <div className="orders">

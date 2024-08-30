@@ -5,7 +5,6 @@ import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/esm/Row";
 
 
-
 const Prices = () => {
     return (
         <>

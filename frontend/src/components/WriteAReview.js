@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Button, Form } from "react-bootstrap";
@@ -7,7 +6,7 @@ import { FaStar } from 'react-icons/fa';
 import { createReviewThunk } from "../features/reviews/reviewThunks.js";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Spinner from "./LoadingSpinner.js";
+import LoadingSpinner from "./LoadingSpinner.js";
 
 const WriteAReview = () => {
     const navigate = useNavigate();
@@ -18,40 +17,12 @@ const WriteAReview = () => {
 
     const isLoading = false;
 
-    useEffect(() => {
-        // Placeholder for any side effects or fetching needed
-    }, []);
-
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(null);
     const [reviewForm, setReviewForm] = useState({
         reviewText: '',
     });
 
-    // const handleSendReview = async (e) => {
-    //     e.preventDefault();
-    //     // Submit the review along with the rating
-    //     const reviewData = { userId, userFirstName, rating, reviewText: reviewForm.reviewText };
-    //     console.log("Review submitted:", reviewData);
-
-    //     await dispatch(createReviewThunk(reviewData));
-
-    //     // Show toast and navigate to dashboard
-    //     toast.success("Thank you for your feedback!", {
-    //         onClose: () => navigate('/dashboard'),
-    //         position: "top-center",
-    //         autoClose: 1000,
-    //         hideProgressBar: true,
-    //         closeOnClick: true,
-    //         pauseOnHover: false,
-    //         draggable: false,
-    //     });
-
-
-    //     // Reset the form fields
-    //     setReviewForm({ reviewText: '' });
-    //     setRating(0);
-    // }
 
     const handleSendReview = async (e) => {
         e.preventDefault();
@@ -90,15 +61,11 @@ const WriteAReview = () => {
         setRating(0);
     }
 
-
-
-
-
     return (
-        isLoading ? <Spinner /> :
+        isLoading ? <LoadingSpinner /> :
             (
                 <>
-                    <Container fluid="sm" style={{ minHeight: '65vh', maxWidth: '800px'  }} >
+                    <Container fluid="sm" style={{ minHeight: '65vh', maxWidth: '800px' }} >
                         <Row className="mt-5 mb-5">
                             <Col>
                                 <Form onSubmit={handleSendReview}>
@@ -127,7 +94,6 @@ const WriteAReview = () => {
                                             })}
                                         </div>
                                     </Form.Group>
-
                                     <Form.Group controlId="formGroupTextarea">
                                         <Form.Control
                                             required

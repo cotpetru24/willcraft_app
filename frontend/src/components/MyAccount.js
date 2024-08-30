@@ -1,17 +1,11 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Spinner from "./LoadingSpinner.js";
+import LoadingSpinner from "./LoadingSpinner.js";
 import { useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { Col, Row } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import ProgressBar from 'react-bootstrap/ProgressBar';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckSquare, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
-import HomeReview from "./HomeReview.js";
-import { formatReviewRating } from "./HomeReview.js";
 import { Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { updateUserDetailsThunk, updateUserPasswordThunk } from "../features/auth/authSlice.js";
@@ -22,30 +16,23 @@ const MyAccount = () => {
     const { orders, isLoading, isError, message } = useSelector(state =>
         state.orders)
 
-
     const user = useSelector(state => state.auth.user)
 
-
-
     const [detailsFormData, setDetailsFormData] = useState({
-        firstName: '', lastName: '',
+        firstName: '',
+        lastName: '',
         email: ''
     });
     const { firstName, lastName, email } = detailsFormData;
-
-
 
     const [passwordFormData, setPasswordFormData] = useState({
         currentPassword: '', password: '', password2: ''
     });
     const { currentPassword, password, password2 } = passwordFormData;
 
-
-
     const order = useSelector(state => state.order)
     const [showChangePasswordForm, setShowChangePasswordForm] = useState(false)
     const [showEditDetailsForm, setShowEditDetailsForm] = useState(false)
-
 
     const onDetailsFormDataChange = e => {
         setDetailsFormData(prevState => ({
@@ -54,14 +41,12 @@ const MyAccount = () => {
         }))
     }
 
-
     const onPasswordFormDataChange = e => {
         setPasswordFormData(prevState => ({
             ...prevState,
             [e.target.name]: e.target.value
         }))
     }
-
 
     useEffect(() => {
         setDetailsFormData({
@@ -70,13 +55,10 @@ const MyAccount = () => {
             email: user.email
         })
 
-
         if (isError) console.log(message)
-        // dispatch(getOrders())
-        // return () => dispatch(reset())
 
-        //on preload populate details form
     }, [navigate, isError, message, dispatch, showEditDetailsForm])
+
 
     useEffect(() => {
         if (!showChangePasswordForm) {
@@ -87,11 +69,6 @@ const MyAccount = () => {
             });
         }
     }, [showChangePasswordForm]);
-
-
-
-
-
 
 
     const handleChangeDetailsSubmit = async (e) => {
@@ -201,7 +178,7 @@ const MyAccount = () => {
     }
 
     return (
-        isLoading ? <Spinner /> :
+        isLoading ? <LoadingSpinner /> :
             (
                 <>
                     <Container style={{ minHeight: '65vh' }} >
@@ -255,8 +232,6 @@ const MyAccount = () => {
                                 </Col>
                             </Row>
                         </Container>
-
-
                         <Container className="md-container">
                             <Row>
                                 <Col>
@@ -273,8 +248,6 @@ const MyAccount = () => {
                                 </Col>
                             </Row>
                         </Container>
-
-
                         {showEditDetailsForm && (
                             <Container className="mt-5">
                                 <Row className="mt-3 mb-4 justify-content-center">
@@ -319,10 +292,6 @@ const MyAccount = () => {
                                                         variant="primary"
                                                         className="m-1 add-edit-form-btn"
                                                         type="button"
-                                                        // onClick={() => {
-                                                        //     handleShowKidsForm();
-                                                        //     resetKidForm();
-                                                        // }}
                                                         onClick={() => setShowEditDetailsForm(false)}
                                                     >
                                                         Cancel
@@ -344,7 +313,6 @@ const MyAccount = () => {
                                 </Row>
                             </Container>
                         )}
-
                         {showChangePasswordForm && (
                             <Container className="mt-5">
                                 <Row className="mt-3 mb-4 justify-content-center">
@@ -415,22 +383,7 @@ const MyAccount = () => {
                                 </Row>
                             </Container >
                         )}
-
-
-
                     </Container>
-                    {/* <Container>
-                        <Row className="mt-3 mb-3">
-                            <Col>
-                                <Button
-                                    className="m-1 add-edit-form-btn"
-                                    onClick={() => navigate('/dashboard')}
-                                >
-                                    Close
-                                </Button>
-                            </Col>
-                        </Row>
-                    </Container> */}
                 </>
             )
     );

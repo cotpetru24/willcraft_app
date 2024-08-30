@@ -1,7 +1,7 @@
 import styles from "../common/styles";
 import { useState, useEffect } from "react";
 import { Accordion, Card, Button, Col, Row, Form, Container, InputGroup } from "react-bootstrap";
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onChecked, asset, onChange, assetIndex }) => {
     const [isChecked, setIsChecked] = useState(false);
@@ -11,13 +11,13 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
         if (data.role && data.role.includes("executor")) {
             setIsChecked(true);
         }
-    
+
         if (section === 'assetDistribution-beneficiary' && asset?.distribution) {
             const personId = data._id || data.tempId; // Use tempId or any other fallback if _id is not available
             const isInDistribution = asset.distribution.some(dist => dist.personId._id === personId || dist.personId.tempId === personId);
-            
+
             setIsChecked(isInDistribution);
-    
+
             if (isInDistribution) {
                 const currentAmount = asset.distribution.find(dist => dist.personId._id === personId || dist.personId.tempId === personId)?.receivingAmount || '';
                 setReceivingAmount(currentAmount);
@@ -26,14 +26,14 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
                 setReceivingAmount('');
             }
         }
-    
+
         if (section === 'assetDistribution-additionalBeneficiary' && asset?.distribution) {
             const personId = data._id || data.tempId; // Use tempId or any other fallback if _id is not available
             const isInDistribution = asset.distribution.some(dist => dist.personId._id === personId || dist.personId.tempId === personId);
             setIsChecked(isInDistribution);
         }
     }, [data.role, section, data._id, data.tempId]); // Add data.tempId to the dependency array
-    
+
 
 
     const currentReceivingAmount = asset?.distribution?.find(dist => dist.personId._id === data._id)?.receivingAmount || '';
@@ -55,15 +55,12 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
         if (/^\d*$/.test(value)) {
             setReceivingAmount(value);
         }
-        else{
+        else {
             toast.warn(`Only numbers allowed`);
-
         }
-
 
         onChange(value, assetIndex, data._id); // Pass the value, assetIndex, and data._id to the parent
     };
-
 
 
     return (
@@ -276,7 +273,6 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
                     </Container>
                 </>
             )}
-
             {section === 'assetsDistribution-asset' && (
                 <>
                     <Container>
@@ -351,7 +347,6 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
                         <Card
                             className={`mb-3 ${isChecked ? 'bg-warning text-dark' : 'bg-light text-dark'}`}>
                             <Card.Body>
-
                                 <Row>
                                     <Col>
                                         <div className="order-item-p">
@@ -417,8 +412,7 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
                                                         <span className="order-item-p-span">Date of birth:  </span>
                                                         {data.personId.dob ?
                                                             new Date(data.personId.dob).toISOString().split('T')[0] :
-                                                            'Invalid date'
-                                                        }
+                                                            'Invalid date'}
                                                     </div>
                                                     <div className="order-item-p">
                                                         <span className="order-item-p-span">Address:  </span>{data.personId.fullAddress}
@@ -457,10 +451,6 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
             )}
         </>
     );
-
-
-
-
 }
 
 export default SectionListItem;

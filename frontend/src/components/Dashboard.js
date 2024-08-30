@@ -1,8 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import OrdersList from "./OrdersList/OrdersList";
 import { resetOrderState } from "../utils/reduxUtils";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { Col, Row, Button } from "react-bootstrap";
@@ -30,13 +29,11 @@ const Dashboard = () => {
 
     return (
         <Container style={{ minHeight: "65vh" }} className="ps-4 pe-4">
-
             <Row className="pt-5 mb-4">
                 <Col >
                     <h1 className="auth-header ">My Wills</h1>
                 </Col>
             </Row>
-
             <Row className="pb-4">
                 <Col>
                     <Button variant="primary mt-2 mb-3"
@@ -50,7 +47,6 @@ const Dashboard = () => {
                     <OrdersList />
                 </Col>
             </Row>
-
             <Row>
                 <Col>
                     <Button onClick={() => navigate('/writeAReview')}>
@@ -58,10 +54,8 @@ const Dashboard = () => {
                     </Button>
                 </Col>
             </Row>
-
         </Container>
     )
-
 }
 
 export default Dashboard;

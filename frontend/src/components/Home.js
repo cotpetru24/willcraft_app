@@ -13,17 +13,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import HowDoesItWork from "./HowDoesItWork";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Carousel from "react-bootstrap/Carousel";
-
 
 const Home = () => {
 
     const { user } = useSelector(state => state.auth)
 
-
     return (
         <>
-            <Container  className="pt-5">
+            <Container className="pt-5">
                 <Row className="justify-content-center" >
                     <Col md={{ span: 4 }}>
                         <h1>Will writing made simple</h1>

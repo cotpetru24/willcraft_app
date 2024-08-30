@@ -9,11 +9,8 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckSquare, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import generateWillPdf from '../../features/docGen/generateWillPdf.js';
-
-
-
 
 
 
@@ -48,8 +45,6 @@ const OrderItem = ({ order }) => {
             const response = await dispatch(getOrderThunk(order._id));
             if (getOrderThunk.fulfilled.match(response)) {
                 generateWillPdf(response.payload); // Use response.payload for the data
-            } else {
-                console.error("Failed to generate the Will PDF:", response.error.message);
             }
         } catch (error) {
             console.error("An error occurred while generating the Will PDF:", error);
@@ -75,7 +70,7 @@ const OrderItem = ({ order }) => {
                         </>
                     )}
                     <Card.Title as="h5">{order.testator}</Card.Title>
-                    <div> {/* Replace Card.Text with div */}
+                    <div>
                         <Row>
                             <Col>
                                 <div className="order-item-p">
@@ -147,10 +142,7 @@ const OrderItem = ({ order }) => {
                                 }
 
 
-
-
-
-                                                               
+                                
                                 {order.status === "complete" && (
 
                                     <Button variant="primary" className=""
@@ -190,18 +182,14 @@ const OrderItem = ({ order }) => {
                                 )}
                             </Col>
                         </Row>
-
-
-
-
                         {order.status === "complete" &&
                             (
                                 <Row >
                                     <Col className="d-flex justify-content-end">
-                                        <Link to="/writeAReview" style={{ textDecoration: 'none', fontSize:'12px' }} 
-                                          onClick={() => {
-                                            window.scrollTo(0, 0);
-                                          }}
+                                        <Link to="/writeAReview" style={{ textDecoration: 'none', fontSize: '12px' }}
+                                            onClick={() => {
+                                                window.scrollTo(0, 0);
+                                            }}
                                         >
                                             Tell us how we did
                                         </Link>
@@ -214,8 +202,6 @@ const OrderItem = ({ order }) => {
             </Card>
         </Container>
     )
-
-
 }
 
 export default OrderItem
