@@ -190,12 +190,7 @@ const CreatingOrder = () => {
                     </Col>
                 </Row>
                 <Row>
-                    <Col>
-
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs={{ order: 2 }} md={{ order: 1 }}>
+                    <Col xs={{ order: 2, span: 12 }} md={{ order: 1, span:6 }}>
                         <TestatorCard />
                         <SpouseOrPartnerCard />
                         <KidsCard />
@@ -203,15 +198,11 @@ const CreatingOrder = () => {
                         <AssetsDistributionCard />
                         <ExecutorsCard />
                     </Col>
-                    <Col xs={{ order: 1 }} md={{ order: 2 }}>
+                    <Col xs={{ order: 1 , span:12}} md={{ order: 2 , span:6}}>
                         <ProgressAndInstructionsCard setShowCheckout={setShowCheckout} showCheckout={showCheckout} />
-                        {/* <CheckOutCard setShowCheckout={setShowCheckout}/> */}
-                        {/* {showCheckout && <CheckOutCard clientSecret={clientSecret} />} */}
-                        {/* {showCheckout && <CheckOutCard setShowCheckout={setShowCheckout} />} */}
                         {showCheckout && (
                             <PaymentPage clientSecret={clientSecret} setShowCheckout={setShowCheckout} />
                         )}
-
                     </Col>
                 </Row>
             </Container>
