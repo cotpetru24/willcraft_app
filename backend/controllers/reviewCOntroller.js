@@ -4,7 +4,7 @@ import User from '../models/userModel.js';
 
 
 export const getAllReviews = asyncHandler(async (req, res) => {
-    const reviews = await Review.find({}).sort({ createdAt: -1 }); // Sort by createdAt in descending order
+    const reviews = await Review.find({}).sort({ createdAt: -1 });
 
     if (reviews) {
         res.status(200).json(reviews);
