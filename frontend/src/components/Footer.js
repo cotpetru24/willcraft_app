@@ -1,6 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { logout, reset } from '../features/auth/authSlice';
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
 import Container from 'react-bootstrap/esm/Container';
 import Col from 'react-bootstrap/esm/Col';
@@ -9,15 +8,11 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
 import { createMessageThunk } from '../features/messages/messagesThunks';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 const Footer = () => {
-
-    const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { user } = useSelector(state => state.auth)
 
     const [messageForm, setMessageForm] = useState({
         senderName: '',
@@ -25,34 +20,15 @@ const Footer = () => {
         messageText: ''
     });
 
-    const [showToast, setShowToast] = useState(false);
-
     const handleSendMessage = async (e) => {
         e.preventDefault();
 
-        // Log the form submission event
-        console.log('Form submitted');
-
         const { senderName, senderEmail, messageText } = messageForm;
-
-        // Log the values of the form fields
-        console.log('Form data:', { senderName, senderEmail, messageText });
-
         const messageData = { senderName, senderEmail, messageText };
 
         try {
-            // Log before sending the message
-            console.log('Sending message data:', messageData);
-
             const response = await dispatch(createMessageThunk(messageData));
-
-            // Log the response from the createMessageThunk function
-            console.log('Response from createMessageThunk:', response);
-
             if (response) {
-                // Log successful response and toast trigger
-                console.log('Message sent successfully, triggering toast');
-
                 toast.success("Message sent!", {
                     position: "top-center",
                     autoClose: 2000,
@@ -61,17 +37,9 @@ const Footer = () => {
                     pauseOnHover: false,
                     draggable: false,
                 });
-
-                setShowToast(true);
-                setTimeout(() => setShowToast(false), 2000);
-
-                // Log the form reset action
-                console.log('Resetting form');
-
                 setMessageForm({ senderName: '', senderEmail: '', messageText: '' });
             }
         } catch (error) {
-            // Log any errors that occur during the message sending process
             console.error('Error in handleSendMessage:', error);
         }
     }
@@ -79,12 +47,6 @@ const Footer = () => {
     return (
         <footer>
             <Container fluid className="main-footer pt-4">
-                {showToast && (
-                    <div style={{ position: 'fixed', top: '20px', right: '20px', backgroundColor: 'green', color: 'white', padding: '10px' }}>
-                        Message sent!
-                    </div>
-                )}
-                <ToastContainer />
                 <Container fluid="md">
                     <Row>
                         <Col xs={12} md={5} className="order-1 order-md-1">
@@ -114,7 +76,7 @@ const Footer = () => {
                                     <Form.Group controlId="formGroupTextarea">
                                         <Form.Control
                                             required
-                                            className="mb-3"
+                                            className="mb-3 message-form-textarea"
                                             as="textarea"
                                             placeholder="Your message"
                                             value={messageForm.messageText}
@@ -207,7 +169,8 @@ const Footer = () => {
                 </Container>
             </Container>
         </footer >
-    )
+    );
 }
 
 export default Footer;
+

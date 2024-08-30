@@ -26,7 +26,7 @@
     color: #e0218a !important;
 }
 
-#message-form-textarea {
+.message-form-textarea {
     height: 100px;
 }
 

@@ -3,8 +3,8 @@ import session from 'express-session';
 import dotenv from 'dotenv';
 import { errorHandler } from './middleware/errorMiddleware.js';
 import connectDb from './connect/connect.js';
-import { peopleRoutes } from './routes/peopleRoutes.js';  // Named import
-import { userRoutes } from './routes/userRoutes.js';  // Named import
+import { peopleRoutes } from './routes/peopleRoutes.js';
+import { userRoutes } from './routes/userRoutes.js';
 import { orderRoutes } from './routes/orderRoutes.js';
 import { reviewRoutes } from './routes/reviewRoutes.js';
 import { messageRoutes } from './routes/messageRoutes.js';
@@ -19,7 +19,6 @@ dotenv.config();
 const port = process.env.PORT || 5000;
 
 const stripe = new Stripe(process.env.STRIPE_API_SECRET);
-
 
 
 connectDb();
@@ -51,7 +50,7 @@ app.use((req, res, next) => {
     next();
 });
 
-// Your existing routes
+
 app.use('/api/users', userRoutes);
 app.use('/api/people', peopleRoutes);
 app.use('/api/orders', orderRoutes);

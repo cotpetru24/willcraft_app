@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index2.css'; // Import custom styles
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -24,33 +23,29 @@ import Reviews from './components/Reviews';
 import MyAccount from './components/MyAccount';
 import WriteAReview from './components/WriteAReview';
 
-
 function App() {
-
-
   return (
     <>
       <Router>
         <div className='container-fluid root'>
           <Header />
           <Routes>
-            <Route path='/' element={<Home />} />;
-            <Route path='/login' element={<Login />} />;
-            <Route path='/register' element={<Register />} />;
-            <Route path='/aboutus' element={<AboutUs />} />;
-            <Route path='/prices' element={<Prices />} />;
-            <Route path='/dashboard' element={<Dashboard />} />;
-            <Route path='/creatingOrder' element={<CreatingOrder />} />;
-            <Route path='/testator' element={<Testator />} />;
-            <Route path='/spouseOrPartner' element={<SpouseOrPartner />} />;
-            <Route path='/kids' element={<Kids />} />;
-            <Route path='/assets' element={<Assets />} />;
-            <Route path='/assetsDistribution' element={<AssetsDistribution />} />;
-            <Route path='/executors' element={<Executors />} />;
-            <Route path='/reviews' element={<Reviews/>}/>
-            <Route path='/myAccount' element={<MyAccount/>}/>
-            <Route path='/writeAReview' element={<WriteAReview/>}/>
-
+            <Route path='/' element={<Home />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Register />} />
+            <Route path='/aboutus' element={<AboutUs />} />
+            <Route path='/prices' element={<Prices />} />
+            <Route path='/dashboard' element={<Dashboard />} />
+            <Route path='/creatingOrder' element={<CreatingOrder />} />
+            <Route path='/testator' element={<Testator />} />
+            <Route path='/spouseOrPartner' element={<SpouseOrPartner />} />
+            <Route path='/kids' element={<Kids />} />
+            <Route path='/assets' element={<Assets />} />
+            <Route path='/assetsDistribution' element={<AssetsDistribution />} />
+            <Route path='/executors' element={<Executors />} />
+            <Route path='/reviews' element={<Reviews />} />
+            <Route path='/myAccount' element={<MyAccount />} />
+            <Route path='/writeAReview' element={<WriteAReview />} />
           </Routes>
           <Footer />
         </div>
