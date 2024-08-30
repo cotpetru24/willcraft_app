@@ -15,10 +15,6 @@ const OrdersList = () => {
 
     const order = useSelector(state => state.order)
 
-
-
-
-
     useEffect(() => {
         if (isError) console.log(message)
         dispatch(getOrders())
@@ -34,7 +30,7 @@ const OrdersList = () => {
                         {orders.length > 0 ? (
                             <div className="orders">
                                 {orders.map(order => (
-                                    <OrderItem key={order._id} order={order} /> // Correct key usage
+                                    <OrderItem key={order._id} order={order} />
                                 ))}
                             </div>
                         ) : (

@@ -13,7 +13,6 @@ import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import generateWillPdf from '../../features/docGen/generateWillPdf.js';
 
 
-
 export const OrderProgressBar = ({ step }) => {
     const now = Math.floor((step / 6) * 100 / 10) * 10;
 

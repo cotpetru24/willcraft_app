@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import CreatingOrderNavigation from "../CreatigOrderNavigation";
 import constants from "../../../common/constants";
 import AddressAutocomplete from "../../Common/AddressAutocomplete";
-import DateInput from "../../Common/DateInput";
 import { updateTestatorSlice } from "../../../features/people/testator/testatorSlice";
 import { updateSpouseOrPartnerSlice, resetSpouseOrPartnerSlice } from "../../../features/people/spouseOrPartner/spouseOrPartnerSlice";
 import spouseOrPartnerThunks from "../../../features/people/spouseOrPartner/spouseOrPartnerThunks";

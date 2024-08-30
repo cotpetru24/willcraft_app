@@ -6,15 +6,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useRef, useEffect } from "react";
 import styles from "../../../common/styles";
 import { updateCurrentOrderSlice, updateOrderThunk } from "../../../features/currentOrder/currentOrderSlice";
-import { createPerson } from "../../../features/people/peopleService";
-import { createKidThunk } from "../../../features/people/kids/kidsThunks";
-import { updateAssetsSlice, createAssetThunk, updateAssetThunk } from "../../../features/orderAssets/orderAssetsSlice"
-// import { removeAdditionalExecutorSlice, updateAdditionalExecutorsSlice } from "../../../features/additionalExecutors/additionalExecutorsSlice";
 import { createExecutorThunk, updateExecutorThunk } from "../../../features/additionalExecutors/additionalExecutorsThunks";
 import { updateAdditionalExecutorsSlice } from "../../../features/additionalExecutors/additionalExecutorsSlice"
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import CreatingOrderNavigation from "../CreatigOrderNavigation";
-
 
 
 const Executors = () => {
@@ -148,18 +143,6 @@ const Executors = () => {
         setShowExecutorForm(true);
     };
 
-
-
-
-
-
-
-
-
-
-
-
-
     const handleSaveAndContinue = async (e) => {
         e.preventDefault();
         const updatedOrder = { ...currentOrder }
@@ -195,9 +178,6 @@ const Executors = () => {
             ]
         };
 
-
-
-
         // Update the currentOrder slice
         await dispatch(updateCurrentOrderSlice(updatedOrderWithIds));
         // Update the order in the backend
@@ -205,10 +185,6 @@ const Executors = () => {
 
         navigate('/creatingOrder');
     };
-
-
-
-
 
 
     const handleBack = () => {
@@ -263,9 +239,6 @@ const Executors = () => {
     };
 
 
-
-
-
     return (
         <>
             <Container className="mt-5 mb-4 ps-4 pe-4">
@@ -279,7 +252,6 @@ const Executors = () => {
                         <h5>Please select or/and add the executors of the will.</h5>
                     </Col>
                 </Row>
-
                 <Row className="justify-content-between">
                     <Col md={5} className="mt-4">
                         <Row>
@@ -437,29 +409,8 @@ const Executors = () => {
                     />
                 </Container>
             </>
-
-
-
-
-
-
-
         </>
     )
 }
 
 export default Executors;
-
-
-
-// <>
-// <div className="section-list-container">
-//     <h3>Selected Executors</h3>
-//     {familyExecutors.map((executor, executorIndex) => (
-//         <div key={executorIndex}>
-//             <p>{executor.fullLegalName}</p>
-//             <p>{executor.role}</p>
-//         </div>
-//     ))}
-// </div>
-// </>

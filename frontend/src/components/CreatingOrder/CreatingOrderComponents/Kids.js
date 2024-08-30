@@ -1,7 +1,6 @@
 import CreatingOrderNavigation from "../CreatigOrderNavigation";
 import constants from "../../../common/constants";
 import AddressAutocomplete from "../../Common/AddressAutocomplete";
-import DateInput from "../../Common/DateInput";
 import SectionListItem from "../../SectionListItem";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -18,8 +17,6 @@ import Form from 'react-bootstrap/Form';
 import Col from "react-bootstrap/esm/Col";
 import Button from "react-bootstrap/Button";
 import { FormControl } from "react-bootstrap";
-
-
 
 
 const Kids = () => {

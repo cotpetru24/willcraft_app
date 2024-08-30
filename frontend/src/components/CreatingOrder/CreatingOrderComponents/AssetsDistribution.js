@@ -1,24 +1,3 @@
-// import constants from "../../../common/constants";
-// import AddressAutocomplete from "../../Common/AddressAutocomplete";
-// import SectionListItem from "../../SectionListItem";
-// import { useNavigate } from "react-router-dom";
-// import { useSelector, useDispatch } from "react-redux";
-// import { useState, useRef, useEffect } from "react";
-// import styles from "../../../common/styles";
-// import { updateCurrentOrderSlice, updateOrderThunk } from "../../../features/currentOrder/currentOrderSlice";
-// import { updateAssetsSlice } from "../../../features/orderAssets/orderAssetsSlice";
-// import { updateAdditionalBeneficiariesSlice } from "../../../features/people/additionalBeneficiaries/additionalBeneficiariesSlice";
-// import additionalBeneficiaryThunks, { createAdditionalBeficiaryThunk, deleteAdditionalBeficiaryThunk } from "../../../features/people/additionalBeneficiaries/additionalBeneficiariesThunks";
-// import { Container, Row, Col, Form, Button, Accordion, InputGroup } from 'react-bootstrap';
-// import CreatingOrderNavigation from "../CreatigOrderNavigation";
-// import { useMediaQuery } from 'react-responsive';
-// import { toast, ToastContainer } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
-
-
-
-
-
 import constants from "../../../common/constants";
 import AddressAutocomplete from "../../Common/AddressAutocomplete";
 import SectionListItem from "../../SectionListItem";
@@ -229,16 +208,6 @@ const AssetsDistribution = () => {
             </div>
         );
 
-
-        // if (total !== 100) {
-        //     // toast.warn(`Total percentage for asset ${assetIndex + 1} is not 100%! It is currently ${total}%`);
-        //     // toast.warn(`Total percentage for ${assetTypeAndDescription} is not 100% ! <br/>It is currently ${total}%`);
-        //     toast.warn(<CustomToast assetTypeAndDescription={assetTypeAndDescription} total={total} />, {
-        //         position: "top-center",
-        //         autoClose: 4000,
-        //         toastClassName: "custom-toast",
-        //     });
-        // }
         if (total !== 100) {
             if (toastId.current) {
                 clearTimeout(toastId.current);
@@ -256,118 +225,6 @@ const AssetsDistribution = () => {
         // Dispatch the updated assets to the Redux store
         dispatch(updateAssetsSlice(updatedAssets));
     };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // const handleBeneficiaryChecked = (personIndex, assetIndex, isChecked) => {
-    //     const familyBeneficiary = potentialBeneficiaries[personIndex];
-    //     const assetToUpdate = assets[assetIndex];
-
-    //     if (!currentOrder || !currentOrder.assetsAndDistribution) {
-    //         console.error("currentOrder or assetsAndDistribution is not defined");
-    //         return;
-    //     }
-
-    //     let updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(personRole => {
-    //         if (personRole.personId._id === familyBeneficiary.personId._id) {
-    //             if (isChecked) {
-    //                 return {
-    //                     ...personRole,
-    //                     role: personRole.role.includes('beneficiary') ? personRole.role : [...personRole.role, 'beneficiary']
-    //                 };
-    //             } else {
-    //                 const isBeneficiaryForOtherAssets = currentOrder.assetsAndDistribution.some(asset =>
-    //                     asset.distribution && asset.distribution.some(dist => {
-    //                         const distPersonId = typeof dist.personId === 'object' ? dist.personId._id : dist.personId;
-    //                         return distPersonId === familyBeneficiary.personId._id && asset.assetId._id !== assetToUpdate._id;
-    //                     })
-    //                 );
-
-    //                 if (!isBeneficiaryForOtherAssets) {
-    //                     return {
-    //                         ...personRole,
-    //                         role: personRole.role.filter(role => role !== 'beneficiary')
-    //                     };
-    //                 }
-    //             }
-    //         }
-    //         return personRole;
-    //     });
-
-    //     if (!assetToUpdate || !assetToUpdate.distribution) {
-    //         console.error("assetToUpdate or its distribution is not defined");
-    //         return;
-    //     }
-
-    //     let updatedDistribution;
-    //     if (isChecked) {
-    //         if (!assetToUpdate.distribution.some(d => d.personId._id === familyBeneficiary.personId._id)) {
-    //             updatedDistribution = [...assetToUpdate.distribution, {
-    //                 personId: familyBeneficiary.personId._id,
-    //                 title: familyBeneficiary.personId.title,
-    //                 fullLegalName: familyBeneficiary.personId.fullLegalName,
-    //                 fullAddress: familyBeneficiary.personId.fullAddress,
-    //                 dob: familyBeneficiary.personId.dob,
-    //                 email: familyBeneficiary.personId.email || '',
-    //                 tel: familyBeneficiary.personId.tel || '',
-    //                 receivingAmount: ''
-    //             }];
-    //         } else {
-    //             updatedDistribution = assetToUpdate.distribution;
-    //         }
-    //     } else {
-    //         updatedDistribution = assetToUpdate.distribution.filter(d => {
-    //             const distPersonId = typeof d.personId === 'object' ? d.personId._id : d.personId;
-    //             return distPersonId !== familyBeneficiary.personId._id;
-    //         });
-    //     }
-
-    //     const updatedAsset = { ...assetToUpdate, distribution: updatedDistribution };
-
-    //     const updatedAssets = assets.map((asset, index) => index === assetIndex ? updatedAsset : asset);
-
-    //     const updatedCurrentOrderAssetDistribution = currentOrder.assetsAndDistribution.map(asset => {
-    //         if (asset.assetId._id === assetToUpdate._id) {
-    //             return {
-    //                 ...asset,
-    //                 distribution: updatedDistribution
-    //             };
-    //         }
-    //         return asset;
-    //     });
-
-    //     const updatedCurrentOrder = {
-    //         ...currentOrder,
-    //         assetsAndDistribution: updatedCurrentOrderAssetDistribution,
-    //         peopleAndRoles: updatedPeopleAndRoles
-    //     };
-
-    //     dispatch(updateAssetsSlice(updatedAssets));
-    //     dispatch(updateCurrentOrderSlice(updatedCurrentOrder));
-    // };
 
     const handleBeneficiaryChecked = (personIndex, assetIndex, isChecked) => {
         const familyBeneficiary = potentialBeneficiaries[personIndex];
@@ -401,18 +258,10 @@ const AssetsDistribution = () => {
         } else {
             updatedDistribution = assetToUpdate.distribution.filter(d => {
                 const distPersonId = typeof d.personId === 'object' ? d.personId._id : d.personId;
-
-
-
-
-
-
-
                 return distPersonId !== familyBeneficiary.personId._id;
             });
 
 
-            // setReceivingAmount('');
         }
 
         // Create the updated asset object
@@ -445,52 +294,16 @@ const AssetsDistribution = () => {
         dispatch(updateCurrentOrderSlice(updatedCurrentOrder));
     };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     const handleAdditionalBeneficiaryFormAdd = async (e) => {
         e.preventDefault();
 
         if (editAdditionalBeneficiaryIndex !== null) {
-            // Update additional beneficiaries
 
-
-
-
-
-
-
-
-
-            // const updatedAdditionalBeneficiaries = additionalBeneficiaries.map((beneficiary, index) =>
-            //     index === editAdditionalBeneficiaryIndex ? { personId: additionalBeneficiaryFormData } : beneficiary
-            // );
             const updatedBeneficiaryDetails = additionalBeneficiaryFormData;
             let tempAdditionalBeneficiariesToUpdate = [...additionalBeneficiariesToUpdate];
 
             const updatedAdditionalBeneficiaries = additionalBeneficiaries.map((beneficiary, index) => {
                 if (index === editAdditionalBeneficiaryIndex) {
-                    // If the _id does not include "temp", add to setAdditionalBeneficiariesToUpdate
-
 
                     // If the _id does not include "temp", store the update information
                     if (!beneficiary.personId._id.includes("temp")) {
@@ -575,24 +388,6 @@ const AssetsDistribution = () => {
             resetAdditionalBeneficiaryForm();
             setShowAdditionalBeneficiaryForm(false);
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         else {
             const newBeneficiary = {
                 ...additionalBeneficiaryFormData,
@@ -606,17 +401,6 @@ const AssetsDistribution = () => {
         resetAdditionalBeneficiaryForm();
         setShowAdditionalBeneficiaryForm(false);
     };
-
-
-
-
-
-
-
-
-
-
-
     const handleSaveAndContinue = async (e) => {
         e.preventDefault();
 
@@ -793,8 +577,6 @@ const AssetsDistribution = () => {
                     }))
                 }));
 
-                // if (response && response.payload) {
-                //     dispatch(updateCurrentOrderSlice(response.payload));
                 if (response && response.payload) {
                     dispatch(updateCurrentOrderSlice({
                         ...response.payload,
@@ -812,31 +594,6 @@ const AssetsDistribution = () => {
     };
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     const handleBack = () => {
         if (savedAdditionalBeneficiariesData.current) {
             dispatch(updateAdditionalBeneficiariesSlice(savedAdditionalBeneficiariesData.current));
@@ -849,8 +606,6 @@ const AssetsDistribution = () => {
         }
         navigate('/creatingOrder');
     };
-
-
 
 
     const handleOnBenFormChange = (event) => {
@@ -949,12 +704,8 @@ const AssetsDistribution = () => {
 
         // Update the assets slice
         await dispatch(updateAssetsSlice(updatedAssets));
-
-
-
-
-
     };
+
 
     return (
         <>
@@ -983,15 +734,10 @@ const AssetsDistribution = () => {
                                             {additionalBeneficiaries.map((person, personIndex) => {
                                                 return (
                                                     <SectionListItem
-                                                        // key={`person-${personIndex}`}
                                                         key={`person-${person._id || personIndex}`}
                                                         buttonsDisabled={showAdditionalBeneficiaryForm}
                                                         data={{ ...person, role: 'additional beneficiary' }}
                                                         onRemove={() => handleRemoveAdditionalBeneficiary(personIndex)}
-
-                                                        // onRemove={() => handleRemoveAdditionalBeneficiary(person._id ? person._id : personIndex)}
-
-
                                                         onEdit={() => handleEditAdditionalBeneficiary(personIndex)}
                                                         section="assetDistribution-additionalBeneficiary"
                                                     />
@@ -1017,7 +763,6 @@ const AssetsDistribution = () => {
                             <Row>
                                 <Col className="m-2">
                                     {assets.map((asset, assetIndex) => (
-
                                         <Accordion className="mt-4 ml-3 accordion-custom-border" defaultActiveKey="0" key={`asset-${asset._id || assetIndex}`}>
                                             <Accordion.Item eventKey="0">
                                                 <Accordion.Header>
@@ -1369,7 +1114,6 @@ const AssetsDistribution = () => {
                                                                             Details:  </span>{asset.otherAssetDetails}</p>}
                                                                 </Col>
                                                             </Row>
-
                                                         </Col>
                                                         <Col className="d-flex justify-content-end col-auto">
                                                             <InputGroup className="total-amount-form-control">
@@ -1416,7 +1160,6 @@ const AssetsDistribution = () => {
                     </>
                 </Container >
             )}
-
             <ToastContainer
                 className="custom-toast"
                 position="top-center"

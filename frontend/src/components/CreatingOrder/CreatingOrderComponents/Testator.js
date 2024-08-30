@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import CreatingOrderNavigation from "../CreatigOrderNavigation";
 import AddressAutocomplete from "../../Common/AddressAutocomplete";
-import DateInput from "../../Common/DateInput";
 import constants from "../../../common/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { updateTestatorSlice } from "../../../features/people/testator/testatorSlice";

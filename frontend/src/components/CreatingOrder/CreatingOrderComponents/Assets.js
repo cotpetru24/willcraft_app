@@ -44,17 +44,8 @@ const Assets = () => {
 
     useEffect(() => {
         if (asset) {
-            setAssetFormData({
-                // _id: assetFormData._id || '',
-                // assetType: assetFormData.assetType || '',
-                // bankName: assetFormData.bankName || '',
-                // provider: assetFormData.provider || '',
-                // companyName: assetFormData.companyName || '',
-                // propertyAddress: assetFormData.propertyAddress || '',
-                // otherAssetDetails: assetFormData.otherAssetDetails || '',
-            })
+            setAssetFormData({})
         }
-        // Store the initial state as "saved" state if it's not already saved
         if (!savedAssetsData.current) {
             savedAssetsData.current = JSON.parse(JSON.stringify(assets));
         }
@@ -83,7 +74,7 @@ const Assets = () => {
                 index === editAssetIndex ? assetFormData : asset
             );
             dispatch(updateAssetsSlice(updatedAssets));
-            setEditAssetIndex(null); // Reset the edit index
+            setEditAssetIndex(null);
         } else {
             dispatch(updateAssetsSlice([...assets, assetFormData]));
         }
@@ -135,7 +126,6 @@ const Assets = () => {
 
         const updatedAssets = [];
 
-        // Create or update each asset
         for (const asset of assets) {
             let response;
             if (asset._id) {
@@ -151,10 +141,8 @@ const Assets = () => {
             });
         }
 
-        // Update assets slice with new assets including their IDs
         await dispatch(updateAssetsSlice(updatedAssets));
 
-        // Prepare updated order with the new asset IDs
         const updatedOrder = {
             ...currentOrder,
             assetsAndDistribution: [
@@ -165,9 +153,7 @@ const Assets = () => {
             ]
         };
 
-        // Update the currentOrder slice
         await dispatch(updateCurrentOrderSlice(updatedOrder));
-        // Update the order in the backend
         await dispatch(updateOrderThunk(updatedOrder));
 
         navigate('/creatingOrder');
@@ -302,19 +288,19 @@ const Assets = () => {
                                                 />
                                             </Form.Group>
                                         )}
-                                        {(assetFormData.assetType === constants.assetType.PENSION 
-                                        || assetFormData.assetType === constants.assetType.LIFE_INSURANCE) && (
-                                            <Form.Group className="mb-3" controlId="formGroupProvider">
-                                                <Form.Label className="bold-label">Provider</Form.Label>
-                                                <Form.Control
-                                                    type="text"
-                                                    name="provider"
-                                                    value={assetFormData.provider}
-                                                    onChange={handleOnChange}
-                                                    className="custom-input"
-                                                />
-                                            </Form.Group>
-                                        )}
+                                        {(assetFormData.assetType === constants.assetType.PENSION
+                                            || assetFormData.assetType === constants.assetType.LIFE_INSURANCE) && (
+                                                <Form.Group className="mb-3" controlId="formGroupProvider">
+                                                    <Form.Label className="bold-label">Provider</Form.Label>
+                                                    <Form.Control
+                                                        type="text"
+                                                        name="provider"
+                                                        value={assetFormData.provider}
+                                                        onChange={handleOnChange}
+                                                        className="custom-input"
+                                                    />
+                                                </Form.Group>
+                                            )}
                                         {assetFormData.assetType === constants.assetType.OTHER && (
                                             <Form.Group className="mb-3" controlId="formGroupAssetDetails">
                                                 <Form.Label className="bold-label">Details</Form.Label>
@@ -359,12 +345,12 @@ const Assets = () => {
                 </Row>
             </Container>
             <>
-            <Container>
-                <OrderNavigation
-                    onBack={handleBack}
-                    onSaveAndContinue={handleSaveAndContinue}
-                    buttonsDisabled={showAssetForm}
-                />
+                <Container>
+                    <OrderNavigation
+                        onBack={handleBack}
+                        onSaveAndContinue={handleSaveAndContinue}
+                        buttonsDisabled={showAssetForm}
+                    />
                 </Container>
             </>
         </>
