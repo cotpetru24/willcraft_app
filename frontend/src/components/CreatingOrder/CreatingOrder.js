@@ -8,11 +8,12 @@ import ExecutorsCard from "./CreatingOrderCards/ExecutorsCard";
 import TestatorCard from "./CreatingOrderCards/TestatorCard";
 import SpouseOrPartnerCard from "./CreatingOrderCards/SpouseOrPartnerCard";
 import ProgressAndInstructionsCard from "./CreatingOrderCards/ProgressAndInstructionsCard";
-import { Container, Row, Col } from "react-bootstrap";
-import { updateOrderCurrentStep } from "../../features/orderSteps/orderCurrentStepSlice";
+import { Container, Row, Col, Button } from "react-bootstrap";
+import { resetOrderCurrentStep, updateOrderCurrentStep } from "../../features/orderSteps/orderCurrentStepSlice";
 import constants from "../../common/constants";
 import PaymentPage from "./CreatingOrderCards/CheckOutCard";
 import { useState } from "react";
+import { resetOrderState } from "../../utils/reduxUtils";
 
 
 
@@ -190,7 +191,7 @@ const CreatingOrder = () => {
                     </Col>
                 </Row>
                 <Row>
-                    <Col xs={{ order: 2, span: 12 }} md={{ order: 1, span:6 }}>
+                    <Col xs={{ order: 2, span: 12 }} md={{ order: 1, span: 6 }}>
                         <TestatorCard />
                         <SpouseOrPartnerCard />
                         <KidsCard />
@@ -198,12 +199,23 @@ const CreatingOrder = () => {
                         <AssetsDistributionCard />
                         <ExecutorsCard />
                     </Col>
-                    <Col xs={{ order: 1 , span:12}} md={{ order: 2 , span:6}}>
+                    <Col xs={{ order: 1, span: 12 }} md={{ order: 2, span: 6 }}>
                         <ProgressAndInstructionsCard setShowCheckout={setShowCheckout} showCheckout={showCheckout} />
                         {showCheckout && (
                             <PaymentPage clientSecret={clientSecret} setShowCheckout={setShowCheckout} />
                         )}
                     </Col>
+                </Row>
+                <Row className="mt-3 mb-4 d-flex justify-content-center">
+                    <Button style={{ width: "350px" }}
+                        variant="primary"
+                        onClick={async () => {
+                            await resetOrderState(dispatch)
+                            navigate('/dashboard')
+                        }}
+                    >
+                        Back
+                    </Button>
                 </Row>
             </Container>
         </>
