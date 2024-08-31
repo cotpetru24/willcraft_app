@@ -73,7 +73,9 @@
     ]
   },
   "devDependencies": {
-    "axios-mock-adapter": "^1.22.0"
+    "@babel/preset-env": "^7.25.4",
+    "axios-mock-adapter": "^1.22.0",
+    "babel-jest": "^29.7.0"
   },
   "jest": {
     "transform": {
