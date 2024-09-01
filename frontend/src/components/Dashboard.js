@@ -7,14 +7,6 @@ import { Container } from "react-bootstrap";
 import { Col, Row, Button } from "react-bootstrap";
 
 
-export const OrderProgressBar = ({ currentValue, maxValue }) => (
-    <>
-        <progress id="progress-bar" className="full-width-progress" value={currentValue} max={maxValue}>{currentValue}%</progress>
-    </>
-);
-
-
-
 const Dashboard = () => {
 
     const dispatch = useDispatch();
