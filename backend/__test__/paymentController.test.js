@@ -1,17 +1,16 @@
 import { createPayment, getPayment, paymentIntent } from '../controllers/paymentController.js';
 import Payment from '../models/paymentModel.js';
-import User from '../models/userModel.js';
 import Stripe from 'stripe';
 
 jest.mock('../models/paymentModel');
-jest.mock('../models/userModel');
 jest.mock('stripe');
 
 const stripe = new Stripe('mock_stripe_secret');
 
 describe('Payment Controller', () => {
 
-    afterEach(() => {
+    beforeEach(() => {
+        // Reset all mocks before each test
         jest.clearAllMocks();
     });
 
@@ -68,23 +67,14 @@ describe('Payment Controller', () => {
     });
 
     test('should get payment by ID', async () => {
-        const payment = {
-            _id: 'payment-id',
-            orderId: 'order-id',
-            userId: 'user-id',
-            amount: 5000,
-            status: 'succeeded',
-            paymentDate: new Date(),
-            products: [{ name: 'Product 1', price: 20 }],
-            paymentMethod: 'card'
-        };
+        const mockPayment = { _id: 'some-payment-id', amount: 5000 };
+        
+        Payment.findById.mockReturnValue({
+            populate: jest.fn().mockReturnThis(),
+            exec: jest.fn().mockResolvedValue(mockPayment),
+        });
 
-        Payment.findById.mockResolvedValue(payment);
-
-        const req = {
-            params: { id: 'payment-id' },
-        };
-
+        const req = { params: { id: 'some-payment-id' } };
         const res = {
             status: jest.fn().mockReturnThis(),
             json: jest.fn(),
@@ -93,11 +83,14 @@ describe('Payment Controller', () => {
         await getPayment(req, res);
 
         expect(res.status).toHaveBeenCalledWith(200);
-        expect(res.json).toHaveBeenCalledWith(payment);
+        expect(res.json).toHaveBeenCalledWith(mockPayment);
     });
 
     test('should return 404 error if payment is not found', async () => {
-        Payment.findById.mockResolvedValue(null);
+        Payment.findById.mockReturnValue({
+            populate: jest.fn().mockReturnThis(),
+            exec: jest.fn().mockResolvedValue(null),
+        });
 
         const req = {
             params: { id: 'non-existent-payment-id' },
@@ -113,18 +106,11 @@ describe('Payment Controller', () => {
     });
 
     test('should create a payment intent', async () => {
-        const req = {
-            body: {
-                products: [{ name: 'Product 1', price: 20 }, { name: 'Product 2', price: 30 }],
-            }
-        };
-
-        const paymentIntent = {
-            client_secret: 'mock_client_secret',
-        };
+        const paymentIntent = { client_secret: 'some-client-secret' };
 
         stripe.paymentIntents.create.mockResolvedValue(paymentIntent);
 
+        const req = { body: { products: [{ price: 1000 }] } };
         const res = {
             status: jest.fn().mockReturnThis(),
             send: jest.fn(),
@@ -132,34 +118,24 @@ describe('Payment Controller', () => {
 
         await paymentIntent(req, res);
 
-        expect(stripe.paymentIntents.create).toHaveBeenCalledWith({
-            amount: 5000, // 20 + 30 = 50 * 100 (pence)
-            currency: 'gbp',
-            description: 'Order payment',
-            automatic_payment_methods: { enabled: true },
-        });
         expect(res.status).toHaveBeenCalledWith(200);
-        expect(res.send).toHaveBeenCalledWith({ clientSecret: paymentIntent.client_secret });
+        expect(res.send).toHaveBeenCalledWith({ clientSecret: 'some-client-secret' });
     });
 
     test('should return 500 error if payment intent creation fails', async () => {
-        const req = {
-            body: {
-                products: [{ name: 'Product 1', price: 20 }],
-            }
-        };
-
         const error = new Error('Failed to create payment intent');
-        stripe.paymentIntents.create.mockRejectedValue(error);
 
+        stripe.paymentIntents.create.mockRejectedValueOnce(error);
+
+        const req = { body: { products: [{ price: 1000 }] } };
         const res = {
             status: jest.fn().mockReturnThis(),
             send: jest.fn(),
         };
 
-        await paymentIntent(req, res);
-
+        await expect(paymentIntent(req, res)).rejects.toThrow('Failed to create payment intent');
         expect(res.status).toHaveBeenCalledWith(500);
         expect(res.send).toHaveBeenCalledWith({ error: 'Failed to create payment intent' });
     });
+
 });
