@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import LoadingSpinner from "./LoadingSpinner.js";
 import { Container, Col, Row, Card } from "react-bootstrap";
-import { formatReviewRating } from "./HomeReview.js";
 import { getAllReviewsThunk } from "../features/reviews/reviewThunks.js";
 import { FaStar } from 'react-icons/fa';
 
@@ -16,7 +15,7 @@ const Reviews = () => {
             try {
                 const resultAction = await dispatch(getAllReviewsThunk());
                 if (resultAction.payload && Array.isArray(resultAction.payload)) {
-                    setReviews(resultAction.payload); // Set the reviews to the response payload
+                    setReviews(resultAction.payload);
                 }
             } catch (error) {
                 console.error("Failed to fetch reviews:", error);
@@ -71,7 +70,6 @@ const Reviews = () => {
                                                         </div>
                                                     </Col>
                                                 </Row>
-
                                                 <Row className="d-flex pt-3 justify-content-center">
                                                     <Col xs="auto">
                                                         {renderStars(review.rating)}

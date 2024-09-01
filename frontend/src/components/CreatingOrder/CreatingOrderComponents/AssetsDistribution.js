@@ -8,7 +8,7 @@ import styles from "../../../common/styles";
 import { updateCurrentOrderSlice, updateOrderThunk } from "../../../features/currentOrder/currentOrderSlice";
 import { updateAssetsSlice } from "../../../features/orderAssets/orderAssetsSlice";
 import { updateAdditionalBeneficiariesSlice } from "../../../features/people/additionalBeneficiaries/additionalBeneficiariesSlice";
-import additionalBeneficiaryThunks, { createAdditionalBeficiaryThunk, deleteAdditionalBeficiaryThunk, updateAdditionalBeficiaryThunk } from "../../../features/people/additionalBeneficiaries/additionalBeneficiariesThunks";
+import { createAdditionalBeficiaryThunk, deleteAdditionalBeficiaryThunk, updateAdditionalBeficiaryThunk } from "../../../features/people/additionalBeneficiaries/additionalBeneficiariesThunks";
 import { Container, Row, Col, Form, Button, Accordion, InputGroup } from 'react-bootstrap';
 import CreatingOrderNavigation from "../CreatigOrderNavigation";
 import { useMediaQuery } from 'react-responsive';
@@ -19,25 +19,20 @@ const AssetsDistribution = () => {
     const isXs = useMediaQuery({ maxWidth: 767 });
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
     const currentOrder = useSelector(state => state.currentOrder);
     const assets = useSelector(state => state.assets);
     const additionalBeneficiaries = useSelector(state => state.additionalBeneficiaries);
-
     const [receivingAmount, setReceivingAmount] = useState('');
     const [totalPercentage, setTotalPercentage] = useState({});
     const [potentialBeneficiaries, setPotentialBeneficiaries] = useState([]);
     const [additionalBeneficiariesToRemove, setAdditionalBeneficiariesToRemove] = useState([]);
     const [additionalBeneficiariesToUpdate, setAdditionalBeneficiariesToUpdate] = useState([]);
-
     const [showAdditionalBeneficiaryForm, setShowAdditionalBeneficiaryForm] = useState(false);
     const [editAdditionalBeneficiaryIndex, setEditAdditionalBeneficiaryIndex] = useState(null);
-
     const savedAdditionalBeneficiariesData = useRef(null);
     const savedCurrentOrderData = useRef(null);
     const savedAssetsData = useRef(null);
     const toastId = useRef(null);
-
 
     let additionalBeneficiary;
 
@@ -102,7 +97,7 @@ const AssetsDistribution = () => {
             };
         });
 
-        // Dispatch if there's an actual change
+        // Dispatch if there's a change
         if (JSON.stringify(updatedAssets) !== JSON.stringify(assets)) {
             dispatch(updateAssetsSlice(updatedAssets));
         }
@@ -146,7 +141,7 @@ const AssetsDistribution = () => {
             return { ...asset, distribution: updatedDistribution };
         });
 
-        // Dispatch if there's an actual change
+        // Dispatch if there's a change
         if (JSON.stringify(updatedAssets) !== JSON.stringify(assets)) {
             dispatch(updateAssetsSlice(updatedAssets));
         }
@@ -155,7 +150,7 @@ const AssetsDistribution = () => {
     const handleOnChange = (value, assetIndex, personId) => {
 
         let assetTypeAndDescription;
-        // Safeguard: Ensure assets array exists
+
         if (!Array.isArray(assets) || !assets[assetIndex]) {
             console.error("Assets array is not defined or assetIndex is out of bounds.");
             return;
@@ -212,9 +207,9 @@ const AssetsDistribution = () => {
                         autoClose: 3000,
                     }
                 );
-            }, 1000); // Delay in milliseconds
+            }, 1000);
         }
-        // Dispatch the updated assets to the Redux store
+
         dispatch(updateAssetsSlice(updatedAssets));
     };
 
@@ -241,7 +236,7 @@ const AssetsDistribution = () => {
                             email: familyBeneficiary.personId.email || '',
                             tel: familyBeneficiary.personId.tel || ''
                         },
-                        receivingAmount: ''  // Initialize with empty or zero value
+                        receivingAmount: ''
                     }
                 ];
             } else {
@@ -276,10 +271,9 @@ const AssetsDistribution = () => {
         const updatedCurrentOrder = {
             ...currentOrder,
             assetsAndDistribution: updatedCurrentOrderAssetDistribution,
-            peopleAndRoles: currentOrder.peopleAndRoles  // Update peopleAndRoles if necessary
+            peopleAndRoles: currentOrder.peopleAndRoles
         };
 
-        // Dispatch the updated slices
         dispatch(updateAssetsSlice(updatedAssets));
         dispatch(updateCurrentOrderSlice(updatedCurrentOrder));
     };
@@ -315,7 +309,6 @@ const AssetsDistribution = () => {
             dispatch(updateAdditionalBeneficiariesSlice(updatedAdditionalBeneficiaries));
 
             const beneficiaryToUpdate = additionalBeneficiaries[editAdditionalBeneficiaryIndex];
-            // const updatedBeneficiaryDetails = additionalBeneficiaryFormData;
 
             // Update the beneficiary details in peopleAndRoles in currentOrder
             const updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(role => {
@@ -324,7 +317,7 @@ const AssetsDistribution = () => {
                         ...role,
                         personId: {
                             ...role.personId,
-                            ...updatedBeneficiaryDetails // This contains the new details for the beneficiary
+                            ...updatedBeneficiaryDetails
                         }
                     };
                 }
@@ -339,7 +332,7 @@ const AssetsDistribution = () => {
                             ...dist,
                             personId: {
                                 ...dist.personId,
-                                ...updatedBeneficiaryDetails // This contains the new details for the beneficiary
+                                ...updatedBeneficiaryDetails
                             }
                         };
                     }
@@ -406,8 +399,8 @@ const AssetsDistribution = () => {
         }
 
         if (additionalBeneficiaries.length > 0) {
-            let updatedPeopleAndRoles = [...currentOrder.peopleAndRoles];  // Initialize with current values
-            let updatedAssetsSlice = [...assets];  // Initialize with current assets
+            let updatedPeopleAndRoles = [...currentOrder.peopleAndRoles];
+            let updatedAssetsSlice = [...assets];
             let updatedAdditionalBeneficiariesSlice = [...additionalBeneficiaries]
 
             for (const benToStore of additionalBeneficiaries) {
@@ -435,8 +428,8 @@ const AssetsDistribution = () => {
                                     return {
                                         ...dist,
                                         personId: {
-                                            ...benToStore.personId,  // Include all the details of person
-                                            _id: correctId,  // Update the _id with the correctId
+                                            ...benToStore.personId,
+                                            _id: correctId,
                                         }
                                     };
                                 }
@@ -499,7 +492,7 @@ const AssetsDistribution = () => {
                 if (response && response.payload) {
                     dispatch(updateCurrentOrderSlice({
                         ...response.payload,
-                        orderId: response.payload._id,  // Map _id to orderId here
+                        orderId: response.payload._id,
                     }));
                 } else {
                     throw new Error('Failed to update order');
@@ -516,16 +509,16 @@ const AssetsDistribution = () => {
             await dispatch(updateCurrentOrderSlice({
                 ...currentOrder,
                 assetsAndDistribution: assets.map(asset => ({
-                    assetId: asset._id || asset.assetId,  // Ensure the assetId is correctly mapped
-                    assetType: asset.assetType,           // Map all necessary fields
+                    assetId: asset._id || asset.assetId,
+                    assetType: asset.assetType,
                     bankName: asset.bankName,
                     provider: asset.provider,
                     otherAssetDetails: asset.otherAssetDetails,
                     distribution: asset.distribution.map(dist => ({
-                        personId: dist.personId._id || dist.personId,  // Ensure personId is correctly formatted
+                        personId: dist.personId._id || dist.personId,
                         receivingAmount: dist.receivingAmount,
-                        title: dist.personId.title,                    // Include additional details
-                        fullLegalName: dist.personId.fullLegalName,    // Ensure full details are passed
+                        title: dist.personId.title,
+                        fullLegalName: dist.personId.fullLegalName,
                         fullAddress: dist.personId.fullAddress,
                         dob: dist.personId.dob,
                         email: dist.personId.email,
@@ -538,16 +531,16 @@ const AssetsDistribution = () => {
                 const response = await dispatch(updateOrderThunk({
                     ...currentOrder,
                     assetsAndDistribution: assets.map(asset => ({
-                        assetId: asset._id || asset.assetId,  // Ensure the assetId is correctly mapped
-                        assetType: asset.assetType,           // Map all necessary fields
+                        assetId: asset._id || asset.assetId,
+                        assetType: asset.assetType,
                         bankName: asset.bankName,
                         provider: asset.provider,
                         otherAssetDetails: asset.otherAssetDetails,
                         distribution: asset.distribution.map(dist => ({
-                            personId: dist.personId._id || dist.personId,  // Ensure personId is correctly formatted
+                            personId: dist.personId._id || dist.personId,
                             receivingAmount: dist.receivingAmount,
-                            title: dist.personId.title,                    // Include additional details
-                            fullLegalName: dist.personId.fullLegalName,    // Ensure full details are passed
+                            title: dist.personId.title,
+                            fullLegalName: dist.personId.fullLegalName,
                             fullAddress: dist.personId.fullAddress,
                             dob: dist.personId.dob,
                             email: dist.personId.email,
@@ -559,7 +552,7 @@ const AssetsDistribution = () => {
                 if (response && response.payload) {
                     dispatch(updateCurrentOrderSlice({
                         ...response.payload,
-                        orderId: response.payload._id,  // Map _id to orderId here
+                        orderId: response.payload._id,
                     }));
                 } else {
                     throw new Error('Failed to update order');
@@ -644,7 +637,6 @@ const AssetsDistribution = () => {
 
     const handleRemoveAdditionalBeneficiary = async (index) => {
         const beneficiaryToDelete = additionalBeneficiaries.find((_, i) => i === index);
-        // setAdditionalBeneficiariesToRemove(prev => [...prev, beneficiaryToDelete.personId._id])
         if (!beneficiaryToDelete.personId._id.includes("temp")) {
             setAdditionalBeneficiariesToRemove(prev => [...prev, beneficiaryToDelete.personId._id]);
         }
@@ -679,9 +671,8 @@ const AssetsDistribution = () => {
                 distribution: asset.distribution
             }))
         };
-        await dispatch(updateCurrentOrderSlice(updatedCurrentOrder));
 
-        // Update the assets slice
+        await dispatch(updateCurrentOrderSlice(updatedCurrentOrder));
         await dispatch(updateAssetsSlice(updatedAssets));
     };
 
@@ -1147,7 +1138,6 @@ const AssetsDistribution = () => {
         </>
     );
 }
-
 
 export default AssetsDistribution;
 

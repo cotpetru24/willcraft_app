@@ -13,7 +13,7 @@ import { updateUserDetailsThunk, updateUserPasswordThunk } from "../features/aut
 const MyAccount = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { orders, isLoading, isError, message } = useSelector(state =>
+    const { isLoading, isError, message } = useSelector(state =>
         state.orders)
 
     const user = useSelector(state => state.auth.user)
@@ -109,7 +109,6 @@ const MyAccount = () => {
             }
         } catch {
             toast.error("Error updating details!", {
-                // onClose: () => navigate('/dashboard'),
                 position: "top-center",
                 autoClose: 1000,
                 hideProgressBar: true,
@@ -135,7 +134,6 @@ const MyAccount = () => {
                 // Check if the action was fulfilled (i.e., successful)
                 if (updateUserPasswordThunk.fulfilled.match(resultAction)) {
                     toast.success("Password updated successfully!", {
-                        // onClose: () => navigate('/dashboard'),
                         position: "top-center",
                         autoClose: 1000,
                         hideProgressBar: true,
@@ -241,7 +239,6 @@ const MyAccount = () => {
                                             setShowEditDetailsForm(false)
                                             setShowChangePasswordForm(true)
                                         }}
-
                                     >
                                         Change password
                                     </Button>
@@ -360,10 +357,6 @@ const MyAccount = () => {
                                                         variant="primary"
                                                         className="m-1 add-edit-form-btn"
                                                         type="button"
-                                                        // onClick={() => {
-                                                        //     handleShowKidsForm();
-                                                        //     resetKidForm();
-                                                        // }}
                                                         onClick={() => { setShowChangePasswordForm(false); }}                                                    >
                                                         Cancel
                                                     </Button>

@@ -19,18 +19,13 @@ const SpouseOrPartner = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const currentOrder = useSelector(state => state.currentOrder);
   const testator = useSelector(state => state.testator)
   const spouseOrPartner = useSelector(state => state.spouseOrPartner)
-
   const [currentMaritalStatus, setMaritalStatus] = useState(testator.maritalStatus)
-
-  // Use useRef to store the "saved" state
   const savedSpouseOrPartnerData = useRef(null);
   const savedTestatorData = useRef(null);
   const initialMaritalStatus = useRef(testator.maritalStatus);
-
   const [spouseOrPartnerFormData, setSpouseOrPartnerFormData] = useState({
     _id: '',
     title: '',
@@ -40,7 +35,6 @@ const SpouseOrPartner = () => {
     email: '',
     tel: ''
   });
-
 
   useEffect(() => {
     if (spouseOrPartner) {
@@ -55,7 +49,6 @@ const SpouseOrPartner = () => {
         tel: spouseOrPartner.tel || ''
       });
 
-      // Store the initial state as "saved" state if it's not already saved
       if (!savedSpouseOrPartnerData.current) {
         savedSpouseOrPartnerData.current = JSON.parse(JSON.stringify(spouseOrPartner));
       }
@@ -97,7 +90,6 @@ const SpouseOrPartner = () => {
 
   const handleSaveAndContinue = async (e) => {
     e.preventDefault();
-
     let updatedPeopleAndRoles = currentOrder.peopleAndRoles;
 
     // Check if marital status changed from spouse/partner to single or widowed
@@ -177,7 +169,6 @@ const SpouseOrPartner = () => {
     }
   }
 
-
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setSpouseOrPartnerFormData((prevData) => ({
@@ -190,17 +181,14 @@ const SpouseOrPartner = () => {
     dispatch(updateSpouseOrPartnerSlice({ ...spouseOrPartnerFormData, [name]: value }));
   };
 
-
   const handlePlaceSelected = (address) => {
     setSpouseOrPartnerFormData((prevData) => ({
       ...prevData,
       fullAddress: address
     }));
 
-    // Dispatch the change to the Redux store
     dispatch(updateSpouseOrPartnerSlice({ ...spouseOrPartnerFormData, fullAddress: address }));
   };
-
 
   return (
     <>

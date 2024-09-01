@@ -5,11 +5,6 @@ import { FaStar } from 'react-icons/fa';
 import { Container, Col, Row, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-export function formatReviewRating(rating) {
-    const yellowStar = '<img class="rating-stars" src="./icons8-star.png" alt="Yellow Star" />';
-    const grayStar = '<img class="rating-stars" src="./icons8-star-filled-30-gray.png" alt="Gray Star" />';
-    return yellowStar.repeat(rating) + grayStar.repeat(5 - rating);
-}
 
 const HomeReview = () => {
     const dispatch = useDispatch();

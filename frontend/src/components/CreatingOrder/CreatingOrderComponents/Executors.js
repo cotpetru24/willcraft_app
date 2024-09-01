@@ -15,14 +15,8 @@ import CreatingOrderNavigation from "../CreatigOrderNavigation";
 const Executors = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
     const currentOrder = useSelector(state => state.currentOrder);
-
-    const spouseOrPartner = useSelector(state => state.spouseOrPartner);
-    const kids = useSelector(state => state.kids);
-    const additionalBeneficiaries = useSelector(state => state.additionalBeneficiaries)
     const additionalExecutors = useSelector(state => state.additionalExecutors)
-
     const [family, setFamily] = useState([]);
 
     useEffect(() => {
@@ -37,9 +31,8 @@ const Executors = () => {
     }, [currentOrder.peopleAndRoles, currentOrder]);
 
     const [showExecutorForm, setShowExecutorForm] = useState(false);
-    const [editExecutorIndex, setEditExecutorIndex] = useState(null); // New state to track the index of the kid being edited
+    const [editExecutorIndex, setEditExecutorIndex] = useState(null);
 
-    // Use useRef to store the "saved" state
     const savedAdditionalExecutorsData = useRef(null);
     const savedCurrentOrderData = useRef(null);
 
@@ -97,7 +90,7 @@ const Executors = () => {
                 index === editExecutorIndex ? additionalExecutorFormData : executor
             );
             dispatch(updateAdditionalExecutorsSlice(updatedAdditionalExecutors));
-            setEditExecutorIndex(null); // Reset the edit index
+            setEditExecutorIndex(null);
         } else {
             dispatch(updateAdditionalExecutorsSlice([...additionalExecutors, additionalExecutorFormData]));
         }
@@ -117,7 +110,7 @@ const Executors = () => {
             tel: ''
 
         });
-        setEditExecutorIndex(null); // Reset the edit index
+        setEditExecutorIndex(null);
     };
 
     const handleRemoveExecutor = (index) => {
@@ -136,7 +129,7 @@ const Executors = () => {
             email: executorToEdit.email || '',
             tel: executorToEdit.tel || ''
         });
-        setEditExecutorIndex(index); // Set the edit index
+        setEditExecutorIndex(index);
         setShowExecutorForm(true);
     };
 
@@ -159,15 +152,12 @@ const Executors = () => {
             });
         }
 
-
-        // Update kids slice with new kids including their IDs
         await dispatch(updateAdditionalExecutorsSlice(updatedAdditionlExecutors));
 
-        // Prepare updated order with the new kids IDs
         const updatedOrderWithIds = {
             ...currentOrder,
             peopleAndRoles: [
-                ...currentOrder.peopleAndRoles.filter(pr => !pr.role.includes(constants.role.ADDITIONAL_EXECUTOR)), // Remove existing kids to avoid duplicates
+                ...currentOrder.peopleAndRoles.filter(pr => !pr.role.includes(constants.role.ADDITIONAL_EXECUTOR)),
                 ...updatedAdditionlExecutors.map(executor => ({
                     personId: executor._id,
                     role: [constants.role.ADDITIONAL_EXECUTOR]
@@ -175,9 +165,7 @@ const Executors = () => {
             ]
         };
 
-        // Update the currentOrder slice
         await dispatch(updateCurrentOrderSlice(updatedOrderWithIds));
-        // Update the order in the backend
         await dispatch(updateOrderThunk(updatedOrderWithIds));
 
         navigate('/creatingOrder');
@@ -185,8 +173,6 @@ const Executors = () => {
 
 
     const handleBack = () => {
-        console.log(`handle back called`);
-        // Revert to the "saved" state
 
         if (savedAdditionalExecutorsData.current) {
             dispatch(updateAdditionalExecutorsSlice(savedAdditionalExecutorsData.current));
@@ -258,7 +244,7 @@ const Executors = () => {
                                         data={person}
                                         onRemove={() => handleRemoveExecutor(personIndex)}
                                         onEdit={() => handleEditExecutor(personIndex)}
-                                        onChecked={(isChecked) => handleExecutorChecked(personIndex, isChecked)}  // Pass the checkbox state
+                                        onChecked={(isChecked) => handleExecutorChecked(personIndex, isChecked)}
                                         section="executors"
                                     />
                                 ))}
@@ -270,7 +256,7 @@ const Executors = () => {
                                         data={person}
                                         onRemove={() => handleRemoveExecutor(personIndex)}
                                         onEdit={() => handleEditExecutor(personIndex)}
-                                        onChecked={(isChecked) => handleExecutorChecked(personIndex, isChecked)}  // Pass the checkbox state
+                                        onChecked={(isChecked) => handleExecutorChecked(personIndex, isChecked)}
                                         section="additional-executors"
                                     />
                                 ))}

@@ -16,12 +16,8 @@ const Testator = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const testator = useSelector((state) => state.testator);
-
-  // Use useRef to store the "saved" state
   const savedTestatorData = useRef(null);
-
   const [testatorFormData, setTestatorFormData] = useState({
     _id: '',
     title: '',
@@ -41,7 +37,6 @@ const Testator = () => {
         title: testator.title || '',
         fullLegalName: testator.fullLegalName || '',
         fullAddress: testator.fullAddress || '',
-        // dob: testator.dob || '',
         dob: testator.dob ? new Date(testator.dob).toISOString().split('T')[0] : '',
         email: testator.email || '',
         tel: testator.tel || '',
@@ -57,7 +52,6 @@ const Testator = () => {
   }, [testator]
   );
 
-
   const handleBack = () => {
     // Revert to the "saved" state
     if (savedTestatorData.current) {
@@ -65,7 +59,6 @@ const Testator = () => {
     }
     navigate('/creatingOrder');
   };
-
 
   const handleSaveAndContinue = async () => {
     if (!testator._id) {
@@ -84,7 +77,6 @@ const Testator = () => {
       [name]: value
     }));
 
-    // Dispatch the change to the Redux store
     dispatch(updateTestatorSlice({ ...testatorFormData, [name]: value }));
   };
 
@@ -95,7 +87,6 @@ const Testator = () => {
       fullAddress: address
     }));
 
-    // Dispatch the change to the Redux store
     dispatch(updateTestatorSlice({ ...testatorFormData, fullAddress: address }));
   };
 
@@ -192,7 +183,6 @@ const Testator = () => {
         />
       </Container>
     </>
-
   );
 }
 

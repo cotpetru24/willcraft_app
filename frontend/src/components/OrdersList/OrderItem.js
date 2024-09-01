@@ -43,7 +43,7 @@ const OrderItem = ({ order }) => {
         try {
             const response = await dispatch(getOrderThunk(order._id));
             if (getOrderThunk.fulfilled.match(response)) {
-                generateWillPdf(response.payload); // Use response.payload for the data
+                generateWillPdf(response.payload);
             }
         } catch (error) {
             console.error("An error occurred while generating the Will PDF:", error);

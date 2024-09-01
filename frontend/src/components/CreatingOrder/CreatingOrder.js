@@ -25,7 +25,7 @@ const CreatingOrder = () => {
     const spouseOrPartner = useSelector(state => state.spouseOrPartner);
     const kids = useSelector(state => state.kids);
     const assets = useSelector(state => state.assets);
-    const clientSecret = "your-client-secret-here"; // Replace with your actual client secret
+    // const clientSecret = "your-client-secret-here";
 
 
     const [showCheckout, setShowCheckout] = useState(false);
@@ -155,7 +155,6 @@ const CreatingOrder = () => {
     }, [testator, spouseOrPartner, kids, assets, currentOrder, dispatch]);
 
 
-    // Use the correct slice name here
     const currentStep = useSelector(state => state.currentOrderStep.currentStep);
 
     return (
@@ -178,7 +177,7 @@ const CreatingOrder = () => {
                     <Col xs={{ order: 1, span: 12 }} md={{ order: 2, span: 6 }}>
                         <ProgressAndInstructionsCard setShowCheckout={setShowCheckout} showCheckout={showCheckout} />
                         {showCheckout && (
-                            <PaymentPage clientSecret={clientSecret} setShowCheckout={setShowCheckout} />
+                            <PaymentPage setShowCheckout={setShowCheckout} />
                         )}
                     </Col>
                 </Row>
@@ -196,7 +195,6 @@ const CreatingOrder = () => {
             </Container>
         </>
     )
-
 }
 
 export default CreatingOrder;

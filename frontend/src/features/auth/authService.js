@@ -13,6 +13,7 @@ const register = async (userData) => {
     return response.data;
 }
 
+
 const logout = () => localStorage.removeItem('user')
 
 
@@ -28,8 +29,6 @@ const login = async (userData) => {
 
 
 export const updateUserDetails = async (userData, token) => {
-    console.log("Updating user details:", userData);  // Debugging: Log the user data being sent
-    console.log("Token:", token);  // Debugging: Log the token
 
     const config = {
         headers: {
@@ -39,19 +38,14 @@ export const updateUserDetails = async (userData, token) => {
 
     try {
         const response = await axios.put(API_URL_UPDATE_USER_DETAILS + userData.userId, userData, config);
-        console.log("Response from updateUserDetails:", response.data);  // Debugging: Log the response data
         return response.data;
     } catch (error) {
-        console.error("Error updating user details:", error.response ? error.response.data : error.message);  // Debugging: Log the error
-        throw error;  // Re-throw the error so it can be handled by the calling code
+        throw error;
     }
 }
 
 
-
 export const updateUserPassword = async (userData, token) => {
-    console.log("Updating user password:", userData);  // Debugging: Log the user data being sent
-    console.log("Token:", token);  // Debugging: Log the token
 
     const config = {
         headers: {
@@ -61,14 +55,11 @@ export const updateUserPassword = async (userData, token) => {
 
     try {
         const response = await axios.put(API_URL + userData.userId, userData, config);
-        console.log("Response from updateUserPassword:", response.data);  // Debugging: Log the response data
         return response.data;
     } catch (error) {
-        console.error("Error updating user password:", error.response ? error.response.data : error.message);  // Debugging: Log the error
-        throw error;  // Re-throw the error so it can be handled by the calling code
+        throw error;
     }
 }
-
 
 
 const authService = { register, logout, login, updateUserPassword, updateUserDetails }

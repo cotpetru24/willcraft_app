@@ -143,22 +143,22 @@ const CheckOutCard = ({ setShowCheckout, clientSecret, products, totalAmount, ad
                     </Form.Group>
                     <Row>
                       <Col className="d-flex justify-content-between">
-                    <Button
-                        variant="warning"
-                        className="creating-order-tile-btns"
-                        onClick={() => setShowCheckout(false)}
-                      >
-                        Cancel
-                    </Button>
-                    <Button
-                      variant="primary"
-                      className="creating-order-tile-btns"
-                      type="submit"
-                      disabled={!stripe || isProcessing}
-                    >
-                      {isProcessing ? "Processing..." : "Pay"}
-                    </Button>
-                    </Col>
+                        <Button
+                          variant="warning"
+                          className="creating-order-tile-btns"
+                          onClick={() => setShowCheckout(false)}
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          variant="primary"
+                          className="creating-order-tile-btns"
+                          type="submit"
+                          disabled={!stripe || isProcessing}
+                        >
+                          {isProcessing ? "Processing..." : "Pay"}
+                        </Button>
+                      </Col>
                     </Row>
                     {error && <div>{error}</div>}
                   </Form>
@@ -176,7 +176,7 @@ const PaymentPage = ({ setShowCheckout }) => {
   const [clientSecret, setClientSecret] = useState(null);
   const dispatch = useDispatch();
 
-const [fetchingIntent, setFetchingIntent]= useState(false);
+  const [fetchingIntent, setFetchingIntent] = useState(false);
 
   const [addStorage, setAddStorage] = useState(false);
   const [addPrinting, setAddPrinting] = useState(false);
@@ -217,43 +217,24 @@ const [fetchingIntent, setFetchingIntent]= useState(false);
       {fetchingIntent ? (
         <LoadingSpinner />
       ) : (
-      clientSecret && (
-        <Elements key={clientSecret} stripe={stripePromise} options={{ clientSecret }}>
-          <CheckOutCard
-            setShowCheckout={setShowCheckout}
-            clientSecret={clientSecret}
-            products={products}
-            totalAmount={totalAmount}
-            addStorage={addStorage}
-            setAddStorage={setAddStorage}
-            addPrinting={addPrinting}
-            setAddPrinting={setAddPrinting}
-          />
-        </Elements>
-      )
+        clientSecret && (
+          <Elements key={clientSecret} stripe={stripePromise} options={{ clientSecret }}>
+            <CheckOutCard
+              setShowCheckout={setShowCheckout}
+              clientSecret={clientSecret}
+              products={products}
+              totalAmount={totalAmount}
+              addStorage={addStorage}
+              setAddStorage={setAddStorage}
+              addPrinting={addPrinting}
+              setAddPrinting={setAddPrinting}
+            />
+          </Elements>
+        )
       )}
     </>
   );
 };
 
 export default PaymentPage;
-
-
-
-{/* <>
-{clientSecret && (
-  <Elements key={clientSecret} stripe={stripePromise} options={{ clientSecret }}>
-    <CheckOutCard
-      setShowCheckout={setShowCheckout}
-      clientSecret={clientSecret}
-      products={products}
-      totalAmount={totalAmount}
-      addStorage={addStorage}
-      setAddStorage={setAddStorage}
-      addPrinting={addPrinting}
-      setAddPrinting={setAddPrinting}
-    />
-  </Elements>
-)}
-</> */}
 

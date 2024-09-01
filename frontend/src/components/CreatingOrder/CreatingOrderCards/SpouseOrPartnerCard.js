@@ -168,8 +168,6 @@ const SpouseOrPartnerCard = () => {
             </Container>
         </>
     );
-
-
 }
 
 export default SpouseOrPartnerCard;

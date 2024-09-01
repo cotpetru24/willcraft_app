@@ -8,10 +8,10 @@ const AboutUs = () => {
     return (
         <Container>
             <Row>
-                <Col xs={{ order: 1, span:12 }} md={{ order: 1, span:6 }}>
+                <Col xs={{ order: 1, span: 12 }} md={{ order: 1, span: 6 }}>
                     <img src="./Education.png" style={{ width: '100%' }} />
                 </Col>
-                <Col xs={{ order: 2, span:12 }} md={{ order: 1, span:6 }} className="pt-5" style={{ textAlign: 'justify' }}>
+                <Col xs={{ order: 2, span: 12 }} md={{ order: 1, span: 6 }} className="pt-5" style={{ textAlign: 'justify' }}>
                     <h1>ABOUT US</h1>
                     <p>
                         Welcome to Willcraft, a user-friendly web application designed to help you create wills efficiently and securely. This project represents the culmination of our hard work and dedication as part of the final project for our Computing BSc course.
@@ -105,7 +105,6 @@ const AboutUs = () => {
             </Row>
         </Container>
     )
-
 }
 
 export default AboutUs;

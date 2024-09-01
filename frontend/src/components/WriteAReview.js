@@ -36,10 +36,9 @@ const WriteAReview = () => {
                 pauseOnHover: false,
                 draggable: false,
             });
-            return; // Prevent form submission if no rating is selected
+            return;
         }
 
-        // Submit the review along with the rating
         const reviewData = { userId, userFirstName, rating, reviewText: reviewForm.reviewText };
         console.log("Review submitted:", reviewData);
 
@@ -49,7 +48,7 @@ const WriteAReview = () => {
         toast.success("Thank you for your feedback!", {
             onClose: () => navigate('/dashboard'),
             position: "top-center",
-            autoClose: 500,
+            autoClose: 1000,
             hideProgressBar: true,
             closeOnClick: true,
             pauseOnHover: false,

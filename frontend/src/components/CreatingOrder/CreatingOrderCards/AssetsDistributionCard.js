@@ -10,7 +10,6 @@ import React from "react";
 import styles from "../../../common/styles";
 
 
-
 const AssetsDistributionCard = () => {
     const navigate = useNavigate();
 
@@ -18,7 +17,6 @@ const AssetsDistributionCard = () => {
     const assetsData = useSelector(state => state.assets);
     const currentOrderStep = useSelector(state => state.currentOrderStep);
     const allNecessaryFieldsSpecified = currentOrderStep.currentStep >= 5;
-
 
     return (
         <>

@@ -6,10 +6,7 @@ export const createExecutorThunk = createAsyncThunk(
     'people/createKidThunk',
     async (executorData, thunkApi) => {
 
-        // Get the userId from the state
         const userId = thunkApi.getState().auth.user._id;
-
-        // Add userId to personData
         const updatedExecutorData = { ...executorData, userId };
 
         try {

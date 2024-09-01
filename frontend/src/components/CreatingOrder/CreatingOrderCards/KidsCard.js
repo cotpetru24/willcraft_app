@@ -37,7 +37,7 @@ const KidsCard = () => {
                             </Row>
                         </Card.Title>
                         {allNecessaryFieldsSpecified && testator.hasChildrenStatus !== 'no' ? (
-                            <Card.Text as="div"> {/* Ensure it's using a div */}
+                            <Card.Text as="div">
                                 {kidsData.map((kid, index) => (
                                     <React.Fragment key={index}>
                                         <Row className="mb-4">

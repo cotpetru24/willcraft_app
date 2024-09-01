@@ -13,7 +13,7 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
         }
 
         if (section === 'assetDistribution-beneficiary' && asset?.distribution) {
-            const personId = data._id || data.tempId; // Use tempId or any other fallback if _id is not available
+            const personId = data._id || data.tempId; // Use tempId if _id is not available
             const isInDistribution = asset.distribution.some(dist => dist.personId._id === personId || dist.personId.tempId === personId);
 
             setIsChecked(isInDistribution);
@@ -28,12 +28,11 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
         }
 
         if (section === 'assetDistribution-additionalBeneficiary' && asset?.distribution) {
-            const personId = data._id || data.tempId; // Use tempId or any other fallback if _id is not available
+            const personId = data._id || data.tempId; // Use tempId _id is not available
             const isInDistribution = asset.distribution.some(dist => dist.personId._id === personId || dist.personId.tempId === personId);
             setIsChecked(isInDistribution);
         }
-    }, [data.role, section, data._id, data.tempId]); // Add data.tempId to the dependency array
-
+    }, [data.role, section, data._id, data.tempId]);
 
 
     const currentReceivingAmount = asset?.distribution?.find(dist => dist.personId._id === data._id)?.receivingAmount || '';
@@ -43,10 +42,8 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
         console.log(`section item => Checkbox state changing to: ${newCheckedState} for person: ${data.fullLegalName}`);
         setIsChecked(newCheckedState);
         setReceivingAmount('');
-        onChecked(newCheckedState);  // Pass the new checked state to the callback
+        onChecked(newCheckedState);
     };
-
-
 
     const handleAmountChange = (event) => {
         const value = event.target.value;
@@ -59,7 +56,7 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
             toast.warn(`Only numbers allowed`);
         }
 
-        onChange(value, assetIndex, data._id); // Pass the value, assetIndex, and data._id to the parent
+        onChange(value, assetIndex, data._id);
     };
 
 
@@ -84,76 +81,6 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
                                                     <div className="order-item-p">
                                                         <span className="order-item-p-span">Address:  </span>{data.fullAddress}
                                                     </div>
-                                                </Col>
-                                            </Row>
-                                            <Row className="d-flex justify-content-end mt-1">
-                                                <Col xs="auto">
-                                                    <Button
-                                                        variant="info"
-                                                        className="section-list-item-card-btn m-1"
-                                                        style={buttonsDisabled ? styles.disabledButton : {}}
-                                                        disabled={buttonsDisabled}
-                                                        onClick={onEdit}
-                                                    >
-                                                        Edit
-                                                    </Button>
-                                                    <Button
-                                                        variant="warning"
-                                                        className="section-list-item-card-btn m-1"
-                                                        style={buttonsDisabled ? styles.disabledButton : {}}
-                                                        disabled={buttonsDisabled}
-                                                        onClick={onRemove}
-                                                    >
-                                                        Remove
-                                                    </Button>
-                                                </Col>
-                                            </Row>
-                                        </Card.Text>
-                                    </Card.Body>
-                                </Card>
-                            </Col>
-                        </Row>
-                    </Container>
-                </>
-            )}
-            {section === 'assets' && (
-                <>
-                    <Container className="mb-3">
-                        <Row>
-                            <Col>
-                                <Card className='shadow' bg="light" text="dark" style={{ borderColor: 'green' }}>
-                                    <Card.Body>
-                                        <Card.Text>
-                                            <Row>
-                                                <Col>
-                                                    <div className="order-item-p">
-                                                        <span className="order-item-p-span">Asset: </span>{data.assetType}
-                                                    </div>
-                                                    {data.assetType === 'Property' && (
-                                                        <div className="order-item-p">
-                                                            <span className="order-item-p-span">Address: </span>{data.propertyAddress}
-                                                        </div>
-                                                    )}
-                                                    {data.assetType === 'Bank Account' && (
-                                                        <div className="order-item-p">
-                                                            <span className="order-item-p-span">Bank Name: </span>{data.bankName}
-                                                        </div>
-                                                    )}
-                                                    {data.assetType === 'Stocks and shares' && (
-                                                        <div className="order-item-p">
-                                                            <span className="order-item-p-span">Company Name: </span>{data.companyName}
-                                                        </div>
-                                                    )}
-                                                    {(data.assetType === 'Pension' || data.assetType === 'Life insurance') && (
-                                                        <div className="order-item-p">
-                                                            <span className="order-item-p-span">Provider: </span>{data.provider}
-                                                        </div>
-                                                    )}
-                                                    {data.assetType === 'Other' && (
-                                                        <div className="order-item-p">
-                                                            <span className="order-item-p-span">Details: </span>{data.otherAssetDetails}
-                                                        </div>
-                                                    )}
                                                 </Col>
                                             </Row>
                                             <Row className="d-flex justify-content-end mt-1">

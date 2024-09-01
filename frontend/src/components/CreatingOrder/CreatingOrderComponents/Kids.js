@@ -16,23 +16,19 @@ import Row from "react-bootstrap/esm/Row";
 import Form from 'react-bootstrap/Form';
 import Col from "react-bootstrap/esm/Col";
 import Button from "react-bootstrap/Button";
-import { FormControl } from "react-bootstrap";
 
 
 const Kids = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
     const testator = useSelector(state => state.testator);
     const currentOrder = useSelector(state => state.currentOrder);
     const kids = useSelector(state => state.kids);
-
     const [showKidsForm, setShowKidsForm] = useState(false);
     const [currentHasChildrenStatus, setHasChildrenStatus] = useState(testator.hasChildrenStatus);
     const [editKidIndex, setEditKidIndex] = useState(null); // New state to track the index of the kid being edited
 
-    // Use useRef to store the "saved" state
     const savedKidsData = useRef(null);
     const savedTestatorData = useRef(null);
     const initialHasChildrenStatus = useRef(testator.hasChildrenStatus);
@@ -57,9 +53,7 @@ const Kids = () => {
                 title: kidFormData.title || '',
                 fullLegalName: kidFormData.fullLegalName || '',
                 fullAddress: kidFormData.fullAddress || '',
-                // dob: kidFormData.dob || '',
                 dob: kidFormData.dob ? new Date(kidFormData.dob).toISOString().split('T')[0] : '',
-
                 email: kidFormData.email || '',
                 tel: kidFormData.tel || ''
             })
@@ -113,10 +107,8 @@ const Kids = () => {
             });
         }
 
-        // Update kids slice with new kids including their IDs
         await dispatch(updateKidsSlice(updatedKids));
 
-        // Prepare updated order with the new kids IDs
         const updatedOrder = {
             ...currentOrder,
             peopleAndRoles: [
@@ -128,9 +120,7 @@ const Kids = () => {
             ]
         };
 
-        // Update the currentOrder slice
         await dispatch(updateCurrentOrderSlice(updatedOrder));
-        // Update the order in the backend
         await dispatch(updateOrderThunk(updatedOrder));
 
         navigate('/creatingOrder');
@@ -194,7 +184,7 @@ const Kids = () => {
             email: '',
             tel: ''
         });
-        setEditKidIndex(null); // Reset the edit index
+        setEditKidIndex(null);
     };
 
 
@@ -215,7 +205,7 @@ const Kids = () => {
             email: kidToEdit.email || '',
             tel: kidToEdit.tel || ''
         });
-        setEditKidIndex(index); // Set the edit index
+        setEditKidIndex(index);
         setShowKidsForm(true);
     };
 

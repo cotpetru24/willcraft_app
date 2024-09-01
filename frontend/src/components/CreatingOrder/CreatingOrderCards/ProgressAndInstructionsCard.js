@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Container, Col, Row, Button, Card, ProgressBar } from "react-bootstrap";
 import React from "react";
@@ -32,8 +31,6 @@ export const OrderProgressBar = () => {
 
 const ProgressAndInstructionsCard = ({ setShowCheckout, showCheckout }) => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const { user } = useSelector(state => state.auth);
     const currentOrderStep = useSelector(state => state.currentOrderStep);
 
     const order = useSelector(state => state.currentOrder);
@@ -115,10 +112,26 @@ const ProgressAndInstructionsCard = ({ setShowCheckout, showCheckout }) => {
                                     </>
                                 )}
 
-                                {currentOrderStep.currentStep === 6 && (
+                                {(currentOrderStep.currentStep === 6) && (order.status !== "complete") && (
                                     <>
                                         <h5>Review and Complete Your Order</h5>
                                         <p>Your order is almost complete! Review all the details and proceed to checkout section to finalize your order.</p>
+                                    </>
+                                )}
+
+                                {order.status === "complete" && (
+                                    <>
+                                        <h5>Thank you for your order</h5>
+                                        <p>Your order is now complete. Please generate, print, and carefully read the instructions, and double-check all the details on the document. If you are happy with all the details, sign the document and store it securely.</p>
+                                        <p>If you ordered document printing, the document will be professionally printed and delivered to you in 5 working days.</p>
+                                        <p>If you ordered document storage, please sign the document and securely post it for storage to:</p>
+                                        <address>
+                                            123 High Street<br />
+                                            Coventry, CV1 1AB<br />
+                                            UK
+                                        </address>
+                                        <p>You will receive a confirmation email once the document has been received.</p>
+                                        <p>If any details are incorrect, please edit the corresponding section and generate the document again to reflect all the necessary amendments.</p>
                                     </>
                                 )}
 
@@ -140,7 +153,7 @@ const ProgressAndInstructionsCard = ({ setShowCheckout, showCheckout }) => {
                             <Col xs="auto">
                                 {order.status === "complete" && (
                                     <Button variant="primary"
-                                    onClick={handleGenerateWill}
+                                        onClick={handleGenerateWill}
                                     >
                                         Generate the Will
                                     </Button>

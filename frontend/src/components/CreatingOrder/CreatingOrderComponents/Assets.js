@@ -18,17 +18,13 @@ import Button from "react-bootstrap/Button";
 const Assets = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
     const currentOrder = useSelector(state => state.currentOrder);
     const assets = useSelector(state => state.assets)
-
     const [showAssetForm, setshowAssetForm] = useState(false);
     const [editAssetIndex, setEditAssetIndex] = useState(null);
-
     const savedAssetsData = useRef(null);
-
     let asset;
-
+    const [assetType, setAssetType] = useState('');
     const [assetFormData, setAssetFormData] = useState({
         _id: '',
         assetType: '',
@@ -39,8 +35,6 @@ const Assets = () => {
         otherAssetDetails: ''
 
     });
-    const [assetType, setAssetType] = useState('');
-
 
     useEffect(() => {
         if (asset) {
