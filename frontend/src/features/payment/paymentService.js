@@ -42,21 +42,3 @@ export const createPayment = async (paymentData, token) => {
   }
 };
 
-
-
-
-
-
-
-
-
-// export const getOrder = async (id, token) => {
-//   const config = {
-//     headers: {
-//       Authorization: `Bearer ${token}`
-//     }
-//   };
-
-//   const response = await axios.get(API_ORDER_URL + id, config);
-//   return response.data;
-// };

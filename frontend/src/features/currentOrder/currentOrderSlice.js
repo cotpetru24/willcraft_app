@@ -53,14 +53,12 @@ export const getOrderThunk = createAsyncThunk(
             const kids = response.peopleAndRoles.filter(p => p.role.includes(constants.role.KID)).map(p => ({
                 ...p.personId,
                 role: p.role,
-                // _id: p._id
                 _id: p.personId._id
             }));
             const additionalExecutors = response.peopleAndRoles.filter(
                 p => p.role.includes(constants.role.ADDITIONAL_EXECUTOR)).map(p => ({
                 ...p.personId,
                 role: p.role,
-                // _id: p._id
                 _id: p.personId._id
             }));
 
@@ -69,29 +67,7 @@ export const getOrderThunk = createAsyncThunk(
                 ...p,
                 role: p.role,
                 _id: p.personId._id || p._id,
-                // personId:p.personId //this was added ++++++++++++++++++++++
             }))
-
-            // const executors = response.peopleAndRoles
-            //     .filter(p => !p.role.includes(constants.role.TESTATOR))
-            //     .map(p => ({
-            //         ...p.personId,
-            //         role: p.role, // Fix the typo from role to roles
-            //         _id: p.personId._id
-            //     }));
-
-
-            // const executors = response.peopleAndRoles
-            // .filter(p => Array.isArray(p.roles) && !p.roles.includes("testator"))
-            // .map(p => ({
-            //     ...p.personId,
-            //     role: p.role,
-            //     _id: p.personId._id
-            // }));
-
-
-
-
 
             const assets = response.assetsAndDistribution.map(a => ({
                 ...a.assetId,
@@ -131,25 +107,10 @@ export const getOrderThunk = createAsyncThunk(
     }
 );
 
-//need to test this function--------------------------
-// export const updateOrderThunk = createAsyncThunk(
-//     'orders/updateOrder',
-//     async ({ id, orderData }, thunkAPI) => {
-//         try {
-//             const token = thunkAPI.getState().auth.user.token;
-//             return await updateOrder(id, orderData, token);
-//         } catch (error) {
-//             const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-//             return thunkAPI.rejectWithValue(message);
-//         }
-//     }
-// );
 
 export const updateOrderThunk = createAsyncThunk(
     'currentOrder/updateOrderThunk',
     async (orderData, thunkAPI) => {
-
-        console.log(`update order called in order slice`)
         try {
             const token = thunkAPI.getState().auth.user.token;
             return await updateOrder(orderData, token);
@@ -173,17 +134,6 @@ const currentOrderSlice = createSlice({
             state.orderId = action.payload.orderId;
             state.userId = action.payload.userId;
             state.status = action.payload.status;
-            // state.peopleAndRoles = action.payload.peopleAndRoles.map(pr => ({
-            //     personId: pr.personId._id || pr.personId, // In case personId is populated, take only the _id
-            //     role: pr.role
-            // }));
-            // state.assetsAndDistribution = assetsAndDistribution.map(ad => ({
-            //     assetId: ad.assetId._id || ad.assetId, // In case assetId is populated, take only the _id
-            //     distribution: (ad.distribution || []).map(dist => ({
-            //         personId: dist.personId._id || dist.personId, // In case personId is populated, take only the _id
-            //         receivingAmount: dist.receivingAmount
-            //     }))
-            // }));
             state.peopleAndRoles = action.payload.peopleAndRoles;
             state.assetsAndDistribution = action.payload.assetsAndDistribution;
         },
@@ -221,19 +171,7 @@ const currentOrderSlice = createSlice({
                 state.orderId = action.payload._id;
                 state.userId = action.payload.userId;
                 state.status = action.payload.status;
-                // state.peopleAndRoles = action.payload.peopleAndRoles.map(pr => ({
-                //     personId: pr.personId._id || pr.personId, // In case personId is populated, take only the _id
-                //     role: pr.role
-                // }));
                 state.peopleAndRoles = action.payload.peopleAndRoles;
-
-                // state.assetsAndDistribution = action.payload.assetsAndDistribution.map(ad => ({
-                //     assetId: ad.assetId._id || ad.assetId, // In case assetId is populated, take only the _id
-                //     distribution: ad.distribution.map(dist => ({
-                //         personId: dist.personId._id || dist.personId, // In case personId is populated, take only the _id
-                //         receivingAmount: dist.receivingAmount
-                //     }))
-                // }));
                 state.assetsAndDistribution = action.payload.assetsAndDistribution
             })
 
@@ -247,35 +185,14 @@ const currentOrderSlice = createSlice({
             .addCase(getOrderThunk.pending, (state) => {
                 state.isLoading = true;
             })
-            // .addCase(getOrderThunk.fulfilled, (state, action) => {
-            //     state.isLoading = false;
-            //     state.isSuccess = true;
-            //     state.orderId = action.payload._id;
-            //     state.userId = action.payload.userId;
-            //     state.status = action.payload.status;
-
-            // })
             .addCase(getOrderThunk.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
                 state.orderId = action.payload._id;
                 state.userId = action.payload.userId;
                 state.status = action.payload.status;
-                // state.peopleAndRoles = action.payload.peopleAndRoles.map(pr => ({
-                //     personId: pr.personId._id || pr.personId, // In case personId is populated, take only the _id
-                //     role: pr.role
-                // }));
-                // state.assetsAndDistribution = action.payload.assetsAndDistribution.map(ad => ({
-                //     assetId: ad.assetId._id || ad.assetId, // In case assetId is populated, take only the _id
-                //     distribution: ad.distribution.map(dist => ({
-                //         personId: dist.personId._id || dist.personId, // In case personId is populated, take only the _id
-                //         receivingAmount: dist.receivingAmount
-                //     }))
-                // }));
                 state.peopleAndRoles = action.payload.peopleAndRoles;
                 state.assetsAndDistribution = action.payload.assetsAndDistribution;
-
-
             })
 
             .addCase(getOrderThunk.rejected, (state, action) => {
