@@ -4,10 +4,12 @@ import { getLast3ReviewsThunk } from '../features/reviews/reviewThunks';
 import { FaStar } from 'react-icons/fa';
 import { Container, Col, Row, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useSelector } from 'react-redux';
 
 
 const HomeReview = () => {
     const dispatch = useDispatch();
+    const { user } = useSelector(state => state.auth)
     const [reviews, setReviews] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [averageRating, setAverageRating] = useState(0);
@@ -79,12 +81,27 @@ const HomeReview = () => {
                         </Row>
                     </Container>
 
-                    <Container>
-                        <Row className="p-4">
+                    <Container className="p-4">
+                        <Row >
                             <Col className="d-flex justify-content-center">
                                 <h5>Rating {averageRating}/5 based on {totalReviews} reviews. <Link to="/reviews">View all reviews</Link></h5>
                             </Col>
                         </Row>
+                        {user._id &&
+                            (
+                                <Row >
+                                    <Col className="d-flex justify-content-center">
+                                        <Link to="/writeAReview" style={{ textDecoration: 'none', color:'#e0218a', fontWeight:'bold' }}
+                                            onClick={() => {
+                                                window.scrollTo(0, 0);
+                                            }}
+                                        >
+                                            Rate us
+                                        </Link>
+                                    </Col>
+                                </Row>
+                            )
+                        }
                     </Container>
                 </>
             )}

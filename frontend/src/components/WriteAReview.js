@@ -44,11 +44,11 @@ const WriteAReview = () => {
 
         await dispatch(createReviewThunk(reviewData));
 
-        // Show toast and navigate to dashboard
+        // Show toast and navigate to home page
         toast.success("Thank you for your feedback!", {
-            onClose: () => navigate('/dashboard'),
+            onClose: () => navigate('/'),
             position: "top-center",
-            autoClose: 1000,
+            autoClose: 500,
             hideProgressBar: true,
             closeOnClick: true,
             pauseOnHover: false,
@@ -109,7 +109,7 @@ const WriteAReview = () => {
                                             <Button
                                                 variant="primary"
                                                 className='mb-5'
-                                                onClick={() => navigate('/dashboard')}
+                                                onClick={() => navigate('/')}
                                             >
                                                 Back
                                             </Button>

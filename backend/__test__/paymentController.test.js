@@ -1,139 +1,165 @@
-import request from 'supertest';
-import express from 'express';
-import mongoose from 'mongoose';
-import { MongoMemoryServer } from 'mongodb-memory-server';
-import jwt from 'jsonwebtoken';
-import { createPayment, getPayment, paymentIntent } from './paymentController';
-import Payment from '../models/paymentModel';
+import { createPayment, getPayment, paymentIntent } from '../controllers/paymentController.js';
+import Payment from '../models/paymentModel.js';
+import User from '../models/userModel.js';
+import Stripe from 'stripe';
 
-const app = express();
-app.use(express.json());
+jest.mock('../models/paymentModel');
+jest.mock('../models/userModel');
+jest.mock('stripe');
 
-// Set up routes
-app.post('/api/payments', createPayment);
-app.get('/api/payments/:id', getPayment);
-app.post('/api/payments/create-payment-intent', paymentIntent);
+const stripe = new Stripe('mock_stripe_secret');
 
-let mongoServer;
-let token;
+describe('Payment Controller', () => {
 
-beforeAll(async () => {
-    mongoServer = await MongoMemoryServer.create();
-    const uri = mongoServer.getUri();
-
-    await mongoose.connect(uri, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
+    afterEach(() => {
+        jest.clearAllMocks();
     });
 
-    // Mock a JWT token
-    token = jwt.sign({ id: 'user_id_mock' }, process.env.JWT_SECRET, { expiresIn: '1h' });
-});
-
-afterAll(async () => {
-    await mongoose.disconnect();
-    await mongoServer.stop();
-});
-
-afterEach(async () => {
-    await Payment.deleteMany({});
-});
-
-describe('Payment API', () => {
-
-    it('should create a payment successfully', async () => {
-        const paymentData = {
-            orderId: 'order_id_mock',
-            amount: 5000,
-            status: 'succeeded',
-            paymentDate: new Date().toISOString(),
-            products: [
-                { name: 'Product 1', price: 20 },
-                { name: 'Product 2', price: 30 },
-            ],
-            paymentMethod: 'card',
+    test('should create a new payment', async () => {
+        const req = {
+            user: { _id: 'user-id' },
+            body: {
+                orderId: 'order-id',
+                amount: 5000,
+                status: 'succeeded',
+                paymentDate: new Date(),
+                products: [{ name: 'Product 1', price: 20 }],
+                paymentMethod: 'card'
+            }
         };
 
-        const res = await request(app)
-            .post('/api/payments')
-            .set('Authorization', `Bearer ${token}`)
-            .send(paymentData)
-            .expect(200);
-
-        expect(res.body).toHaveProperty('_id');
-        expect(res.body.orderId).toBe(paymentData.orderId);
-        expect(res.body.amount).toBe(paymentData.amount);
-    });
-
-    it('should return 400 if required fields are missing', async () => {
-        const paymentData = {
-            orderId: 'order_id_mock',
-            amount: 5000,
+        const payment = {
+            _id: 'payment-id',
+            ...req.body,
+            userId: req.user._id,
         };
 
-        await request(app)
-            .post('/api/payments')
-            .set('Authorization', `Bearer ${token}`)
-            .send(paymentData)
-            .expect(400);
+        Payment.create.mockResolvedValue(payment);
+
+        const res = {
+            status: jest.fn().mockReturnThis(),
+            json: jest.fn(),
+        };
+
+        await createPayment(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith(payment);
     });
 
-    it('should retrieve a payment by ID', async () => {
-        const payment = await Payment.create({
-            orderId: 'order_id_mock',
-            userId: 'user_id_mock',
+    test('should return 400 error if required fields are missing in createPayment', async () => {
+        const req = {
+            user: { _id: 'user-id' },
+            body: {
+                orderId: '',
+                amount: 5000,
+                products: [{ name: 'Product 1', price: 20 }],
+                paymentMethod: 'card'
+            }
+        };
+
+        const res = {
+            status: jest.fn().mockReturnThis(),
+            json: jest.fn(),
+        };
+
+        await expect(createPayment(req, res)).rejects.toThrow('Please provide all required fields');
+        expect(res.status).toHaveBeenCalledWith(400);
+    });
+
+    test('should get payment by ID', async () => {
+        const payment = {
+            _id: 'payment-id',
+            orderId: 'order-id',
+            userId: 'user-id',
             amount: 5000,
             status: 'succeeded',
             paymentDate: new Date(),
             products: [{ name: 'Product 1', price: 20 }],
-            paymentMethod: 'card',
+            paymentMethod: 'card'
+        };
+
+        Payment.findById.mockResolvedValue(payment);
+
+        const req = {
+            params: { id: 'payment-id' },
+        };
+
+        const res = {
+            status: jest.fn().mockReturnThis(),
+            json: jest.fn(),
+        };
+
+        await getPayment(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith(payment);
+    });
+
+    test('should return 404 error if payment is not found', async () => {
+        Payment.findById.mockResolvedValue(null);
+
+        const req = {
+            params: { id: 'non-existent-payment-id' },
+        };
+
+        const res = {
+            status: jest.fn().mockReturnThis(),
+            json: jest.fn(),
+        };
+
+        await expect(getPayment(req, res)).rejects.toThrow('Payment not found');
+        expect(res.status).toHaveBeenCalledWith(404);
+    });
+
+    test('should create a payment intent', async () => {
+        const req = {
+            body: {
+                products: [{ name: 'Product 1', price: 20 }, { name: 'Product 2', price: 30 }],
+            }
+        };
+
+        const paymentIntent = {
+            client_secret: 'mock_client_secret',
+        };
+
+        stripe.paymentIntents.create.mockResolvedValue(paymentIntent);
+
+        const res = {
+            status: jest.fn().mockReturnThis(),
+            send: jest.fn(),
+        };
+
+        await paymentIntent(req, res);
+
+        expect(stripe.paymentIntents.create).toHaveBeenCalledWith({
+            amount: 5000, // 20 + 30 = 50 * 100 (pence)
+            currency: 'gbp',
+            description: 'Order payment',
+            automatic_payment_methods: { enabled: true },
         });
-
-        const res = await request(app)
-            .get(`/api/payments/${payment._id}`)
-            .set('Authorization', `Bearer ${token}`)
-            .expect(200);
-
-        expect(res.body).toHaveProperty('_id', payment._id.toString());
-        expect(res.body).toHaveProperty('orderId', payment.orderId);
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.send).toHaveBeenCalledWith({ clientSecret: paymentIntent.client_secret });
     });
 
-    it('should return 404 if payment not found', async () => {
-        const fakeId = new mongoose.Types.ObjectId();
+    test('should return 500 error if payment intent creation fails', async () => {
+        const req = {
+            body: {
+                products: [{ name: 'Product 1', price: 20 }],
+            }
+        };
 
-        await request(app)
-            .get(`/api/payments/${fakeId}`)
-            .set('Authorization', `Bearer ${token}`)
-            .expect(404);
-    });
+        const error = new Error('Failed to create payment intent');
+        stripe.paymentIntents.create.mockRejectedValue(error);
 
-    it('should create a payment intent successfully', async () => {
-        const products = [
-            { name: 'Product 1', price: 20 },
-            { name: 'Product 2', price: 30 },
-        ];
+        const res = {
+            status: jest.fn().mockReturnThis(),
+            send: jest.fn(),
+        };
 
-        const res = await request(app)
-            .post('/api/payments/create-payment-intent')
-            .set('Authorization', `Bearer ${token}`)
-            .send({ products })
-            .expect(200);
+        await paymentIntent(req, res);
 
-        expect(res.body).toHaveProperty('clientSecret');
-    });
-
-    it('should handle errors when creating a payment intent', async () => {
-        // Simulate a failure in Stripe's API by using invalid data
-        const products = [
-            { name: 'Product 1', price: -20 },
-        ];
-
-        const res = await request(app)
-            .post('/api/payments/create-payment-intent')
-            .set('Authorization', `Bearer ${token}`)
-            .send({ products })
-            .expect(500);
-
-        expect(res.body).toHaveProperty('error', 'Failed to create payment intent');
+        expect(res.status).toHaveBeenCalledWith(500);
+        expect(res.send).toHaveBeenCalledWith({ error: 'Failed to create payment intent' });
     });
 });
