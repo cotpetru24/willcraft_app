@@ -96,7 +96,7 @@ const CheckOutCard = ({ setShowCheckout, clientSecret, products, totalAmount, ad
             </Card.Title>
 
             {/* Order Breakdown */}
-            <Card.Text>
+            <Card.Text as="div">
               {products.map((product, index) => (
                 <Row key={index} className="d-flex justify-content-between">
                   <Col>

@@ -39,7 +39,7 @@ export const createPayment = asyncHandler(async (req, res) => {
 
 // Get a specific payment by ID
 export const getPayment = asyncHandler(async (req, res) => {
-    const payment = await Payment.findById(req.params.id).populate('orderId userId');
+    const payment = await Payment.findById(req.params.id)
 
     if (!payment) {
         res.status(404);
@@ -58,9 +58,6 @@ export const paymentIntent = asyncHandler(async (req, res) => {
 
         // Calculate the total amount by summing up the price of each product
         const totalAmount = products.reduce((acc, product) => acc + Number(product.price), 0) * 100;
-
-
-        console.log('Total amount to be charged (in smallest currency unit):', totalAmount);
 
         // Create the payment intent with the calculated total amount
         const paymentIntent = await stripe.paymentIntents.create({
