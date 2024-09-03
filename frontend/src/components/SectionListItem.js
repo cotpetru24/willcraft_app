@@ -61,6 +61,76 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
 
     return (
         <>
+            {section === 'assets' && (
+                <>
+                    <Container className="mb-3">
+                        <Row>
+                            <Col>
+                                <Card className='shadow' bg="light" text="dark" style={{ borderColor: 'green' }}>
+                                    <Card.Body>
+                                        <Card.Text as="div">
+                                            <Row>
+                                                <Col>
+                                                    <div className="order-item-p">
+                                                        <span className="order-item-p-span">Asset: </span>{data.assetType}
+                                                    </div>
+                                                    {data.assetType === 'Property' && (
+                                                        <div className="order-item-p">
+                                                            <span className="order-item-p-span">Address: </span>{data.propertyAddress}
+                                                        </div>
+                                                    )}
+                                                    {data.assetType === 'Bank Account' && (
+                                                        <div className="order-item-p">
+                                                            <span className="order-item-p-span">Bank Name: </span>{data.bankName}
+                                                        </div>
+                                                    )}
+                                                    {data.assetType === 'Stocks and shares' && (
+                                                        <div className="order-item-p">
+                                                            <span className="order-item-p-span">Company Name: </span>{data.companyName}
+                                                        </div>
+                                                    )}
+                                                    {(data.assetType === 'Pension' || data.assetType === 'Life insurance') && (
+                                                        <div className="order-item-p">
+                                                            <span className="order-item-p-span">Provider: </span>{data.provider}
+                                                        </div>
+                                                    )}
+                                                    {data.assetType === 'Other' && (
+                                                        <div className="order-item-p">
+                                                            <span className="order-item-p-span">Details: </span>{data.otherAssetDetails}
+                                                        </div>
+                                                    )}
+                                                </Col>
+                                            </Row>
+                                            <Row className="d-flex justify-content-end mt-1">
+                                                <Col xs="auto">
+                                                    <Button
+                                                        variant="info"
+                                                        className="section-list-item-card-btn m-1"
+                                                        style={buttonsDisabled ? styles.disabledButton : {}}
+                                                        disabled={buttonsDisabled}
+                                                        onClick={onEdit}
+                                                    >
+                                                        Edit
+                                                    </Button>
+                                                    <Button
+                                                        variant="warning"
+                                                        className="section-list-item-card-btn m-1"
+                                                        style={buttonsDisabled ? styles.disabledButton : {}}
+                                                        disabled={buttonsDisabled}
+                                                        onClick={onRemove}
+                                                    >
+                                                        Remove
+                                                    </Button>
+                                                </Col>
+                                            </Row>
+                                        </Card.Text>
+                                    </Card.Body>
+                                </Card>
+                            </Col>
+                        </Row>
+                    </Container>
+                </>
+            )}
             {section === 'kids' && (
                 <>
                     <Container className="mb-3">
