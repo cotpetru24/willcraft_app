@@ -45,7 +45,7 @@ const ExecutorsCard = () => {
                             </Row>
                         </Card.Title>
                         {allNecessaryFieldsSpecified ? (
-                            <Card.Text>
+                            <Card.Text as="div">
                                 {allExecutors.map((executor, index) => (
                                     <React.Fragment key={index}>
                                         <Row className="mb-4">

@@ -220,10 +220,8 @@ const AssetsDistribution = () => {
         // Update the distribution array for the asset
         let updatedDistribution;
         if (isChecked) {
-            console.log(`is checked in assets distribution`);
             // Add person to distribution if not already present
             if (!assetToUpdate.distribution.some(d => d.personId._id === familyBeneficiary.personId._id)) {
-                console.log(`person is not in the asset distribution, person will be now added`);
                 updatedDistribution = [
                     ...assetToUpdate.distribution,
                     {
@@ -257,7 +255,6 @@ const AssetsDistribution = () => {
 
         // Update the assetsAndDistribution in currentOrder
         const updatedCurrentOrderAssetDistribution = currentOrder.assetsAndDistribution.map(asset => {
-            console.log(`asset distribution should have been updated`);
             if ((asset.assetId._id === assetToUpdate._id) || (asset._id === assetToUpdate._id)) {
                 return {
                     ...asset,

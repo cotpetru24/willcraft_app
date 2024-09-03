@@ -39,7 +39,6 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
 
     const handleCheckboxChange = () => {
         const newCheckedState = !isChecked;
-        console.log(`section item => Checkbox state changing to: ${newCheckedState} for person: ${data.fullLegalName}`);
         setIsChecked(newCheckedState);
         setReceivingAmount('');
         onChecked(newCheckedState);
@@ -69,7 +68,7 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
                             <Col>
                                 <Card className='shadow' bg="light" text="dark" style={{ borderColor: 'green' }}>
                                     <Card.Body>
-                                        <Card.Text>
+                                        <Card.Text as="div">
                                             <Row>
                                                 <Col>
                                                     <div className="order-item-p">
@@ -120,7 +119,7 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
                             <Col>
                                 <Card className='shadow' bg="light" text="dark" style={{ borderColor: 'green' }}>
                                     <Card.Body>
-                                        <Card.Text>
+                                        <Card.Text as="div">
                                             <Row>
                                                 <Col>
                                                     <div className="order-item-p">
@@ -156,7 +155,7 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
                             <Col>
                                 <Card className='shadow' bg="light" text="dark" style={{ borderColor: 'green' }}>
                                     <Card.Body>
-                                        <Card.Text>
+                                        <Card.Text as="div">
                                             <Row>
                                                 <Col>
                                                     <div className="order-item-p">
@@ -329,7 +328,7 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
                             <Col>
                                 <Card className='shadow' bg="light" text="dark" style={{ borderColor: 'green' }}>
                                     <Card.Body>
-                                        <Card.Text>
+                                        <Card.Text as="div">
                                             <Row>
                                                 <Col>
                                                     <div className="order-item-p">

@@ -8,7 +8,6 @@ const initialState = [];
 export const createAssetThunk = createAsyncThunk(
   'assets/createAssetThunk',
   async (assetData, thunkApi) => {
-    console.log(`create asset thunk called`)
     // Get the userId from the state
     const userId = thunkApi.getState().auth.user._id;
 

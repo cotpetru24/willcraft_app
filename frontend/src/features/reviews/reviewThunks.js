@@ -80,21 +80,11 @@ export const getAllReviewsThunk = createAsyncThunk(
 export const getLast3ReviewsThunk = createAsyncThunk(
     'reviews/getLast3Reviews',
     async (thunkApi) => {
-        console.log('getLast3ReviewsThunk called');
-
-
-
         try {
-            // Send the message data to the API
             const getLast3ReviewsResponse = await getLast3Reviews();
-
-            // Log the response from the API
-            console.log('Response from getLast3ReviewsThunk API:', getLast3ReviewsResponse);
-
             return getLast3ReviewsResponse;
 
         } catch (error) {
-            // Log any error that occurs during the API call
             console.error('Error in getLast3ReviewsThunk:', error);
 
             const message =
