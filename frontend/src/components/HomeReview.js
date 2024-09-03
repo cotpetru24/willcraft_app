@@ -87,7 +87,7 @@ const HomeReview = () => {
                                 <h5>Rating {averageRating}/5 based on {totalReviews} reviews. <Link to="/reviews">View all reviews</Link></h5>
                             </Col>
                         </Row>
-                        {user._id &&
+                        {user && user._id &&
                             (
                                 <Row >
                                     <Col className="d-flex justify-content-center">

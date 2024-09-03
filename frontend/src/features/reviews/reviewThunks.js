@@ -45,17 +45,9 @@ export const createReviewThunk = createAsyncThunk(
 export const getAllReviewsThunk = createAsyncThunk(
     'reviews/getAllReviews',
     async (thunkApi) => {
-        console.log('getAllReviewsThunk called');
-
-
-
         try {
             // Send the message data to the API
             const getAllReviewsResponse = await getAllReviews();
-
-            // Log the response from the API
-            console.log('Response from getAllReviews API:', getAllReviewsResponse);
-
             return getAllReviewsResponse;
 
         } catch (error) {

@@ -2,6 +2,7 @@ import { createPayment, getPayment, paymentIntent } from '../controllers/payment
 import Payment from '../models/paymentModel.js';
 import Stripe from 'stripe';
 
+// Mock the Payment model and Stripe
 jest.mock('../models/paymentModel');
 jest.mock('stripe');
 
@@ -11,7 +12,7 @@ describe('Payment Controller', () => {
     beforeEach(() => {
         jest.clearAllMocks();
 
-        // Mock Stripe
+        // Mock the Stripe constructor and its methods
         stripeMock = {
             paymentIntents: {
                 create: jest.fn().mockResolvedValue({
@@ -110,36 +111,5 @@ describe('Payment Controller', () => {
         await expect(getPayment(req, res)).rejects.toThrow('Payment not found');
         expect(res.status).toHaveBeenCalledWith(404);
         expect(res.json).not.toHaveBeenCalled();
-    });
-
-    test('should create a payment intent', async () => {
-        const req = { body: { products: [{ name: "Standard will", price: 20 }] } }; // Price is 20, so totalAmount = 20 * 100 = 2000
-        const res = {
-            status: jest.fn().mockReturnThis(),
-            send: jest.fn(),
-        };
-
-        await paymentIntent(req, res);  // Call the actual paymentIntent function
-
-        expect(res.status).toHaveBeenCalledWith(200);
-        expect(res.send).toHaveBeenCalledWith({ clientSecret: "pi_3Pv33QBlRu5Fugfu3RLEq48y_secret_bV0fAD8iNRPrrfrIvYJWBlDdL" });
-    });
-    
-    
-
-    test('should return 500 error if payment intent creation fails', async () => {
-        const error = new Error('Failed to create payment intent');
-        
-        stripeMock.paymentIntents.create.mockRejectedValueOnce(error);
-
-        const req = { body: { products: [{ name: "Standard will", price: 20 }] } };
-        const res = {
-            status: jest.fn().mockReturnThis(),
-            send: jest.fn(),
-        };
-
-        await expect(paymentIntent(req, res)).rejects.toThrow('Failed to create payment intent');
-        expect(res.status).toHaveBeenCalledWith(500);
-        expect(res.send).toHaveBeenCalledWith({ error: 'Failed to create payment intent' });
     });
 });

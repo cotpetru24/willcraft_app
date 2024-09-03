@@ -25,12 +25,12 @@ bcrypt.hash = jest.fn().mockResolvedValue('mock-hashed-password');
 test('should register a new user', async () => {
     const req = {
         body: {
-            name: 'test name',
+            firstName: 'Test',
+            lastName: 'Name',
             email: 'demo@demo.com',
             password: 'password'
         },
     };
-
 
     const res = {
         status: jest.fn().mockReturnThis(),
@@ -39,7 +39,9 @@ test('should register a new user', async () => {
 
     await registerUser(req, res);
     expect(res.status).toHaveBeenCalledWith(201);
-})
+    expect(res.json).toHaveBeenCalled(); // Optionally, you can check if res.json was called with the expected user data
+});
+
 
 
 test('should return 400 error if any field is missing', async () => {
