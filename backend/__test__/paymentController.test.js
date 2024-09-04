@@ -1,32 +1,32 @@
-import { createPayment, getPayment, paymentIntent } from '../controllers/paymentController.js';
+import { createPayment, getPayment } from '../controllers/paymentController.js';
 import Payment from '../models/paymentModel.js';
-import Stripe from 'stripe';
+// import Stripe from 'stripe';
 
 // Mock the Payment model and Stripe
 jest.mock('../models/paymentModel');
-jest.mock('stripe');
+// jest.mock('stripe');
 
 describe('Payment Controller', () => {
-    let stripeMock;
+    // let stripeMock;
 
-    beforeEach(() => {
-        jest.clearAllMocks();
+    // beforeEach(() => {
+    //     jest.clearAllMocks();
 
-        // Mock the Stripe constructor and its methods
-        stripeMock = {
-            paymentIntents: {
-                create: jest.fn().mockResolvedValue({
-                    id: "pi_3Pv33QBlRu5Fugfu3RLEq48y",
-                    amount: 2000, // Mocked amount based on the product price
-                    currency: "gbp",
-                    status: "succeeded",
-                    client_secret: "pi_3Pv33QBlRu5Fugfu3RLEq48y_secret_bV0fAD8iNRPrrfrIvYJWBlDdL",
-                }),
-            },
-        };
+    //     // Mock the Stripe constructor and its methods
+    //     stripeMock = {
+    //         paymentIntents: {
+    //             create: jest.fn().mockResolvedValue({
+    //                 id: "pi_3Pv33QBlRu5Fugfu3RLEq48y",
+    //                 amount: 2000, // Mocked amount based on the product price
+    //                 currency: "gbp",
+    //                 status: "succeeded",
+    //                 client_secret: "pi_3Pv33QBlRu5Fugfu3RLEq48y_secret_bV0fAD8iNRPrrfrIvYJWBlDdL",
+    //             }),
+    //         },
+    //     };
 
-        Stripe.mockImplementation(() => stripeMock);
-    });
+    //     Stripe.mockImplementation(() => stripeMock);
+    // });
 
     test('should create a new payment', async () => {
         const req = {
@@ -60,7 +60,8 @@ describe('Payment Controller', () => {
         expect(res.json).toHaveBeenCalledWith(payment);
     });
 
-    test('should return 400 error if required fields are missing in createPayment', async () => {
+
+    test('should return error 400 if required fields are missing in createPayment', async () => {
         const req = {
             user: { _id: 'user-id' },
             body: {
@@ -80,27 +81,28 @@ describe('Payment Controller', () => {
         expect(res.status).toHaveBeenCalledWith(400);
     });
 
-    test('should get payment by ID', async () => {
-        const req = { params: { id: '123' } };
 
+    test('should get a payment by ID', async () => {
+        const req = { params: { id: '123' } };
         const mockPayment = { id: '123', amount: 4500 };
-        
+
         Payment.findById.mockResolvedValue(mockPayment);
 
         const res = {
             status: jest.fn().mockReturnThis(),
             json: jest.fn(),
         };
-         
+
         await getPayment(req, res);
-    
+
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledWith(mockPayment);
     });
 
-    test('should return 404 error if payment is not found', async () => {
+
+    test('should return error 404 if payment is not found', async () => {
         const req = { params: { id: '654' } };
-        
+
         Payment.findById.mockResolvedValue(null);
 
         const res = {

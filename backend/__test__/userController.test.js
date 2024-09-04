@@ -1,5 +1,6 @@
 const { registerUser } = require('../controllers/userController')
 
+
 jest.mock('../models/userModel', () => {
     const mockUser = {
         _id: 'user-id',
@@ -39,12 +40,11 @@ test('should register a new user', async () => {
 
     await registerUser(req, res);
     expect(res.status).toHaveBeenCalledWith(201);
-    expect(res.json).toHaveBeenCalled(); // Optionally, you can check if res.json was called with the expected user data
+    expect(res.json).toHaveBeenCalled();
 });
 
 
-
-test('should return 400 error if any field is missing', async () => {
+test('should return error 400 if required fields are missing', async () => {
     const req = {
         body: {
             name: 'test name',

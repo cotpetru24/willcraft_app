@@ -1,8 +1,7 @@
 import asyncHandler from 'express-async-handler';
 import Order from '../models/orderModel.js';
-import User from '../models/userModel.js'; // Ensure the User model is imported
-import Person from '../models/personModel.js';
-import Asset from '../models/assetModel.js';
+import User from '../models/userModel.js';
+// imsport Asset from '../models/assetModel.js';
 
 
 export const createOrder = asyncHandler(async (req, res) => {
@@ -20,8 +19,8 @@ export const createOrder = asyncHandler(async (req, res) => {
     res.status(200).json(order);
 });
 
+
 export const updateOrder = asyncHandler(async (req, res) => {
-    console.log(JSON.stringify(req.body))
     const { id: orderId } = req.params;
 
     const order = await Order.findById(orderId);
@@ -48,11 +47,10 @@ export const updateOrder = asyncHandler(async (req, res) => {
     res.status(200).json(updatedOrder);
 });
 
-// Get orders
+
 export const getOrder = asyncHandler(async (req, res) => {
     const { id: orderId } = req.params;
 
-    // Fetch the order
     const order = await Order.findById(orderId)
         .populate('peopleAndRoles.personId')
         .populate('assetsAndDistribution.assetId')
@@ -71,19 +69,17 @@ export const getOrder = asyncHandler(async (req, res) => {
     }
 });
 
-export const getAllUserOrders = asyncHandler(async (req, res) => {
-    console.log(`get all user orders called in order controller. user id - ${req.user.id}`);
 
-    // Fetch orders by user ID and sort by updatedAt in descending order
+export const getAllUserOrders = asyncHandler(async (req, res) => {
     const orders = await Order.find({ userId: req.user.id })
-        .sort({ updatedAt: -1 })  // Sort by updatedAt in descending order
+        .sort({ updatedAt: -1 })
         .populate('peopleAndRoles.personId')
         .populate('assetsAndDistribution.assetId')
         .populate('assetsAndDistribution.distribution.personId');
 
 
     if (orders) {
-        // Map through orders to get the desired response structure
+        // Map through orders and set the currentOrderStep for each order based on the data
         const response = await Promise.all(orders.map(async order => {
             let currentStep = 0;
 
@@ -174,7 +170,6 @@ export const getAllUserOrders = asyncHandler(async (req, res) => {
 });
 
 
-// Delete an order
 export const deleteOrder = asyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id);
     if (!order) {
@@ -186,7 +181,7 @@ export const deleteOrder = asyncHandler(async (req, res) => {
 
     if (!user) {
         res.status(401);
-        throw new Error('No such user found');
+        throw new Error('No such order found');
     }
 
     if (order.userId.toString() !== user.id) {

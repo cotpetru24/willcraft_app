@@ -1,6 +1,7 @@
 import Message from '../models/messageModel.js';
 import asyncHandler from 'express-async-handler';
 
+
 export const createMessage = asyncHandler(async (req, res) => {
     console.log('create message controller called');
 
@@ -25,6 +26,7 @@ export const createMessage = asyncHandler(async (req, res) => {
     }
 });
 
+
 export const getMessages = asyncHandler(async (req, res) => {
     const messages = await Message.find({});
 
@@ -35,6 +37,7 @@ export const getMessages = asyncHandler(async (req, res) => {
         throw new Error('Error retrieving messages');
     }
 });
+
 
 export const deleteMessage = asyncHandler(async (req, res) => {
     const message = await Message.findByIdAndDelete(req.params.id);

@@ -2,6 +2,7 @@ import asyncHandler from 'express-async-handler';
 import Asset from '../models/assetModel.js';
 import User from '../models/userModel.js';
 
+
 export const getAsset = asyncHandler(async (req, res) => {
     const { assetId } = req.body;
     let asset;
@@ -16,6 +17,7 @@ export const getAsset = asyncHandler(async (req, res) => {
     }
 });
 
+
 export const createAsset = asyncHandler(async (req, res) => {
     const {
         assetType,
@@ -26,16 +28,14 @@ export const createAsset = asyncHandler(async (req, res) => {
         otherAssetDetails
     } = req.body;
 
-    // Check for required fields
     if (!assetType) {
         res.status(400);
         throw new Error('Please select an asset type');
     }
 
-    // Create the asset with the appropriate fields based on assetType
     const assetData = {
         assetType,
-        userId: req.user.id // Corrected to userId
+        userId: req.user.id
     };
 
     if (assetType.toLowerCase() === 'bank account' && bankName) {
@@ -55,6 +55,7 @@ export const createAsset = asyncHandler(async (req, res) => {
     res.status(200).json(asset);
 });
 
+
 export const updateAsset = asyncHandler(async (req, res) => {
     try {
         const asset = await Asset.findById(req.params.id);
@@ -67,7 +68,7 @@ export const updateAsset = asyncHandler(async (req, res) => {
 
         if (!user) {
             res.status(403);
-            throw new Error('No such user found');
+            throw new Error('No such asset found');
         }
 
         if (asset.userId.toString() !== user.id) {
@@ -85,6 +86,7 @@ export const updateAsset = asyncHandler(async (req, res) => {
     }
 });
 
+
 export const deleteAsset = asyncHandler(async (req, res) => {
     const asset = await Asset.findById(req.params.id);
     if (!asset) {
@@ -96,7 +98,7 @@ export const deleteAsset = asyncHandler(async (req, res) => {
 
     if (!user) {
         res.status(403);
-        throw new Error('No such user found');
+        throw new Error('No such asset found');
     }
 
     if (asset.userId.toString() !== user.id) {
