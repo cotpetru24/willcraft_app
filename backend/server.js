@@ -12,7 +12,6 @@ import { assetRoutes } from './routes/assetRoutes.js';
 import { paymentRoutes } from './routes/paymentRoutes.js';
 import Stripe from 'stripe';
 import cors from 'cors';
-// import { v4 as uuidv4 } from 'uuid';
 
 dotenv.config();
 

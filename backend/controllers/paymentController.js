@@ -1,16 +1,12 @@
 import asyncHandler from 'express-async-handler';
-// import Person from '../models/personModel.js';
-// import User from '../models/userModel.js';
 import Payment from '../models/paymentModel.js';
-// import { v4 as uuidv4 } from 'uuid';
 import Stripe from 'stripe';
 import dotenv from 'dotenv';
-import express from 'express';
 
 
 dotenv.config();
 const stripe = new Stripe(process.env.STRIPE_API_SECRET);
-// const router = express.Router();
+
 
 export const createPayment = asyncHandler(async (req, res) => {
     const { orderId, amount, status, paymentDate, products, paymentMethod } = req.body;

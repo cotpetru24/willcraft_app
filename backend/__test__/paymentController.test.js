@@ -1,32 +1,10 @@
 import { createPayment, getPayment } from '../controllers/paymentController.js';
 import Payment from '../models/paymentModel.js';
-// import Stripe from 'stripe';
 
-// Mock the Payment model and Stripe
+
 jest.mock('../models/paymentModel');
-// jest.mock('stripe');
 
 describe('Payment Controller', () => {
-    // let stripeMock;
-
-    // beforeEach(() => {
-    //     jest.clearAllMocks();
-
-    //     // Mock the Stripe constructor and its methods
-    //     stripeMock = {
-    //         paymentIntents: {
-    //             create: jest.fn().mockResolvedValue({
-    //                 id: "pi_3Pv33QBlRu5Fugfu3RLEq48y",
-    //                 amount: 2000, // Mocked amount based on the product price
-    //                 currency: "gbp",
-    //                 status: "succeeded",
-    //                 client_secret: "pi_3Pv33QBlRu5Fugfu3RLEq48y_secret_bV0fAD8iNRPrrfrIvYJWBlDdL",
-    //             }),
-    //         },
-    //     };
-
-    //     Stripe.mockImplementation(() => stripeMock);
-    // });
 
     test('should create a new payment', async () => {
         const req = {
