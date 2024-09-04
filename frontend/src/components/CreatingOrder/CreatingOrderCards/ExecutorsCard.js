@@ -67,7 +67,11 @@ const ExecutorsCard = () => {
                                 <Row className="d-flex justify-content-end">
                                     <Col xs="auto">
                                         <Button variant="primary" className="creating-order-tile-btns"
-                                            onClick={() => navigate('/executors')}
+                                            onClick={() => {
+                                                navigate('/executors')
+                                                window.scrollTo(0, 0);
+                                            }
+                                            }
                                             style={currentOrderStep.currentStep < 5 ?
                                                 styles.disabledButton : {}}
                                             disabled={currentOrderStep.currentStep < 5}
@@ -87,7 +91,11 @@ const ExecutorsCard = () => {
                                         <Button
                                             variant="primary"
                                             className="m-1 creating-order-tile-btns"
-                                            onClick={() => navigate('/executors')}
+                                            onClick={() => {
+                                                navigate('/executors')
+                                                window.scrollTo(0, 0);
+                                            }
+                                            }
                                             style={currentOrderStep.currentStep !== 5 ?
                                                 styles.disabledButton : {}}
                                             disabled={currentOrderStep.currentStep !== 5}

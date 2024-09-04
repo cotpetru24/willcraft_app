@@ -86,7 +86,10 @@ const AssetsCard = () => {
                                         <Button
                                             variant="primary"
                                             className="creating-order-tile-btns"
-                                            onClick={() => navigate('/assets')}
+                                            onClick={() => {
+                                                navigate('/assets')
+                                                window.scrollTo(0, 0);}
+                                            }
                                             style={currentOrderStep.currentStep < 3 ?
                                                 styles.disabledButton : {}}
                                             disabled={currentOrderStep.currentStep < 3}
@@ -108,7 +111,10 @@ const AssetsCard = () => {
                                         <Button
                                             variant="primary"
                                             className="m-1 creating-order-tile-btns"
-                                            onClick={() => navigate('/assets')}
+                                            onClick={() => {
+                                                navigate('/assets')
+                                                window.scrollTo(0, 0);}
+                                            }
                                             style={currentOrderStep.currentStep !== 3 ?
                                                 styles.disabledButton : {}}
                                             disabled={currentOrderStep.currentStep !== 3}
