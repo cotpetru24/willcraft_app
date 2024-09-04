@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const {Schema} = mongoose;
+const { Schema } = mongoose;
 
 const messageSchema = mongoose.Schema(
     {
@@ -19,7 +19,7 @@ const messageSchema = mongoose.Schema(
         userId: {
             type: Schema.Types.ObjectId,
             ref: 'User',
-        },    
+        },
     },
     { timestamps: true }
 );

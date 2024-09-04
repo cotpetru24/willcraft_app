@@ -2,8 +2,8 @@ import express from 'express';
 import {getAllReviews, getLast3Reviews, updateReview, createReview, deleteReview} from '../controllers/reviewController.js';
 import { protect } from '../middleware/authMiddleware.js';
 
-const router = express.Router();
 
+const router = express.Router();
 
 router.get('/', getAllReviews);
 

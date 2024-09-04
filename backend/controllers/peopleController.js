@@ -3,7 +3,6 @@ import Person from '../models/personModel.js';
 import User from '../models/userModel.js';
 
 
-
 export const createPerson = asyncHandler(async (req, res) => {
     if (!req.body.fullLegalName) {
         res.status(400);
@@ -89,7 +88,7 @@ export const getPersons = asyncHandler(async (req, res) => {
 
 export const deletePerson = asyncHandler(async (req, res) => {
     const person = await Person.findById(req.params.id);
-    if (!person) { // Changed from review to person
+    if (!person) {
         res.status(400);
         throw new Error('Person not found.');
     }

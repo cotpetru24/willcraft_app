@@ -12,14 +12,13 @@ import { assetRoutes } from './routes/assetRoutes.js';
 import { paymentRoutes } from './routes/paymentRoutes.js';
 import Stripe from 'stripe';
 import cors from 'cors';
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
 
 dotenv.config();
 
 const port = process.env.PORT || 5000;
 
 const stripe = new Stripe(process.env.STRIPE_API_SECRET);
-
 
 connectDb();
 
@@ -28,7 +27,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors())
 
-// Session Setup
 app.use(
     session({
         secret: "hello",
@@ -40,16 +38,13 @@ app.use(
     })
 );
 
-// Example middleware to demonstrate session usage
 app.use((req, res, next) => {
     if (!req.session.views) {
         req.session.views = 0;
     }
     req.session.views++;
-    console.log(`Number of views: ${req.session.views}`);
     next();
 });
-
 
 app.use('/api/users', userRoutes);
 app.use('/api/people', peopleRoutes);
@@ -58,10 +53,7 @@ app.use('/api/reviews', reviewRoutes);
 app.use('/api/messages', messageRoutes);
 app.use('/api/assets', assetRoutes);
 app.use('/api/payments', paymentRoutes)
-
-
-
-// Error handler middleware
 app.use(errorHandler);
+
 
 app.listen(port, () => console.log(`Server is listening on port ${port}`));

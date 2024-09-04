@@ -2,6 +2,7 @@ import express from 'express';
 import { createPerson, deletePerson, getPersons, updatePerson } from '../controllers/peopleController.js';
 import { protect } from '../middleware/authMiddleware.js';
 
+
 const router = express.Router();
 
 router.get('/', protect, getPersons);

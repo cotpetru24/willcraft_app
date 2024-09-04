@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Entity Relationship Diagram (EERD) with Crow's Foot Notation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        .entity {
+            border: 1px solid black;
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+            text-align: center;
+            position: relative;
+        }
+        .relation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+        .line {
+            height: 2px;
+            background-color: black;
+            width: 200px;
+        }
+        .crowfoot {
+            font-weight: bold;
+            font-size: 20px;
+            margin: 0 5px;
+        }
+        h3 {
+            margin-bottom: 5px;
+        }
+        ul {
+            text-align: left;
+            font-size: 14px;
+        }
+        .relationship-type {
+            font-style: italic;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .required {
+            color: red;
+        }
+        .default-value {
+            color: green;
+        }
+        .relationship-line {
+            border-left: 2px solid black;
+            height: 100px;
+            position: absolute;
+            left: 50%;
+            top: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Enhanced Entity Relationship Diagram (EERD) with Crow's Foot Notation</h1>
+
+    <div class="container">
+        <!-- User Entity -->
+        <div class="entity">
+            <h3>User</h3>
+            <ul>
+                <li>_id: ObjectId</li>
+                <li>firstName: String <span class="required">(required)</span></li>
+                <li>lastName: String <span class="required">(required)</span></li>
+                <li>email: String <span class="required">(required)</span></li>
+                <li>password: String <span class="required">(required)</span></li>
+                <li>status: String <span class="required">(required)</span> <span class="default-value">(default: "active")</span></li>
+                <li>type: String <span class="required">(required)</span> <span class="default-value">(default: "user")</span></li>
+            </ul>
+            <div class="relationship-type">
+                One-to-Many with Assets, Orders, Reviews, Payments
+            </div>
+        </div>
+
+        <!-- Asset Entity -->
+        <div class="entity">
+            <h3>Asset</h3>
+            <ul>
+                <li>_id: ObjectId</li>
+                <li>assetType: String <span class="required">(required)</span></li>
+                <li>bankName: String</li>
+                <li>provider: String</li>
+                <li>companyName: String</li>
+                <li>propertyAddress: String</li>
+                <li>otherAssetDetails: String</li>
+                <li>userId: ObjectId (ref: User) <span class="required">(required)</span></li>
+            </ul>
+            <div class="relationship-type">
+                Many-to-One with User <br>
+                Many-to-Many with Order (assetsAndDistribution)
+            </div>
+        </div>
+
+        <!-- Person Entity -->
+        <div class="entity">
+            <h3>Person</h3>
+            <ul>
+                <li>_id: ObjectId</li>
+                <li>title: String <span class="required">(required)</span></li>
+                <li>fullLegalName: String <span class="required">(required)</span></li>
+                <li>fullAddress: String <span class="required">(required)</span></li>
+                <li>dob: Date <span class="required">(required)</span></li>
+                <li>email: String</li>
+                <li>tel: String</li>
+                <li>maritalStatus: String</li>
+                <li>hasChildrenStatus: String</li>
+                <li>userId: ObjectId (ref: User) <span class="required">(required)</span></li>
+            </ul>
+            <div class="relationship-type">
+                Many-to-One with User <br>
+                Many-to-One with Order (peopleAndRoles)
+            </div>
+        </div>
+
+        <!-- Review Entity -->
+        <div class="entity">
+            <h3>Review</h3>
+            <ul>
+                <li>_id: ObjectId</li>
+                <li>userId: ObjectId (ref: User) <span class="required">(required)</span></li>
+                <li>reviewText: String <span class="required">(required)</span></li>
+                <li>userFirstName: String <span class="required">(required)</span></li>
+                <li>rating: Number <span class="required">(required)</span></li>
+            </ul>
+            <div class="relationship-type">
+                Many-to-One with User
+            </div>
+        </div>
+
+        <!-- Order Entity -->
+        <div class="entity">
+            <h3>Order</h3>
+            <ul>
+                <li>_id: ObjectId</li>
+                <li>userId: ObjectId (ref: User) <span class="required">(required)</span></li>
+                <li>status: String <span class="required">(required)</span> <span class="default-value">(default: "CreatingOrder")</span></li>
+                <li>completionDate: Date</li>
+                <li>peopleAndRoles: Array (personId: ObjectId, role: Array[String]) <span class="required">(required)</span></li>
+                <li>assetsAndDistribution: Array (assetId: ObjectId, distribution: Array[personId, receivingAmount])</li>
+            </ul>
+            <div class="relationship-type">
+                Many-to-One with User <br>
+                Many-to-Many with Asset <br>
+                Many-to-Many with Person
+            </div>
+        </div>
+
+        <!-- Payment Entity -->
+        <div class="entity">
+            <h3>Payment</h3>
+            <ul>
+                <li>_id: ObjectId</li>
+                <li>orderId: ObjectId (ref: Order) <span class="required">(required)</span></li>
+                <li>userId: ObjectId (ref: User) <span class="required">(required)</span></li>
+                <li>amount: Number <span class="required">(required)</span></li>
+                <li>status: String <span class="required">(required)</span> <span class="default-value">(default: "pending")</span></li>
+                <li>paymentDate: Date <span class="required">(required)</span> <span class="default-value">(default: Date.now)</span></li>
+                <li>products: Array (name: String, price: Number) <span class="required">(required)</span></li>
+                <li>paymentMethod: String <span class="required">(required)</span></li>
+            </ul>
+            <div class="relationship-type">
+                Many-to-One with User <br>
+                Many-to-One with Order
+            </div>
+        </div>
+
+        <!-- Message Entity -->
+        <div class="entity">
+            <h3>Message</h3>
+            <ul>
+                <li>_id: ObjectId</li>
+                <li>senderName: String <span class="required">(required)</span></li>
+                <li>senderEmail: String <span class="required">(required)</span></li>
+                <li>messageText: String <span class="required">(required)</span></li>
+                <li>userId: ObjectId (ref: User)</li>
+            </ul>
+            <div class="relationship-type">
+                Many-to-One with User (optional)
+            </div>
+        </div>
+    </div>
+
+    <!-- Relationships -->
+    <div class="relation">
+        <div class="entity">
+            <h3>User</h3>
+        </div>
+        <div class="crowfoot">|<br>|<br>|<br>|</div>
+        <div class="line"></div>
+        <div class="crowfoot">0..*</div>
+        <div class="entity">
+            <h3>Asset</h3>
+        </div>
+    </div>
+
+    <div class="relation">
+        <div class="entity">
+            <h3>User</h3>
+        </div>
+        <div class="crowfoot">|<br>|<br>|<br>|</div>
+        <div class="line"></div>
+        <div class="crowfoot">0..*</div>
+        <div class="entity">
+            <h3>Order</h3>
+        </div>
+    </div>
+
+    <div class="relation">
+        <div class="entity">
+            <h3>Order</h3>
+        </div>
+        <div class="crowfoot">|<br>|<br>|<br>|</div>
+        <div class="line"></div>
+        <div class="crowfoot">0..*</div>
+        <div class="entity">
+            <h3>Person</h3>
+        </div>
+    </div>
+
+    <div class="relation">
+        <div class="entity">
+            <h3>Order</h3>
+        </div>
+        <div class="crowfoot">|<br>|<br>|<br>|</div>
+        <div class="line"></div>
+        <div class="crowfoot">0..*</div>
+        <div class="entity">
+            <h3>Asset</h3>
+        </div>
+    </div>
+
+    <div class="relation">
+        <div class="entity">
+            <h3>User</h3>
+        </div>
+        <div class="crowfoot">|<br>|<br>|<br>|</div>
+        <div class="line"></div>
+        <div class="crowfoot">0..*</div>
+        <div class="entity">
+            <h3>Review</h3>
+        </div>
+    </div>
+
+    <div class="relation">
+        <div class="entity">
+            <h3>Order</h3>
+        </div>
+        <div class="crowfoot">|<br>|<br>|<br>|</div>
+        <div class="line"></div>
+        <div class="crowfoot">0..*</div>
+        <div class="entity">
+            <h3>Payment</h3>
+        </div>
+    </div>
+
+</body>
+</html>
