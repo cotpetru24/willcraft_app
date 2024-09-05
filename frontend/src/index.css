@@ -2,7 +2,6 @@
     box-sizing: border-box;
 }
 
-
 .root {
     padding: 0px;
 }
@@ -42,7 +41,6 @@
 .main-footer {
     background-color: #131921;
     color: rgba(255, 255, 255, 0.87);
-
 }
 
 #sendEmailLink {
@@ -70,14 +68,6 @@
     object-fit: contain;
 }
 
-@media (max-width: 575.98px) {
-    .align-items-xs-end {
-        align-items: flex-end !important;
-        padding-bottom: 5px;
-    }
-}
-
-
 #get-started-btn {
     background-color: #e0218a;
     border: none;
@@ -86,21 +76,21 @@
 
 #get-started-btn:hover {
     background-color: #0d6efd;
-
 }
 
 .home-review-card {
     width: 24rem;
     font-size: 14px;
 }
-.home-review-card-text{
-        max-height: 150px;
-        text-align: justify;
-        word-wrap: break-word;
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-line-clamp: 7; /* Adjust the number of lines you want to display */
-        -webkit-box-orient: vertical;
+
+.home-review-card-text {
+    max-height: 150px;
+    text-align: justify;
+    word-wrap: break-word;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
 }
 
 .rating-stars {
@@ -164,7 +154,6 @@
     border-color: #a7a7a7;
 }
 
-
 .beneficiary-border {
     border-bottom: 1px solid #a7a7a7;
 }
@@ -174,11 +163,12 @@
     border-color: #a7a7a7 !important;
 }
 
-.receiving-amount-form-control{
-    width:150px;
+.receiving-amount-form-control {
+    width: 150px;
 }
-.total-amount-form-control{
-    width:90px;
+
+.total-amount-form-control {
+    width: 90px;
 }
 
 .min-height-container {
@@ -189,15 +179,12 @@
     width: auto !important;
 }
 
-
 .md-container {
-    max-width: 1000px; 
+    max-width: 1000px;
     width: 100%;
-  }
-  
+}
 
-
-  .loadingSpinnerContainer {
+.loadingSpinnerContainer {
     position: fixed;
     top: 0;
     right: 0;
@@ -208,15 +195,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-  
-  .loadingSpinner {
+}
+
+.loadingSpinner {
     width: 64px;
     height: 64px;
     border: 8px solid;
     border-color: #000 transparent #555 transparent;
     border-radius: 50%;
     animation: spin 1.2s linear infinite;
-  }
+}
 
-  
+@media (max-width: 575.98px) {
+    .align-items-xs-end {
+        align-items: flex-end !important;
+        padding-bottom: 5px;
+    }
+}

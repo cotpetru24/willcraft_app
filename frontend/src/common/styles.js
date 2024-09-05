@@ -31,4 +31,5 @@ const styles = {
         boxShadow: "0px 0px 10px 0px grey",
     },
 };
+
 export default styles

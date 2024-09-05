@@ -38,17 +38,12 @@ const assetType = Object.freeze({
 })
 
 
-
-
-
-
 const constants = {
     title,
     role,
     maritalStatus,
     assetType
 }
-
 
 
 export default constants

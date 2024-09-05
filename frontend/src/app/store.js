@@ -12,6 +12,7 @@ import additionalBeneficiariesReducer from '../features/people/additionalBenefic
 import additionalExecutorsReducer from '../features/additionalExecutors/additionalExecutorsSlice';
 import orderCurrentStepReducer from '../features/orderSteps/orderCurrentStepSlice';
 
+
 const rootReducer = combineReducers({
   auth: authReducer,
   orders: ordersReducer,
@@ -25,7 +26,8 @@ const rootReducer = combineReducers({
   additionalExecutors: additionalExecutorsReducer,
 });
 
-// Load state from localStorage (will return undefined if nothing is found)
+
+// Load the state from localStorage
 const preloadedState = {
   auth: loadState('auth'),
   orders: loadState('orders'),
@@ -39,11 +41,13 @@ const preloadedState = {
   additionalExecutors: loadState('additionalExecutors'),
 };
 
+
 export const store = configureStore({
   reducer: rootReducer,
   preloadedState,
   devTools: process.env.NODE_ENV !== 'production',
 });
+
 
 store.subscribe(() => {
   saveState('auth', store.getState().auth);
@@ -57,5 +61,6 @@ store.subscribe(() => {
   saveState('assets', store.getState().assets);
   saveState('additionalExecutors', store.getState().additionalExecutors);
 });
+
 
 export default store;
