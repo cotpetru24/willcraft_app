@@ -3,11 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { logout, reset } from '../features/auth/authSlice';
 import { LinkContainer } from 'react-router-bootstrap';
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import { Navbar, Nav, Offcanvas, Button } from 'react-bootstrap';
+import { Navbar, Nav, Offcanvas, Button, Row, Col } from 'react-bootstrap';
 import React, { useState } from 'react';
-import { useMediaQuery } from 'react-responsive';
 
 
 const Header = () => {
@@ -15,7 +12,7 @@ const Header = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { user } = useSelector(state => state.auth)
-    const isXs = useMediaQuery({ maxWidth: 767 });
+
 
     const logoutfn = () => {
         dispatch(logout())
@@ -29,10 +26,13 @@ const Header = () => {
                 console.error('Logout failed:', error);
             });
     };
+
+
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
 
     return (
         <>
@@ -56,13 +56,11 @@ const Header = () => {
                                 <>
                                     <Navbar expand="lg" className="pb-2">
                                         <Container fluid className="justify-content-end">
-
                                             <Button variant="outline-primary"
                                                 style={{ borderColor: 'rgba(255, 255, 255, 0.87)' }}
                                                 onClick={handleShow} className="d-lg-none ">
                                                 <span className="navbar-toggler-icon" style={{ backgroundColor: 'rgba(255, 255, 255, 0.87)' }}></span>
                                             </Button>
-
                                             <Navbar.Collapse className="d-none d-lg-flex justify-content-end">
                                                 <Nav variant='underline' className="ms-auto">
                                                     <Nav.Item>
@@ -140,13 +138,11 @@ const Header = () => {
                                 <>
                                     <Navbar expand="lg" className="pb-2">
                                         <Container fluid className="justify-content-end">
-
                                             <Button variant="outline-primary"
                                                 style={{ borderColor: 'rgba(255, 255, 255, 0.87)' }}
                                                 onClick={handleShow} className="d-lg-none ">
                                                 <span className="navbar-toggler-icon" style={{ backgroundColor: 'rgba(255, 255, 255, 0.87)' }}></span>
                                             </Button>
-
                                             <Navbar.Collapse className="d-none d-lg-flex justify-content-end">
                                                 <Nav variant='underline' className="ms-auto">
                                                     <Nav.Item>
@@ -212,5 +208,6 @@ const Header = () => {
         </>
     )
 }
+
 
 export default Header;

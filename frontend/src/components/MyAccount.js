@@ -10,12 +10,13 @@ import { Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { updateUserDetailsThunk, updateUserPasswordThunk } from "../features/auth/authSlice.js";
 
+
 const MyAccount = () => {
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { isLoading, isError, message } = useSelector(state =>
-        state.orders)
 
+    const { isLoading, isError, message } = useSelector(state => state.orders)
     const user = useSelector(state => state.auth.user)
 
     const [detailsFormData, setDetailsFormData] = useState({
@@ -23,16 +24,20 @@ const MyAccount = () => {
         lastName: '',
         email: ''
     });
-    const { firstName, lastName, email } = detailsFormData;
 
     const [passwordFormData, setPasswordFormData] = useState({
-        currentPassword: '', password: '', password2: ''
+        currentPassword: '', 
+        password: '', 
+        password2: ''
     });
+
+    const { firstName, lastName, email } = detailsFormData;
     const { currentPassword, password, password2 } = passwordFormData;
 
-    const order = useSelector(state => state.order)
+    // const order = useSelector(state => state.order)
     const [showChangePasswordForm, setShowChangePasswordForm] = useState(false)
     const [showEditDetailsForm, setShowEditDetailsForm] = useState(false)
+
 
     const onDetailsFormDataChange = e => {
         setDetailsFormData(prevState => ({
@@ -41,12 +46,14 @@ const MyAccount = () => {
         }))
     }
 
+
     const onPasswordFormDataChange = e => {
         setPasswordFormData(prevState => ({
             ...prevState,
             [e.target.name]: e.target.value
         }))
     }
+
 
     useEffect(() => {
         setDetailsFormData({
@@ -73,11 +80,11 @@ const MyAccount = () => {
 
     const handleChangeDetailsSubmit = async (e) => {
         e.preventDefault();
+
         try {
             const userData = { firstName, lastName, email };
             const resultAction = await dispatch(updateUserDetailsThunk(userData));
 
-            // Check if the action was fulfilled (i.e., successful)
             if (updateUserDetailsThunk.fulfilled.match(resultAction)) {
                 toast.success("Details updated successfully!", {
                     position: "top-center",
@@ -88,7 +95,7 @@ const MyAccount = () => {
                     draggable: false,
                 });
 
-                // Reset the form and close the edit form
+                // Reset the details form
                 setDetailsFormData({
                     firstName: '',
                     lastName: '',
@@ -96,7 +103,6 @@ const MyAccount = () => {
                 });
                 setShowEditDetailsForm(false);
             } else {
-                // Handle the case where the update was not successful
                 const errorMessage = resultAction.payload || 'Error updating details';
                 toast.error(errorMessage, {
                     position: "top-center",
@@ -119,6 +125,7 @@ const MyAccount = () => {
         }
     }
 
+
     const handleChangePasswordSubmit = async (e) => {
         e.preventDefault();
 
@@ -131,7 +138,6 @@ const MyAccount = () => {
                 const userData = { currentPassword, password };
                 const resultAction = await dispatch(updateUserPasswordThunk(userData));
 
-                // Check if the action was fulfilled (i.e., successful)
                 if (updateUserPasswordThunk.fulfilled.match(resultAction)) {
                     toast.success("Password updated successfully!", {
                         position: "top-center",
@@ -141,7 +147,7 @@ const MyAccount = () => {
                         pauseOnHover: false,
                         draggable: false,
                     });
-                    // Reset the form and close the edit form
+                    // Reset password form
                     setPasswordFormData({
                         currentPassword: '',
                         password: '',
@@ -149,7 +155,6 @@ const MyAccount = () => {
                     });
                     setShowChangePasswordForm(false);
                 } else {
-                    // Handle the case where the update was not successful
                     const errorMessage = resultAction.payload || 'Error updating password';
                     toast.error(errorMessage, {
                         position: "top-center",
@@ -175,6 +180,20 @@ const MyAccount = () => {
         }
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
     return (
         isLoading ? <LoadingSpinner /> :
             (

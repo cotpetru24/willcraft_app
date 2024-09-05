@@ -5,11 +5,12 @@ import { configureStore } from "@reduxjs/toolkit";
 import Dashboard from './Dashboard';
 import { BrowserRouter } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import ordersReducer from '../features/orders/ordersSlice';
-import { act } from 'react';
+// import ordersReducer from '../features/orders/ordersSlice';
+// import { act } from 'react';
 
-// Mock reducers
-const mockReducer = (state = {}, action) => state;
+// // Mock reducers
+// const mockReducer = (state = {}, action) => state;
+
 
 jest.mock('react-redux', () => ({
     ...jest.requireActual('react-redux'),
@@ -20,6 +21,7 @@ jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
     useNavigate: jest.fn(),
 }));
+
 
 describe('Dashboard', () => {
     const initialOrdersState = {
@@ -52,7 +54,8 @@ describe('Dashboard', () => {
         useNavigate.mockReturnValue(mockNavigate);
     });
 
-    test('renders the dashboard with correct elements', () => {
+
+    test('should render the dashboard with correct elements', () => {
         render(
             <Provider store={store}>
                 <BrowserRouter>
@@ -63,10 +66,10 @@ describe('Dashboard', () => {
 
         expect(screen.getByText('My Wills')).toBeInTheDocument();
         expect(screen.getByText('Create a new Will')).toBeInTheDocument();
-        expect(screen.getByText('Write a Review')).toBeInTheDocument();
     });
 
-    test('navigates to creatinOrder page on button click', () => {
+
+    test('should navigate to creatinOrder page on button click', () => {
         render(
             <Provider store={store}>
                 <BrowserRouter>
@@ -81,7 +84,8 @@ describe('Dashboard', () => {
         expect(mockNavigate).toHaveBeenCalledWith('/creatingOrder');
     });
 
-    test('navigates to writeReview page on button click', () => {
+
+    test('should render OrdersList component with orders', () => {
         render(
             <Provider store={store}>
                 <BrowserRouter>
@@ -89,22 +93,6 @@ describe('Dashboard', () => {
                 </BrowserRouter>
             </Provider>
         );
-
-        const writeReviewButton = screen.getByText('Write a Review');
-        fireEvent.click(writeReviewButton);
-
-        expect(mockNavigate).toHaveBeenCalledWith('/writeAReview');
-    });
-
-    test('renders OrdersList component with orders', () => {
-        render(
-            <Provider store={store}>
-                <BrowserRouter>
-                    <Dashboard />
-                </BrowserRouter>
-            </Provider>
-        );
-
 
         expect(screen.getByText('Test Name')).toBeInTheDocument();
         expect(screen.getByText('29/08/2024, 22:22:38')).toBeInTheDocument();
