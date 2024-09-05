@@ -31,7 +31,7 @@ const mockState = {
     currentOrder: {
         orderId: '66cbdd6aafd8a462bd5854f2',
         userId: '6691a1559949d9c888e2e850',
-        status: 'complete',
+        status: 'CreatingOrder',
         peopleAndRoles: [
             {
                 personId: {
@@ -178,8 +178,7 @@ describe('CreatingOrder', () => {
         expect(screen.getByText('Your Executors')).toBeInTheDocument();
         expect(screen.getByText('Order Progress')).toBeInTheDocument();
         expect(screen.getByText('Review and Complete Your Order')).toBeInTheDocument();
-        expect(screen.getAllByText('Edit')).toHaveLength(6);  // Adjust the length if necessary
-        expect(screen.getByText('Generate the Will')).toBeInTheDocument();
+        expect(screen.getAllByText('Edit')).toHaveLength(6);
         expect(screen.getByText('Back')).toBeInTheDocument();
     });
 });

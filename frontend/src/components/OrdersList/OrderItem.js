@@ -1,10 +1,11 @@
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { deleteOrder } from "../../features/orders/ordersSlice";
 import { getOrderThunk } from "../../features/currentOrder/currentOrderSlice";
 import { useNavigate } from "react-router-dom";
 import { resetOrderState } from "../../utils/reduxUtils";
 import { Container } from "react-bootstrap";
-import { Col, Row } from "react-bootstrap";
+import { Col, Row , Modal} from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import ProgressBar from 'react-bootstrap/ProgressBar';
@@ -39,6 +40,13 @@ const OrderItem = ({ order }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    const [showModal, setShowModal] = useState(false);
+
+    const handleDelete = async () => {
+        await dispatch(deleteOrder(order._id));
+        setShowModal(false);
+    };
+
     const handleGenerateWill = async () => {
         try {
             const response = await dispatch(getOrderThunk(order._id));
@@ -51,6 +59,7 @@ const OrderItem = ({ order }) => {
     };
 
     return (
+        <>
         <Container className="mb-5">
             <Card className='shadow' bg="light" text="dark" >
                 <Card.Body>
@@ -113,7 +122,7 @@ const OrderItem = ({ order }) => {
                                 {order.status !== 'complete' && (
                                     <Button
                                         variant="warning m-1 order-item-btn"
-                                        onClick={() => dispatch(deleteOrder(order._id))}
+                                        onClick={() => setShowModal(true)}
                                         className="order-item-btns"
                                     >
                                         Delete
@@ -185,6 +194,22 @@ const OrderItem = ({ order }) => {
                 </Card.Body>
             </Card>
         </Container>
+  
+                    <Modal show={showModal} onHide={() => setShowModal(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Confirm Deletion</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Are you sure you want to delete this order?</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowModal(false)}>
+                        Cancel
+                    </Button>
+                    <Button variant="danger" onClick={handleDelete}>
+                        Delete
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+            </>
     )
 }
 

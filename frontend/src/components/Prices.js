@@ -14,7 +14,6 @@ const Prices = () => {
                     <Col xs={12} md={5} className="mb-4">
                         <Card className='prices-card p-2 d-flex flex-column shadow' bg="light" text="dark" >
                             <Card.Img variant="top" src="./fill_out.png" className="mx-auto d-block" style={{ width: '70%' }} />
-                            <a href="https://storyset.com/education">Education illustrations by Storyset</a>
                             <Card.Body className="flex-grow-1 d-flex flex-column">
                                 <Card.Title>Wills starting from £20</Card.Title>
                                 <Card.Text>

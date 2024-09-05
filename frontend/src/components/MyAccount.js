@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import LoadingSpinner from "./LoadingSpinner.js";
 import { useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { Col, Row } from "react-bootstrap";
@@ -26,15 +25,14 @@ const MyAccount = () => {
     });
 
     const [passwordFormData, setPasswordFormData] = useState({
-        currentPassword: '', 
-        password: '', 
+        currentPassword: '',
+        password: '',
         password2: ''
     });
 
     const { firstName, lastName, email } = detailsFormData;
     const { currentPassword, password, password2 } = passwordFormData;
 
-    // const order = useSelector(state => state.order)
     const [showChangePasswordForm, setShowChangePasswordForm] = useState(false)
     const [showEditDetailsForm, setShowEditDetailsForm] = useState(false)
 
@@ -56,15 +54,24 @@ const MyAccount = () => {
 
 
     useEffect(() => {
-        setDetailsFormData({
-            firstName: user.firstName,
-            lastName: user.lastName,
-            email: user.email
-        })
+        if (user) {
+            setDetailsFormData({
+                firstName: user.firstName || '',
+                lastName: user.lastName || '',
+                email: user.email || ''
+            });
+        } else {
+            setDetailsFormData({
+                firstName: '',
+                lastName: '',
+                email: ''
+            });
+        }
 
-        if (isError) console.log(message)
-
-    }, [navigate, isError, message, dispatch, showEditDetailsForm])
+        if (isError) {
+            console.log(message);
+        }
+    }, [user, isError, message, dispatch, showEditDetailsForm]);
 
 
     useEffect(() => {
@@ -181,224 +188,209 @@ const MyAccount = () => {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-    
     return (
-        isLoading ? <LoadingSpinner /> :
-            (
-                <>
-                    <Container style={{ minHeight: '65vh' }} >
-                        <Container className="md-container">
-                            <Row className="mt-4 mb-5 ">
-                                <Col>
-                                    <h1 className="auth-header">My Account</h1>
-                                </Col>
-                            </Row>
-                        </Container>
-                        <Container className="md-container mb-5">
+        <>
+            <Container style={{ minHeight: '65vh' }} >
+                <Container className="md-container">
+                    <Row className="mt-4 mb-5 ">
+                        <Col>
+                            <h1 className="auth-header">My Account</h1>
+                        </Col>
+                    </Row>
+                </Container>
+                <Container className="md-container mb-5">
+                    <Row>
+                        <Col>
                             <Row>
+                                <Col xs={4} sm={2} md={2} lg={2} xl={2}>
+                                    First name:
+                                </Col>
                                 <Col>
-                                    <Row>
-                                        <Col xs={4} sm={2} md={2} lg={2} xl={2}>
-                                            First name:
-                                        </Col>
-                                        <Col>
-                                            {user.firstName}
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col xs={4} sm={2} md={2} lg={2} xl={2}>
-                                            Last name:
-                                        </Col>
-                                        <Col>
-                                            {user.lastName}
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col xs={4} sm={2} md={2} lg={2} xl={2}>
-                                            Email:
-                                        </Col>
-                                        <Col>
-                                            {user.email}
-                                        </Col>
-                                    </Row>
+                                    {user?.firstName || ''}
                                 </Col>
                             </Row>
                             <Row>
+                                <Col xs={4} sm={2} md={2} lg={2} xl={2}>
+                                    Last name:
+                                </Col>
                                 <Col>
-                                    <Button
-                                        variant="primary"
-                                        onClick={() => {
-                                            setShowChangePasswordForm(false)
-                                            setShowEditDetailsForm(true)
-                                        }}
-                                    >
-                                        Edit
-                                    </Button>
+                                    {user?.lastName || ''}
                                 </Col>
                             </Row>
-                        </Container>
-                        <Container className="md-container">
                             <Row>
+                                <Col xs={4} sm={2} md={2} lg={2} xl={2}>
+                                    Email:
+                                </Col>
                                 <Col>
-                                    <Button
-                                        variant="primary"
-                                        onClick={() => {
-                                            setShowEditDetailsForm(false)
-                                            setShowChangePasswordForm(true)
-                                        }}
-                                    >
-                                        Change password
-                                    </Button>
+                                    {user?.email || ''}
                                 </Col>
                             </Row>
-                        </Container>
-                        {showEditDetailsForm && (
-                            <Container className="mt-5">
-                                <Row className="mt-3 mb-4 justify-content-center">
-                                    <Col xs={12} md={4} className="mx-auto">
-                                        <Form onSubmit={handleChangeDetailsSubmit} style={{ minWidth: '300px' }}>
-                                            <Form.Group className="mb-3" controlId="formGroupFirstName">
-                                                <Form.Label className="bold-label">First name</Form.Label>
-                                                <Form.Control
-                                                    type="text"
-                                                    name="firstName"
-                                                    value={detailsFormData.firstName}
-                                                    onChange={onDetailsFormDataChange}
-                                                    required
-                                                    className="custom-input"
-                                                />
-                                            </Form.Group>
-                                            <Form.Group className="mb-3" controlId="formGroupLastName">
-                                                <Form.Label className="bold-label">Last name</Form.Label>
-                                                <Form.Control
-                                                    type="text"
-                                                    name="lastName"
-                                                    value={detailsFormData.lastName}
-                                                    onChange={onDetailsFormDataChange}
-                                                    required
-                                                    className="custom-input"
-                                                />
-                                            </Form.Group>
-                                            <Form.Group className="mb-3" controlId="formGroupEmail">
-                                                <Form.Label className="bold-label">Email</Form.Label>
-                                                <Form.Control
-                                                    type="email"
-                                                    name="email"
-                                                    value={detailsFormData.email}
-                                                    required
-                                                    onChange={onDetailsFormDataChange}
-                                                    className="custom-input"
-                                                />
-                                            </Form.Group>
-                                            <Row>
-                                                <Col>
-                                                    <Button
-                                                        variant="primary"
-                                                        className="m-1 add-edit-form-btn"
-                                                        type="button"
-                                                        onClick={() => setShowEditDetailsForm(false)}
-                                                    >
-                                                        Cancel
-                                                    </Button>
-                                                </Col>
-                                                <Col className="d-flex justify-content-end">
-                                                    <Button
-                                                        variant="primary"
-                                                        className="m-1 add-edit-form-btn"
-                                                        type="submit"
-                                                    >
-                                                        Save
-                                                    </Button>
-                                                </Col>
-                                            </Row>
-                                        </Form>
-                                    </Col>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Button
+                                variant="primary"
+                                onClick={() => {
+                                    setShowChangePasswordForm(false)
+                                    setShowEditDetailsForm(true)
+                                }}
+                            >
+                                Edit
+                            </Button>
+                        </Col>
+                    </Row>
+                </Container>
+                <Container className="md-container">
+                    <Row>
+                        <Col>
+                            <Button
+                                variant="primary"
+                                onClick={() => {
+                                    setShowEditDetailsForm(false)
+                                    setShowChangePasswordForm(true)
+                                }}
+                            >
+                                Change password
+                            </Button>
+                        </Col>
+                    </Row>
+                </Container>
+                {showEditDetailsForm && (
+                    <Container className="mt-5">
+                        <Row className="mt-3 mb-4 justify-content-center">
+                            <Col xs={12} md={4} className="mx-auto">
+                                <Form onSubmit={handleChangeDetailsSubmit} style={{ minWidth: '300px' }}>
+                                    <Form.Group className="mb-3" controlId="formGroupFirstName">
+                                        <Form.Label className="bold-label">First name</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            name="firstName"
+                                            value={detailsFormData.firstName}
+                                            onChange={onDetailsFormDataChange}
+                                            required
+                                            className="custom-input"
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3" controlId="formGroupLastName">
+                                        <Form.Label className="bold-label">Last name</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            name="lastName"
+                                            value={detailsFormData.lastName}
+                                            onChange={onDetailsFormDataChange}
+                                            required
+                                            className="custom-input"
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3" controlId="formGroupEmail">
+                                        <Form.Label className="bold-label">Email</Form.Label>
+                                        <Form.Control
+                                            type="email"
+                                            name="email"
+                                            value={detailsFormData.email}
+                                            required
+                                            onChange={onDetailsFormDataChange}
+                                            className="custom-input"
+                                        />
+                                    </Form.Group>
+                                    <Row>
+                                        <Col>
+                                            <Button
+                                                variant="primary"
+                                                className="m-1 add-edit-form-btn"
+                                                type="button"
+                                                onClick={() => setShowEditDetailsForm(false)}
+                                            >
+                                                Cancel
+                                            </Button>
+                                        </Col>
+                                        <Col className="d-flex justify-content-end">
+                                            <Button
+                                                variant="primary"
+                                                className="m-1 add-edit-form-btn"
+                                                type="submit"
+                                            >
+                                                Save
+                                            </Button>
+                                        </Col>
+                                    </Row>
+                                </Form>
+                            </Col>
 
-                                </Row>
-                            </Container>
-                        )}
-                        {showChangePasswordForm && (
-                            <Container className="mt-5">
-                                <Row className="mt-3 mb-4 justify-content-center">
-                                    <Col xs={12} sm={12} md={4} className="mx-auto">
-                                        <Form onSubmit={handleChangePasswordSubmit} style={{ minWidth: '300px' }}>
-                                            <Form.Group className="mb-3" controlId="formGroupCurrentPassword">
-                                                <Form.Label className="bold-label">Current password</Form.Label>
-                                                <Form.Control
-                                                    type="password"
-                                                    placeholder="Current password"
-                                                    name="currentPassword"
-                                                    value={passwordFormData.currentPassword}
-                                                    onChange={onPasswordFormDataChange}
-                                                    className="custom-input"
-                                                    required
-                                                />
-                                            </Form.Group>
-                                            <Form.Group className="mb-3" controlId="formGroupPassword">
-                                                <Form.Label className="bold-label">New password</Form.Label>
-                                                <Form.Control
-                                                    type="password"
-                                                    placeholder="New password"
-                                                    name="password"
-                                                    value={passwordFormData.password}
-                                                    onChange={onPasswordFormDataChange}
-                                                    className="custom-input"
-                                                    required
-                                                />
-                                            </Form.Group>
-                                            <Form.Group className="mb-3" controlId="formGroupPassword2">
-                                                <Form.Label className="bold-label">Confirm new password</Form.Label>
-                                                <Form.Control
-                                                    type="password"
-                                                    placeholder="Confirm new password"
-                                                    name="password2"
-                                                    value={passwordFormData.password2}
-                                                    onChange={onPasswordFormDataChange}
-                                                    className="custom-input"
-                                                    required
-                                                />
-                                            </Form.Group>
-                                            <Row>
-                                                <Col>
-                                                    <Button
-                                                        variant="primary"
-                                                        className="m-1 add-edit-form-btn"
-                                                        type="button"
-                                                        onClick={() => { setShowChangePasswordForm(false); }}                                                    >
-                                                        Cancel
-                                                    </Button>
-                                                </Col>
-                                                <Col className="d-flex justify-content-end">
-                                                    <Button
-                                                        variant="primary"
-                                                        className="m-1 add-edit-form-btn"
-                                                        type="submit"
-                                                    >
-                                                        Save
-                                                    </Button>
-                                                </Col>
-                                            </Row>
-                                        </Form>
-                                    </Col>
-                                </Row>
-                            </Container >
-                        )}
+                        </Row>
                     </Container>
-                </>
-            )
-    );
+                )}
+                {showChangePasswordForm && (
+                    <Container className="mt-5">
+                        <Row className="mt-3 mb-4 justify-content-center">
+                            <Col xs={12} sm={12} md={4} className="mx-auto">
+                                <Form onSubmit={handleChangePasswordSubmit} style={{ minWidth: '300px' }}>
+                                    <Form.Group className="mb-3" controlId="formGroupCurrentPassword">
+                                        <Form.Label className="bold-label">Current password</Form.Label>
+                                        <Form.Control
+                                            type="password"
+                                            placeholder="Current password"
+                                            name="currentPassword"
+                                            value={passwordFormData.currentPassword}
+                                            onChange={onPasswordFormDataChange}
+                                            className="custom-input"
+                                            required
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3" controlId="formGroupPassword">
+                                        <Form.Label className="bold-label">New password</Form.Label>
+                                        <Form.Control
+                                            type="password"
+                                            placeholder="New password"
+                                            name="password"
+                                            value={passwordFormData.password}
+                                            onChange={onPasswordFormDataChange}
+                                            className="custom-input"
+                                            required
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3" controlId="formGroupPassword2">
+                                        <Form.Label className="bold-label">Confirm new password</Form.Label>
+                                        <Form.Control
+                                            type="password"
+                                            placeholder="Confirm new password"
+                                            name="password2"
+                                            value={passwordFormData.password2}
+                                            onChange={onPasswordFormDataChange}
+                                            className="custom-input"
+                                            required
+                                        />
+                                    </Form.Group>
+                                    <Row>
+                                        <Col>
+                                            <Button
+                                                variant="primary"
+                                                className="m-1 add-edit-form-btn"
+                                                type="button"
+                                                onClick={() => { setShowChangePasswordForm(false); }}                                                    >
+                                                Cancel
+                                            </Button>
+                                        </Col>
+                                        <Col className="d-flex justify-content-end">
+                                            <Button
+                                                variant="primary"
+                                                className="m-1 add-edit-form-btn"
+                                                type="submit"
+                                            >
+                                                Save
+                                            </Button>
+                                        </Col>
+                                    </Row>
+                                </Form>
+                            </Col>
+                        </Row>
+                    </Container >
+                )}
+            </Container>
+        </>
+    )
 }
+
 
 export default MyAccount

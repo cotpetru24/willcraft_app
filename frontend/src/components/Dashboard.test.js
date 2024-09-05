@@ -5,12 +5,9 @@ import { configureStore } from "@reduxjs/toolkit";
 import Dashboard from './Dashboard';
 import { BrowserRouter } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-// import ordersReducer from '../features/orders/ordersSlice';
-// import { act } from 'react';
 
-// // Mock reducers
-// const mockReducer = (state = {}, action) => state;
 
+const mockReducer = (state = {}, action) => state;
 
 jest.mock('react-redux', () => ({
     ...jest.requireActual('react-redux'),

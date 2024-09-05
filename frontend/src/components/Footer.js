@@ -154,6 +154,9 @@ const Footer = () => {
                         </Col>
                         <Col>
                             <Row className="justify-content-end">
+                                <Col>
+                                <a href="https://storyset.com/education">Education illustrations by Storyset</a>
+                                </Col>
                                 <Col xs="auto">
                                     <Link to='/'>
                                         Terms of Service

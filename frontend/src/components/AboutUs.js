@@ -9,7 +9,7 @@ const AboutUs = () => {
         <Container>
             <Row>
                 <Col xs={{ order: 1, span: 12 }} md={{ order: 1, span: 6 }}>
-                    <img src="./Education.png" style={{ width: '100%' }} />
+                    <img src="./Education.png" alt="Education illustration" style={{ width: '100%' }} />
                 </Col>
                 <Col xs={{ order: 2, span: 12 }} md={{ order: 1, span: 6 }} className="pt-5" style={{ textAlign: 'justify' }}>
                     <h1>ABOUT US</h1>
