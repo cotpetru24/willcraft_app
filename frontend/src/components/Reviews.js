@@ -5,7 +5,9 @@ import { Container, Col, Row, Card } from "react-bootstrap";
 import { getAllReviewsThunk } from "../features/reviews/reviewThunks.js";
 import { FaStar } from 'react-icons/fa';
 
+
 const Reviews = () => {
+
     const dispatch = useDispatch();
     const [reviews, setReviews] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -25,10 +27,12 @@ const Reviews = () => {
         };
 
         fetchAllReviews();
+
     }, [dispatch]);
 
 
     const renderStars = (rating) => {
+
         return (
             <div>
                 {[...Array(5)].map((star, index) => {
@@ -46,6 +50,7 @@ const Reviews = () => {
     };
 
     return (
+
         isLoading ? <LoadingSpinner /> :
             (
                 <>
@@ -91,5 +96,6 @@ const Reviews = () => {
             )
     );
 }
+
 
 export default Reviews;

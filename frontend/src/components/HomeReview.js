@@ -5,9 +5,11 @@ import { FaStar } from 'react-icons/fa';
 import { Container, Col, Row, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useSelector } from 'react-redux';
+import LoadingSpinner from './LoadingSpinner'
 
 
 const HomeReview = () => {
+
     const dispatch = useDispatch();
     const { user } = useSelector(state => state.auth)
     const [reviews, setReviews] = useState([]);
@@ -32,7 +34,8 @@ const HomeReview = () => {
         };
 
         fetchLatest3Reviews();
-    }, []);
+
+    });
 
     const renderStars = (rating) => {
         return (
@@ -53,9 +56,7 @@ const HomeReview = () => {
 
     return (
         <Container >
-            {isLoading ? (
-                <p>Loading...</p>
-            ) : (
+            {isLoading ? <LoadingSpinner /> : (
                 <>
                     <Container className='ps-0 pe-0 mt-3'>
                         <Row className="d-flex justify-content-center justify-content-md-between">
@@ -80,7 +81,6 @@ const HomeReview = () => {
                             ))}
                         </Row>
                     </Container>
-
                     <Container className="p-4">
                         <Row >
                             <Col className="d-flex justify-content-center">
@@ -91,7 +91,7 @@ const HomeReview = () => {
                             (
                                 <Row >
                                     <Col className="d-flex justify-content-center">
-                                        <Link to="/writeAReview" style={{ textDecoration: 'none', color:'#e0218a', fontWeight:'bold' }}
+                                        <Link to="/writeAReview" style={{ textDecoration: 'none', color: '#e0218a', fontWeight: 'bold' }}
                                             onClick={() => {
                                                 window.scrollTo(0, 0);
                                             }}

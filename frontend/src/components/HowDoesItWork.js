@@ -6,6 +6,7 @@ import Container from 'react-bootstrap/Container'
 
 
 const HowDoesItWork = () => {
+
   return (
     <>
       <Carousel variant='dark' interval={null}>
@@ -80,5 +81,6 @@ const HowDoesItWork = () => {
     </>
   );
 }
+
 
 export default HowDoesItWork;

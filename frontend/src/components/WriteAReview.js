@@ -8,13 +8,15 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LoadingSpinner from "./LoadingSpinner.js";
 
+
 const WriteAReview = () => {
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
     const user = useSelector(state => state.auth.user);
     const userId = user._id;
     const userFirstName = user.firstName;
-
     const isLoading = false;
 
     const [rating, setRating] = useState(0);
@@ -22,7 +24,6 @@ const WriteAReview = () => {
     const [reviewForm, setReviewForm] = useState({
         reviewText: '',
     });
-
 
     const handleSendReview = async (e) => {
         e.preventDefault();
@@ -40,11 +41,8 @@ const WriteAReview = () => {
         }
 
         const reviewData = { userId, userFirstName, rating, reviewText: reviewForm.reviewText };
-        console.log("Review submitted:", reviewData);
-
         await dispatch(createReviewThunk(reviewData));
 
-        // Show toast and navigate to home page
         toast.success("Thank you for your feedback!", {
             onClose: () => navigate('/'),
             position: "top-center",
@@ -55,7 +53,6 @@ const WriteAReview = () => {
             draggable: false,
         });
 
-        // Reset the form fields
         setReviewForm({ reviewText: '' });
         setRating(0);
     }
@@ -130,5 +127,6 @@ const WriteAReview = () => {
             )
     );
 }
+
 
 export default WriteAReview;

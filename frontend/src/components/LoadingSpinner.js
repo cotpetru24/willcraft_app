@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Spinner } from 'react-bootstrap';
 
+
 function LoadingSpinner() {
   return (
     <Container className='d-flex justify-content-center align-items-center' data-testid="loading-spinner" style={{ minHeight: '40vh' }}>
@@ -15,5 +16,6 @@ function LoadingSpinner() {
     </Container>
   );
 }
+
 
 export default LoadingSpinner;
