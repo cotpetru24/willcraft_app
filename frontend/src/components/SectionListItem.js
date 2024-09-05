@@ -3,9 +3,12 @@ import { useState, useEffect } from "react";
 import { Accordion, Card, Button, Col, Row, Form, Container, InputGroup } from "react-bootstrap";
 import { toast } from 'react-toastify';
 
+
 const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onChecked, asset, onChange, assetIndex }) => {
+
     const [isChecked, setIsChecked] = useState(false);
     const [receivingAmount, setReceivingAmount] = useState('');
+
 
     useEffect(() => {
         if (data.role && data.role.includes("executor")) {
@@ -37,6 +40,7 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
 
     const currentReceivingAmount = asset?.distribution?.find(dist => dist.personId._id === data._id)?.receivingAmount || '';
 
+
     const handleCheckboxChange = () => {
         const newCheckedState = !isChecked;
         setIsChecked(newCheckedState);
@@ -44,9 +48,9 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
         onChecked(newCheckedState);
     };
 
+
     const handleAmountChange = (event) => {
         const value = event.target.value;
-        // setReceivingAmount(value);
 
         if (/^\d*$/.test(value)) {
             setReceivingAmount(value);
@@ -58,7 +62,7 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
         onChange(value, assetIndex, data._id);
     };
 
-
+    
     return (
         <>
             {section === 'assets' && (
@@ -314,7 +318,7 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
                                         </Row>
                                     </Container>
                                 </Accordion.Header>
-                                <Accordion.Body>
+                                {/* <Accordion.Body>
                                     <Card className="mb-3">
                                         <Card.Body>
                                             Spouse here
@@ -331,7 +335,7 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
                                             This is the content for the third card. You can place any content here.
                                         </Card.Body>
                                     </Card>
-                                </Accordion.Body>
+                                </Accordion.Body> */}
                             </Accordion.Item>
                         </Accordion>
                     </Container>
@@ -448,5 +452,6 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
         </>
     );
 }
+
 
 export default SectionListItem;
