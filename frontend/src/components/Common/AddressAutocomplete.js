@@ -2,9 +2,11 @@ import React, { useEffect, useRef } from 'react';
 import { useLoadScript } from '@react-google-maps/api';
 import Form from 'react-bootstrap/Form';
 
+
 const libraries = ['places'];
 
 const AddressAutocomplete = ({ name, value, onPlaceSelected, handleInputChange }) => {
+
   const inputRef = useRef(null);
 
   const { isLoaded, loadError } = useLoadScript({
@@ -45,5 +47,6 @@ const AddressAutocomplete = ({ name, value, onPlaceSelected, handleInputChange }
     />
   );
 };
+
 
 export default AddressAutocomplete;

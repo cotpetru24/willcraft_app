@@ -77,7 +77,6 @@ const AboutUs = () => {
                                 <span>Secure Storage:</span>Your data is securely stored, allowing you to revisit and update your will at any time.
                             </p>
                         </li>
-
                     </ol>
                     <h2>Technology Stack</h2>
                     <p>
@@ -106,5 +105,6 @@ const AboutUs = () => {
         </Container>
     )
 }
+
 
 export default AboutUs;

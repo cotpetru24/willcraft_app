@@ -17,6 +17,7 @@ const Register = () => {
         firstName: '', lastName: '',
         email: '', password: '', password2: ''
     });
+
     const { firstName, lastName, email, password, password2 } = formData;
 
     const navigate = useNavigate();
@@ -49,7 +50,6 @@ const Register = () => {
             dispatch(register(userData));
         }
     };
-
 
     return (
         isLoading ? <LoadingSpinner /> : (
@@ -136,5 +136,6 @@ const Register = () => {
         )
     )
 }
+
 
 export default Register;

@@ -12,12 +12,10 @@ const Dashboard = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-
     const handleCreateWill = async () => {
         resetOrderState(dispatch)
         navigate('/creatingOrder');
     };
-
 
     return (
         <Container style={{ minHeight: "65vh" }} className="ps-4 pe-4">
@@ -42,5 +40,6 @@ const Dashboard = () => {
         </Container>
     )
 }
+
 
 export default Dashboard;

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import Spinner from '../LoadingSpinner';
+import LoadingSpinner from '../LoadingSpinner';
 import { login, reset } from '../../features/auth/authSlice'
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/esm/Row";
@@ -12,11 +12,9 @@ import Button from "react-bootstrap/esm/Button";
 import Col from "react-bootstrap/esm/Col";
 
 
-
 const Login = () => {
     const [formData, setFormData] = useState({ email: '', password: '' });
     const { email, password } = formData;
-
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { user, isLoading, isError, isSuccess, message } = useSelector(state => state.auth);
@@ -25,8 +23,8 @@ const Login = () => {
         if (isError) toast.error(message);
         if (isSuccess || user) navigate('/dashboard');
         dispatch(reset());
-    },
-        [user, isError, isSuccess, message, navigate, dispatch]
+    }, [user, isError, isSuccess, message, navigate, dispatch]
+
     );
 
     const onChange = e => {
@@ -43,7 +41,7 @@ const Login = () => {
     };
 
     return (
-        isLoading ? <Spinner /> : (
+        isLoading ? <LoadingSpinner /> : (
             <>
                 <Container style={{ minHeight: '65vh' }} className="mt-5 mb-4">
                     <Row className="mt-3 mb-4 justify-content-center">
@@ -95,5 +93,6 @@ const Login = () => {
         )
     )
 }
+
 
 export default Login

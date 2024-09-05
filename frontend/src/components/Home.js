@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckSquare, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { login, reset } from '../features/auth/authSlice';
-import './Common/FontAwesomeSetup';
 import Container from "react-bootstrap/esm/Container";
 import { Col, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";

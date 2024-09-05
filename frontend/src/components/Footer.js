@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
 import Container from 'react-bootstrap/esm/Container';
@@ -11,9 +11,10 @@ import { createMessageThunk } from '../features/messages/messagesThunks';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Footer = () => {
-    const dispatch = useDispatch();
 
+const Footer = () => {
+    
+    const dispatch = useDispatch();
     const [messageForm, setMessageForm] = useState({
         senderName: '',
         senderEmail: '',
@@ -171,6 +172,7 @@ const Footer = () => {
         </footer >
     );
 }
+
 
 export default Footer;
 
