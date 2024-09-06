@@ -8,10 +8,7 @@ export const createTestatorThunk = createAsyncThunk(
     'people/createTestator',
     async (testatorData, thunkApi) => {
 
-        // Get the userId from the state
         const userId = thunkApi.getState().auth.user._id;
-
-        // Add userId to personData
         const updatedTestatorData = { ...testatorData, userId };
 
         try {
@@ -26,7 +23,8 @@ export const createTestatorThunk = createAsyncThunk(
                 };
                 const createNewOrderResponse = await thunkApi.dispatch(createOrderThunk(orderData)).unwrap();
 
-                return { ...createTestatorResponse, orderId: createNewOrderResponse._id }; // Return both person and new order ID
+                return { ...createTestatorResponse, orderId: createNewOrderResponse._id };
+
             } else {
                 return createTestatorResponse;
             }

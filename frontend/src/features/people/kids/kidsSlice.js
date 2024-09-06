@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = [];
 
-
 const kidsSlice = createSlice({
     name: 'kids',
     initialState,
@@ -18,6 +17,10 @@ const kidsSlice = createSlice({
     }
 });
 
-export const { updateKidsSlice, resetKidsSlice } = kidsSlice.actions;
+
+export const {
+    updateKidsSlice,
+    resetKidsSlice
+} = kidsSlice.actions;
 
 export default kidsSlice.reducer;

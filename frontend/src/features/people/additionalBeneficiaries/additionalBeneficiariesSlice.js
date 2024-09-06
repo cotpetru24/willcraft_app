@@ -18,6 +18,10 @@ const additionalBeneficiariesSlice = createSlice({
     }
 });
 
-export const { updateAdditionalBeneficiariesSlice, resetAdditionalBeneficiariesSlice } = additionalBeneficiariesSlice.actions;
+
+export const {
+    updateAdditionalBeneficiariesSlice,
+    resetAdditionalBeneficiariesSlice
+} = additionalBeneficiariesSlice.actions;
 
 export default additionalBeneficiariesSlice.reducer;

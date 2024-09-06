@@ -6,10 +6,7 @@ export const createSpouseOrPartnerThunk = createAsyncThunk(
     'people/createSpouseOrPartner',
     async (spouseOrPartnerData, thunkApi) => {
 
-        // Get the userId from the state
         const userId = thunkApi.getState().auth.user._id;
-
-        // Add userId to personData
         const updatedSpouseOrPartnerData = { ...spouseOrPartnerData, userId };
 
         try {

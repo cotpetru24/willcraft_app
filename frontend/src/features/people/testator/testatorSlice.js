@@ -33,15 +33,12 @@ const testatorSlice = createSlice({
             state.tel = tel || '';
             state.maritalStatus = maritalStatus || '';
             state.hasChildrenStatus = hasChildrenStatus || '';
-
-
         },
         resetTestatorSlice: (state) => initialState,
     },
     extraReducers: (builder) => {
 
         builder
-
 
             //create Testator cases 
             .addCase(testatorThunks.createTestatorThunk.pending, (state) => {
@@ -52,7 +49,6 @@ const testatorSlice = createSlice({
                 state.isSuccess = true;
 
                 const { _id, title, fullLegalName, fullAddress, email, dob, tel, maritalStatus, hasChildrenStatus } = action.payload;
-
                 state._id = _id;
                 state.title = title;
                 state.fullLegalName = fullLegalName;
@@ -79,7 +75,6 @@ const testatorSlice = createSlice({
                 state.isSuccess = true;
 
                 const { _id, title, fullLegalName, fullAddress, dob, email, tel, maritalStatus, hasChildrenStatus } = action.payload;
-
                 state._id = _id;
                 state.title = title;
                 state.fullLegalName = fullLegalName;
@@ -97,6 +92,7 @@ const testatorSlice = createSlice({
             });
     },
 });
+
 
 export const { updateTestatorSlice, resetTestatorSlice } = testatorSlice.actions;
 

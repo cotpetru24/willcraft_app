@@ -1,5 +1,4 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-// import peopleService from "../people/peopleService";
 import peopleService from "../peopleService";
 
 
@@ -7,10 +6,7 @@ export const createAdditionalBeficiaryThunk = createAsyncThunk(
     'people/createAdditionalBeficiaryThunk',
     async (additionalBeneficiaryData, thunkApi) => {
 
-        // Get the userId from the state
         const userId = thunkApi.getState().auth.user._id;
-
-        // Add userId to personData
         const updatedAdditionalBeneficiaryData = { ...additionalBeneficiaryData, userId };
 
         try {
@@ -47,6 +43,7 @@ export const updateAdditionalBeficiaryThunk = createAsyncThunk(
         }
     }
 );
+
 
 export const deleteAdditionalBeficiaryThunk = createAsyncThunk(
     'people/deleteAdditionalBeficiaryThunk',

@@ -36,7 +36,6 @@ const spouseOrPartnerSlice = createSlice({
 
         builder
 
-
             //create SpouseOrPartner cases 
             .addCase(spouseOrPartnerThunks.createSpouseOrPartnerThunk.pending, (state) => {
                 state.isLoading = true;
@@ -46,7 +45,6 @@ const spouseOrPartnerSlice = createSlice({
                 state.isSuccess = true;
 
                 const { _id, title, fullLegalName, fullAddress, dob, email, tel } = action.payload;
-
                 state._id = _id;
                 state.title = title;
                 state.fullLegalName = fullLegalName;
@@ -71,7 +69,6 @@ const spouseOrPartnerSlice = createSlice({
                 state.isSuccess = true;
 
                 const { _id, title, fullLegalName, fullAddress, dob, email, tel } = action.payload;
-
                 state._id = _id;
                 state.title = title;
                 state.fullLegalName = fullLegalName;
@@ -88,7 +85,11 @@ const spouseOrPartnerSlice = createSlice({
     },
 });
 
-export const { updateSpouseOrPartnerSlice, resetSpouseOrPartnerSlice } = spouseOrPartnerSlice.actions;
+
+export const {
+    updateSpouseOrPartnerSlice,
+    resetSpouseOrPartnerSlice
+} = spouseOrPartnerSlice.actions;
 
 export default spouseOrPartnerSlice.reducer;
 
