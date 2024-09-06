@@ -9,7 +9,7 @@ import spouseOrPartnerReducer from '../features/people/spouseOrPartner/spouseOrP
 import kidsReducer from '../features/people/kids/kidsSlice';
 import assetsReducer from '../features/orderAssets/orderAssetsSlice';
 import additionalBeneficiariesReducer from '../features/people/additionalBeneficiaries/additionalBeneficiariesSlice';
-import additionalExecutorsReducer from '../features/additionalExecutors/additionalExecutorsSlice';
+import additionalExecutorsReducer from '../features/people/additionalExecutors/additionalExecutorsSlice';
 import orderCurrentStepReducer from '../features/orderSteps/orderCurrentStepSlice';
 
 

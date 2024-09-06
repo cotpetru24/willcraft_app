@@ -62,7 +62,7 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
         onChange(value, assetIndex, data._id);
     };
 
-    
+
     return (
         <>
             {section === 'assets' && (
@@ -318,24 +318,6 @@ const SectionListItem = ({ buttonsDisabled, data, onRemove, onEdit, section, onC
                                         </Row>
                                     </Container>
                                 </Accordion.Header>
-                                {/* <Accordion.Body>
-                                    <Card className="mb-3">
-                                        <Card.Body>
-                                            Spouse here
-                                        </Card.Body>
-                                    </Card>
-                                    <Card className="mb-3">
-                                        <Card.Body>
-                                            Kid 1 here
-                                        </Card.Body>
-                                    </Card>
-                                    <Card>
-                                        <Card.Header>Card #3</Card.Header>
-                                        <Card.Body>
-                                            This is the content for the third card. You can place any content here.
-                                        </Card.Body>
-                                    </Card>
-                                </Accordion.Body> */}
                             </Accordion.Item>
                         </Accordion>
                     </Container>

@@ -5,7 +5,7 @@ import { updateSpouseOrPartnerSlice } from "../people/spouseOrPartner/spouseOrPa
 import constants from "../../common/constants";
 import { updateKidsSlice } from "../people/kids/kidsSlice";
 import { updateAssetsSlice } from "../orderAssets/orderAssetsSlice";
-import { updateAdditionalExecutorsSlice } from "../additionalExecutors/additionalExecutorsSlice";
+import { updateAdditionalExecutorsSlice } from "../people/additionalExecutors/additionalExecutorsSlice";
 import { updateAdditionalBeneficiariesSlice } from "../people/additionalBeneficiaries/additionalBeneficiariesSlice";
 
 

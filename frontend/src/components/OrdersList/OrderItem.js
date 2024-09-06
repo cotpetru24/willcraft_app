@@ -50,6 +50,24 @@ const OrderItem = ({ order }) => {
     };
 
 
+    const daysLeftToEdit = () => {
+        const currentDate = new Date();
+        const completionDate = new Date(order.completionDate);
+        const timeDifference = completionDate.getTime() + 30 * 24 * 60 * 60 * 1000 - currentDate.getTime();
+        const daysLeft = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+        if (daysLeft > 0) {
+            return (
+                <Col xs="auto"
+                    className="d-flex justify-content-start align-items-center flex-grow-1"
+                >
+                    <p className="m-0" style={{ fontWeight: 500 }}>{daysLeft} days left to edit</p>
+                </Col>
+            );
+        }
+        return null;
+    };
+
+
     const handleGenerateWill = async () => {
         try {
             const response = await dispatch(getOrderThunk(order._id));
@@ -97,26 +115,7 @@ const OrderItem = ({ order }) => {
                                 </Col>
                             </Row>
                             <Row className=" d-flex justify-content-end">
-                                {order.status === "complete" && (
-                                    (() => {
-                                        const currentDate = new Date();
-                                        const completionDate = new Date(order.completionDate);
-                                        const timeDifference = completionDate.getTime() + 30 * 24 * 60 * 60 * 1000 - currentDate.getTime();
-                                        const daysLeft = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
-                                        if (daysLeft > 0) {
-                                            return (
-                                                <>
-                                                    <Col xs="auto"
-                                                        className="d-flex justify-content-start align-items-center flex-grow-1"
-                                                    >
-                                                        <p className="m-0" style={{ fontWeight: 500 }}>{daysLeft} days left to edit</p>
-                                                    </Col>
-                                                </>
-                                            );
-                                        }
-                                        return null;
-                                    })
-                                )}
+                                {order.status === "complete" && daysLeftToEdit()}
                                 <Col xs="auto">
                                     {order.status !== 'complete' && (
                                         <Button
