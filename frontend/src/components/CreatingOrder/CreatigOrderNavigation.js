@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/esm/Row';
 import Col from 'react-bootstrap/esm/Col';
 import Button from 'react-bootstrap/esm/Button';
 
+
 const CreatingOrderNavigation = ({ onBack, onSaveAndContinue, buttonsDisabled }) => {
 
   return (
@@ -15,8 +16,7 @@ const CreatingOrderNavigation = ({ onBack, onSaveAndContinue, buttonsDisabled })
             className="order-nav-btn"
             variant='primary'
             onClick={onBack}
-            style={buttonsDisabled ?
-              styles.disabledButton : {}}
+            style={buttonsDisabled ? styles.disabledButton : {}}
             disabled={buttonsDisabled}
           >Cancel
           </Button>
@@ -26,8 +26,7 @@ const CreatingOrderNavigation = ({ onBack, onSaveAndContinue, buttonsDisabled })
             className="order-nav-btn"
             variant='primary'
             onClick={onSaveAndContinue}
-            style={buttonsDisabled ?
-              styles.disabledButton : {}}
+            style={buttonsDisabled ? styles.disabledButton : {}}
             disabled={buttonsDisabled}
           >Save and continue
           </Button>
@@ -36,5 +35,6 @@ const CreatingOrderNavigation = ({ onBack, onSaveAndContinue, buttonsDisabled })
     </Container >
   );
 };
+
 
 export default CreatingOrderNavigation;

@@ -17,6 +17,7 @@ import { resetOrderState } from "../../utils/reduxUtils";
 
 
 const CreatingOrder = () => {
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -25,10 +26,9 @@ const CreatingOrder = () => {
     const spouseOrPartner = useSelector(state => state.spouseOrPartner);
     const kids = useSelector(state => state.kids);
     const assets = useSelector(state => state.assets);
-    // const clientSecret = "your-client-secret-here";
-
 
     const [showCheckout, setShowCheckout] = useState(false);
+
 
     useEffect(() => {
         let currentStep = 0;
@@ -45,12 +45,12 @@ const CreatingOrder = () => {
         ) {
             currentStep = 1;
         } else {
-            // If testator details are incomplete, set currentStep to 0 and exit early
+            // If testator details are incomplete, set currentStep to 0
             dispatch(updateOrderCurrentStep(0));
             return;
         }
 
-        // Check if spouse details are complete (or if marital status allows skipping this step)
+        // Check if spouse details are complete or if marital status is single or wodowed
         if (
             currentStep === 1 &&
             (testator.maritalStatus === constants.maritalStatus.SINGLE ||
@@ -67,12 +67,12 @@ const CreatingOrder = () => {
         ) {
             currentStep = 2;
         } else {
-            // If spouse details are incomplete, set currentStep to 1 and exit early
+            // If spouse details are incomplete, set currentStep to 1
             dispatch(updateOrderCurrentStep(1));
             return;
         }
 
-        // Check if kids details are complete (or if testator has no children)
+        // Check if kids details are complete or if testator has no children
         if (
             currentStep === 2 &&
             (testator.hasChildrenStatus === 'no' ||
@@ -90,7 +90,7 @@ const CreatingOrder = () => {
         ) {
             currentStep = 3;
         } else {
-            // If kids details are incomplete, set currentStep to 2 and exit early
+            // If kids details are incomplete, set currentStep to 2
             dispatch(updateOrderCurrentStep(2));
             return;
         }
@@ -102,7 +102,7 @@ const CreatingOrder = () => {
         ) {
             currentStep = 4;
         } else {
-            // If assets details are incomplete, set currentStep to 3 and exit early
+            // If assets details are incomplete, set currentStep to 3
             dispatch(updateOrderCurrentStep(3));
             return;
         }
@@ -112,14 +112,13 @@ const CreatingOrder = () => {
             currentStep === 4 && (assets && assets.length > 0)
         ) {
             const allAssetsValid = assets.every(asset => {
-                // Check if distribution is an array and exists
                 if (Array.isArray(asset.distribution)) {
                     const totalDistribution = asset.distribution.reduce((sum, dist) => {
                         return sum + Number(dist.receivingAmount);
                     }, 0);
                     return totalDistribution === 100;
                 } else {
-                    // If distribution doesn't exist or isn't an array, consider the asset invalid
+                    // If distribution doesn't exist consider the asset invalid
                     return false;
                 }
             });
@@ -127,7 +126,7 @@ const CreatingOrder = () => {
             if (allAssetsValid) {
                 currentStep = 5;
             } else {
-                // If assets distribution is not valid, set currentStep to 4 and exit early
+                // If assets distribution is not valid set currentStep to 4
                 dispatch(updateOrderCurrentStep(4));
                 return;
             }
@@ -144,18 +143,19 @@ const CreatingOrder = () => {
             if (executors.length > 0) {
                 currentStep = 6;
             } else {
-                // If executors are not valid, set currentStep to 5 and exit early
+                // If executors are not valid, set currentStep to 5
                 dispatch(updateOrderCurrentStep(5));
                 return;
             }
         }
 
-        // Dispatch the current step to the Redux store
+        // Update currentStep in Redux
         dispatch(updateOrderCurrentStep(currentStep));
     }, [testator, spouseOrPartner, kids, assets, currentOrder, dispatch]);
 
 
     const currentStep = useSelector(state => state.currentOrderStep.currentStep);
+
 
     return (
         <>
@@ -196,5 +196,6 @@ const CreatingOrder = () => {
         </>
     )
 }
+
 
 export default CreatingOrder;

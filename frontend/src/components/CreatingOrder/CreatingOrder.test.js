@@ -144,6 +144,7 @@ const mockState = {
 };
 
 describe('CreatingOrder', () => {
+    
     const mockStore = configureStore({
         reducer: {
             currentOrder: currentOrderReducer,
@@ -161,6 +162,7 @@ describe('CreatingOrder', () => {
     });
 
     test('renders CreatingOrder component correctly', () => {
+
         render(
             <Provider store={mockStore}>
                 <BrowserRouter>
