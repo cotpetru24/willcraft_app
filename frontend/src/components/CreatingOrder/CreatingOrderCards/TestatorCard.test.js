@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { BrowserRouter } from 'react-router-dom';
 import TestatorCard from './TestatorCard';
-import testatorReducer from '../../../features/people/testator/testatorSlice';
 
 
 const mockState = {
@@ -19,6 +18,7 @@ const mockState = {
     }
 };
 
+
 describe('TestatorCard', () => {
     const mockStore = configureStore({
         reducer: {
@@ -29,7 +29,8 @@ describe('TestatorCard', () => {
     });
 
 
-    test('renders TestatorCard component correctly', () => {
+    test('should render TestatorCard component correctly', () => {
+
         render(
             <Provider store={mockStore}>
                 <BrowserRouter>
@@ -37,7 +38,7 @@ describe('TestatorCard', () => {
                 </BrowserRouter>
             </Provider>
         );
-    
+
         expect(screen.getByText('About you')).toBeInTheDocument();
         expect(screen.getByText(/Mr\.\sJohn\sSmith/)).toBeInTheDocument();
         expect(screen.getByText('Date of birth:')).toBeInTheDocument();
@@ -45,9 +46,10 @@ describe('TestatorCard', () => {
         expect(screen.getByText('123 London Road')).toBeInTheDocument();
         expect(screen.getByText('Edit')).toBeInTheDocument();
     });
-      
 
-    test('renders "Get Started" button when fields are not filled', () => {
+
+    test('should render "Get Started" button when fields are not filled in', () => {
+
         const mockStateEmpty = {
             testator: {
                 title: '',

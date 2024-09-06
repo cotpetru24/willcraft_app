@@ -9,12 +9,14 @@ import Card from 'react-bootstrap/Card';
 import React from "react";
 import styles from "../../../common/styles";
 
-const AssetsCard = () => {
-    const navigate = useNavigate();
 
+const AssetsCard = () => {
+
+    const navigate = useNavigate();
     const assetsData = useSelector(state => state.assets);
     const currentOrderStep = useSelector(state => state.currentOrderStep);
     const allNecessaryFieldsSpecified = currentOrderStep.currentStep >= 4;
+
 
     return (
         <>
@@ -88,7 +90,8 @@ const AssetsCard = () => {
                                             className="creating-order-tile-btns"
                                             onClick={() => {
                                                 navigate('/assets')
-                                                window.scrollTo(0, 0);}
+                                                window.scrollTo(0, 0);
+                                            }
                                             }
                                             style={currentOrderStep.currentStep < 3 ?
                                                 styles.disabledButton : {}}
@@ -113,7 +116,8 @@ const AssetsCard = () => {
                                             className="m-1 creating-order-tile-btns"
                                             onClick={() => {
                                                 navigate('/assets')
-                                                window.scrollTo(0, 0);}
+                                                window.scrollTo(0, 0);
+                                            }
                                             }
                                             style={currentOrderStep.currentStep !== 3 ?
                                                 styles.disabledButton : {}}
@@ -130,7 +134,7 @@ const AssetsCard = () => {
             </Container>
         </>
     );
-
 }
+
 
 export default AssetsCard;

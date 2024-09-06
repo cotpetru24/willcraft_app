@@ -11,12 +11,13 @@ import styles from "../../../common/styles";
 
 
 const AssetsDistributionCard = () => {
-    const navigate = useNavigate();
 
+    const navigate = useNavigate();
     const testator = useSelector(state => state.testator)
     const assetsData = useSelector(state => state.assets);
     const currentOrderStep = useSelector(state => state.currentOrderStep);
     const allNecessaryFieldsSpecified = currentOrderStep.currentStep >= 5;
+
 
     return (
         <>
@@ -92,7 +93,8 @@ const AssetsDistributionCard = () => {
                                             className="creating-order-tile-btns"
                                             onClick={() => {
                                                 navigate('/assetsDistribution')
-                                                window.scrollTo(0, 0);}
+                                                window.scrollTo(0, 0);
+                                            }
                                             }
                                             style={currentOrderStep.currentStep < 4 ?
                                                 styles.disabledButton : {}}
@@ -117,7 +119,8 @@ const AssetsDistributionCard = () => {
                                             className="m-1 creating-order-tile-btns"
                                             onClick={() => {
                                                 navigate('/assetsDistribution')
-                                                window.scrollTo(0, 0);}
+                                                window.scrollTo(0, 0);
+                                            }
                                             }
                                             style={currentOrderStep.currentStep !== 4 ?
                                                 styles.disabledButton : {}}
@@ -135,5 +138,6 @@ const AssetsDistributionCard = () => {
         </>
     );
 }
+
 
 export default AssetsDistributionCard;

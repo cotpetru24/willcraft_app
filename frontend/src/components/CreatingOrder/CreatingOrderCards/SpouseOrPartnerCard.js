@@ -12,6 +12,7 @@ import styles from "../../../common/styles";
 
 
 const SpouseOrPartnerCard = () => {
+
     const navigate = useNavigate();
 
     const [spouseOrPartnerInitialData, setSpouseOrPartnerInitialData] = useState({
@@ -26,6 +27,7 @@ const SpouseOrPartnerCard = () => {
     const currentOrderStep = useSelector(state => state.currentOrderStep);
     const allNecessaryFieldsSpecified = currentOrderStep.currentStep >= 2;
 
+
     useEffect(() => {
         if (spouseOrPartnerData) {
             setSpouseOrPartnerInitialData({
@@ -36,6 +38,7 @@ const SpouseOrPartnerCard = () => {
             });
         }
     }, [spouseOrPartnerData]);
+
 
     return (
         <>
@@ -169,5 +172,6 @@ const SpouseOrPartnerCard = () => {
         </>
     );
 }
+
 
 export default SpouseOrPartnerCard;

@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 
 
 export const OrderProgressBar = () => {
+
     const currentOrderStep = useSelector(state => state.currentOrderStep.currentStep || 0);
     const now = Math.floor((currentOrderStep / 6) * 100 / 10) * 10;
     const textColor = now > 50 ? 'rgba(255, 255, 255, 0.87)' : 'black';
@@ -30,10 +31,12 @@ export const OrderProgressBar = () => {
 
 
 const ProgressAndInstructionsCard = ({ setShowCheckout, showCheckout }) => {
+
     const dispatch = useDispatch();
     const currentOrderStep = useSelector(state => state.currentOrderStep);
-
     const order = useSelector(state => state.currentOrder);
+
+
     const handleGenerateWill = async () => {
         try {
             const response = await dispatch(getOrderThunk(order.orderId));
@@ -46,6 +49,7 @@ const ProgressAndInstructionsCard = ({ setShowCheckout, showCheckout }) => {
             console.error("An error occurred while generating the Will PDF:", error);
         }
     };
+
 
     return (
         <Container className="mb-5">
@@ -166,5 +170,6 @@ const ProgressAndInstructionsCard = ({ setShowCheckout, showCheckout }) => {
         </Container>
     );
 };
+
 
 export default ProgressAndInstructionsCard;

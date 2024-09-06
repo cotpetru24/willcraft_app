@@ -9,13 +9,15 @@ import Card from 'react-bootstrap/Card';
 import React from "react";
 import styles from "../../../common/styles";
 
-const KidsCard = () => {
-    const navigate = useNavigate();
 
+const KidsCard = () => {
+
+    const navigate = useNavigate();
     const testator = useSelector(state => state.testator)
     const kidsData = useSelector(state => state.kids);
     const currentOrderStep = useSelector(state => state.currentOrderStep);
     const allNecessaryFieldsSpecified = currentOrderStep.currentStep >= 3;
+
 
     return (
         <>
@@ -125,5 +127,6 @@ const KidsCard = () => {
         </>
     );
 }
+
 
 export default KidsCard;

@@ -11,13 +11,11 @@ import styles from "../../../common/styles";
 
 
 const ExecutorsCard = () => {
-    const navigate = useNavigate();
 
+    const navigate = useNavigate();
     const executorsData = useSelector(state => state.additionalExecutors)
     const currentOrder = useSelector(state => state.currentOrder)
     const currentOrderStep = useSelector(state => state.currentOrderStep);
-
-
 
     const allExecutors = currentOrder.peopleAndRoles
         .filter(p => p.role.includes('executor') || p.role.includes('additional executor'))
@@ -110,5 +108,6 @@ const ExecutorsCard = () => {
         </>
     );
 }
+
 
 export default ExecutorsCard;
