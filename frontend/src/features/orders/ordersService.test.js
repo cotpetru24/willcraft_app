@@ -4,6 +4,7 @@ import ordersService from "./ordersService";
 
 const mock = new MockAdapter(axios);
 
+
 describe('ordersService', () => {
     afterEach(() => {
         mock.reset();
@@ -37,7 +38,7 @@ describe('ordersService', () => {
         const orderId = '66d252ed245514d47ddb7247';
 
 
-        mock.onDelete('/api/orders/' + orderId, { headers: { Authorization: `Bearer ${token}` } }).reply(200, {id: orderId});
+        mock.onDelete('/api/orders/' + orderId, { headers: { Authorization: `Bearer ${token}` } }).reply(200, { id: orderId });
         const response = await ordersService.deleteOrder(orderId, token);
         expect(response.id).toEqual(orderId)
     })

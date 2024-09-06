@@ -1,17 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import orderAssetsService from './orderAssetsService';
 
-
 const initialState = [];
 
-// Create Asset Thunk
+
 export const createAssetThunk = createAsyncThunk(
   'assets/createAssetThunk',
-  async (assetData, thunkApi) => {
-    // Get the userId from the state
-    const userId = thunkApi.getState().auth.user._id;
 
-    // Add userId to assetData
+  async (assetData, thunkApi) => {
+
+    const userId = thunkApi.getState().auth.user._id;
     const updatedAssetData = { ...assetData, userId };
 
     try {
@@ -33,6 +31,7 @@ export const createAssetThunk = createAsyncThunk(
 
 export const updateAssetThunk = createAsyncThunk(
   'assets/updateAssetThunk',
+
   async (assetData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;

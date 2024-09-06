@@ -10,6 +10,7 @@ const initialState = {
     message: ''
 }
 
+
 export const getOrders = createAsyncThunk(
     'orders/getAllUserOrders',
     async (_, thunkAPI) => {
@@ -23,10 +24,12 @@ export const getOrders = createAsyncThunk(
                 error.response && error.response.data && error.response.data.message)
                 || error.message
                 || error.toString()
+
             return thunkAPI.rejectWithValue(message)
         }
     }
 )
+
 
 export const deleteOrder = createAsyncThunk(
     'orders/deleteOrder',
@@ -40,10 +43,12 @@ export const deleteOrder = createAsyncThunk(
                 (error.response && error.response.data && error.response.data.message)
                 || error.message
                 || error.toString()
+
             return thunkAPI.rejectWithValue(message)
         }
     }
 )
+
 
 export const ordersSlice = createSlice({
     name: 'orders',
@@ -51,7 +56,6 @@ export const ordersSlice = createSlice({
     reducers: {
         reset: state => initialState
     },
-
     extraReducers: (builder) => {
         builder
 
@@ -61,13 +65,13 @@ export const ordersSlice = createSlice({
             })
             .addCase(getOrders.fulfilled, (state, action) => {
                 state.isLoading = false
-                    state.isSuccess = true
-                    state.orders=action.payload
+                state.isSuccess = true
+                state.orders = action.payload
             })
             .addCase(getOrders.rejected, (state, action) => {
                 state.isLoading = false
-                    state.isError = true
-                    state.message = action.payload
+                state.isError = true
+                state.message = action.payload
             })
 
 
@@ -77,17 +81,18 @@ export const ordersSlice = createSlice({
             })
             .addCase(deleteOrder.fulfilled, (state, action) => {
                 state.isLoading = false
-                    state.isSuccess = true
-                    state.orders = state.orders.filter(order => order._id !== action.payload.id)
+                state.isSuccess = true
+                state.orders = state.orders.filter(order => order._id !== action.payload.id)
             })
             .addCase(deleteOrder.rejected, (state, action) => {
                 state.isLoading = false
-                    state.isError = true
-                    state.message = action.payload
+                state.isError = true
+                state.message = action.payload
             })
     }
 })
 
-export const {reset} = ordersSlice.actions
+
+export const { reset } = ordersSlice.actions
 
 export default ordersSlice.reducer

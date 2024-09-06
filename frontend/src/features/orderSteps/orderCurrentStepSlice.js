@@ -1,8 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+
 const initialState = {
   currentStep: 0,
 };
+
 
 const orderCurrentStepSlice = createSlice({
   name: 'currentOrderStep',
@@ -16,6 +18,7 @@ const orderCurrentStepSlice = createSlice({
     }
   },
 });
+
 
 export const { updateOrderCurrentStep, resetOrderCurrentStep } = orderCurrentStepSlice.actions;
 
