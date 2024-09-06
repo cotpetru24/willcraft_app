@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import constants from "../../common/constants";
 import { createPaymentIntent, createPayment } from "./paymentService";
 
 
@@ -15,6 +14,7 @@ export const createPaymentIntentThunk = createAsyncThunk(
         }
     }
 );
+
 
 export const createPaymentThunk = createAsyncThunk(
     'payments/createPayment',

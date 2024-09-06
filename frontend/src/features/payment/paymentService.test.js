@@ -4,12 +4,14 @@ import { createPaymentIntent, createPayment } from './paymentService';
 
 const mock = new MockAdapter(axios);
 
+
 describe('paymentService', () => {
+
     afterEach(() => {
         mock.reset();
     });
 
-    test('createPaymentIntent successfully', async () => {
+    test('calls createPaymentIntent successfully', async () => {
         const token = 'mock_token';
         const products = [
             { name: 'Product 1', price: 20 },
@@ -29,6 +31,7 @@ describe('paymentService', () => {
         const response = await createPaymentIntent(products, token);
         expect(response.clientSecret).toEqual(clientSecret);
     });
+
 
     test('createPayment successfully', async () => {
         const token = 'mock_token';
@@ -58,6 +61,7 @@ describe('paymentService', () => {
         expect(response).toEqual(paymentResponse);
     });
 
+
     test('createPaymentIntent failed with error', async () => {
         const token = 'mock_token';
         const products = [
@@ -71,6 +75,7 @@ describe('paymentService', () => {
         const response = await createPaymentIntent(products, token);
         expect(response).toBeUndefined();
     });
+
 
     test('createPayment failed with error', async () => {
         const token = 'mock_token';

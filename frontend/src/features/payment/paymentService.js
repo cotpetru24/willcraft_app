@@ -3,7 +3,6 @@ const API_PAYMENT_INTENT_URL = '/api/payments/create-payment-intent';
 const API_PAYMENT_URL = '/api/payments';
 
 
-
 export const createPaymentIntent = async (products, token) => {
   const config = {
     headers: {
@@ -21,7 +20,6 @@ export const createPaymentIntent = async (products, token) => {
     console.error("Error fetching client secret:", error);
   }
 };
-
 
 
 export const createPayment = async (paymentData, token) => {
