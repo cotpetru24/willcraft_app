@@ -4,6 +4,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { BrowserRouter } from 'react-router-dom';
 import OrderItem from './OrderItem';
 
+
 const mockReducer = (state = {}, action) => state;
 
 describe('OrderItem', () => {
@@ -20,7 +21,7 @@ describe('OrderItem', () => {
         }
     });
 
-    test('renders order details correctly', () => {
+    test('should render OrderItem and order details correctly', () => {
         render(
             <Provider store={store}>
                 <BrowserRouter>

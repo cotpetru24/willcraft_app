@@ -15,7 +15,7 @@ describe('OrdersList', () => {
         }
     });
 
-    test('renders orders correctly', () => {
+    test('should render the orders correctly', () => {
         const mockState = {
             orders: [
                 {
@@ -52,7 +52,7 @@ describe('OrdersList', () => {
         expect(screen.getByText('Test Name 2')).toBeInTheDocument();
     });
 
-    test('renders no wills message correctly', () => {
+    test('should render no wills message correctly', () => {
         const mockState = {
             orders: [],
             isLoading: false,
@@ -72,7 +72,7 @@ describe('OrdersList', () => {
         expect(screen.getByText("Click Create my will to get started.")).toBeInTheDocument();
     });
 
-    test('renders loading spinner when loading', () => {
+    test('should render the loading spinner when loading', () => {
         const mockState = {
             orders: [],
             isLoading: true,

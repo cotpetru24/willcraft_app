@@ -8,11 +8,10 @@ import LoadingSpinner from "../LoadingSpinner";
 
 
 const OrdersList = () => {
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { orders, isLoading, isError, message } = useSelector(state =>
-        state.orders)
-
+    const { orders, isLoading, isError, message } = useSelector(state => state.orders)
     const order = useSelector(state => state.order)
 
     useEffect(() => {
@@ -44,5 +43,6 @@ const OrdersList = () => {
             )
     );
 }
+
 
 export default OrdersList
