@@ -36,6 +36,7 @@ const SpouseOrPartner = () => {
     tel: ''
   });
 
+
   useEffect(() => {
     if (spouseOrPartner) {
       setSpouseOrPartnerFormData({
@@ -43,7 +44,6 @@ const SpouseOrPartner = () => {
         title: spouseOrPartner.title || '',
         fullLegalName: spouseOrPartner.fullLegalName || '',
         fullAddress: spouseOrPartner.fullAddress || '',
-        // dob: spouseOrPartner.dob || '',
         dob: spouseOrPartner.dob ? new Date(spouseOrPartner.dob).toISOString().split('T')[0] : '',
         email: spouseOrPartner.email || '',
         tel: spouseOrPartner.tel || ''
@@ -56,14 +56,13 @@ const SpouseOrPartner = () => {
       if (!savedTestatorData.current) {
         savedTestatorData.current = JSON.parse(JSON.stringify(testator));
       }
-
     }
   }, [spouseOrPartner]
   );
 
 
   useEffect(() => {
-    // Check if the marital status has changed to 'single'
+    // Check if the marital status has changed to single or widowed
     if ((initialMaritalStatus.current !== constants.maritalStatus.SINGLE
       || currentMaritalStatus === constants.maritalStatus.WIDOWED)
       && (
@@ -77,7 +76,7 @@ const SpouseOrPartner = () => {
 
 
   const handleBack = () => {
-    // Revert to the "saved" state
+    // Revert to the saved state
     if (savedTestatorData.current) {
       dispatch(updateTestatorSlice(savedTestatorData.current));
     }
@@ -141,18 +140,15 @@ const SpouseOrPartner = () => {
           };
 
           await dispatch(updateCurrentOrderSlice(updatedOrder));
-
           await dispatch(updateOrderThunk(updatedOrder));
         }
       } else {
-
         await dispatch(spouseOrPartnerThunks.updateSpouseOrPartnerThunk(spouseOrPartner));
       }
     }
 
     // Update testator's marital status if it has changed
     if (initialMaritalStatus.current !== currentMaritalStatus) {
-
       await dispatch(testatorThunks.updateTestatorThunk({ ...testator, maritalStatus: currentMaritalStatus }));
     }
 
@@ -169,6 +165,7 @@ const SpouseOrPartner = () => {
     }
   }
 
+
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setSpouseOrPartnerFormData((prevData) => ({
@@ -176,10 +173,9 @@ const SpouseOrPartner = () => {
       [name]: value
     }));
 
-
-    // Dispatch the change to the Redux store
     dispatch(updateSpouseOrPartnerSlice({ ...spouseOrPartnerFormData, [name]: value }));
   };
+
 
   const handlePlaceSelected = (address) => {
     setSpouseOrPartnerFormData((prevData) => ({
@@ -189,6 +185,7 @@ const SpouseOrPartner = () => {
 
     dispatch(updateSpouseOrPartnerSlice({ ...spouseOrPartnerFormData, fullAddress: address }));
   };
+
 
   return (
     <>
@@ -345,6 +342,7 @@ const SpouseOrPartner = () => {
     </>
   );
 }
+
 
 export default SpouseOrPartner;
 

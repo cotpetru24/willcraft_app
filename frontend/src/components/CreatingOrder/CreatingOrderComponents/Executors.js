@@ -13,11 +13,13 @@ import CreatingOrderNavigation from "../CreatigOrderNavigation";
 
 
 const Executors = () => {
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const currentOrder = useSelector(state => state.currentOrder);
     const additionalExecutors = useSelector(state => state.additionalExecutors)
     const [family, setFamily] = useState([]);
+
 
     useEffect(() => {
         const updatedFamily = currentOrder.peopleAndRoles
@@ -30,9 +32,9 @@ const Executors = () => {
         setFamily(updatedFamily);
     }, [currentOrder.peopleAndRoles, currentOrder]);
 
+
     const [showExecutorForm, setShowExecutorForm] = useState(false);
     const [editExecutorIndex, setEditExecutorIndex] = useState(null);
-
     const savedAdditionalExecutorsData = useRef(null);
     const savedCurrentOrderData = useRef(null);
 
@@ -48,6 +50,7 @@ const Executors = () => {
         tel: ''
     });
 
+
     useEffect(() => {
         if (executor) {
             setExecutorFormData({
@@ -60,7 +63,6 @@ const Executors = () => {
                 tel: additionalExecutorFormData.tel || ''
             })
         }
-        // Store the initial state as "saved" state if it's not already saved
         if (!savedAdditionalExecutorsData.current) {
             savedAdditionalExecutorsData.current = JSON.parse(JSON.stringify(additionalExecutors));
         }
@@ -74,6 +76,7 @@ const Executors = () => {
         setShowExecutorForm(prevState => !prevState);
     };
 
+
     const handleOnChange = (e) => {
         const { name, value } = e.target;
         setExecutorFormData((prevData) => ({
@@ -81,6 +84,7 @@ const Executors = () => {
             [name]: value
         }));
     };
+
 
     const handleExecutorFormAdd = (e) => {
         e.preventDefault();
@@ -99,6 +103,7 @@ const Executors = () => {
         setShowExecutorForm(false);
     };
 
+
     const resetExecutorForm = () => {
         setExecutorFormData({
             _id: '',
@@ -113,10 +118,12 @@ const Executors = () => {
         setEditExecutorIndex(null);
     };
 
+
     const handleRemoveExecutor = (index) => {
         const updatedAdditionalExecutors = additionalExecutors.filter((_, i) => i !== index);
         dispatch(updateAdditionalExecutorsSlice(updatedAdditionalExecutors));
     };
+
 
     const handleEditExecutor = (index) => {
         const executorToEdit = additionalExecutors[index];
@@ -132,6 +139,7 @@ const Executors = () => {
         setEditExecutorIndex(index);
         setShowExecutorForm(true);
     };
+
 
     const handleSaveAndContinue = async (e) => {
         e.preventDefault();
@@ -185,6 +193,7 @@ const Executors = () => {
         navigate('/creatingOrder');
     };
 
+
     const handlePlaceSelected = (address) => {
         setExecutorFormData((prevData) => ({
             ...prevData,
@@ -192,9 +201,9 @@ const Executors = () => {
         }));
     };
 
-    const [familyExecutors, setFamilyExecutors] = useState([]);
 
     const handleExecutorChecked = (index, isChecked) => {
+
         const familyExecutor = family[index];
 
         const updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(personRole => {
@@ -393,5 +402,6 @@ const Executors = () => {
         </>
     )
 }
+
 
 export default Executors;

@@ -15,7 +15,9 @@ import { useMediaQuery } from 'react-responsive';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
 const AssetsDistribution = () => {
+
     const isXs = useMediaQuery({ maxWidth: 767 });
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -48,8 +50,9 @@ const AssetsDistribution = () => {
         role: 'additional beneficiary',
     });
 
-    // Effect to calculate receiving amounts and total percentages
+
     useEffect(() => {
+        // Effect to calculate receiving amounts and total percentages
         if (additionalBeneficiary) {
             setAdditionalBeneficiaryFormData({
                 _id: additionalBeneficiary._id || '',
@@ -63,7 +66,6 @@ const AssetsDistribution = () => {
             });
         }
 
-        // Saving the initial data
         if (!savedAdditionalBeneficiariesData.current) {
             savedAdditionalBeneficiariesData.current = JSON.parse(JSON.stringify(additionalBeneficiaries));
         }
@@ -103,6 +105,7 @@ const AssetsDistribution = () => {
         }
 
     }, [additionalBeneficiaries, currentOrder, assets, totalPercentage]);
+
 
     useEffect(() => {
         const updatedPotentialBeneficiaries = [
@@ -146,6 +149,7 @@ const AssetsDistribution = () => {
             dispatch(updateAssetsSlice(updatedAssets));
         }
     }, [assets]);
+
 
     const handleOnChange = (value, assetIndex, personId) => {
 
@@ -213,7 +217,9 @@ const AssetsDistribution = () => {
         dispatch(updateAssetsSlice(updatedAssets));
     };
 
+
     const handleBeneficiaryChecked = (personIndex, assetIndex, isChecked) => {
+
         const familyBeneficiary = potentialBeneficiaries[personIndex];
         const assetToUpdate = assets[assetIndex];
 
@@ -275,6 +281,7 @@ const AssetsDistribution = () => {
         dispatch(updateCurrentOrderSlice(updatedCurrentOrder));
     };
 
+
     const handleAdditionalBeneficiaryFormAdd = async (e) => {
         e.preventDefault();
 
@@ -282,6 +289,7 @@ const AssetsDistribution = () => {
 
             const updatedBeneficiaryDetails = additionalBeneficiaryFormData;
             let tempAdditionalBeneficiariesToUpdate = [...additionalBeneficiariesToUpdate];
+
 
             const updatedAdditionalBeneficiaries = additionalBeneficiaries.map((beneficiary, index) => {
                 if (index === editAdditionalBeneficiaryIndex) {
@@ -299,13 +307,13 @@ const AssetsDistribution = () => {
                 return beneficiary;
             });
 
+
             // Set the updated beneficiaries to the state after the loop
             setAdditionalBeneficiariesToUpdate(tempAdditionalBeneficiariesToUpdate);
-            console.log(`ben to updated= ${JSON.stringify(tempAdditionalBeneficiariesToUpdate)}`)
-
             dispatch(updateAdditionalBeneficiariesSlice(updatedAdditionalBeneficiaries));
 
             const beneficiaryToUpdate = additionalBeneficiaries[editAdditionalBeneficiaryIndex];
+
 
             // Update the beneficiary details in peopleAndRoles in currentOrder
             const updatedPeopleAndRoles = currentOrder.peopleAndRoles.map(role => {
@@ -320,6 +328,7 @@ const AssetsDistribution = () => {
                 }
                 return role;
             });
+
 
             // Update the beneficiary details in distribution for each asset
             const updatedAssets = assets.map(asset => {
@@ -337,6 +346,7 @@ const AssetsDistribution = () => {
                 });
                 return { ...asset, distribution: updatedDistribution };
             });
+
 
             // Update the currentOrder slice
             const updatedCurrentOrder = {
@@ -357,10 +367,11 @@ const AssetsDistribution = () => {
                 }))
             };
 
+
             await dispatch(updateCurrentOrderSlice(updatedCurrentOrder));
             await dispatch(updateAssetsSlice(updatedAssets));
 
-            // Reset form and state
+            // Reset the form and state
             setEditAdditionalBeneficiaryIndex(null);
             resetAdditionalBeneficiaryForm();
             setShowAdditionalBeneficiaryForm(false);
@@ -378,6 +389,8 @@ const AssetsDistribution = () => {
         resetAdditionalBeneficiaryForm();
         setShowAdditionalBeneficiaryForm(false);
     };
+
+
     const handleSaveAndContinue = async (e) => {
         e.preventDefault();
 
@@ -414,10 +427,12 @@ const AssetsDistribution = () => {
                             }
                             return addBen;
                         });
+
                         await dispatch(updateAdditionalBeneficiariesSlice(updatedAdditionalBeneficiariesSlice));
+
+
                         updatedAssetsSlice = updatedAssetsSlice.map((asset) => {
                             const updatedDistribution = asset.distribution.map((dist) => {
-                                // Check if dist.personId is an object or a string and compare accordingly
                                 const distPersonId = typeof dist.personId === 'object' ? dist.personId._id : dist.personId;
 
                                 if (distPersonId === benToStore.personId._id) {
@@ -434,6 +449,7 @@ const AssetsDistribution = () => {
                             });
                             return { ...asset, distribution: updatedDistribution };
                         });
+
 
                         await dispatch(updateAssetsSlice(updatedAssetsSlice));
 
@@ -502,7 +518,6 @@ const AssetsDistribution = () => {
         else {
             await dispatch(updateAssetsSlice(assets));
             await dispatch(updateAdditionalBeneficiariesSlice(additionalBeneficiaries));
-
             await dispatch(updateCurrentOrderSlice({
                 ...currentOrder,
                 assetsAndDistribution: assets.map(asset => ({
@@ -585,7 +600,9 @@ const AssetsDistribution = () => {
         });
     };
 
+
     const handleEditAdditionalBeneficiary = (index) => {
+
         const beneficiaryToEdit = additionalBeneficiaries[index];
         setAdditionalBeneficiaryFormData({
             _id: beneficiaryToEdit.personId._id || '',
@@ -633,11 +650,14 @@ const AssetsDistribution = () => {
 
 
     const handleRemoveAdditionalBeneficiary = async (index) => {
+
         const beneficiaryToDelete = additionalBeneficiaries.find((_, i) => i === index);
+
         if (!beneficiaryToDelete.personId._id.includes("temp")) {
             setAdditionalBeneficiariesToRemove(prev => [...prev, beneficiaryToDelete.personId._id]);
         }
         const updatedAdditionalBeneficiaries = additionalBeneficiaries.filter((_, i) => i !== index);
+
         await dispatch(updateAdditionalBeneficiariesSlice(updatedAdditionalBeneficiaries));
 
         // Remove the beneficiary from peopleAndRoles in currentOrder
@@ -648,7 +668,6 @@ const AssetsDistribution = () => {
             const updatedDistribution = asset.distribution.filter(dist => dist.personId._id !== beneficiaryToDelete.personId._id);
             return { ...asset, distribution: updatedDistribution };
         });
-
 
         // Update the currentOrder slice
         const updatedCurrentOrder = {
@@ -1135,6 +1154,7 @@ const AssetsDistribution = () => {
         </>
     );
 }
+
 
 export default AssetsDistribution;
 

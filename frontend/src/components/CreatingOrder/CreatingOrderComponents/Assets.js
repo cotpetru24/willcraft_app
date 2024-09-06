@@ -16,6 +16,7 @@ import Button from "react-bootstrap/Button";
 
 
 const Assets = () => {
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const currentOrder = useSelector(state => state.currentOrder);
@@ -35,6 +36,7 @@ const Assets = () => {
         otherAssetDetails: ''
 
     });
+
 
     useEffect(() => {
         if (asset) {
@@ -350,6 +352,7 @@ const Assets = () => {
         </>
     )
 }
+
 
 export default Assets;
 

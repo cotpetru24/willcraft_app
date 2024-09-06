@@ -27,8 +27,7 @@ const Kids = () => {
     const kids = useSelector(state => state.kids);
     const [showKidsForm, setShowKidsForm] = useState(false);
     const [currentHasChildrenStatus, setHasChildrenStatus] = useState(testator.hasChildrenStatus);
-    const [editKidIndex, setEditKidIndex] = useState(null); // New state to track the index of the kid being edited
-
+    const [editKidIndex, setEditKidIndex] = useState(null);
     const savedKidsData = useRef(null);
     const savedTestatorData = useRef(null);
     const initialHasChildrenStatus = useRef(testator.hasChildrenStatus);
@@ -59,7 +58,6 @@ const Kids = () => {
             })
         }
 
-        // Store the initial state as "saved" state if it's not already saved
         if (!savedTestatorData.current) {
             savedTestatorData.current = JSON.parse(JSON.stringify(testator));
         }
@@ -72,7 +70,6 @@ const Kids = () => {
 
 
     const handleBack = () => {
-        // Revert to the "saved" state
         if (savedTestatorData.current) {
             dispatch(updateTestatorSlice(savedTestatorData.current));
         }
@@ -112,7 +109,7 @@ const Kids = () => {
         const updatedOrder = {
             ...currentOrder,
             peopleAndRoles: [
-                ...currentOrder.peopleAndRoles.filter(pr => !pr.role.includes(constants.role.KID)), // Remove existing kids to avoid duplicates
+                ...currentOrder.peopleAndRoles.filter(pr => !pr.role.includes(constants.role.KID)),
                 ...updatedKids.map(kid => ({
                     personId: kid._id,
                     role: [constants.role.KID]
@@ -164,7 +161,7 @@ const Kids = () => {
                 index === editKidIndex ? kidFormData : kid
             );
             dispatch(updateKidsSlice(updatedKids));
-            setEditKidIndex(null); // Reset the edit index
+            setEditKidIndex(null);
         } else {
             dispatch(updateKidsSlice([...kids, kidFormData]));
         }
@@ -419,6 +416,7 @@ const Kids = () => {
         </>
     )
 }
+
 
 export default Kids;
 

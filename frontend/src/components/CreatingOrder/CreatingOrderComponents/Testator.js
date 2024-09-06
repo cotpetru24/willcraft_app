@@ -43,7 +43,7 @@ const Testator = () => {
         maritalStatus: testator.maritalStatus || '',
       });
 
-      // Store the initial state as "saved" state if it's not already saved
+      // Store the initial state of testator slice
       if (!savedTestatorData.current) {
         savedTestatorData.current = JSON.parse(JSON.stringify(testator));
       }
@@ -52,13 +52,15 @@ const Testator = () => {
   }, [testator]
   );
 
+
   const handleBack = () => {
-    // Revert to the "saved" state
+    // Revert to the saved testator state
     if (savedTestatorData.current) {
       dispatch(updateTestatorSlice(savedTestatorData.current));
     }
     navigate('/creatingOrder');
   };
+
 
   const handleSaveAndContinue = async () => {
     if (!testator._id) {
@@ -185,5 +187,6 @@ const Testator = () => {
     </>
   );
 }
+
 
 export default Testator;
