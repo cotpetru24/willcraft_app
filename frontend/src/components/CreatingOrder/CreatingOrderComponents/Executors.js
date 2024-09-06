@@ -6,8 +6,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useRef, useEffect } from "react";
 import styles from "../../../common/styles";
 import { updateCurrentOrderSlice, updateOrderThunk } from "../../../features/currentOrder/currentOrderSlice";
-import { createExecutorThunk, updateExecutorThunk } from "../../../features/additionalExecutors/additionalExecutorsThunks";
-import { updateAdditionalExecutorsSlice } from "../../../features/additionalExecutors/additionalExecutorsSlice"
+import { createExecutorThunk, updateExecutorThunk } from "../../../features/people/additionalExecutors/additionalExecutorsThunks";
+import { updateAdditionalExecutorsSlice } from "../../../features/people/additionalExecutors/additionalExecutorsSlice"
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import CreatingOrderNavigation from "../CreatigOrderNavigation";
 

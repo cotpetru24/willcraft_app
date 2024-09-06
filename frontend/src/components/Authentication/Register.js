@@ -12,7 +12,9 @@ import Button from "react-bootstrap/esm/Button";
 import Col from "react-bootstrap/esm/Col";
 
 
+// Register component
 const Register = () => {
+    // Set state for storing form data
     const [formData, setFormData] = useState({
         firstName: '', lastName: '',
         email: '', password: '', password2: ''
@@ -22,35 +24,42 @@ const Register = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    // Get necessary state from the Redux store
     const { user, isLoading, isError, isSuccess, message } = useSelector(state => state.auth);
 
+    // Handle registration status changes
     useEffect(() => {
         if (isError) toast.error(message);
         if (isSuccess || user) navigate('/dashboard');
         dispatch(reset());
-    },
-        [user, isSuccess, isError, message, navigate, dispatch]
-    )
+    }, [user, isSuccess, isError, message, navigate, dispatch]);
 
+    // Handle form input changes
     const onChange = e => {
         setFormData(prevState => ({
             ...prevState,
             [e.target.name]: e.target.value
-        }))
-    }
+        }));
+    };
 
+    // Handle form submission for registration
     const onSubmit = e => {
         e.preventDefault();
 
+        // Check if passwords match
         if (password !== password2) {
-            toast.error('Passwords don\'t match')
+            toast.error('Passwords don\'t match');
         }
         else {
-            const userData = { firstName, lastName, email, password }
+            // Create user data object
+            const userData = { firstName, lastName, email, password };
+            // Dispatch register action
             dispatch(register(userData));
         }
     };
 
+    // Render loadingSpinner if loading, else render registration form
     return (
         isLoading ? <LoadingSpinner /> : (
             <>
@@ -63,6 +72,7 @@ const Register = () => {
                     <Row className="justify-content-center">
                         <Col xs={12} md={4} className="mx-auto">
                             <Form onSubmit={onSubmit}>
+                                {/* First name input field */}
                                 <Form.Group className="mb-3" controlId="formGroupFirstName">
                                     <Form.Label className="bold-label">First Name</Form.Label>
                                     <Form.Control
@@ -74,6 +84,8 @@ const Register = () => {
                                         required
                                     />
                                 </Form.Group>
+
+                                {/* Last name input field */}
                                 <Form.Group className="mb-3" controlId="formGroupLastName">
                                     <Form.Label className="bold-label">Last Name</Form.Label>
                                     <Form.Control
@@ -85,6 +97,8 @@ const Register = () => {
                                         required
                                     />
                                 </Form.Group>
+
+                                {/* Email input field */}
                                 <Form.Group className="mb-3" controlId="formGroupEmail">
                                     <Form.Label className="bold-label">Email address</Form.Label>
                                     <Form.Control
@@ -96,6 +110,8 @@ const Register = () => {
                                         required
                                     />
                                 </Form.Group>
+
+                                {/* Password input field */}
                                 <Form.Group className="mb-3" controlId="formGroupPassword">
                                     <Form.Label className="bold-label">Password</Form.Label>
                                     <Form.Control
@@ -107,6 +123,8 @@ const Register = () => {
                                         required
                                     />
                                 </Form.Group>
+
+                                {/* Confirm password input field */}
                                 <Form.Group className="mb-3" controlId="formGroupPassword2">
                                     <Form.Label className="bold-label">Confirm password</Form.Label>
                                     <Form.Control
@@ -118,12 +136,16 @@ const Register = () => {
                                         required
                                     />
                                 </Form.Group>
+
+                                {/* Submit button */}
                                 <Button variant="primary" type="submit" className="w-100 mt-3">
                                     Register
                                 </Button>
                             </Form>
                         </Col>
                     </Row>
+
+                    {/* Link to the login page */}
                     <Row className="mt-3 justify-content-start">
                         <Col xs={12} md={4} className="mx-auto">
                             <p>
@@ -131,10 +153,10 @@ const Register = () => {
                             </p>
                         </Col>
                     </Row>
-                </Container >
+                </Container>
             </>
         )
-    )
+    );
 }
 
 

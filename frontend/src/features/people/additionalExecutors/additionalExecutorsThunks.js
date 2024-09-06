@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import peopleService from "../people/peopleService";
+import peopleService from "../peopleService";
 
 
 export const createExecutorThunk = createAsyncThunk(

@@ -156,7 +156,7 @@ const CreatingOrder = () => {
 
     const currentStep = useSelector(state => state.currentOrderStep.currentStep);
 
-
+    // Render the component structure with cards and navigation
     return (
         <>
             <Container>

@@ -12,34 +12,42 @@ import Button from "react-bootstrap/esm/Button";
 import Col from "react-bootstrap/esm/Col";
 
 
+// Login component
 const Login = () => {
+
+    // Set local state to store form data
     const [formData, setFormData] = useState({ email: '', password: '' });
     const { email, password } = formData;
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
     const { user, isLoading, isError, isSuccess, message } = useSelector(state => state.auth);
 
+    // Handle authentication status changes
     useEffect(() => {
         if (isError) toast.error(message);
         if (isSuccess || user) navigate('/dashboard');
         dispatch(reset());
-    }, [user, isError, isSuccess, message, navigate, dispatch]
+    }, [user, isError, isSuccess, message, navigate, dispatch]);
 
-    );
 
+    // Handle form input changes
     const onChange = e => {
         setFormData(prevState => ({
             ...prevState,
             [e.target.name]: e.target.value
-        }))
+        }));
     };
 
+    // Handle login form submission
     const onSubmit = e => {
-        e.preventDefault()
-        const userData = { email, password }
-        dispatch(login(userData))
+        e.preventDefault();
+        const userData = { email, password };
+        dispatch(login(userData));
     };
 
+    // Render loading spinner if loading, otherwise render login form
     return (
         isLoading ? <LoadingSpinner /> : (
             <>
@@ -52,6 +60,7 @@ const Login = () => {
                     <Row className="justify-content-center">
                         <Col xs={12} md={4} className="mx-auto">
                             <Form onSubmit={onSubmit}>
+                                {/* Email input field */}
                                 <Form.Group className="mb-3" controlId="formGroupEmail">
                                     <Form.Label className="bold-label">Email address</Form.Label>
                                     <Form.Control
@@ -63,6 +72,8 @@ const Login = () => {
                                         required
                                     />
                                 </Form.Group>
+
+                                {/* Password input field */}
                                 <Form.Group className="mb-3" controlId="formGroupPassword">
                                     <Form.Label className="bold-label">Password</Form.Label>
                                     <Form.Control
@@ -75,12 +86,16 @@ const Login = () => {
                                         required
                                     />
                                 </Form.Group>
+
+                                {/* Submit button */}
                                 <Button variant="primary" type="submit" className="w-100 mt-3">
                                     Login
                                 </Button>
                             </Form>
                         </Col>
                     </Row>
+
+                    {/* Link to register page */}
                     <Row className="mt-3 justify-content-start">
                         <Col xs={12} md={4} className="mx-auto">
                             <p>
@@ -91,8 +106,8 @@ const Login = () => {
                 </Container>
             </>
         )
-    )
+    );
 }
 
 
-export default Login
+export default Login;

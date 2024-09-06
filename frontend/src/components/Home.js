@@ -1,10 +1,9 @@
 import React from "react";
 import HomeReview from "./HomeReview";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckSquare, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
-import { login, reset } from '../features/auth/authSlice';
+import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import Container from "react-bootstrap/esm/Container";
 import { Col, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
@@ -13,9 +12,11 @@ import HowDoesItWork from "./HowDoesItWork";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
+// Home component for the landing page
 const Home = () => {
 
-    const { user } = useSelector(state => state.auth)
+    // Get the current user from the Redux state
+    const { user } = useSelector(state => state.auth);
 
     return (
         <>
@@ -23,6 +24,7 @@ const Home = () => {
                 <Row className="justify-content-center" >
                     <Col md={{ span: 4 }}>
                         <h1>Will writing made simple</h1>
+                        {/* List of benefits using FontAwesome icons */}
                         <Container className="pt-3">
                             <h5><FontAwesomeIcon
                                 icon={faCheckCircle}
@@ -45,9 +47,11 @@ const Home = () => {
                                 className="custom-icon"
                                 style={{ color: 'green' }} /> starting from £20</h5>
                         </Container>
+
+                        {/* Conditional button rendering based on whether the user is logged in */}
                         <Row className="p-2 pt-3">
                             {user ? (
-                                <Container >
+                                <Container>
                                     <Link to='/dashboard'>
                                         <Button
                                             className='mb-5'
@@ -57,7 +61,7 @@ const Home = () => {
                                     </Link>
                                 </Container>
                             ) : (
-                                <Container >
+                                <Container>
                                     <Link to='/login'>
                                         <Button
                                             className='mb-5'
@@ -69,11 +73,15 @@ const Home = () => {
                             )}
                         </Row>
                     </Col>
+
+                    {/* Hero image */}
                     <Col md={{ span: 8 }}>
                         <img src="/hero1.png" style={{ width: '100%' }} alt="Home" />
                     </Col>
                 </Row>
             </Container>
+
+            {/* Section for How It Works */}
             <Container className="mt-5">
                 <Row className="pt-5 mb-5 section-header">
                     <Col>
@@ -82,6 +90,8 @@ const Home = () => {
                 </Row>
                 <HowDoesItWork />
             </Container>
+
+            {/* Section for Testimonials */}
             <Container className="mb-5 mt-5">
                 <Row className="pt-5 mb-3 section-header">
                     <Col>
@@ -98,4 +108,5 @@ const Home = () => {
     );
 }
 
-export default Home
+
+export default Home;
