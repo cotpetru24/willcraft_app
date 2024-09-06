@@ -5,7 +5,6 @@ import axios from "axios";
 import { updateOrderThunk, getOrderThunk, createOrderThunk } from "./currentOrderSlice";
 import * as currentOrderService from "./currentOrderService";
 
-
 const mockStore = configureMockStore([thunk])
 const mock = new MockAdapter(axios)
 
@@ -29,9 +28,9 @@ describe('currentOrderSlice', () => {
                 message: ''
             },
             auth: {
-                user: { 
+                user: {
                     token: mockToken,
-                    _id: mockUserId 
+                    _id: mockUserId
                 },
             },
         })
@@ -41,7 +40,8 @@ describe('currentOrderSlice', () => {
             store.clearActions();
         })
 
-    test("calls the currentOrderService to fetch the current order", async () => {
+
+    test("calls the currentOrderService.getOrder to fetch the current order", async () => {
         const token = 'mock_token';
         const orderId = '66d252ed245514d47ddb7247';
         const currentOrder = {
@@ -210,7 +210,7 @@ describe('currentOrderSlice', () => {
     })
 
 
-    test("calls the currentOrderService to update the order", async () => {
+    test("calls the currentOrderService.updateOrder to update the order", async () => {
         const token = 'mock_token';
         const updatedOrder = {
             orderId: '66d252ed245514d47ddb7247',
@@ -245,13 +245,14 @@ describe('currentOrderSlice', () => {
                 }
             ]
         };
-    
+
         const updateOrderSpy = jest.spyOn(currentOrderService, 'updateOrder').mockResolvedValue(updatedOrder);
         await store.dispatch(updateOrderThunk(updatedOrder));
-        expect(updateOrderSpy).toHaveBeenCalledWith(updatedOrder, token);       
+        expect(updateOrderSpy).toHaveBeenCalledWith(updatedOrder, token);
     });
 
-    test("calls the currentOrderService to create an order", async () => {
+
+    test("calls the currentOrderService.createOrder to create an order", async () => {
         const token = 'mock_token';
         const newOrderData = {
             status: 'CreatingOrder',
@@ -285,11 +286,11 @@ describe('currentOrderSlice', () => {
                 }
             ]
         };
-    
+
         const createdOrder = { ...newOrderData, orderId: '66d252ed245514d47ddb7247', userId: mockUserId };
         const createOrderSpy = jest.spyOn(currentOrderService, 'createOrder').mockResolvedValue(createdOrder);
         await store.dispatch(createOrderThunk(newOrderData));
-        expect(createOrderSpy).toHaveBeenCalledWith({ ...newOrderData, userId: mockUserId  }, token);
-    }); 
+        expect(createOrderSpy).toHaveBeenCalledWith({ ...newOrderData, userId: mockUserId }, token);
+    });
 })
 

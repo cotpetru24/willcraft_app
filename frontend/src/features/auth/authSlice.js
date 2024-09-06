@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import authService from './authService';
 
+
 const localuser = JSON.parse(localStorage.getItem('user'));
 
 const initialState = {
@@ -164,7 +165,7 @@ export const authSlice = createSlice({
                 state.isError = true
                 state.message = action.payload
             })
-            
+
 
             .addCase(updateUserPasswordThunk.pending, (state) => {
                 state.isLoading = true
@@ -181,6 +182,7 @@ export const authSlice = createSlice({
             })
     }
 });
+
 
 export const { reset } = authSlice.actions;
 

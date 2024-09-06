@@ -1,8 +1,9 @@
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
-import { getOrder, updateOrder, createOrder } from "./currentOrderService"; 
+import { getOrder, updateOrder, createOrder } from "./currentOrderService";
 
 const mock = new MockAdapter(axios);
+
 
 describe('currentOrderService', () => {
     afterEach(() => {
@@ -187,7 +188,8 @@ describe('currentOrderService', () => {
                 return [200, orderData];
             }
             return [404];
-        });        
+        });
+
         const response = await updateOrder(orderData, token);
         expect(response).toEqual(orderData)
     })
@@ -282,11 +284,10 @@ describe('currentOrderService', () => {
             }
             return [404];
         });
-                     
+
         const response = await createOrder(newOrderData, token);
         expect(response).toEqual(newOrderData)
     })
-
 });
 
 

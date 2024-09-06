@@ -5,7 +5,6 @@ import { updateSpouseOrPartnerSlice } from "../people/spouseOrPartner/spouseOrPa
 import constants from "../../common/constants";
 import { updateKidsSlice } from "../people/kids/kidsSlice";
 import { updateAssetsSlice } from "../orderAssets/orderAssetsSlice";
-import { updateAllPeopleSlice } from "../people/peopleSlice";
 import { updateAdditionalExecutorsSlice } from "../additionalExecutors/additionalExecutorsSlice";
 import { updateAdditionalBeneficiariesSlice } from "../people/additionalBeneficiaries/additionalBeneficiariesSlice";
 
@@ -23,8 +22,6 @@ const initialState = {
 };
 
 
-
-// Thunk for creating an order
 export const createOrderThunk = createAsyncThunk(
     'currentOrder/createOrderThunk',
     async (orderData, thunkAPI) => {
@@ -39,6 +36,7 @@ export const createOrderThunk = createAsyncThunk(
         }
     }
 );
+
 
 export const getOrderThunk = createAsyncThunk(
     'currentOrder/getOrderThunk',
@@ -57,17 +55,17 @@ export const getOrderThunk = createAsyncThunk(
             }));
             const additionalExecutors = response.peopleAndRoles.filter(
                 p => p.role.includes(constants.role.ADDITIONAL_EXECUTOR)).map(p => ({
-                ...p.personId,
-                role: p.role,
-                _id: p.personId._id
-            }));
+                    ...p.personId,
+                    role: p.role,
+                    _id: p.personId._id
+                }));
 
             const additionalBeneficiaries = response.peopleAndRoles.filter(
                 p => p.role.includes('additional beneficiary')).map(p => ({
-                ...p,
-                role: p.role,
-                _id: p.personId._id || p._id,
-            }))
+                    ...p,
+                    role: p.role,
+                    _id: p.personId._id || p._id,
+                }))
 
             const assets = response.assetsAndDistribution.map(a => ({
                 ...a.assetId,
@@ -89,19 +87,17 @@ export const getOrderThunk = createAsyncThunk(
 
             if (assets) {
                 thunkAPI.dispatch(updateAssetsSlice(assets))
-
             }
             if (additionalExecutors) thunkAPI.dispatch(updateAdditionalExecutorsSlice(additionalExecutors))
 
-
-
             if (additionalBeneficiaries) thunkAPI.dispatch(updateAdditionalBeneficiariesSlice(additionalBeneficiaries))
 
-
             return response;
+
         } catch (error) {
             const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
             console.error('Error in getOrderThunk:', message);
+
             return thunkAPI.rejectWithValue(message);
         }
     }
@@ -122,7 +118,6 @@ export const updateOrderThunk = createAsyncThunk(
 );
 
 
-
 const currentOrderSlice = createSlice({
     name: 'currentOrder',
     initialState,
@@ -141,7 +136,6 @@ const currentOrderSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-
 
             .addCase(createOrderThunk.pending, (state) => {
                 state.isLoading = true;
@@ -203,10 +197,7 @@ const currentOrderSlice = createSlice({
     },
 });
 
+
 export const { resetCurrentOrderSlice, updateCurrentOrderSlice } = currentOrderSlice.actions;
-
-
-
-
 
 export default currentOrderSlice.reducer;
