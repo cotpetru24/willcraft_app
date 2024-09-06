@@ -10,7 +10,9 @@ import LoadingSpinner from "../../LoadingSpinner";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_API_FRONTEND_SECRET);
 
+
 const CheckOutCard = ({ setShowCheckout, clientSecret, products, totalAmount, addStorage, setAddStorage, addPrinting, setAddPrinting }) => {
+
   const dispatch = useDispatch();
   const stripe = useStripe();
   const elements = useElements();
@@ -20,8 +22,10 @@ const CheckOutCard = ({ setShowCheckout, clientSecret, products, totalAmount, ad
   const currentOrder = useSelector((state) => state.currentOrder);
   const userId = useSelector((state) => state.auth.user._id);
 
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     if (!stripe || !elements || !clientSecret) {
       return;
     }
@@ -39,7 +43,7 @@ const CheckOutCard = ({ setShowCheckout, clientSecret, products, totalAmount, ad
         setError(`Payment failed: ${error.message}`);
         setIsProcessing(false);
       } else if (paymentIntent && paymentIntent.status === "succeeded") {
-        // Prepare the payment data to dispatch
+        // Prepare the payment data for dispatch
         const paymentData = {
           orderId: currentOrder.orderId,
           userId: userId,
@@ -60,12 +64,11 @@ const CheckOutCard = ({ setShowCheckout, clientSecret, products, totalAmount, ad
         );
 
         // Handle successful payment
-        console.log("Payment successful!");
         setError(null);
         setIsProcessing(false);
         setTimeout(() => {
           setShowCheckout(false);
-        }, 1000); // 2-second delay
+        }, 1000);
         toast.success("Payment successfully made!");
       }
     } catch (err) {
@@ -74,6 +77,7 @@ const CheckOutCard = ({ setShowCheckout, clientSecret, products, totalAmount, ad
       setIsProcessing(false);
     }
   };
+
 
   return (
     <>
@@ -95,7 +99,7 @@ const CheckOutCard = ({ setShowCheckout, clientSecret, products, totalAmount, ad
               </Row>
             </Card.Title>
 
-            {/* Order Breakdown */}
+            {/* Order breakdown/products */}
             <Card.Text as="div">
               {products.map((product, index) => (
                 <Row key={index} className="d-flex justify-content-between">
@@ -118,7 +122,7 @@ const CheckOutCard = ({ setShowCheckout, clientSecret, products, totalAmount, ad
               <Row>
                 <Col>
                   <Form onSubmit={handleSubmit}>
-                    {/* Checkboxes for add-ons */}
+                    {/* Checkboxes for additional products */}
                     <Form.Group className="mb-3" controlId="formGroupAddOns">
                       <Form.Check
                         type="checkbox"
@@ -133,7 +137,6 @@ const CheckOutCard = ({ setShowCheckout, clientSecret, products, totalAmount, ad
                         onChange={() => setAddPrinting(!addPrinting)}
                       />
                     </Form.Group>
-
                     <Form.Group
                       className="mb-3"
                       controlId="formGroupCardDetails"
@@ -172,17 +175,16 @@ const CheckOutCard = ({ setShowCheckout, clientSecret, products, totalAmount, ad
   );
 };
 
+
 const PaymentPage = ({ setShowCheckout }) => {
+
   const [clientSecret, setClientSecret] = useState(null);
-  const dispatch = useDispatch();
-
   const [fetchingIntent, setFetchingIntent] = useState(false);
-
   const [addStorage, setAddStorage] = useState(false);
   const [addPrinting, setAddPrinting] = useState(false);
+  const dispatch = useDispatch();
 
   const baseProduct = { name: "Standard will", price: 20 };
-
   const storageProduct = { name: "Storage", price: 25 };
   const printingProduct = { name: "Printing", price: 10 };
 
@@ -195,6 +197,7 @@ const PaymentPage = ({ setShowCheckout }) => {
   const totalAmount = products.reduce((acc, product) => acc + product.price, 0);
 
   useEffect(() => {
+
     const fetchClientSecret = async () => {
       setFetchingIntent(true)
       const productsData = { products };
@@ -211,6 +214,7 @@ const PaymentPage = ({ setShowCheckout }) => {
 
     fetchClientSecret();
   }, [dispatch, addStorage, addPrinting]);
+
 
   return (
     <>
@@ -235,6 +239,7 @@ const PaymentPage = ({ setShowCheckout }) => {
     </>
   );
 };
+
 
 export default PaymentPage;
 
