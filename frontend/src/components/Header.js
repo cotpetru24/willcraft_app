@@ -34,6 +34,20 @@ const Header = () => {
     const handleShow = () => setShow(true);
 
 
+    useEffect(() => {
+        if (user && user.token) {
+            const decodedToken = jwtDecode(user.token);
+            const currentTime = Date.now() / 1000;
+            const tokenExpiryTime = decodedToken.exp;
+
+            //Checking if token is expired
+            if (tokenExpiryTime < currentTime) {
+                logoutfn();
+            }
+        }
+    }, [user, navigate, dispatch]);
+
+
     return (
         <>
             <Container fluid className='main-header'>
